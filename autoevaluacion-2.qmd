@@ -1,0 +1,142 @@
+---
+title: "Autoevaluación Módulo 2"
+subtitle: "Introducción a la estadística inferencial con R"
+filters:
+  - selfcheck.lua
+include-after-body: selfcheck.html
+toc: false
+---
+
+Nueve preguntas cortas sobre el [Módulo 2](modulo-2.qmd): dos por cada objetivo de la sesión y una sobre transformaciones. Tienes dos intentos por pregunta; después verás la respuesta y una explicación. **Es anónima: no se guarda ni se envía nada.**
+
+::: {.callout-note appearance="simple"}
+<span id="sc-score"></span>
+:::
+
+
+## Objetivo 1: Muestras, poblaciones, parámetros y estadísticos
+
+::: {.selfcheck}
+**1. Medimos la longitud de 78 renacuajos y calculamos su media, 19.38 mm. Esa media es...**
+
+- [ ] un parámetro, porque describe a la población de renacuajos
+- [x] un estadístico, porque se calcula a partir de una muestra y sirve para estimar el parámetro
+- [ ] la media poblacional exacta
+- [ ] un valor p
+
+::: {.explanation}
+Los **parámetros** ($\mu$, $\sigma$) describen a la población y casi nunca los conocemos. Los **estadísticos** ($\bar{x}$, $s$) se calculan con la muestra y los usamos para estimar los parámetros.
+:::
+:::
+
+::: {.selfcheck}
+**2. ¿Por qué la varianza de una muestra se divide para $n - 1$ y no para $n$?**
+
+- [ ] Para que el cálculo sea más rápido
+- [x] Porque al usar la media de la muestra, dividir para $n$ subestimaría en promedio la varianza de la población
+- [ ] Porque siempre falta un dato
+- [ ] Es solo una convención sin efecto
+
+::: {.explanation}
+Los datos están, en promedio, más cerca de su propia media $\bar{x}$ que de la media verdadera $\mu$. Dividir para $n - 1$ corrige ese sesgo. Es lo que hacen `var()` y `sd()` en R.
+:::
+:::
+
+## Objetivo 2: Intervalos de confianza
+
+::: {.selfcheck}
+**3. El intervalo de confianza del 95% para la glucosa media es de 73.05 a 105.91 mg/dL. ¿Cuál es la interpretación correcta?**
+
+- [ ] El 95% de los ratones tiene una glucosa entre 73.05 y 105.91 mg/dL
+- [ ] Hay un 95% de probabilidad de que la media de la muestra esté en ese intervalo
+- [x] Si repitiéramos el estudio muchas veces, el 95% de los intervalos calculados así contendría la media verdadera
+- [ ] La media verdadera es 89.48 con un 95% de seguridad
+
+::: {.explanation}
+El 95% se refiere al **método**: de cada 100 intervalos calculados con muestras distintas, unos 95 contendrían $\mu$. No describe a los ratones individuales (eso sería un intervalo de predicción), y la media de la muestra siempre está en el centro del intervalo.
+:::
+:::
+
+::: {.selfcheck}
+**4. Si medimos 40 ratones en lugar de 10, con la misma variación, el intervalo de confianza...**
+
+- [ ] se hace más ancho
+- [x] se hace más angosto, aproximadamente la mitad
+- [ ] no cambia
+- [ ] se desplaza hacia la derecha
+
+::: {.explanation}
+El ancho depende del error estándar $s/\sqrt{n}$. Con 4 veces más datos, $\sqrt{n}$ se duplica y el intervalo se reduce más o menos a la mitad (un poco más, porque además el valor de $t$ crítico baja).
+:::
+:::
+
+## Objetivo 3: Hipótesis y valor p
+
+::: {.selfcheck}
+**5. Una prueba da $p = 0.0003$. ¿Qué significa?**
+
+- [ ] La probabilidad de que $H_0$ sea verdadera es 0.03%
+- [x] Si $H_0$ fuera verdadera, obtener una diferencia como esta o mayor sería muy poco probable
+- [ ] El efecto es grande e importante
+- [ ] La probabilidad de haber cometido un error tipo II es 0.03%
+
+::: {.explanation}
+El valor p se calcula **suponiendo que $H_0$ es cierta**: es la probabilidad de observar datos tan extremos como los nuestros, o más. No es la probabilidad de $H_0$, y no dice nada sobre el tamaño del efecto: para eso mira la diferencia y su intervalo de confianza.
+:::
+:::
+
+::: {.selfcheck}
+**6. Rechazamos $H_0$ cuando en realidad era verdadera. Eso es...**
+
+- [x] un error tipo I
+- [ ] un error tipo II
+- [ ] la potencia de la prueba
+- [ ] un intervalo de confianza
+
+::: {.explanation}
+El **error tipo I** es un falso positivo; su probabilidad es el nivel de significancia $\alpha$ (por lo general 0.05). El **error tipo II** es no rechazar $H_0$ cuando es falsa. La **potencia** es $1 - \beta$, la probabilidad de detectar un efecto que sí existe.
+:::
+:::
+
+## Objetivo 4: Elegir y ejecutar la prueba
+
+::: {.selfcheck}
+**7. Medimos la presión de 15 pacientes antes y después de una dieta. Las diferencias son normales. ¿Qué prueba usamos?**
+
+- [ ] Prueba t de muestras independientes
+- [x] Prueba t de muestras emparejadas
+- [ ] Prueba de Wilcoxon para dos muestras
+- [ ] Prueba t de una muestra con $\mu = 0$ sobre los valores de antes
+
+::: {.explanation}
+Son **los mismos** pacientes medidos dos veces: las mediciones están emparejadas. `t.test(despues, antes, paired = TRUE)` equivale a una prueba t de una muestra sobre las diferencias, con $\mu = 0$.
+:::
+:::
+
+::: {.selfcheck}
+**8. En R, `t.test(y ~ grupo, data = d)` sin más argumentos hace...**
+
+- [ ] la prueba t de Student, que supone varianzas iguales
+- [x] la prueba t de Welch, que no supone varianzas iguales
+- [ ] una prueba de Wilcoxon
+- [ ] una prueba emparejada
+
+::: {.explanation}
+El valor por defecto es `var.equal = FALSE`, es decir, la prueba de **Welch**. Por eso sus grados de libertad suelen tener decimales (64.3 en el ejercicio 2.3). Para la prueba de Student hay que pedir `var.equal = TRUE`.
+:::
+:::
+
+::: {.selfcheck}
+**9. Comparas `log(edad)` entre dos grupos con `t.test()` y la diferencia de medias es $-0.66$. ¿Cómo se interpreta en días?**
+
+- [ ] El primer grupo tarda 0.66 días menos
+- [x] El primer grupo tarda `exp(-0.66)` $\approx$ 0.52 veces lo que tarda el segundo, es decir, cerca de la mitad
+- [ ] No se puede interpretar, porque los datos se transformaron
+- [ ] El primer grupo tarda 66% más
+
+::: {.explanation}
+En escala logarítmica, una diferencia de medias es el logaritmo de un **cociente** de medias geométricas. `exp(-0.66)` $\approx$ 0.52: el primer grupo tarda alrededor de la mitad. Lo mismo vale para los límites del intervalo de confianza: aplícales `exp()`.
+:::
+:::
+
+¿Fallaste alguna? Vuelve a la parte correspondiente de las [diapositivas](diapositivas/modulo-2.html){target="_blank"} o de los [ejercicios](ejercicios-2.qmd).

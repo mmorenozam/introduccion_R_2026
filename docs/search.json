@@ -1,0 +1,1381 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Introducción a R",
+    "section": "",
+    "text": "Anuncios\n\n\n\n\nBienvenidos. La primera clase es el domingo 15 de noviembre, a las 9H00. Antes, revisa los requisitos e instala R y RStudio siguiendo la guía de Recursos.\nEste curso brinda herramientas estadísticas de aplicación inmediata mediante el uso del lenguaje R. Está pensado para una audiencia diversa: no hace falta un conocimiento profundo de teoría estadística ni experiencia previa en programación.\nDesde la primera hora de clase vas a usar R para analizar datos, y avanzarás paso a paso desde la estadística descriptiva y las pruebas de hipótesis básicas hasta el análisis de varianza (ANOVA). Al terminar, podrás obtener un certificado de aprobación."
+  },
+  {
+    "objectID": "index.html#cuatro-módulos-un-mismo-camino",
+    "href": "index.html#cuatro-módulos-un-mismo-camino",
+    "title": "Introducción a R",
+    "section": "Cuatro módulos, un mismo camino",
+    "text": "Cuatro módulos, un mismo camino\n\n\n\nDomingo 15 de noviembre\n\n1. Generalidades e introducción a R\nR y RStudio, proyectos, objetos, paquetes, importación de datos y estadísticos descriptivos.\nIr al módulo\n\n\n\n\n\nDomingo 22 de noviembre\n\n2. Estadística inferencial\nMuestras y poblaciones, intervalos de confianza, pruebas t y pruebas de Wilcoxon.\nIr al módulo\n\n\n\n\n\nDomingo 29 de noviembre\n\n3. Análisis de varianza\nANOVA de una vía, supuestos y diagnósticos, comparaciones múltiples y Kruskal-Wallis.\nIr al módulo\n\n\n\n\n\nDomingo 6 de diciembre\n\n4. ANOVA de múltiples vías y exportación\nANOVA aditivo y no aditivo de dos vías; exportar resultados a csv, Excel y Word.\nIr al módulo\n\n\n\n\nVer el programa completo →"
+  },
+  {
+    "objectID": "index.html#cómo-aprendemos",
+    "href": "index.html#cómo-aprendemos",
+    "title": "Introducción a R",
+    "section": "Cómo aprendemos",
+    "text": "Cómo aprendemos\n\nPrimero la pregunta, luego el código. Cada prueba estadística empieza con la pregunta que responde y con un gráfico de los datos.\nPracticar desde el primer día. Exposiciones cortas seguidas de trabajo práctico en R, en clase y en casa.\nTus propios datos. Te animamos a aplicar cada método a tus datos, a la par de los ejemplos del curso.\nBuenas prácticas desde el inicio. Proyectos de R, scripts ordenados y análisis reproducibles.\nMateriales abiertos. Diapositivas, ejercicios y datos están disponibles en este sitio."
+  },
+  {
+    "objectID": "index.html#explora",
+    "href": "index.html#explora",
+    "title": "Introducción a R",
+    "section": "Explora",
+    "text": "Explora\n\n\n\nEjercicios\nEjercicios interactivos de R que corren en tu navegador, sin instalar nada. Cada uno tiene pistas, y las soluciones se publican al terminar cada módulo.\nEmpezar con el Módulo 1\n\n\n\n\nAutoevaluación\nPreguntas cortas de opción múltiple, anónimas, con explicaciones. Te muestran qué ideas necesitan un repaso.\nAutoevaluación del Módulo 1\n\n\n\n\nEvaluación y certificado\n40% ejercicios en clase, 60% examen virtual. Con 7 de 10 puntos obtienes el certificado de aprobación.\nCómo se evalúa"
+  },
+  {
+    "objectID": "diapositivas/modulo-4.html",
+    "href": "diapositivas/modulo-4.html",
+    "title": "ANOVA aditivo de dos vías",
+    "section": "",
+    "text": "Módulo 4: ANOVA de múltiples vías y exportación de resultados\n\nMauricio Moreno, PhD\nDomingo 6 de diciembre de 2026"
+  },
+  {
+    "objectID": "diapositivas/modulo-4.html#section",
+    "href": "diapositivas/modulo-4.html#section",
+    "title": "ANOVA aditivo de dos vías",
+    "section": "",
+    "text": "Módulo 4: ANOVA de múltiples vías y exportación de resultados\n\nMauricio Moreno, PhD\nDomingo 6 de diciembre de 2026"
+  },
+  {
+    "objectID": "diapositivas/modulo-4.html#hoy",
+    "href": "diapositivas/modulo-4.html#hoy",
+    "title": "ANOVA aditivo de dos vías",
+    "section": "Hoy",
+    "text": "Hoy\n\nANOVA aditivo de dos vías\nInteracciones y ANOVA no aditivo de dos vías\nDiagnósticos y transformaciones\nExportar resultados a csv, Excel y Word\nCierre del curso, examen y certificado"
+  },
+  {
+    "objectID": "diapositivas/modulo-4.html#los-datos-de-hoy",
+    "href": "diapositivas/modulo-4.html#los-datos-de-hoy",
+    "title": "ANOVA aditivo de dos vías",
+    "section": "Los datos de hoy",
+    "text": "Los datos de hoy\nUsamos la tabla ranas del Módulo 1, con los tratamientos como factores.\n\n\nMostrar el código\nranas &lt;- read.csv(\"datos/ranas.csv\")\nranas$Pred  &lt;- factor(ranas$Pred)\nranas$Res   &lt;- factor(ranas$Res)\nranas$Hatch &lt;- factor(ranas$Hatch)\nstr(ranas)\n\n\n'data.frame':   78 obs. of  12 variables:\n $ Block            : int  1 1 1 1 1 1 1 1 1 1 ...\n $ Tank.Unique      : int  1 2 3 4 5 6 7 8 9 10 ...\n $ Pred             : Factor w/ 3 levels \"C\",\"L\",\"NL\": 3 1 1 2 3 2 3 1 2 1 ...\n $ Hatch            : Factor w/ 2 levels \"E\",\"L\": 2 1 2 2 1 1 2 1 2 2 ...\n $ Res              : Factor w/ 2 levels \"Hi\",\"Lo\": 1 1 1 2 1 1 2 2 1 2 ...\n $ Age.DPO          : num  47.2 45.4 53.8 56.9 64.8 ...\n $ Age.FromEmergence: num  13.2 11.4 19.8 22.9 30.8 ...\n $ SVL.initial      : num  19.4 18.4 18.9 18.8 19.7 ...\n $ Tail.initial     : num  4.83 5.37 4.8 4.63 5.43 ...\n $ SVL.final        : num  19.7 19 19.1 19.1 20.1 ...\n $ Mass.final       : num  0.418 0.382 0.412 0.382 0.486 ...\n $ Resorb.days      : num  3.49 3.79 3.51 3.65 4.22 ..."
+  },
+  {
+    "objectID": "diapositivas/modulo-4.html#un-segundo-ejemplo",
+    "href": "diapositivas/modulo-4.html#un-segundo-ejemplo",
+    "title": "ANOVA aditivo de dos vías",
+    "section": "Un segundo ejemplo",
+    "text": "Un segundo ejemplo\nDatos ToothGrowth, incluidos en R: crecimiento de los odontoblastos de 60 cobayos según el suplemento de vitamina C y la dosis. Convertimos la dosis en factor.\n\n\nMostrar el código\ndientes &lt;- ToothGrowth\ndientes$dosis &lt;- factor(dientes$dose)\nstr(dientes)\n\n\n'data.frame':   60 obs. of  4 variables:\n $ len  : num  4.2 11.5 7.3 5.8 6.4 10 11.2 11.2 5.2 7 ...\n $ supp : Factor w/ 2 levels \"OJ\",\"VC\": 2 2 2 2 2 2 2 2 2 2 ...\n $ dose : num  0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 ...\n $ dosis: Factor w/ 3 levels \"0.5\",\"1\",\"2\": 1 1 1 1 1 1 1 1 1 1 ..."
+  },
+  {
+    "objectID": "diapositivas/modulo-4.html#dos-factores-a-la-vez",
+    "href": "diapositivas/modulo-4.html#dos-factores-a-la-vez",
+    "title": "ANOVA aditivo de dos vías",
+    "section": "Dos factores a la vez",
+    "text": "Dos factores a la vez\n¿Depende la longitud final del depredador, de los recursos, o de ambos?\n\nboxplot(SVL.final ~ Pred + Res, data = ranas, xlab = \"Depredador.Recursos\", ylab = \"Longitud final (mm)\")\n\n\n\n\n\n\n\n\n\n\n¿Por qué no dos ANOVAs separados? Porque cada factor explica parte de la variación: incluirlos juntos reduce el error y prueba cada uno teniendo en cuenta el otro."
+  },
+  {
+    "objectID": "diapositivas/modulo-4.html#anova-aditivo-en-r",
+    "href": "diapositivas/modulo-4.html#anova-aditivo-en-r",
+    "title": "ANOVA aditivo de dos vías",
+    "section": "ANOVA aditivo en R",
+    "text": "ANOVA aditivo en R\nEn un modelo aditivo, cada factor tiene su propio efecto y los efectos se suman: y ~ A + B.\n\naditivo &lt;- aov(SVL.final ~ Pred + Res, data = ranas)\nsummary(aditivo)\n\n            Df Sum Sq Mean Sq F value   Pr(&gt;F)    \nPred         2  64.73   32.36  26.509 2.08e-09 ***\nRes          1   3.60    3.60   2.951     0.09 .  \nResiduals   74  90.34    1.22                     \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\n\n. . .\n\n\nCada fila prueba un factor. Aquí: efecto claro del depredador; el de los recursos no llega a ser significativo.\nLas comparaciones múltiples, factor por factor: TukeyHSD(aditivo, which = \"Pred\")."
+  },
+  {
+    "objectID": "diapositivas/modulo-4.html#qué-observas",
+    "href": "diapositivas/modulo-4.html#qué-observas",
+    "title": "ANOVA aditivo de dos vías",
+    "section": "¿Qué observas?",
+    "text": "¿Qué observas?\n\ninteraction.plot(x.factor = ranas$Pred, trace.factor = ranas$Res, response = ranas$SVL.final,\n                 xlab = \"Depredador\", ylab = \"Longitud final (mm)\", trace.label = \"Recursos\")\n\n\n\n\n\n\n\n\nLíneas paralelas: el efecto de los recursos es el mismo con cualquier depredador. No hay interacción."
+  },
+  {
+    "objectID": "diapositivas/modulo-4.html#una-interacción",
+    "href": "diapositivas/modulo-4.html#una-interacción",
+    "title": "ANOVA aditivo de dos vías",
+    "section": "Una interacción",
+    "text": "Una interacción\nDatos ToothGrowth, incluidos en R: crecimiento de los odontoblastos de cobayos según el suplemento (OJ jugo de naranja, VC ácido ascórbico) y la dosis de vitamina C.\n\ninteraction.plot(x.factor = dientes$dosis, trace.factor = dientes$supp, response = dientes$len,\n                 xlab = \"Dosis (mg/día)\", ylab = \"Longitud\", trace.label = \"Suplemento\")\n\n\n\n\n\n\n\n\nLas líneas se juntan: la ventaja del jugo de naranja depende de la dosis."
+  },
+  {
+    "objectID": "diapositivas/modulo-4.html#anova-no-aditivo-en-r",
+    "href": "diapositivas/modulo-4.html#anova-no-aditivo-en-r",
+    "title": "ANOVA aditivo de dos vías",
+    "section": "ANOVA no aditivo en R",
+    "text": "ANOVA no aditivo en R\nA * B es una abreviatura de A + B + A:B, donde A:B es la interacción.\n\nno_aditivo &lt;- aov(len ~ supp * dosis, data = dientes)\nsummary(no_aditivo)\n\n            Df Sum Sq Mean Sq F value   Pr(&gt;F)    \nsupp         1  205.4   205.4  15.572 0.000231 ***\ndosis        2 2426.4  1213.2  92.000  &lt; 2e-16 ***\nsupp:dosis   2  108.3    54.2   4.107 0.021860 *  \nResiduals   54  712.1    13.2                     \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\n\n. . .\n\n\n\n\n\n\nSi la interacción es significativa, no se puede hablar del efecto de un factor sin decir en qué nivel del otro."
+  },
+  {
+    "objectID": "diapositivas/modulo-4.html#comparaciones-con-interacción",
+    "href": "diapositivas/modulo-4.html#comparaciones-con-interacción",
+    "title": "ANOVA aditivo de dos vías",
+    "section": "Comparaciones con interacción",
+    "text": "Comparaciones con interacción\nPara comparar las combinaciones, Tukey sobre el término de la interacción (aquí, solo las seis primeras de 15 comparaciones):\n\nhead(TukeyHSD(no_aditivo, which = \"supp:dosis\")$`supp:dosis`)\n\n               diff        lwr        upr        p adj\nVC:0.5-OJ:0.5 -5.25 -10.048124 -0.4518762 2.425209e-02\nOJ:1-OJ:0.5    9.47   4.671876 14.2681238 4.612304e-06\nVC:1-OJ:0.5    3.54  -1.258124  8.3381238 2.640208e-01\nOJ:2-OJ:0.5   12.83   8.031876 17.6281238 2.125153e-09\nVC:2-OJ:0.5   12.91   8.111876 17.7081238 1.769939e-09\nOJ:1-VC:0.5   14.72   9.921876 19.5181238 2.985967e-11"
+  },
+  {
+    "objectID": "diapositivas/modulo-4.html#los-mismos-supuestos",
+    "href": "diapositivas/modulo-4.html#los-mismos-supuestos",
+    "title": "ANOVA aditivo de dos vías",
+    "section": "Los mismos supuestos",
+    "text": "Los mismos supuestos\n\npar(mfrow = c(1, 2))\nplot(no_aditivo, which = 1:2)\n\n\n\n\n\n\n\n\n\nshapiro.test(residuals(no_aditivo))$p.value\n\n[1] 0.6694242\n\nbartlett.test(len ~ interaction(supp, dosis), data = dientes)$p.value\n\n[1] 0.2260997"
+  },
+  {
+    "objectID": "diapositivas/modulo-4.html#cuando-la-variación-crece-con-la-media",
+    "href": "diapositivas/modulo-4.html#cuando-la-variación-crece-con-la-media",
+    "title": "ANOVA aditivo de dos vías",
+    "section": "Cuando la variación crece con la media",
+    "text": "Cuando la variación crece con la media\n\n\nUn embudo en el gráfico de residuos frente a ajustados (la dispersión crece con la media) es típico de tiempos, conteos y masas.\nEl logaritmo suele estabilizar la varianza: aov(log(y) ~ A * B).\nEn escala logarítmica, los efectos se multiplican. A veces una interacción en la escala original desaparece en la escala logarítmica.\nLo veremos con los datos de las ranas en los ejercicios.\n\n\n. . .\n\n\n\n\n\n\nMoraleja: revisa los diagnósticos antes de interpretar una interacción."
+  },
+  {
+    "objectID": "diapositivas/modulo-4.html#section-1",
+    "href": "diapositivas/modulo-4.html#section-1",
+    "title": "ANOVA aditivo de dos vías",
+    "section": "",
+    "text": "Ejercicios, Partes 1 y 2"
+  },
+  {
+    "objectID": "diapositivas/modulo-4.html#la-tabla-del-anova-como-tabla-de-datos",
+    "href": "diapositivas/modulo-4.html#la-tabla-del-anova-como-tabla-de-datos",
+    "title": "ANOVA aditivo de dos vías",
+    "section": "La tabla del ANOVA como tabla de datos",
+    "text": "La tabla del ANOVA como tabla de datos\n\ntabla_anova &lt;- as.data.frame(summary(aditivo)[[1]])\ntabla_anova &lt;- cbind(Fuente = rownames(tabla_anova), tabla_anova)\ntabla_anova\n\n                 Fuente Df    Sum Sq   Mean Sq   F value       Pr(&gt;F)\nPred        Pred         2 64.725806 32.362903 26.508799 2.082617e-09\nRes         Res          1  3.602797  3.602797  2.951089 9.000175e-02\nResiduals   Residuals   74 90.341882  1.220836        NA           NA"
+  },
+  {
+    "objectID": "diapositivas/modulo-4.html#csv-y-excel",
+    "href": "diapositivas/modulo-4.html#csv-y-excel",
+    "title": "ANOVA aditivo de dos vías",
+    "section": "csv y Excel",
+    "text": "csv y Excel\n\nwrite.csv(tabla_anova, \"resultados/tabla_anova.csv\", row.names = FALSE)\n\n. . .\nVarias tablas en un mismo archivo de Excel, una por hoja:\n\nlibrary(writexl)\nmedias &lt;- aggregate(SVL.final ~ Pred + Res, data = ranas, FUN = mean)\nwrite_xlsx(list(anova = tabla_anova, medias = medias),\n           path = \"resultados/resultados_longitud.xlsx\")"
+  },
+  {
+    "objectID": "diapositivas/modulo-4.html#word",
+    "href": "diapositivas/modulo-4.html#word",
+    "title": "ANOVA aditivo de dos vías",
+    "section": "Word",
+    "text": "Word\n\n\n\nlibrary(flextable)\n\ntabla_word &lt;- flextable(tabla_anova)\ntabla_word &lt;- colformat_double(tabla_word, digits = 3)\ntabla_word &lt;- autofit(tabla_word)\n\nsave_as_docx(tabla_word, path = \"resultados/tabla_anova.docx\")\n\n\n\nLa tabla llega a Word como una tabla editable, no como imagen.\nLos valores p muy pequeños: escríbelos como \\(p &lt; 0.001\\)."
+  },
+  {
+    "objectID": "diapositivas/modulo-4.html#section-2",
+    "href": "diapositivas/modulo-4.html#section-2",
+    "title": "ANOVA aditivo de dos vías",
+    "section": "",
+    "text": "Ejercicios, Parte 3"
+  },
+  {
+    "objectID": "diapositivas/modulo-4.html#lo-que-vimos-en-cuatro-domingos",
+    "href": "diapositivas/modulo-4.html#lo-que-vimos-en-cuatro-domingos",
+    "title": "ANOVA aditivo de dos vías",
+    "section": "Lo que vimos en cuatro domingos",
+    "text": "Lo que vimos en cuatro domingos\n\n\n\n\n\n\n\nMódulo\nPreguntas que ya puedes responder con R\n\n\n\n\n1\n¿Cómo son mis datos? Importar, resumir y graficar.\n\n\n2\n¿Es esta media distinta de un valor? ¿Difieren dos grupos? ¿Cambiaron los mismos individuos?\n\n\n3\n¿Difieren tres o más grupos? ¿Cuáles?\n\n\n4\n¿Cómo actúan dos factores a la vez? ¿Cómo llevo los resultados a un informe?"
+  },
+  {
+    "objectID": "diapositivas/modulo-4.html#antes-de-terminar",
+    "href": "diapositivas/modulo-4.html#antes-de-terminar",
+    "title": "ANOVA aditivo de dos vías",
+    "section": "Antes de terminar…",
+    "text": "Antes de terminar…\n\n\n\n\n\n\nstatstest.com"
+  },
+  {
+    "objectID": "diapositivas/modulo-4.html#examen-y-certificado",
+    "href": "diapositivas/modulo-4.html#examen-y-certificado",
+    "title": "ANOVA aditivo de dos vías",
+    "section": "Examen y certificado",
+    "text": "Examen y certificado\n\n\nEl examen virtual estará disponible a partir del día 7 de diciembre; la fecha límite se anuncia en clase. Vale el 60% de la nota.\nEs un script de R para completar: llenas los espacios en blanco, ejecutas todo con “Source” y entregas el archivo .R.\nLos ejercicios en clase valen el 40%.\nCon 7/10 obtienes el certificado de aprobación; si no, el de asistencia.\nAntes del examen, completa todos los ejercicios del Módulo 4 (incluida la Parte 4) y repasa las autoevaluaciones de los cuatro módulos.\n¿Quieres seguir? El curso Visualización de datos en R cubre {tidyverse}, {ggplot2} y reportes con Quarto."
+  },
+  {
+    "objectID": "diapositivas/modulo-4.html#section-3",
+    "href": "diapositivas/modulo-4.html#section-3",
+    "title": "ANOVA aditivo de dos vías",
+    "section": "",
+    "text": "¡Gracias!\n\n\n\n\n\n\n\nCréditos de fotos\n\n\n\nPortada por Becomes Co en Unsplash\nFoto final por Wolfgang Hasselmann en Unsplash\nResto de fotos: varias fuentes"
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html",
+    "href": "diapositivas/modulo-2.html",
+    "title": "Muestras y poblaciones",
+    "section": "",
+    "text": "Módulo 2: Introducción a la estadística inferencial con R\n\nMauricio Moreno, PhD\nDomingo 22 de noviembre de 2026"
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#section",
+    "href": "diapositivas/modulo-2.html#section",
+    "title": "Muestras y poblaciones",
+    "section": "",
+    "text": "Módulo 2: Introducción a la estadística inferencial con R\n\nMauricio Moreno, PhD\nDomingo 22 de noviembre de 2026"
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#hoy",
+    "href": "diapositivas/modulo-2.html#hoy",
+    "title": "Muestras y poblaciones",
+    "section": "Hoy",
+    "text": "Hoy\n\nMuestras, poblaciones, parámetros y estadísticos\nIntervalos de confianza\nPruebas de hipótesis y el valor p\nPruebas t: una muestra, dos muestras independientes, muestras emparejadas\nPruebas de Wilcoxon y transformaciones\n\n. . .\n\n\n\n\n\n\nEl domingo pasado aprendimos a describir una muestra. Hoy usamos la muestra para sacar conclusiones sobre la población de la que viene."
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#los-datos-de-hoy",
+    "href": "diapositivas/modulo-2.html#los-datos-de-hoy",
+    "title": "Muestras y poblaciones",
+    "section": "Los datos de hoy",
+    "text": "Los datos de hoy\nUsamos la tabla ranas del Módulo 1, con los tratamientos como factores.\n\n\nMostrar el código\nranas &lt;- read.csv(\"datos/ranas.csv\")\nranas$Pred  &lt;- factor(ranas$Pred)\nranas$Res   &lt;- factor(ranas$Res)\nranas$Hatch &lt;- factor(ranas$Hatch)\nstr(ranas)\n\n\n'data.frame':   78 obs. of  12 variables:\n $ Block            : int  1 1 1 1 1 1 1 1 1 1 ...\n $ Tank.Unique      : int  1 2 3 4 5 6 7 8 9 10 ...\n $ Pred             : Factor w/ 3 levels \"C\",\"L\",\"NL\": 3 1 1 2 3 2 3 1 2 1 ...\n $ Hatch            : Factor w/ 2 levels \"E\",\"L\": 2 1 2 2 1 1 2 1 2 2 ...\n $ Res              : Factor w/ 2 levels \"Hi\",\"Lo\": 1 1 1 2 1 1 2 2 1 2 ...\n $ Age.DPO          : num  47.2 45.4 53.8 56.9 64.8 ...\n $ Age.FromEmergence: num  13.2 11.4 19.8 22.9 30.8 ...\n $ SVL.initial      : num  19.4 18.4 18.9 18.8 19.7 ...\n $ Tail.initial     : num  4.83 5.37 4.8 4.63 5.43 ...\n $ SVL.final        : num  19.7 19 19.1 19.1 20.1 ...\n $ Mass.final       : num  0.418 0.382 0.412 0.382 0.486 ...\n $ Resorb.days      : num  3.49 3.79 3.51 3.65 4.22 ..."
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#población-y-muestra",
+    "href": "diapositivas/modulo-2.html#población-y-muestra",
+    "title": "Muestras y poblaciones",
+    "section": "Población y muestra",
+    "text": "Población y muestra\n\n\n\n\n\nTomado de Learning Statistics with R\n\n\n\n\n\nPoblación: todos los individuos sobre los que queremos concluir (todos los renacuajos de la especie).\nMuestra: los que realmente medimos (78 tanques).\nEn un muestreo aleatorio simple, cada individuo tiene la misma probabilidad de ser elegido."
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#parámetros-y-estadísticos",
+    "href": "diapositivas/modulo-2.html#parámetros-y-estadísticos",
+    "title": "Muestras y poblaciones",
+    "section": "Parámetros y estadísticos",
+    "text": "Parámetros y estadísticos\n\n\n\n\nPoblación (parámetro)\nMuestra (estadístico)\n\n\n\n\nMedia\n\\(\\mu\\)\n\\(\\bar{x}\\)\n\n\nDesviación estándar\n\\(\\sigma\\)\n\\(s\\)\n\n\nVarianza\n\\(\\sigma^2\\)\n\\(s^2\\)\n\n\n\n. . .\n\n\nLos parámetros casi nunca los conocemos: los estimamos con los estadísticos.\nOtra muestra daría otra \\(\\bar{x}\\). ¿Cuánto puede cambiar? Eso nos lo dice el error estándar, \\(s / \\sqrt{n}\\)."
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#intervalos-de-confianza",
+    "href": "diapositivas/modulo-2.html#intervalos-de-confianza",
+    "title": "Muestras y poblaciones",
+    "section": "Intervalos de confianza",
+    "text": "Intervalos de confianza\nUn intervalo de confianza del 95% para la media:\n\\[\n\\bar{x} \\pm t_{0.975,\\ n-1} \\cdot \\frac{s}{\\sqrt{n}}\n\\]\n. . .\n\nt.test(ranas$SVL.final)$conf.int\n\n[1] 19.05763 19.70493\nattr(,\"conf.level\")\n[1] 0.95\n\n\n. . .\n\n\n\n\n\n\n¿Qué significa “95% de confianza”?\n\n\n\nSi repitiéramos el estudio muchas veces, el 95% de los intervalos calculados así contendría la media verdadera \\(\\mu\\)."
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#intervalos-de-confianza-1",
+    "href": "diapositivas/modulo-2.html#intervalos-de-confianza-1",
+    "title": "Muestras y poblaciones",
+    "section": "Intervalos de confianza",
+    "text": "Intervalos de confianza\n50 muestras de \\(n = 10\\) de una población con \\(\\mu = 90\\):\n\n\nMostrar el código\nset.seed(2026)\nic &lt;- t(replicate(50, t.test(rnorm(10, mean = 90, sd = 20))$conf.int))\nfuera &lt;- ic[, 1] &gt; 90 | ic[, 2] &lt; 90\nplot(NULL, xlim = c(1, 50), ylim = range(ic), xlab = \"Muestra\", ylab = \"IC 95%\")\nsegments(1:50, ic[, 1], 1:50, ic[, 2], lwd = 2, col = ifelse(fuera, \"#D55E00\", \"#0072B2\"))\nabline(h = 90, lty = 2)\n\n\n\n\n\n\n\n\n\nLos intervalos en naranja no contienen a \\(\\mu\\): son 3 de 50."
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#section-1",
+    "href": "diapositivas/modulo-2.html#section-1",
+    "title": "Muestras y poblaciones",
+    "section": "",
+    "text": "Ejercicios, Parte 1"
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#de-la-pregunta-a-las-hipótesis",
+    "href": "diapositivas/modulo-2.html#de-la-pregunta-a-las-hipótesis",
+    "title": "Muestras y poblaciones",
+    "section": "De la pregunta a las hipótesis",
+    "text": "De la pregunta a las hipótesis\n\n\nPregunta de investigación: ¿la escasez de alimento cambia el tiempo que tardan los renacuajos en reabsorber la cola?\nHipótesis nula, \\(H_0\\): no hay diferencia, \\(\\mu_{Hi} = \\mu_{Lo}\\).\nHipótesis alternativa, \\(H_1\\): sí hay diferencia, \\(\\mu_{Hi} \\neq \\mu_{Lo}\\).\nLa prueba estadística mide qué tan compatibles son los datos con \\(H_0\\)."
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#tipos-de-errores",
+    "href": "diapositivas/modulo-2.html#tipos-de-errores",
+    "title": "Muestras y poblaciones",
+    "section": "Tipos de errores",
+    "text": "Tipos de errores\n\n\n\n\n\n\n\n\n\n\\(H_0\\) es verdadera\n\\(H_0\\) es falsa\n\n\n\n\nRechazamos \\(H_0\\)\nError tipo I (\\(\\alpha\\))\nCorrecto (potencia, \\(1 - \\beta\\))\n\n\nNo rechazamos \\(H_0\\)\nCorrecto\nError tipo II (\\(\\beta\\))\n\n\n\n. . .\n\n\n\\(\\alpha\\), el nivel de significancia, lo fijamos nosotros: por lo general 0.05.\nLa potencia crece con el tamaño de la muestra y con el tamaño del efecto."
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#pruebas-de-dos-colas-y-de-una-cola",
+    "href": "diapositivas/modulo-2.html#pruebas-de-dos-colas-y-de-una-cola",
+    "title": "Muestras y poblaciones",
+    "section": "Pruebas de dos colas y de una cola",
+    "text": "Pruebas de dos colas y de una cola\n\n\n\n\n\nDos colas: \\(H_1: \\mu \\neq \\mu_0\\)\n\n\n\n\n\n\nUna cola: \\(H_1: \\mu &gt; \\mu_0\\)\n\n\n\n\nEn R: alternative = \"two.sided\" (por defecto), \"greater\" o \"less\".\n\nImágenes: UCLA Advanced Research Computing"
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#el-valor-p",
+    "href": "diapositivas/modulo-2.html#el-valor-p",
+    "title": "Muestras y poblaciones",
+    "section": "El valor p",
+    "text": "El valor p\n\n\n\n\n\n\n\n\n\n\nEs la probabilidad de obtener datos tan extremos como los nuestros, o más, si \\(H_0\\) fuera verdadera.\nSi \\(p &lt; \\alpha\\), rechazamos \\(H_0\\).\nNo es la probabilidad de que \\(H_0\\) sea verdadera.\nNo dice si el efecto es grande o importante: para eso, mira la diferencia y su intervalo."
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#supuestos",
+    "href": "diapositivas/modulo-2.html#supuestos",
+    "title": "Muestras y poblaciones",
+    "section": "Supuestos",
+    "text": "Supuestos\n\n\nObservaciones independientes.\nDatos (o diferencias) con distribución normal, o una muestra grande.\nPara dos muestras independientes: varianzas homogéneas (solo para la prueba de Student).\n\n\n. . .\n\npar(mfrow = c(1, 2))\nhist(ranas$Mass.final, main = \"\", xlab = \"Masa final (g)\")\nqqnorm(ranas$Mass.final, main = \"\"); qqline(ranas$Mass.final)"
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#normalidad-shapiro-wilk",
+    "href": "diapositivas/modulo-2.html#normalidad-shapiro-wilk",
+    "title": "Muestras y poblaciones",
+    "section": "Normalidad: Shapiro-Wilk",
+    "text": "Normalidad: Shapiro-Wilk\n\\(H_0\\): los datos vienen de una distribución normal.\n\nshapiro.test(ranas$Mass.final)\n\n\n    Shapiro-Wilk normality test\n\ndata:  ranas$Mass.final\nW = 0.84713, p-value = 1.717e-07\n\n\n. . .\n\n\n\n\n\n\nCon muestras grandes, Shapiro-Wilk detecta desviaciones mínimas y sin importancia. Mira siempre también el gráfico Q-Q."
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#prueba-t-de-una-muestra",
+    "href": "diapositivas/modulo-2.html#prueba-t-de-una-muestra",
+    "title": "Muestras y poblaciones",
+    "section": "Prueba t de una muestra",
+    "text": "Prueba t de una muestra\n¿Es la masa media al salir del agua distinta de 0.40 g?\n\nt.test(ranas$Mass.final, mu = 0.40)\n\n\n    One Sample t-test\n\ndata:  ranas$Mass.final\nt = 2.4427, df = 77, p-value = 0.01687\nalternative hypothesis: true mean is not equal to 0.4\n95 percent confidence interval:\n 0.4055686 0.4546950\nsample estimates:\nmean of x \n0.4301318"
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#prueba-t-de-muestras-independientes",
+    "href": "diapositivas/modulo-2.html#prueba-t-de-muestras-independientes",
+    "title": "Muestras y poblaciones",
+    "section": "Prueba t de muestras independientes",
+    "text": "Prueba t de muestras independientes\n¿Difiere la longitud final entre renacuajos de eclosión temprana (E) y tardía (L)?\n\nvar.test(SVL.final ~ Hatch, data = ranas)\n\n\n    F test to compare two variances\n\ndata:  SVL.final by Hatch\nF = 1.51, num df = 38, denom df = 38, p-value = 0.2085\nalternative hypothesis: true ratio of variances is not equal to 1\n95 percent confidence interval:\n 0.7918426 2.8796646\nsample estimates:\nratio of variances \n          1.510047 \n\n\n. . .\n\nt.test(SVL.final ~ Hatch, data = ranas)\n\n\n    Welch Two Sample t-test\n\ndata:  SVL.final by Hatch\nt = 0.6054, df = 72.986, p-value = 0.5468\nalternative hypothesis: true difference in means between group E and group L is not equal to 0\n95 percent confidence interval:\n -0.4529452  0.8481748\nsample estimates:\nmean in group E mean in group L \n       19.48009        19.28247"
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#student-o-welch",
+    "href": "diapositivas/modulo-2.html#student-o-welch",
+    "title": "Muestras y poblaciones",
+    "section": "Student o Welch",
+    "text": "Student o Welch\n\n\nPor defecto, t.test() hace la prueba de Welch, que no supone varianzas iguales. Por eso sus grados de libertad tienen decimales.\nLa prueba de Student clásica necesita var.equal = TRUE.\nSi las varianzas son parecidas, las dos dan casi lo mismo. Si no lo son, Welch es la segura.\n\n\n. . .\n\nt.test(SVL.final ~ Hatch, data = ranas, var.equal = TRUE)$p.value\n\n[1] 0.546719"
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#prueba-t-de-muestras-emparejadas",
+    "href": "diapositivas/modulo-2.html#prueba-t-de-muestras-emparejadas",
+    "title": "Muestras y poblaciones",
+    "section": "Prueba t de muestras emparejadas",
+    "text": "Prueba t de muestras emparejadas\nDatos sleep, incluidos en R: horas extra de sueño de los mismos 10 pacientes con dos medicamentos.\n\n\nMostrar el código\ndroga_1 &lt;- sleep$extra[sleep$group == 1]\ndroga_2 &lt;- sleep$extra[sleep$group == 2]\nshapiro.test(droga_2 - droga_1)\n\n\n\n    Shapiro-Wilk normality test\n\ndata:  droga_2 - droga_1\nW = 0.82987, p-value = 0.03334\n\n\n. . .\n\nt.test(droga_2, droga_1, paired = TRUE)\n\n\n    Paired t-test\n\ndata:  droga_2 and droga_1\nt = 4.0621, df = 9, p-value = 0.002833\nalternative hypothesis: true mean difference is not equal to 0\n95 percent confidence interval:\n 0.7001142 2.4598858\nsample estimates:\nmean difference \n           1.58"
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#section-2",
+    "href": "diapositivas/modulo-2.html#section-2",
+    "title": "Muestras y poblaciones",
+    "section": "",
+    "text": "Ejercicios, Parte 2"
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#y-si-los-datos-no-son-normales",
+    "href": "diapositivas/modulo-2.html#y-si-los-datos-no-son-normales",
+    "title": "Muestras y poblaciones",
+    "section": "¿Y si los datos no son normales?",
+    "text": "¿Y si los datos no son normales?\n\n\nLas pruebas de Wilcoxon comparan rangos (posiciones) en lugar de medias.\nNo suponen normalidad, pero sí observaciones independientes.\nUna muestra: ¿la mediana es distinta de un valor de referencia?\nDos muestras (también llamada de Mann-Whitney): ¿un grupo tiende a tener valores más altos que el otro?\n\n\n. . .\n\nshapiro.test(ranas$Age.FromEmergence)\n\n\n    Shapiro-Wilk normality test\n\ndata:  ranas$Age.FromEmergence\nW = 0.82366, p-value = 3.143e-08"
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#wilcoxon-para-una-y-dos-muestras",
+    "href": "diapositivas/modulo-2.html#wilcoxon-para-una-y-dos-muestras",
+    "title": "Muestras y poblaciones",
+    "section": "Wilcoxon para una y dos muestras",
+    "text": "Wilcoxon para una y dos muestras\n¿La mediana de la edad al salir del agua es distinta de 20 días?\n\nwilcox.test(ranas$Age.FromEmergence, mu = 20)\n\n\n    Wilcoxon signed rank test with continuity correction\n\ndata:  ranas$Age.FromEmergence\nV = 2106, p-value = 0.004891\nalternative hypothesis: true location is not equal to 20\n\n\n. . .\n¿Difiere entre eclosión temprana y tardía?\n\nwilcox.test(Age.FromEmergence ~ Hatch, data = ranas)\n\n\n    Wilcoxon rank sum exact test\n\ndata:  Age.FromEmergence by Hatch\nW = 633, p-value = 0.2047\nalternative hypothesis: true location shift is not equal to 0"
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#otra-opción-transformar",
+    "href": "diapositivas/modulo-2.html#otra-opción-transformar",
+    "title": "Muestras y poblaciones",
+    "section": "Otra opción: transformar",
+    "text": "Otra opción: transformar\nSi los datos tienen una cola larga a la derecha, una transformación puede acercarlos a la normalidad y permitir la prueba t.\n\n\n\n\n\n\n\n\nTransformación\nEn R\nCuándo\n\n\n\n\nLogaritmo\nlog(y)\ntiempos, masas, concentraciones (valores positivos)\n\n\nLogaritmo con ceros\nlog(y + 1)\ncomo la anterior, si hay ceros\n\n\nRaíz cuadrada\nsqrt(y)\nconteos\n\n\n\n. . .\n\n\nMostrar el código\npar(mfrow = c(1, 2))\nhist(ranas$Age.FromEmergence, main = \"En días\", xlab = \"Edad al salir del agua\")\nhist(log(ranas$Age.FromEmergence), main = \"En logaritmo\", xlab = \"log(edad)\")"
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#prueba-t-sobre-el-logaritmo",
+    "href": "diapositivas/modulo-2.html#prueba-t-sobre-el-logaritmo",
+    "title": "Muestras y poblaciones",
+    "section": "Prueba t sobre el logaritmo",
+    "text": "Prueba t sobre el logaritmo\n\nshapiro.test(log(ranas$Age.FromEmergence[ranas$Hatch == \"E\"]))$p.value\n\n[1] 0.2168169\n\nshapiro.test(log(ranas$Age.FromEmergence[ranas$Hatch == \"L\"]))$p.value\n\n[1] 0.3431191\n\nprueba_log &lt;- t.test(log(Age.FromEmergence) ~ Hatch, data = ranas)\nprueba_log$p.value\n\n[1] 0.283308\n\n\n. . .\nPara interpretar, volvemos a la escala original con exp():\n\nexp(prueba_log$estimate)   # medias geométricas, en días\n\nmean in group E mean in group L \n       21.76614        25.90847 \n\nexp(prueba_log$conf.int)   # cociente E / L, con su IC 95%\n\n[1] 0.6093341 1.1583076\nattr(,\"conf.level\")\n[1] 0.95\n\n\n\n\n\n\n\n\nEn escala logarítmica, una diferencia de medias se convierte en un cociente: cuántas veces más (o menos) tarda un grupo que el otro."
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#qué-prueba-uso",
+    "href": "diapositivas/modulo-2.html#qué-prueba-uso",
+    "title": "Muestras y poblaciones",
+    "section": "¿Qué prueba uso?",
+    "text": "¿Qué prueba uso?\n\n\n\nPregunta\nDatos normales\nDatos no normales\n\n\n\n\n¿Media (o mediana) igual a un valor?\nt.test(x, mu = )\ntransformar, o wilcox.test(x, mu = )\n\n\n¿Difieren dos grupos independientes?\nt.test(y ~ grupo)\ntransformar, o wilcox.test(y ~ grupo)\n\n\n¿Cambian los mismos individuos?\nt.test(x2, x1, paired = TRUE)\nwilcox.test(x2, x1, paired = TRUE)\n\n\n¿Difieren tres o más grupos?\nANOVA (Módulo 3)\nKruskal-Wallis (Módulo 3)"
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#section-3",
+    "href": "diapositivas/modulo-2.html#section-3",
+    "title": "Muestras y poblaciones",
+    "section": "",
+    "text": "Ejercicios, Parte 3"
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#antes-del-próximo-domingo",
+    "href": "diapositivas/modulo-2.html#antes-del-próximo-domingo",
+    "title": "Muestras y poblaciones",
+    "section": "Antes del próximo domingo",
+    "text": "Antes del próximo domingo\n\n\nCompleta todos los ejercicios del Módulo 2: lo que no alcanzamos en clase, incluida la Parte 4, es tarea.\nCon tus propios datos, escribe una pregunta que se responda con una prueba t: plantea \\(H_0\\) y \\(H_1\\) y revisa los supuestos antes de correrla.\nHaz la autoevaluación del Módulo 2."
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#section-4",
+    "href": "diapositivas/modulo-2.html#section-4",
+    "title": "Muestras y poblaciones",
+    "section": "",
+    "text": "Fin del módulo 2\n\n\n\n\n\n\n\nCréditos de fotos\n\n\n\nFoto final por PARK HONG KYU en Unsplash\nResto de fotos: varias fuentes"
+  },
+  {
+    "objectID": "acerca.html",
+    "href": "acerca.html",
+    "title": "Acerca de",
+    "section": "",
+    "text": "Mauricio Moreno, PhD\nIngeniero en Biotecnología (Universidad de las Fuerzas Armadas ESPE), con un máster en Estadística con mención en Biometría (KU Leuven, Bélgica) y un doctorado en Bioinformática (Jacobs University Bremen, Alemania). Tiene más de quince años de experiencia en programación estadística en R.\nHa trabajado como consultor independiente, profesor, analista de estadísticas ambientales e investigador postdoctoral. Actualmente es Científico Bioestadístico en la función de Soluciones de Campo en Bayer Crop Science, Alemania, donde lidera proyectos de investigación y desarrollo, incluida la migración de procesos estadísticos a la nube y la determinación de tamaños de muestra mediante simulaciones Montecarlo basadas en cadenas de Markov.\nEn su tiempo libre imparte cursos gratuitos de estadística en línea. El más reciente, Bioestadística en R (2025), fue un taller de 40 horas para estudiantes e investigadores de biología y agricultura."
+  },
+  {
+    "objectID": "acerca.html#sobre-el-instructor",
+    "href": "acerca.html#sobre-el-instructor",
+    "title": "Acerca de",
+    "section": "",
+    "text": "Mauricio Moreno, PhD\nIngeniero en Biotecnología (Universidad de las Fuerzas Armadas ESPE), con un máster en Estadística con mención en Biometría (KU Leuven, Bélgica) y un doctorado en Bioinformática (Jacobs University Bremen, Alemania). Tiene más de quince años de experiencia en programación estadística en R.\nHa trabajado como consultor independiente, profesor, analista de estadísticas ambientales e investigador postdoctoral. Actualmente es Científico Bioestadístico en la función de Soluciones de Campo en Bayer Crop Science, Alemania, donde lidera proyectos de investigación y desarrollo, incluida la migración de procesos estadísticos a la nube y la determinación de tamaños de muestra mediante simulaciones Montecarlo basadas en cadenas de Markov.\nEn su tiempo libre imparte cursos gratuitos de estadística en línea. El más reciente, Bioestadística en R (2025), fue un taller de 40 horas para estudiantes e investigadores de biología y agricultura."
+  },
+  {
+    "objectID": "acerca.html#contacto",
+    "href": "acerca.html#contacto",
+    "title": "Acerca de",
+    "section": "Contacto",
+    "text": "Contacto\nPreguntas fuera de la hora de clase: mmorenozambrano@gmail.com"
+  },
+  {
+    "objectID": "acerca.html#sobre-este-sitio",
+    "href": "acerca.html#sobre-este-sitio",
+    "title": "Acerca de",
+    "section": "Sobre este sitio",
+    "text": "Sobre este sitio\nSitio construido con Quarto. Los ejercicios interactivos usan webR mediante la extensión quarto-live, que corre R directamente en el navegador."
+  },
+  {
+    "objectID": "autoevaluacion-4.html",
+    "href": "autoevaluacion-4.html",
+    "title": "Autoevaluación Módulo 4",
+    "section": "",
+    "text": "Ocho preguntas cortas sobre el Módulo 4, dos por cada objetivo de la sesión. Tienes dos intentos por pregunta; después verás la respuesta y una explicación. Es anónima: no se guarda ni se envía nada."
+  },
+  {
+    "objectID": "autoevaluacion-4.html#objetivo-1-anova-aditivo-de-dos-vías",
+    "href": "autoevaluacion-4.html#objetivo-1-anova-aditivo-de-dos-vías",
+    "title": "Autoevaluación Módulo 4",
+    "section": "Objetivo 1: ANOVA aditivo de dos vías",
+    "text": "Objetivo 1: ANOVA aditivo de dos vías\n\n1. ¿Qué supone el modelo aov(y ~ Pred + Res)?\nQue solo importa el depredador\nQue el efecto de los recursos es el mismo con cualquier depredador\nQue los dos factores interactúan\nQue las observaciones están emparejadasComprobar respuesta\n\n\nEn un modelo aditivo, cada factor tiene su propio efecto y los efectos se suman: pasar de recursos altos a bajos cambia la respuesta en la misma cantidad, sea cual sea el depredador. Si eso no se cumple, necesitamos la interacción Pred:Res.\n\n\n\n\n2. En el ANOVA aditivo de Resorb.days, Res tiene \\(p = 0.0003\\) y Pred tiene \\(p = 0.28\\). La conclusión es…\nninguno de los factores importa\nlos recursos afectan el tiempo de reabsorción y no hay evidencia de un\nefecto del depredador\nel depredador afecta el tiempo de reabsorción\nhay una interacciónComprobar respuesta\n\n\nCada fila de la tabla prueba un factor, teniendo en cuenta el otro. Recursos: efecto claro. Depredador: no hay evidencia de efecto (lo que no prueba que el efecto sea exactamente cero)."
+  },
+  {
+    "objectID": "autoevaluacion-4.html#objetivo-2-interacciones",
+    "href": "autoevaluacion-4.html#objetivo-2-interacciones",
+    "title": "Autoevaluación Módulo 4",
+    "section": "Objetivo 2: Interacciones",
+    "text": "Objetivo 2: Interacciones\n\n3. En un gráfico de interacción, las líneas de recursos altos y bajos se cruzan o se separan mucho de un depredador a otro. Esto sugiere…\nque no hay efecto de los recursos\nuna interacción: el efecto de los recursos depende del depredador\nque los residuos no son normales\nque el diseño está desbalanceadoComprobar respuesta\n\n\nLíneas paralelas significan efectos aditivos. Si no son paralelas, el efecto de un factor cambia según el nivel del otro: eso es una interacción, que se prueba con el término Pred:Res del modelo Pred * Res.\n\n\n\n\n4. ¿Qué es y ~ Pred * Res en R?\nUn modelo con el producto de las dos variables como única variable\nUna abreviatura de y ~ Pred + Res + Pred:Res\nLo mismo que y ~ Pred + Res\nUn error, porque no se pueden multiplicar factoresComprobar respuesta\n\n\n* incluye los dos efectos principales y su interacción. Pred:Res sola es solo la interacción, y casi nunca se usa sin los efectos principales."
+  },
+  {
+    "objectID": "autoevaluacion-4.html#objetivo-3-diagnósticos-y-transformaciones",
+    "href": "autoevaluacion-4.html#objetivo-3-diagnósticos-y-transformaciones",
+    "title": "Autoevaluación Módulo 4",
+    "section": "Objetivo 3: Diagnósticos y transformaciones",
+    "text": "Objetivo 3: Diagnósticos y transformaciones\n\n5. En el gráfico de residuos frente a ajustados, la dispersión de los residuos crece con los valores ajustados, en forma de embudo. ¿Qué conviene probar?\nQuitar los puntos más alejados\nTransformar la respuesta, por ejemplo con log()\nAgregar más factores al modelo\nNada, el ANOVA no tiene supuestosComprobar respuesta\n\n\nCuando la variación crece con la media (típico de tiempos, conteos y masas), el logaritmo suele estabilizar la varianza y acercar los residuos a la normalidad. Quitar datos para que el modelo “funcione” no es una buena práctica.\n\n\n\n\n6. Con Age.FromEmergence la interacción era significativa (\\(p = 0.016\\)), pero con log(Age.FromEmergence) ya no lo es (\\(p = 0.24\\)). ¿Cuál es la mejor interpretación?\nEl logaritmo eliminó información importante\nLa interacción era sobre todo un efecto de la escala: en escala\nlogarítmica, los efectos son aproximadamente multiplicativos y no\ninteractúan\nHay que reportar siempre el modelo con el valor p más pequeño\nLos datos tienen un errorComprobar respuesta\n\n\nSi los recursos bajos multiplican la edad por un factor similar con cualquier depredador, en días el retraso parece mayor donde la edad ya era mayor. El modelo con log() cumple mejor los supuestos y describe los datos de forma más simple. Lo que no se vale es elegir el modelo según qué valor p conviene."
+  },
+  {
+    "objectID": "autoevaluacion-4.html#objetivo-4-exportar-resultados",
+    "href": "autoevaluacion-4.html#objetivo-4-exportar-resultados",
+    "title": "Autoevaluación Módulo 4",
+    "section": "Objetivo 4: Exportar resultados",
+    "text": "Objetivo 4: Exportar resultados\n\n7. ¿Qué hace write.csv(tabla, \"resultados/tabla.csv\")?\nLee el archivo tabla.csv\nGuarda tabla como archivo csv en la carpeta\nresultados del proyecto\nGuarda la tabla en Excel\nImprime la tabla en la consolaComprobar respuesta\n\n\nwrite.csv() escribe una tabla de datos en un archivo de texto separado por comas, que se abre en Excel, LibreOffice o cualquier editor. La ruta es relativa a la carpeta de trabajo, por eso conviene trabajar en un proyecto de R.\n\n\n\n\n8. Quieres guardar dos tablas en un mismo archivo de Excel, cada una en su hoja. ¿Qué usas?\nDos llamadas a write.csv()\nwritexl::write_xlsx(list(anova = t1, medias = t2), \"resultados.xlsx\")\nflextable::save_as_docx(t1, t2)\nread.csv(\"resultados.xlsx\")Comprobar respuesta\n\n\nwrite_xlsx() recibe una lista con nombres: cada elemento es una hoja. Un archivo csv solo puede tener una tabla, y save_as_docx() crea documentos de Word.\n\n\n\n¿Fallaste alguna? Vuelve a la parte correspondiente de las diapositivas o de los ejercicios. Cuando estés listo, haz el examen virtual, disponible a partir del 7 de diciembre."
+  },
+  {
+    "objectID": "autoevaluacion-2.html",
+    "href": "autoevaluacion-2.html",
+    "title": "Autoevaluación Módulo 2",
+    "section": "",
+    "text": "Nueve preguntas cortas sobre el Módulo 2: dos por cada objetivo de la sesión y una sobre transformaciones. Tienes dos intentos por pregunta; después verás la respuesta y una explicación. Es anónima: no se guarda ni se envía nada."
+  },
+  {
+    "objectID": "autoevaluacion-2.html#objetivo-1-muestras-poblaciones-parámetros-y-estadísticos",
+    "href": "autoevaluacion-2.html#objetivo-1-muestras-poblaciones-parámetros-y-estadísticos",
+    "title": "Autoevaluación Módulo 2",
+    "section": "Objetivo 1: Muestras, poblaciones, parámetros y estadísticos",
+    "text": "Objetivo 1: Muestras, poblaciones, parámetros y estadísticos\n\n1. Medimos la longitud de 78 renacuajos y calculamos su media, 19.38 mm. Esa media es…\nun parámetro, porque describe a la población de renacuajos\nun estadístico, porque se calcula a partir de una muestra y sirve para\nestimar el parámetro\nla media poblacional exacta\nun valor pComprobar respuesta\n\n\nLos parámetros (\\(\\mu\\), \\(\\sigma\\)) describen a la población y casi nunca los conocemos. Los estadísticos (\\(\\bar{x}\\), \\(s\\)) se calculan con la muestra y los usamos para estimar los parámetros.\n\n\n\n\n2. ¿Por qué la varianza de una muestra se divide para \\(n - 1\\) y no para \\(n\\)?\nPara que el cálculo sea más rápido\nPorque al usar la media de la muestra, dividir para n subestimaría en promedio la\nvarianza de la población\nPorque siempre falta un dato\nEs solo una convención sin efectoComprobar respuesta\n\n\nLos datos están, en promedio, más cerca de su propia media \\(\\bar{x}\\) que de la media verdadera \\(\\mu\\). Dividir para \\(n - 1\\) corrige ese sesgo. Es lo que hacen var() y sd() en R."
+  },
+  {
+    "objectID": "autoevaluacion-2.html#objetivo-2-intervalos-de-confianza",
+    "href": "autoevaluacion-2.html#objetivo-2-intervalos-de-confianza",
+    "title": "Autoevaluación Módulo 2",
+    "section": "Objetivo 2: Intervalos de confianza",
+    "text": "Objetivo 2: Intervalos de confianza\n\n3. El intervalo de confianza del 95% para la glucosa media es de 73.05 a 105.91 mg/dL. ¿Cuál es la interpretación correcta?\nEl 95% de los ratones tiene una glucosa entre 73.05 y 105.91 mg/dL\nHay un 95% de probabilidad de que la media de la muestra esté en ese\nintervalo\nSi repitiéramos el estudio muchas veces, el 95% de los intervalos\ncalculados así contendría la media verdadera\nLa media verdadera es 89.48 con un 95% de seguridadComprobar respuesta\n\n\nEl 95% se refiere al método: de cada 100 intervalos calculados con muestras distintas, unos 95 contendrían \\(\\mu\\). No describe a los ratones individuales (eso sería un intervalo de predicción), y la media de la muestra siempre está en el centro del intervalo.\n\n\n\n\n4. Si medimos 40 ratones en lugar de 10, con la misma variación, el intervalo de confianza…\nse hace más ancho\nse hace más angosto, aproximadamente la mitad\nno cambia\nse desplaza hacia la derechaComprobar respuesta\n\n\nEl ancho depende del error estándar \\(s/\\sqrt{n}\\). Con 4 veces más datos, \\(\\sqrt{n}\\) se duplica y el intervalo se reduce más o menos a la mitad (un poco más, porque además el valor de \\(t\\) crítico baja)."
+  },
+  {
+    "objectID": "autoevaluacion-2.html#objetivo-3-hipótesis-y-valor-p",
+    "href": "autoevaluacion-2.html#objetivo-3-hipótesis-y-valor-p",
+    "title": "Autoevaluación Módulo 2",
+    "section": "Objetivo 3: Hipótesis y valor p",
+    "text": "Objetivo 3: Hipótesis y valor p\n\n5. Una prueba da \\(p = 0.0003\\). ¿Qué significa?\nLa probabilidad de que H0 sea verdadera es 0.03%\nSi H0 fuera\nverdadera, obtener una diferencia como esta o mayor sería muy poco\nprobable\nEl efecto es grande e importante\nLa probabilidad de haber cometido un error tipo II es 0.03%Comprobar respuesta\n\n\nEl valor p se calcula suponiendo que \\(H_0\\) es cierta: es la probabilidad de observar datos tan extremos como los nuestros, o más. No es la probabilidad de \\(H_0\\), y no dice nada sobre el tamaño del efecto: para eso mira la diferencia y su intervalo de confianza.\n\n\n\n\n6. Rechazamos \\(H_0\\) cuando en realidad era verdadera. Eso es…\nun error tipo I\nun error tipo II\nla potencia de la prueba\nun intervalo de confianzaComprobar respuesta\n\n\nEl error tipo I es un falso positivo; su probabilidad es el nivel de significancia \\(\\alpha\\) (por lo general 0.05). El error tipo II es no rechazar \\(H_0\\) cuando es falsa. La potencia es \\(1 - \\beta\\), la probabilidad de detectar un efecto que sí existe."
+  },
+  {
+    "objectID": "autoevaluacion-2.html#objetivo-4-elegir-y-ejecutar-la-prueba",
+    "href": "autoevaluacion-2.html#objetivo-4-elegir-y-ejecutar-la-prueba",
+    "title": "Autoevaluación Módulo 2",
+    "section": "Objetivo 4: Elegir y ejecutar la prueba",
+    "text": "Objetivo 4: Elegir y ejecutar la prueba\n\n7. Medimos la presión de 15 pacientes antes y después de una dieta. Las diferencias son normales. ¿Qué prueba usamos?\nPrueba t de muestras independientes\nPrueba t de muestras emparejadas\nPrueba de Wilcoxon para dos muestras\nPrueba t de una muestra con μ = 0 sobre los valores de antesComprobar respuesta\n\n\nSon los mismos pacientes medidos dos veces: las mediciones están emparejadas. t.test(despues, antes, paired = TRUE) equivale a una prueba t de una muestra sobre las diferencias, con \\(\\mu = 0\\).\n\n\n\n\n8. En R, t.test(y ~ grupo, data = d) sin más argumentos hace…\nla prueba t de Student, que supone varianzas iguales\nla prueba t de Welch, que no supone varianzas iguales\nuna prueba de Wilcoxon\nuna prueba emparejadaComprobar respuesta\n\n\nEl valor por defecto es var.equal = FALSE, es decir, la prueba de Welch. Por eso sus grados de libertad suelen tener decimales (64.3 en el ejercicio 2.3). Para la prueba de Student hay que pedir var.equal = TRUE.\n\n\n\n\n9. Comparas log(edad) entre dos grupos con t.test() y la diferencia de medias es \\(-0.66\\). ¿Cómo se interpreta en días?\nEl primer grupo tarda 0.66 días menos\nEl primer grupo tarda exp(-0.66) ≈ 0.52 veces lo que tarda el segundo, es\ndecir, cerca de la mitad\nNo se puede interpretar, porque los datos se transformaron\nEl primer grupo tarda 66% másComprobar respuesta\n\n\nEn escala logarítmica, una diferencia de medias es el logaritmo de un cociente de medias geométricas. exp(-0.66) \\(\\approx\\) 0.52: el primer grupo tarda alrededor de la mitad. Lo mismo vale para los límites del intervalo de confianza: aplícales exp().\n\n\n\n¿Fallaste alguna? Vuelve a la parte correspondiente de las diapositivas o de los ejercicios."
+  },
+  {
+    "objectID": "ejercicios-4.html",
+    "href": "ejercicios-4.html",
+    "title": "Ejercicios Módulo 4",
+    "section": "",
+    "text": "Estos ejercicios siguen el Módulo 4. Los de las partes 1 y 2 corren en tu navegador; los de exportar a Excel y Word se hacen en RStudio, porque crean archivos en tu computador. Donde veas ____, complétalo. ¿Te atascaste? Abre la pestaña Pista. Las soluciones se publican después de la sesión.\n#| setup: true\n#| exercise:\n#|   - ex_1_1\n#|   - ex_1_2\n#|   - ex_2_1\n#|   - ex_2_2\n#|   - ex_2_3\n#|   - ex_3_1\n#|   - ex_4_1\n#|   - ex_4_2\n#|   - ex_4_3\n#|   - ex_4_4\nranas &lt;- read.csv(\"datos/ranas.csv\")\nranas$Pred  &lt;- factor(ranas$Pred)\nranas$Res   &lt;- factor(ranas$Res)\nranas$Hatch &lt;- factor(ranas$Hatch)"
+  },
+  {
+    "objectID": "ejercicios-4.html#parte-1",
+    "href": "ejercicios-4.html#parte-1",
+    "title": "Ejercicios Módulo 4",
+    "section": "Parte 1: ANOVA aditivo de dos vías",
+    "text": "Parte 1: ANOVA aditivo de dos vías\n\nEjercicio 1.1: Dos factores a la vez\n¿Dependen los días para reabsorber la cola (Resorb.days) del depredador, de los recursos, o de ambos? Ajusta un ANOVA aditivo de dos vías y revisa la normalidad de los residuos.\n\nEjercicioPistaSolución\n\n\n\n#| exercise: ex_1_1\nboxplot(Resorb.days ~ Pred + Res, data = ranas)\n\naditivo &lt;- aov(Resorb.days ~ Pred ____ Res, data = ranas)\nsummary(aditivo)\n\nshapiro.test(residuals(____))\n\n\n\n\nEn un modelo aditivo, los factores se unen con +: cada uno tiene su propio efecto y los efectos se suman.\n\n\n\n\nSolución. \nboxplot(Resorb.days ~ Pred + Res, data = ranas)\n\naditivo &lt;- aov(Resorb.days ~ Pred + Res, data = ranas)\nsummary(aditivo)\n\nshapiro.test(residuals(aditivo))\n\n\n\n\ngl\nSC\nCM\n\\(F\\)\n\\(p\\)\n\n\n\n\nPred\n2\n0.78\n0.39\n1.31\n0.28\n\n\nRes\n1\n4.35\n4.35\n14.53\n0.0003\n\n\nResiduales\n74\n22.14\n0.30\n\n\n\n\n\nLos recursos sí afectan el tiempo de reabsorción, el depredador no. Los residuos son normales (Shapiro-Wilk: \\(p = 0.27\\)). Con recursos bajos, la cola tarda en promedio medio día más en reabsorberse.\n\n\nLa solución se publicará después de la sesión del domingo 6 de diciembre. Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 1.2: ¿Es razonable el modelo aditivo?\nEl modelo aditivo supone que el efecto de los recursos es el mismo con cualquier depredador. Compruébalo con un gráfico de interacción y con un modelo que incluya la interacción.\n\nEjercicioPistaSolución\n\n\n\n#| exercise: ex_1_2\ninteraction.plot(x.factor = ranas$Pred, trace.factor = ranas$____,\n                 response = ranas$Resorb.days,\n                 xlab = \"Depredador\", ylab = \"Días para reabsorber la cola\",\n                 trace.label = \"Recursos\")\n\ncon_interaccion &lt;- aov(Resorb.days ~ Pred ____ Res, data = ranas)\nsummary(con_interaccion)\n\n\n\n\nPred * Res es una abreviatura de Pred + Res + Pred:Res, donde Pred:Res es la interacción. En el gráfico, líneas más o menos paralelas indican que no hay interacción.\n\n\n\n\nSolución. \ninteraction.plot(x.factor = ranas$Pred, trace.factor = ranas$Res,\n                 response = ranas$Resorb.days,\n                 xlab = \"Depredador\", ylab = \"Días para reabsorber la cola\",\n                 trace.label = \"Recursos\")\n\ncon_interaccion &lt;- aov(Resorb.days ~ Pred * Res, data = ranas)\nsummary(con_interaccion)\nLas líneas no son perfectamente paralelas, pero la interacción no es significativa (\\(F = 0.86\\), \\(gl = 2\\) y 72, \\(p = 0.43\\)): las diferencias que vemos son compatibles con el azar. El modelo aditivo del ejercicio 1.1 es razonable.\n\n\nLa solución se publicará después de la sesión del domingo 6 de diciembre. Mientras tanto, usa la pestaña Pista."
+  },
+  {
+    "objectID": "ejercicios-4.html#parte-2",
+    "href": "ejercicios-4.html#parte-2",
+    "title": "Ejercicios Módulo 4",
+    "section": "Parte 2: ANOVA no aditivo de dos vías",
+    "text": "Parte 2: ANOVA no aditivo de dos vías\n\nEjercicio 2.1: Una interacción\nRepite el análisis con la edad al salir del agua (Age.FromEmergence). Dibuja el gráfico de interacción y ajusta el modelo con interacción. ¿Qué observas?\n\nEjercicioPistaSolución\n\n\n\n#| exercise: ex_2_1\ninteraction.plot(x.factor = ranas$Pred, trace.factor = ranas$Res,\n                 response = ranas$____,\n                 xlab = \"Depredador\", ylab = \"Edad al salir del agua (días)\",\n                 trace.label = \"Recursos\")\n\nno_aditivo &lt;- aov(Age.FromEmergence ~ ____, data = ranas)\nsummary(no_aditivo)\n\n\n\n\nUsa la misma estructura del ejercicio 1.2, cambiando la variable de respuesta.\n\n\n\n\nSolución. \ninteraction.plot(x.factor = ranas$Pred, trace.factor = ranas$Res,\n                 response = ranas$Age.FromEmergence,\n                 xlab = \"Depredador\", ylab = \"Edad al salir del agua (días)\",\n                 trace.label = \"Recursos\")\n\nno_aditivo &lt;- aov(Age.FromEmergence ~ Pred * Res, data = ranas)\nsummary(no_aditivo)\n\n\n\n\ngl\nSC\nCM\n\\(F\\)\n\\(p\\)\n\n\n\n\nPred\n2\n9466.9\n4733.4\n15.90\n&lt; 0.001\n\n\nRes\n1\n9963.5\n9963.5\n33.48\n&lt; 0.001\n\n\nPred:Res\n2\n2605.9\n1303.0\n4.38\n0.016\n\n\nResiduales\n72\n21429.3\n297.6\n\n\n\n\n\nLas líneas no son paralelas y la interacción es significativa: con recursos bajos, los renacuajos salen del agua más tarde, pero el retraso es mucho mayor en el control (de 25 a 59 días) que con el depredador letal (de 13 a 22 días). Cuando hay interacción, no se puede hablar del efecto de los recursos sin decir con qué depredador. Pero antes de concluir… ¡los supuestos!\n\n\nLa solución se publicará después de la sesión del domingo 6 de diciembre. Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 2.2: Diagnósticos del modelo no aditivo\nRevisa la normalidad de los residuos del modelo no_aditivo y la homogeneidad de varianzas entre las seis combinaciones de depredador y recursos.\n\nEjercicioPistaSolución\n\n\n\n#| exercise: ex_2_2\nno_aditivo &lt;- aov(Age.FromEmergence ~ Pred * Res, data = ranas)\n\npar(mfrow = c(2, 2))\nplot(no_aditivo)\npar(mfrow = c(1, 1))\n\nshapiro.test(residuals(____))\nbartlett.test(Age.FromEmergence ~ interaction(Pred, ____), data = ranas)\n\n\n\n\ninteraction(Pred, Res) crea un factor con las seis combinaciones (C.Hi, L.Hi, …), así bartlett.test() compara las varianzas de todas ellas.\n\n\n\n\nSolución. \nno_aditivo &lt;- aov(Age.FromEmergence ~ Pred * Res, data = ranas)\n\npar(mfrow = c(2, 2))\nplot(no_aditivo)\npar(mfrow = c(1, 1))\n\nshapiro.test(residuals(no_aditivo))\nbartlett.test(Age.FromEmergence ~ interaction(Pred, Res), data = ranas)\nLos dos supuestos fallan: los residuos no son normales (Shapiro-Wilk: \\(p = 0.010\\)) y las varianzas son muy distintas (Bartlett: \\(p &lt; 0.001\\)). En el gráfico de residuos frente a ajustados, la dispersión crece con la media, en forma de embudo. Es una señal típica de que conviene transformar la respuesta con el logaritmo.\n\n\nLa solución se publicará después de la sesión del domingo 6 de diciembre. Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 2.3: La interacción que desaparece\nAjusta el mismo modelo con el logaritmo de la edad. ¿Mejoran los supuestos? ¿Sigue siendo significativa la interacción?\n\nEjercicioPistaSolución\n\n\n\n#| exercise: ex_2_3\nlog_no_aditivo &lt;- aov(____(Age.FromEmergence) ~ Pred * Res, data = ranas)\nsummary(log_no_aditivo)\n\nshapiro.test(residuals(log_no_aditivo))\nbartlett.test(log(Age.FromEmergence) ~ interaction(Pred, Res), data = ranas)\n\n\n\n\nPuedes transformar la respuesta dentro de la fórmula: log(y) ~ A * B. En R, log() es el logaritmo natural.\n\n\n\n\nSolución. \nlog_no_aditivo &lt;- aov(log(Age.FromEmergence) ~ Pred * Res, data = ranas)\nsummary(log_no_aditivo)\n\nshapiro.test(residuals(log_no_aditivo))\nbartlett.test(log(Age.FromEmergence) ~ interaction(Pred, Res), data = ranas)\nLos supuestos mejoran mucho: los residuos ya son compatibles con la normalidad (Shapiro-Wilk: \\(p = 0.10\\)) y la diferencia entre varianzas es bastante menor (Bartlett: \\(p = 0.022\\), frente a \\(p &lt; 0.001\\) antes). Y la interacción ya no es significativa (\\(F = 1.47\\), \\(p = 0.24\\)); depredador y recursos siguen siendo muy significativos (\\(p &lt; 0.001\\)).\n¿Qué pasó? En la escala logarítmica, los efectos se multiplican en lugar de sumarse. Con recursos bajos, la edad al salir del agua se multiplica por un factor que no difiere claramente entre depredadores; en días, un mismo factor se ve como un retraso mayor donde la edad ya era mayor. La “interacción” del ejercicio 2.1 era sobre todo un efecto de la escala. Moraleja: revisa los diagnósticos antes de interpretar una interacción.\n\n\nLa solución se publicará después de la sesión del domingo 6 de diciembre. Mientras tanto, usa la pestaña Pista."
+  },
+  {
+    "objectID": "ejercicios-4.html#parte-3",
+    "href": "ejercicios-4.html#parte-3",
+    "title": "Ejercicios Módulo 4",
+    "section": "Parte 3: Comparaciones múltiples y exportación",
+    "text": "Parte 3: Comparaciones múltiples y exportación\n\nEjercicio 3.1: Tukey con dos factores, y exportar a csv\nAjusta el modelo aditivo con el logaritmo de la edad y compara los depredadores con Tukey. Luego guarda la tabla del ANOVA en un archivo csv y vuelve a leerlo para comprobar que se guardó bien.\n\nEjercicioPistaSolución\n\n\n\n#| exercise: ex_3_1\nlog_aditivo &lt;- aov(log(Age.FromEmergence) ~ Pred + Res, data = ranas)\nTukeyHSD(log_aditivo, which = \"____\")\n\ntabla_anova &lt;- as.data.frame(summary(log_aditivo)[[1]])\ntabla_anova\n\nwrite.csv(____, \"tabla_anova.csv\")\nread.csv(\"____\")\n\n\n\n\nCon varios factores, which = \"Pred\" le dice a TukeyHSD() qué factor comparar. summary(modelo)[[1]] extrae la tabla del ANOVA; as.data.frame() la convierte en una tabla de datos que se puede exportar.\n\n\n\n\nSolución. \nlog_aditivo &lt;- aov(log(Age.FromEmergence) ~ Pred + Res, data = ranas)\nTukeyHSD(log_aditivo, which = \"Pred\")\n\ntabla_anova &lt;- as.data.frame(summary(log_aditivo)[[1]])\ntabla_anova\n\nwrite.csv(tabla_anova, \"tabla_anova.csv\")\nread.csv(\"tabla_anova.csv\")\nEn escala logarítmica, la diferencia L - C es -0.77 (\\(p &lt; 0.001\\)), NL - C es -0.27 (\\(p = 0.26\\)) y NL - L es 0.50 (\\(p = 0.011\\)). Para interpretarlas, vuelve a la escala original con exp(): con el depredador letal, la edad al salir del agua es exp(-0.77) \\(\\approx\\) 0.46 veces la del control, es decir, un 54% menor.\nwrite.csv() guarda el archivo en la carpeta de trabajo (en tu computador, la de tu proyecto de R). Al leerlo, los nombres de las filas aparecen en una columna X; para recuperarlos como nombres de filas, usa read.csv(\"tabla_anova.csv\", row.names = 1).\n\n\nLa solución se publicará después de la sesión del domingo 6 de diciembre. Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 3.2: Exportar a Excel\nGuarda en un solo archivo de Excel dos hojas: la tabla del ANOVA del ejercicio 3.1 y las medias de la edad para cada combinación de depredador y recursos.\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\nEste ejercicio se hace en RStudio, en tu proyecto del curso: copia el código, complétalo y córrelo.\n\n\n\n# install.packages(\"writexl\")   # solo la primera vez\nlibrary(writexl)\n\nranas &lt;- read.csv(\"datos/ranas.csv\")\nlog_aditivo &lt;- aov(log(Age.FromEmergence) ~ Pred + Res, data = ranas)\n\ntabla_anova &lt;- as.data.frame(summary(log_aditivo)[[1]])\ntabla_anova &lt;- cbind(Fuente = rownames(tabla_anova), tabla_anova)\n\nmedias &lt;- aggregate(Age.FromEmergence ~ Pred + Res, data = ranas, FUN = ____)\n\nwrite_xlsx(list(anova = ____, medias = medias),\n           path = \"resultados/resultados_edad.xlsx\")\n\n\nwrite_xlsx() acepta una lista con nombres: cada elemento se guarda en una hoja con ese nombre. Crea antes la carpeta resultados/ en tu proyecto. Los nombres de las filas no se exportan, por eso los pasamos a una columna Fuente con cbind().\n\n\n\nLa solución se publicará después de la sesión del domingo 6 de diciembre. Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 3.3: Exportar a Word\nConvierte la tabla del ANOVA en una tabla con formato, con números redondeados, y guárdala en un documento de Word listo para tu informe.\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\nEste ejercicio se hace en RStudio, en tu proyecto del curso: copia el código, complétalo y córrelo.\n\n\n\n# install.packages(\"flextable\")   # solo la primera vez\nlibrary(flextable)\n\nranas &lt;- read.csv(\"datos/ranas.csv\")\nlog_aditivo &lt;- aov(log(Age.FromEmergence) ~ Pred + Res, data = ranas)\n\ntabla_anova &lt;- as.data.frame(summary(log_aditivo)[[1]])\ntabla_anova &lt;- cbind(Fuente = rownames(tabla_anova), tabla_anova)\nnames(tabla_anova) &lt;- c(\"Fuente\", \"gl\", \"SC\", \"CM\", \"F\", \"p\")\n\ntabla_word &lt;- flextable(tabla_anova)\ntabla_word &lt;- colformat_double(tabla_word, digits = ____)\ntabla_word &lt;- autofit(tabla_word)\ntabla_word\n\nsave_as_docx(____, path = \"resultados/tabla_anova.docx\")\n\n\ncolformat_double() controla los decimales de las columnas numéricas. save_as_docx() recibe la tabla de {flextable} y la ruta del archivo.\n\n\n\nLa solución se publicará después de la sesión del domingo 6 de diciembre. Mientras tanto, usa la pestaña Pista."
+  },
+  {
+    "objectID": "ejercicios-4.html#parte-4",
+    "href": "ejercicios-4.html#parte-4",
+    "title": "Ejercicios Módulo 4",
+    "section": "Parte 4: Más práctica",
+    "text": "Parte 4: Más práctica\n\nEjercicio 4.1: ¿Hace falta la interacción?\nAjusta SVL.final ~ Pred * Res. Si la interacción no es significativa, ajusta el modelo aditivo e interpreta los efectos principales.\n\nEjercicioPistaSolución\n\n\n\n#| exercise: ex_4_1\ncon_interaccion &lt;- aov(SVL.final ~ Pred ____ Res, data = ranas)\nsummary(con_interaccion)\n\naditivo &lt;- aov(SVL.final ~ Pred ____ Res, data = ranas)\nsummary(aditivo)\n\n\n\n\n* incluye la interacción y + no. Si la interacción no aporta, el modelo más simple (aditivo) es más fácil de interpretar.\n\n\n\n\nSolución. \ncon_interaccion &lt;- aov(SVL.final ~ Pred * Res, data = ranas)\nsummary(con_interaccion)\n\naditivo &lt;- aov(SVL.final ~ Pred + Res, data = ranas)\nsummary(aditivo)\nLa interacción no es significativa (\\(F = 0.37\\), \\(p = 0.69\\)). En el modelo aditivo, el depredador tiene un efecto claro (\\(F = 26.51\\), \\(p &lt; 0.001\\)) y los recursos no llegan a ser significativos (\\(F = 2.95\\), \\(p = 0.09\\)).\n\n\nLa solución se publicará después de la sesión del domingo 6 de diciembre. Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 4.2: Gráfico de interacción para la masa\nDibuja el gráfico de interacción de Mass.final (depredador en el eje x, una línea por nivel de recursos) y compruébalo con el modelo con interacción.\n\nEjercicioPistaSolución\n\n\n\n#| exercise: ex_4_2\ninteraction.plot(x.factor = ranas$____, trace.factor = ranas$____,\n                 response = ranas$Mass.final,\n                 xlab = \"Depredador\", ylab = \"Masa final (g)\",\n                 trace.label = \"Recursos\")\n\nsummary(aov(Mass.final ~ Pred * Res, data = ranas))\n\n\n\n\nx.factor va en el eje horizontal y trace.factor define las líneas.\n\n\n\n\nSolución. \ninteraction.plot(x.factor = ranas$Pred, trace.factor = ranas$Res,\n                 response = ranas$Mass.final,\n                 xlab = \"Depredador\", ylab = \"Masa final (g)\",\n                 trace.label = \"Recursos\")\n\nsummary(aov(Mass.final ~ Pred * Res, data = ranas))\nLas líneas son casi paralelas y la interacción no es significativa (\\(F = 0.15\\), \\(p = 0.86\\)): el efecto de los recursos sobre la masa es parecido con cualquier depredador.\n\n\nLa solución se publicará después de la sesión del domingo 6 de diciembre. Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 4.3: Tukey en el modelo aditivo de la masa\nAjusta Mass.final ~ Pred + Res y compara los depredadores con Tukey. ¿Qué pares difieren y por cuántos gramos?\n\nEjercicioPistaSolución\n\n\n\n#| exercise: ex_4_3\naditivo_masa &lt;- aov(Mass.final ~ Pred + Res, data = ranas)\nTukeyHSD(aditivo_masa, which = \"____\")\n\n\n\n\nwhich = \"Pred\" limita las comparaciones al factor depredador.\n\n\n\n\nSolución. \naditivo_masa &lt;- aov(Mass.final ~ Pred + Res, data = ranas)\nTukeyHSD(aditivo_masa, which = \"Pred\")\nL pesa 0.14 g más que el control (\\(p &lt; 0.001\\)) y 0.11 g más que NL (\\(p = 0.001\\)); el control y NL no difieren (\\(p = 0.43\\)). Recuerda que, en el ejercicio 4.3 del Módulo 3, los diagnósticos de la masa sugerían usar log(): hazlo y comprueba que las conclusiones no cambian.\n\n\nLa solución se publicará después de la sesión del domingo 6 de diciembre. Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 4.4: Exportar la tabla de medias\nCalcula la longitud final media para cada combinación de depredador y recursos, guárdala en medias.csv sin los nombres de las filas y vuelve a leerla.\n\nEjercicioPistaSolución\n\n\n\n#| exercise: ex_4_4\nmedias &lt;- aggregate(SVL.final ~ Pred + Res, data = ranas, FUN = mean)\nmedias\n\nwrite.csv(medias, \"medias.csv\", row.names = ____)\nread.csv(\"____\")\n\n\n\n\nCon row.names = FALSE, write.csv() no guarda la columna con los números de fila.\n\n\n\n\nSolución. \nmedias &lt;- aggregate(SVL.final ~ Pred + Res, data = ranas, FUN = mean)\nmedias\n\nwrite.csv(medias, \"medias.csv\", row.names = FALSE)\nread.csv(\"medias.csv\")\nLa tabla tiene seis filas, una por combinación; por ejemplo, L con recursos altos tiene una media de 20.53 mm y el control con recursos bajos, 18.17 mm. Al leerla, ya no aparece la columna X.\n\n\nLa solución se publicará después de la sesión del domingo 6 de diciembre. Mientras tanto, usa la pestaña Pista."
+  },
+  {
+    "objectID": "ejercicios-4.html#con-tus-propios-datos",
+    "href": "ejercicios-4.html#con-tus-propios-datos",
+    "title": "Ejercicios Módulo 4",
+    "section": "Con tus propios datos",
+    "text": "Con tus propios datos\nElige una respuesta y dos factores de tus datos. Dibuja el gráfico de interacción, ajusta el modelo con interacción, revisa los diagnósticos (y transforma si hace falta), decide entre el modelo aditivo y el no aditivo, y exporta la tabla final a Word."
+  },
+  {
+    "objectID": "ejercicios-2.html",
+    "href": "ejercicios-2.html",
+    "title": "Ejercicios Módulo 2",
+    "section": "",
+    "text": "Estos ejercicios siguen el Módulo 2. El código corre en tu navegador. Donde veas ____, complétalo y presiona Run Code. ¿Te atascaste? Abre la pestaña Pista. Las soluciones se publican después de la sesión.\n#| setup: true\n#| exercise:\n#|   - ex_1_1\n#|   - ex_2_1\n#|   - ex_2_2\n#|   - ex_2_3\n#|   - ex_2_4\n#|   - ex_3_1\n#|   - ex_3_2\n#|   - ex_3_3\n#|   - ex_4_1\n#|   - ex_4_2\n#|   - ex_4_3\n#|   - ex_4_4\nranas &lt;- read.csv(\"datos/ranas.csv\")\nglucosa &lt;- c(108.7, 93.7, 52.7, 79.0, 74.7, 131.9, 99.5, 63.3, 98.6, 92.7)\nantes   &lt;- c(142, 128, 155, 136, 149, 131, 160, 138, 145, 152, 127, 140)\ndespues &lt;- c(131, 125, 140, 130, 139, 129, 147, 131, 141, 139, 126, 128)\ngerminacion &lt;- c(4.2, 5.1, 3.8, 6.9, 4.6, 12.4, 5.5, 4.9, 9.8, 5.3, 4.3, 15.2)"
+  },
+  {
+    "objectID": "ejercicios-2.html#parte-1",
+    "href": "ejercicios-2.html#parte-1",
+    "title": "Ejercicios Módulo 2",
+    "section": "Parte 1: Estadísticos e intervalos de confianza",
+    "text": "Parte 1: Estadísticos e intervalos de confianza\n\nEjercicio 1.1: Intervalo de confianza para la media\nCalcula la media y la desviación estándar de glucosa, y su intervalo de confianza del 95%: primero “a mano” con la distribución t de Student, y luego con t.test().\n\nEjercicioPistaSolución\n\n\n\n#| exercise: ex_1_1\nn &lt;- length(glucosa)\nmedia &lt;- mean(glucosa)\nde &lt;- ____(glucosa)\nmedia\nde\n\nerror_estandar &lt;- de / sqrt(____)\nt_critico &lt;- qt(0.975, df = n - 1)\nmedia - t_critico * error_estandar\nmedia + ____ * error_estandar\n\nt.test(glucosa)$conf.int\n\n\n\n\nEl error estándar de la media es \\(s / \\sqrt{n}\\). El intervalo es \\(\\bar{x} \\pm t_{0.975,\\, n-1} \\cdot s/\\sqrt{n}\\).\n\n\n\n\nSolución. \nn &lt;- length(glucosa)\nmedia &lt;- mean(glucosa)\nde &lt;- sd(glucosa)\nmedia\nde\n\nerror_estandar &lt;- de / sqrt(n)\nt_critico &lt;- qt(0.975, df = n - 1)\nmedia - t_critico * error_estandar\nmedia + t_critico * error_estandar\n\nt.test(glucosa)$conf.int\nLa media es 89.48 mg/dL y la desviación estándar 22.97 mg/dL. El intervalo de confianza del 95% va de 73.05 a 105.91 mg/dL, igual con los dos métodos. Con solo 10 ratones y tanta variación, el intervalo es ancho.\n\n\nLa solución se publicará después de la sesión del domingo 22 de noviembre. Mientras tanto, usa la pestaña Pista."
+  },
+  {
+    "objectID": "ejercicios-2.html#parte-2",
+    "href": "ejercicios-2.html#parte-2",
+    "title": "Ejercicios Módulo 2",
+    "section": "Parte 2: Pruebas t",
+    "text": "Parte 2: Pruebas t\n\nEjercicio 2.1: Prueba t de una muestra\nEn ratones sanos, la glucosa está entre 80 y 100 mg/dL. ¿Hay evidencia de que la media de esta línea de ratones está por encima de 100 mg/dL? Revisa primero la normalidad.\n\nEjercicioPistaSolución\n\n\n\n#| exercise: ex_2_1\nqqnorm(glucosa); qqline(glucosa)\nshapiro.test(____)\n\nt.test(glucosa, mu = ____, alternative = \"____\")\n\n\n\n\nLa hipótesis alternativa es “la media es mayor que 100”: en t.test() eso es alternative = \"greater\". Las otras opciones son \"less\" y \"two.sided\".\n\n\n\n\nSolución. \nqqnorm(glucosa); qqline(glucosa)\nshapiro.test(glucosa)\n\nt.test(glucosa, mu = 100, alternative = \"greater\")\nLos puntos siguen la línea del gráfico Q-Q y Shapiro-Wilk no rechaza la normalidad (\\(W = 0.978\\), \\(p = 0.95\\)), así que la prueba t es adecuada.\nLa prueba da \\(t = -1.45\\), \\(gl = 9\\), \\(p = 0.91\\). No hay evidencia de que la media supere los 100 mg/dL: de hecho, la media de la muestra (89.48) está por debajo. Con estos datos, esta línea no parece un buen modelo de hiperglucemia.\n\n\nLa solución se publicará después de la sesión del domingo 22 de noviembre. Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 2.2: Dos muestras independientes: los supuestos\nQueremos comparar los días para reabsorber la cola (Resorb.days) entre tanques con recursos altos y bajos (Res). Revisa la normalidad de cada grupo y la homogeneidad de sus varianzas.\n\nEjercicioPistaSolución\n\n\n\n#| exercise: ex_2_2\nboxplot(Resorb.days ~ Res, data = ranas)\n\nshapiro.test(ranas$Resorb.days[ranas$Res == \"Hi\"])\nshapiro.test(ranas$Resorb.days[ranas$Res == \"____\"])\n\nvar.test(Resorb.days ~ ____, data = ranas)\n\n\n\n\nranas$Resorb.days[ranas$Res == \"Hi\"] toma solo los valores del grupo Hi. En var.test() la hipótesis nula es que las dos varianzas son iguales.\n\n\n\n\nSolución. \nboxplot(Resorb.days ~ Res, data = ranas)\n\nshapiro.test(ranas$Resorb.days[ranas$Res == \"Hi\"])\nshapiro.test(ranas$Resorb.days[ranas$Res == \"Lo\"])\n\nvar.test(Resorb.days ~ Res, data = ranas)\nLos dos grupos parecen normales (Shapiro-Wilk: \\(p = 0.42\\) para Hi y \\(p = 0.52\\) para Lo). Pero las varianzas no son iguales: \\(F = 0.40\\), \\(p = 0.006\\). El grupo Lo varía más, como se ve en el diagrama de caja. Esto decide qué versión de la prueba t usar en el siguiente ejercicio.\n\n\nLa solución se publicará después de la sesión del domingo 22 de noviembre. Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 2.3: Dos muestras independientes: la prueba\nCompara la media de Resorb.days entre Hi y Lo con la prueba t de Welch, que no supone varianzas iguales. ¿Qué cambia si usas var.equal = TRUE?\n\nEjercicioPistaSolución\n\n\n\n#| exercise: ex_2_3\nt.test(Resorb.days ~ Res, data = ____)\n\nt.test(Resorb.days ~ Res, data = ranas, var.equal = ____)\n\n\n\n\nPor defecto, t.test() ya hace la prueba de Welch. La prueba t de Student clásica necesita var.equal = TRUE.\n\n\n\n\nSolución. \nt.test(Resorb.days ~ Res, data = ranas)\n\nt.test(Resorb.days ~ Res, data = ranas, var.equal = TRUE)\nPrueba de Welch: \\(t = -3.80\\), \\(gl = 64.3\\), \\(p = 0.0003\\). Con recursos bajos, los renacuajos tardan en promedio 4.64 días en reabsorber la cola, frente a 4.16 días con recursos altos: una diferencia de 0.47 días (IC 95%: 0.22 a 0.72). R la muestra como Hi menos Lo, por eso aparece con signo negativo.\nCon var.equal = TRUE cambian los grados de libertad (76) y el valor p (\\(p = 0.0003\\)), pero la conclusión es la misma. Como las varianzas difieren, la versión correcta aquí es la de Welch.\n\n\nLa solución se publicará después de la sesión del domingo 22 de noviembre. Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 2.4: Muestras emparejadas\nLos vectores antes y despues son la glucosa de los mismos 12 ratones antes y después de un tratamiento. ¿Bajó la glucosa? Revisa la normalidad de las diferencias y haz la prueba emparejada.\n\nEjercicioPistaSolución\n\n\n\n#| exercise: ex_2_4\ndiferencias &lt;- despues - ____\nmean(diferencias)\nshapiro.test(____)\n\nt.test(despues, antes, paired = ____)\n\n\n\n\nEn una prueba emparejada, el supuesto de normalidad se revisa sobre las diferencias dentro de cada ratón, no sobre cada grupo por separado.\n\n\n\n\nSolución. \ndiferencias &lt;- despues - antes\nmean(diferencias)\nshapiro.test(diferencias)\n\nt.test(despues, antes, paired = TRUE)\nLas diferencias son normales (Shapiro-Wilk: \\(p = 0.35\\)). En promedio, la glucosa bajó 8.08 mg/dL después del tratamiento (IC 95%: 5.00 a 11.17 mg/dL; \\(t = -5.77\\), \\(gl = 11\\), \\(p = 0.0001\\)).\n¿Por qué emparejar? Cada ratón es su propio control: la diferencia entre ratones (de 127 a 160 mg/dL antes del tratamiento) no se mezcla con el efecto del tratamiento.\n\n\nLa solución se publicará después de la sesión del domingo 22 de noviembre. Mientras tanto, usa la pestaña Pista."
+  },
+  {
+    "objectID": "ejercicios-2.html#parte-3",
+    "href": "ejercicios-2.html#parte-3",
+    "title": "Ejercicios Módulo 2",
+    "section": "Parte 3: Wilcoxon y transformaciones",
+    "text": "Parte 3: Wilcoxon y transformaciones\n\nEjercicio 3.1: Wilcoxon para una muestra\nEl proveedor de las semillas indica que la mediana de germinación es de 4.5 días. Revisa la normalidad de germinacion y elige la prueba adecuada para comprobarlo.\n\nEjercicioPistaSolución\n\n\n\n#| exercise: ex_3_1\nhist(germinacion)\nshapiro.test(____)\nmedian(germinacion)\n\nwilcox.test(germinacion, mu = ____)\n\n\n\n\nSi Shapiro-Wilk rechaza la normalidad y la muestra es pequeña, la prueba de Wilcoxon de una muestra compara la mediana con un valor de referencia.\n\n\n\n\nSolución. \nhist(germinacion)\nshapiro.test(germinacion)\nmedian(germinacion)\n\nwilcox.test(germinacion, mu = 4.5)\nLos datos no son normales: dos semillas tardaron mucho más que el resto (Shapiro-Wilk: \\(p = 0.004\\)). La prueba de Wilcoxon da \\(V = 67\\), \\(p = 0.027\\): la mediana de germinación (5.2 días) es distinta de los 4.5 días que indica el proveedor; en estas semillas, es mayor.\n\n\nLa solución se publicará después de la sesión del domingo 22 de noviembre. Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 3.2: Wilcoxon para dos muestras\n¿Difiere la edad al salir del agua (Age.FromEmergence) entre tanques con recursos altos y bajos? Revisa la normalidad de cada grupo y elige la prueba.\n\nEjercicioPistaSolución\n\n\n\n#| exercise: ex_3_2\nboxplot(Age.FromEmergence ~ Res, data = ranas)\n\nshapiro.test(ranas$Age.FromEmergence[ranas$Res == \"Hi\"])\nshapiro.test(ranas$Age.FromEmergence[ranas$Res == \"Lo\"])\n\ntapply(ranas$Age.FromEmergence, ranas$Res, ____)\nwilcox.test(Age.FromEmergence ~ ____, data = ranas)\n\n\n\n\nSi alguno de los grupos no es normal, la prueba de Wilcoxon para dos muestras (también llamada de Mann-Whitney) es la alternativa a la prueba t. Como compara posiciones, resume cada grupo con la mediana.\n\n\n\n\nSolución. \nboxplot(Age.FromEmergence ~ Res, data = ranas)\n\nshapiro.test(ranas$Age.FromEmergence[ranas$Res == \"Hi\"])\nshapiro.test(ranas$Age.FromEmergence[ranas$Res == \"Lo\"])\n\ntapply(ranas$Age.FromEmergence, ranas$Res, median)\nwilcox.test(Age.FromEmergence ~ Res, data = ranas)\nNinguno de los dos grupos es normal (Shapiro-Wilk: \\(p = 0.013\\) y \\(p = 0.003\\)). La prueba de Wilcoxon da \\(W = 371\\), \\(p = 0.0001\\): con recursos bajos, los renacuajos salen del agua más tarde (mediana de 33.7 días frente a 16.2).\nR avisa que no puede calcular el valor p exacto porque hay valores empatados, y usa una aproximación normal. Es un aviso, no un error.\n\n\nLa solución se publicará después de la sesión del domingo 22 de noviembre. Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 3.3: Transformar antes de abandonar la prueba t\nLos tiempos suelen tener una cola larga a la derecha. Repite la comparación del ejercicio 3.2 con el logaritmo de Age.FromEmergence: revisa la normalidad de cada grupo, haz la prueba t y vuelve a la escala original con exp().\n\nEjercicioPistaSolución\n\n\n\n#| exercise: ex_3_3\nranas$log_edad &lt;- ____(ranas$Age.FromEmergence)\n\nshapiro.test(ranas$log_edad[ranas$Res == \"Hi\"])\nshapiro.test(ranas$log_edad[ranas$Res == \"Lo\"])\n\nprueba &lt;- t.test(log_edad ~ Res, data = ranas)\nprueba\n\nexp(prueba$estimate)\nexp(prueba$conf.int)\n\n\n\n\nlog() es el logaritmo natural. En escala logarítmica, una diferencia de medias se convierte, con exp(), en un cociente: cuántas veces es mayor un grupo que el otro. exp() de la media de los logaritmos es la media geométrica.\n\n\n\n\nSolución. \nranas$log_edad &lt;- log(ranas$Age.FromEmergence)\n\nshapiro.test(ranas$log_edad[ranas$Res == \"Hi\"])\nshapiro.test(ranas$log_edad[ranas$Res == \"Lo\"])\n\nprueba &lt;- t.test(log_edad ~ Res, data = ranas)\nprueba\n\nexp(prueba$estimate)\nexp(prueba$conf.int)\nEn escala logarítmica, los dos grupos ya son compatibles con la normalidad (Shapiro-Wilk: \\(p = 0.52\\) para Hi y \\(p = 0.055\\) para Lo). La prueba de Welch da \\(t = -4.62\\), \\(gl = 69.5\\), \\(p &lt; 0.001\\).\nDe vuelta en días: las medias geométricas son 17.0 días (Hi) y 33.1 días (Lo). El intervalo de exp(prueba$conf.int) va de 0.39 a 0.69: con recursos altos, los renacuajos salen del agua en un 31% a 61% menos tiempo; en promedio, en la mitad (0.51 veces) del tiempo.\nLa conclusión coincide con la del ejercicio 3.2, pero ahora tenemos además el tamaño del efecto y su intervalo de confianza.\n\n\nLa solución se publicará después de la sesión del domingo 22 de noviembre. Mientras tanto, usa la pestaña Pista."
+  },
+  {
+    "objectID": "ejercicios-2.html#parte-4",
+    "href": "ejercicios-2.html#parte-4",
+    "title": "Ejercicios Módulo 2",
+    "section": "Parte 4: Más práctica",
+    "text": "Parte 4: Más práctica\n\nEjercicio 4.1: Cambiar el nivel de confianza\nCalcula el intervalo de confianza del 99% para la media de SVL.final y compáralo con el del 95%. ¿Cuál es más ancho, y por qué?\n\nEjercicioPistaSolución\n\n\n\n#| exercise: ex_4_1\nt.test(ranas$SVL.final)$conf.int\nt.test(ranas$SVL.final, conf.level = ____)$conf.int\n\n\n\n\nEl argumento conf.level de t.test() cambia el nivel de confianza; por defecto es 0.95.\n\n\n\n\nSolución. \nt.test(ranas$SVL.final)$conf.int\nt.test(ranas$SVL.final, conf.level = 0.99)$conf.int\nEl intervalo del 99% va de 18.95 a 19.81 mm y es más ancho que el del 95%. Para estar más seguros de capturar \\(\\mu\\), necesitamos un intervalo más amplio: el valor crítico de \\(t\\) pasa de 1.99 a 2.64.\n\n\nLa solución se publicará después de la sesión del domingo 22 de noviembre. Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 4.2: Una cola, con los datos de las ranas\n¿Hay evidencia de que la masa media al salir del agua (Mass.final) es mayor que 0.40 g?\n\nEjercicioPistaSolución\n\n\n\n#| exercise: ex_4_2\nmean(ranas$Mass.final)\nt.test(ranas$Mass.final, mu = ____, alternative = \"____\")\n\n\n\n\nLa hipótesis alternativa es “mayor que 0.40”: alternative = \"greater\".\n\n\n\n\nSolución. \nmean(ranas$Mass.final)\nt.test(ranas$Mass.final, mu = 0.40, alternative = \"greater\")\nLa media es 0.430 g y la prueba da \\(t = 2.44\\), \\(gl = 77\\), \\(p = 0.008\\): hay evidencia de que la masa media supera los 0.40 g. Con 78 tanques, la prueba t es robusta a desviaciones moderadas de la normalidad.\n\n\nLa solución se publicará después de la sesión del domingo 22 de noviembre. Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 4.3: Una diferencia que no aparece\n¿Difiere la longitud final (SVL.final) entre recursos altos y bajos? Haz la prueba de Welch e interpreta tanto el valor p como el intervalo de confianza.\n\nEjercicioPistaSolución\n\n\n\n#| exercise: ex_4_3\ntapply(ranas$SVL.final, ranas$Res, mean)\nt.test(SVL.final ~ ____, data = ranas)\n\n\n\n\nUn intervalo de confianza de la diferencia que contiene el cero es compatible con “no hay diferencia”.\n\n\n\n\nSolución. \ntapply(ranas$SVL.final, ranas$Res, mean)\nt.test(SVL.final ~ Res, data = ranas)\nLas medias son 19.60 mm (Hi) y 19.17 mm (Lo). La prueba da \\(t = 1.33\\), \\(gl = 72.9\\), \\(p = 0.19\\), y el intervalo de la diferencia va de -0.21 a 1.07 mm: contiene el cero. No hay evidencia de una diferencia, lo que no es lo mismo que demostrar que no la hay: el intervalo deja abierta una diferencia de hasta 1 mm.\n\n\nLa solución se publicará después de la sesión del domingo 22 de noviembre. Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 4.4: Wilcoxon para muestras emparejadas\n¿Crecieron los renacuajos entre la medición inicial (SVL.initial) y la final (SVL.final)? Revisa la normalidad de las diferencias y elige entre la prueba t emparejada y la de Wilcoxon emparejada.\n\nEjercicioPistaSolución\n\n\n\n#| exercise: ex_4_4\ndiferencias &lt;- ranas$SVL.final - ranas$SVL.initial\nshapiro.test(____)\nmedian(diferencias)\n\nwilcox.test(ranas$SVL.final, ranas$SVL.initial, paired = ____)\n\n\n\n\nComo en la prueba t emparejada, la normalidad se revisa sobre las diferencias. Si no son normales, wilcox.test(..., paired = TRUE) es la alternativa.\n\n\n\n\nSolución. \ndiferencias &lt;- ranas$SVL.final - ranas$SVL.initial\nshapiro.test(diferencias)\nmedian(diferencias)\n\nwilcox.test(ranas$SVL.final, ranas$SVL.initial, paired = TRUE)\nLas diferencias no son normales (Shapiro-Wilk: \\(p = 0.001\\)), así que usamos Wilcoxon emparejada: \\(V = 3077\\), \\(p &lt; 0.001\\). La mediana del crecimiento es 0.36 mm: los renacuajos sí crecieron.\n\n\nLa solución se publicará después de la sesión del domingo 22 de noviembre. Mientras tanto, usa la pestaña Pista."
+  },
+  {
+    "objectID": "ejercicios-2.html#con-tus-propios-datos",
+    "href": "ejercicios-2.html#con-tus-propios-datos",
+    "title": "Ejercicios Módulo 2",
+    "section": "Con tus propios datos",
+    "text": "Con tus propios datos\nEscribe una pregunta de investigación sobre tus datos que compare dos grupos o una muestra con un valor de referencia. Plantea \\(H_0\\) y \\(H_1\\), revisa los supuestos, elige entre la prueba t y la de Wilcoxon, y resume el resultado en una frase con el estadístico, los grados de libertad (si los hay) y el valor p."
+  },
+  {
+    "objectID": "modulo-4.html",
+    "href": "modulo-4.html",
+    "title": "Módulo 4: ANOVA de múltiples vías y exportación de resultados",
+    "section": "",
+    "text": "Ver las diapositivas Hacer los ejercicios Hacer la autoevaluación"
+  },
+  {
+    "objectID": "modulo-4.html#contexto",
+    "href": "modulo-4.html#contexto",
+    "title": "Módulo 4: ANOVA de múltiples vías y exportación de resultados",
+    "section": "Contexto",
+    "text": "Contexto\n\nPara quién: participantes que ya saben ajustar y diagnosticar un ANOVA de una vía (Módulo 3).\nLugar en el curso: última sesión. Añadimos un segundo factor al ANOVA y aprendemos a llevar los resultados de R a un informe.\nDuración: 3 horas de clase virtual y unas 6 horas de trabajo autónomo, incluido el examen virtual."
+  },
+  {
+    "objectID": "modulo-4.html#objetivos-de-la-sesión",
+    "href": "modulo-4.html#objetivos-de-la-sesión",
+    "title": "Módulo 4: ANOVA de múltiples vías y exportación de resultados",
+    "section": "Objetivos de la sesión",
+    "text": "Objetivos de la sesión\nAl terminar, podrás:\n\nAjustar e interpretar un ANOVA aditivo de dos vías.\nReconocer una interacción en un gráfico, y ajustar e interpretar un ANOVA no aditivo de dos vías.\nDecidir, con los diagnósticos, si una transformación de la respuesta cambia las conclusiones.\nExportar tablas de resultados a csv, Excel y Word."
+  },
+  {
+    "objectID": "modulo-4.html#estructura",
+    "href": "modulo-4.html#estructura",
+    "title": "Módulo 4: ANOVA de múltiples vías y exportación de resultados",
+    "section": "Estructura",
+    "text": "Estructura\n\n\n\n\n\n\n\n\nParte\nQué hacemos\nObjetivo\n\n\n\n\nDos factores a la vez\nDepredador y recursos: ¿por qué no dos ANOVAs separados?\n1\n\n\nANOVA aditivo de dos vías\naov(y ~ A + B); leer cada efecto principal\n1\n\n\n¿Qué observas?\nGráfico de interacción con interaction.plot(): líneas paralelas o no\n2\n\n\nANOVA no aditivo de dos vías\naov(y ~ A * B); qué significa una interacción\n2\n\n\nDiagnósticos y transformaciones\nLa interacción que desaparece al transformar con log()\n3\n\n\nComparaciones múltiples\nTukeyHSD() con dos factores\n1, 2\n\n\nExportar a csv y Excel\nwrite.csv() y writexl::write_xlsx()\n4\n\n\nExportar a Word\nTablas con {flextable} y save_as_docx()\n4\n\n\nAntes de terminar\nRepaso del curso, examen virtual y certificado"
+  },
+  {
+    "objectID": "modulo-4.html#trabajo-autónomo",
+    "href": "modulo-4.html#trabajo-autónomo",
+    "title": "Módulo 4: ANOVA de múltiples vías y exportación de resultados",
+    "section": "Trabajo autónomo",
+    "text": "Trabajo autónomo\nDespués de la clase:\n\nCompleta todos los ejercicios: un ANOVA aditivo, uno no aditivo y la exportación de sus tablas. Lo que no alcancemos en clase, incluida la Parte 4 (Más práctica), es tarea.\nExporta a Word la tabla de un ANOVA de tus propios datos, lista para un informe.\nHaz la autoevaluación y luego el examen virtual, disponible a partir del 7 de diciembre (ver Evaluación)."
+  },
+  {
+    "objectID": "modulo-4.html#datos-y-materiales",
+    "href": "modulo-4.html#datos-y-materiales",
+    "title": "Módulo 4: ANOVA de múltiples vías y exportación de resultados",
+    "section": "Datos y materiales",
+    "text": "Datos y materiales\n\nranas.csv (descargar): datos del Prof. Justin C. Touchon (ver Módulo 1).\nPaquetes para trabajar en tu computador: {writexl} y {flextable}.\nDiapositivas del Módulo 4."
+  },
+  {
+    "objectID": "modulo-2.html",
+    "href": "modulo-2.html",
+    "title": "Módulo 2: Introducción a la estadística inferencial con R",
+    "section": "",
+    "text": "Ver las diapositivas Hacer los ejercicios Hacer la autoevaluación"
+  },
+  {
+    "objectID": "modulo-2.html#contexto",
+    "href": "modulo-2.html#contexto",
+    "title": "Módulo 2: Introducción a la estadística inferencial con R",
+    "section": "Contexto",
+    "text": "Contexto\n\nPara quién: participantes que ya saben importar una tabla y calcular estadísticos descriptivos en R (Módulo 1).\nLugar en el curso: segunda sesión. Pasamos de describir una muestra a sacar conclusiones sobre la población de la que viene.\nDuración: 3 horas de clase virtual y unas 6 horas de trabajo autónomo."
+  },
+  {
+    "objectID": "modulo-2.html#objetivos-de-la-sesión",
+    "href": "modulo-2.html#objetivos-de-la-sesión",
+    "title": "Módulo 2: Introducción a la estadística inferencial con R",
+    "section": "Objetivos de la sesión",
+    "text": "Objetivos de la sesión\nAl terminar, podrás:\n\nDistinguir entre muestra y población, y entre parámetro y estadístico.\nCalcular e interpretar un intervalo de confianza para la media.\nPlantear las hipótesis nula y alternativa de una pregunta de investigación, e interpretar el valor p.\nElegir y ejecutar la prueba adecuada (t de una muestra, de muestras independientes o emparejadas, o su alternativa de Wilcoxon) después de revisar sus supuestos."
+  },
+  {
+    "objectID": "modulo-2.html#estructura",
+    "href": "modulo-2.html#estructura",
+    "title": "Módulo 2: Introducción a la estadística inferencial con R",
+    "section": "Estructura",
+    "text": "Estructura\n\n\n\n\n\n\n\n\nParte\nQué hacemos\nObjetivo\n\n\n\n\nRepaso\nMuestras, poblaciones y tipos de muestreo\n1\n\n\nParámetros y estadísticos\nMedia, desviación estándar y varianza: de la población y de la muestra\n1\n\n\nIntervalos de confianza\nQué significa “95% de confianza”; cálculo con t.test()\n2\n\n\nPruebas de hipótesis\nHipótesis nula y alternativa, errores tipo I y II, potencia, pruebas de una y dos colas, el valor p\n3\n\n\nSupuestos\nNormalidad (gráfico Q-Q, shapiro.test()) y homogeneidad de varianzas (var.test())\n4\n\n\nPrueba t de una muestra\n¿Es la media distinta de un valor de referencia?\n4\n\n\nPrueba t de muestras independientes\n¿Difieren las medias de dos grupos? Student y Welch\n4\n\n\nPrueba t de muestras emparejadas\nMediciones antes y después en los mismos individuos\n4\n\n\n¿Qué prueba uso?\nUna tabla para elegir entre las pruebas t y de Wilcoxon según la pregunta y los datos\n3, 4\n\n\nPruebas de Wilcoxon\nAlternativas no paramétricas para una y dos muestras\n4\n\n\nTransformaciones\nlog() y sqrt() cuando los datos no son normales; volver a la escala original con exp()\n4"
+  },
+  {
+    "objectID": "modulo-2.html#trabajo-autónomo",
+    "href": "modulo-2.html#trabajo-autónomo",
+    "title": "Módulo 2: Introducción a la estadística inferencial con R",
+    "section": "Trabajo autónomo",
+    "text": "Trabajo autónomo\nDespués de la clase:\n\nCompleta todos los ejercicios: un intervalo de confianza y una prueba de cada tipo, con los datos de las ranas y dos ejemplos cortos. Lo que no alcancemos en clase, incluida la Parte 4 (Más práctica), es tarea.\nCon tus propios datos, escribe una pregunta que se responda con una prueba t, plantea las hipótesis y revisa los supuestos antes de correrla.\nHaz la autoevaluación."
+  },
+  {
+    "objectID": "modulo-2.html#datos-y-materiales",
+    "href": "modulo-2.html#datos-y-materiales",
+    "title": "Módulo 2: Introducción a la estadística inferencial con R",
+    "section": "Datos y materiales",
+    "text": "Datos y materiales\n\nranas.csv (descargar): datos del Prof. Justin C. Touchon (ver Módulo 1).\nLos datos de glucosa en ratones y de germinación son ilustrativos, escritos para los ejercicios.\nDiapositivas del Módulo 2."
+  },
+  {
+    "objectID": "programa.html",
+    "href": "programa.html",
+    "title": "Programa",
+    "section": "",
+    "text": "El curso tiene cuatro módulos de tres horas, uno por domingo. Cada módulo se apoya en el anterior: primero aprendemos a trabajar con R y a describir los datos, luego a hacer inferencias sobre una o dos poblaciones, y finalmente a comparar muchos grupos con el análisis de varianza.\nflowchart LR\n  M1[\"&lt;b&gt;Módulo 1&lt;/b&gt;&lt;br/&gt;Generalidades e&lt;br/&gt;introducción a R\"] --&gt; M2[\"&lt;b&gt;Módulo 2&lt;/b&gt;&lt;br/&gt;Estadística&lt;br/&gt;inferencial\"]\n  M2 --&gt; M3[\"&lt;b&gt;Módulo 3&lt;/b&gt;&lt;br/&gt;Análisis de&lt;br/&gt;varianza\"]\n  M3 --&gt; M4[\"&lt;b&gt;Módulo 4&lt;/b&gt;&lt;br/&gt;ANOVA de múltiples vías&lt;br/&gt;y exportación\"]\n  classDef default fill:#ffffff,stroke:#333333,color:#000000;\n  style M1 fill:#ffffff,stroke:#0072B2,stroke-width:3px,color:#000000\n  style M2 fill:#ffffff,stroke:#D55E00,stroke-width:3px,color:#000000\n  style M3 fill:#ffffff,stroke:#009E73,stroke-width:3px,color:#000000\n  style M4 fill:#ffffff,stroke:#CC79A7,stroke-width:3px,color:#000000"
+  },
+  {
+    "objectID": "programa.html#objetivos-de-aprendizaje",
+    "href": "programa.html#objetivos-de-aprendizaje",
+    "title": "Programa",
+    "section": "Objetivos de aprendizaje",
+    "text": "Objetivos de aprendizaje\nAl finalizar el curso podrás:\n\nUtilizar el entorno de R y RStudio para realizar operaciones básicas y gestionar conjuntos de datos.\nAplicar conceptos fundamentales de estadística descriptiva para resumir y explorar datos numéricos y categóricos.\nEjecutar pruebas de hipótesis básicas (como la prueba t) con funciones de R.\nRealizar análisis de varianza (ANOVA) para comparar medias entre múltiples grupos.\nInterpretar resultados estadísticos y presentarlos de manera clara y sustentada.\nIntegrar buenas prácticas de programación y organización de proyectos en R para análisis reproducibles."
+  },
+  {
+    "objectID": "programa.html#formato-y-horario",
+    "href": "programa.html#formato-y-horario",
+    "title": "Programa",
+    "section": "Formato y horario",
+    "text": "Formato y horario\n\nModalidad: 100% en línea, clases virtuales en tiempo real.\nHorario: cuatro domingos, de 9H00 a 12H00.\nDuración: 12 horas de clases virtuales y 24 horas de aprendizaje autónomo individual, 36 horas en total.\nCada sesión combina exposiciones cortas con trabajo práctico en R. Lo que no se alcance en clase queda como tarea: se espera que completes todos los ejercicios de cada módulo. Los ejercicios se resuelven a la par de la clase, con ayuda del tutor y de los demás participantes.\n\n\nCalendario del curso.\n\n\n\n\n\n\n\nSesión\nFecha\nMódulo\n\n\n\n\n1\nDomingo 15 de noviembre de 2026\nGeneralidades e introducción a R\n\n\n2\nDomingo 22 de noviembre de 2026\nIntroducción a la estadística inferencial con R\n\n\n3\nDomingo 29 de noviembre de 2026\nIntroducción al análisis de varianza\n\n\n4\nDomingo 6 de diciembre de 2026\nANOVA de múltiples vías y exportación de resultados"
+  },
+  {
+    "objectID": "programa.html#requisitos",
+    "href": "programa.html#requisitos",
+    "title": "Programa",
+    "section": "Requisitos",
+    "text": "Requisitos\nIndispensables:\n\nComputador con al menos 2 GB de RAM y procesador de 64 bits, para los talleres y las tareas.\nConexión estable a internet.\n\nIdeales, pero no indispensables:\n\nConocimientos básicos de estadística.\nSistema operativo Windows 10/11.\nMicrosoft Office (o LibreOffice)."
+  },
+  {
+    "objectID": "programa.html#contenidos-y-alineación",
+    "href": "programa.html#contenidos-y-alineación",
+    "title": "Programa",
+    "section": "Contenidos y alineación",
+    "text": "Contenidos y alineación\nCada módulo indica qué podrás hacer al terminarlo, cómo lo practicamos y cómo se comprueba. Los números entre paréntesis remiten a los objetivos de aprendizaje.\n\n\n\n\nMódulo\nAl terminar podrás…\nActividades\nEvaluación\n\n\n\n\n1. Generalidades e introducción a R\ninstalar R y RStudio y trabajar en un proyecto de R; usar tipos de datos, operadores, objetos y paquetes; importar una tabla de datos; calcular estadísticos descriptivos (1, 2, 6)\ninstalación guiada, programación en vivo, ejercicios cortos\nejercicios en clase, autoevaluación\n\n\n2. Estadística inferencial\ndistinguir muestra y población, parámetro y estadístico; calcular intervalos de confianza; plantear hipótesis; elegir y ejecutar pruebas t y de Wilcoxon (3, 5)\ntabla “¿qué prueba uso?”, ejercicios guiados\nejercicios en clase, autoevaluación\n\n\n3. Análisis de varianza\najustar un ANOVA de una vía; revisar sus supuestos con gráficos y pruebas; hacer comparaciones múltiples; usar Kruskal-Wallis cuando los supuestos fallan (4, 5)\n“graficar antes de modelar”, diagnóstico de un modelo en grupo\nejercicios en clase, autoevaluación\n\n\n4. ANOVA de múltiples vías y exportación\najustar e interpretar ANOVAs aditivos y no aditivos de dos vías; exportar tablas de resultados a csv, Excel y Word (4, 5, 6)\ninterpretar un gráfico de interacción, exportar una tabla lista para un informe\nejercicios en clase, autoevaluación, examen virtual"
+  },
+  {
+    "objectID": "programa.html#evaluacion",
+    "href": "programa.html#evaluacion",
+    "title": "Programa",
+    "section": "Evaluación",
+    "text": "Evaluación\nLa nota final se pondera sobre un máximo de 10 puntos:\n\n\n\nComponente\nPeso\n\n\n\n\nResolución de ejercicios durante cada sesión\n40%\n\n\nExamen virtual (la fecha límite se anunciará durante el curso)\n60%\n\n\n\n\nEl examen es un script de R para completar: recibes el código con espacios en blanco, lo completas en tu proyecto con los datos del examen y entregas el archivo .R.\nCon una nota de 7 puntos o más obtienes el certificado de aprobación.\nSi no alcanzas la nota mínima, tienes derecho a un certificado de asistencia.\nLas autoevaluaciones de este sitio no cuentan para la nota: son para que compruebes por tu cuenta qué ideas necesitan un repaso."
+  },
+  {
+    "objectID": "programa.html#comunicación",
+    "href": "programa.html#comunicación",
+    "title": "Programa",
+    "section": "Comunicación",
+    "text": "Comunicación\nLas preguntas fuera de la hora de clase se dirigen al correo electrónico mmorenozambrano@gmail.com."
+  },
+  {
+    "objectID": "programa.html#y-después",
+    "href": "programa.html#y-después",
+    "title": "Programa",
+    "section": "¿Y después?",
+    "text": "¿Y después?\nEste curso es el primero de dos. El segundo, Visualización de datos en R, cubre {tidyverse}, {ggplot2} y reportes con Quarto. Lo ideal es tomar los dos en orden, aunque el segundo incluye un módulo introductorio para quienes no hayan tomado este."
+  },
+  {
+    "objectID": "modulo-1.html",
+    "href": "modulo-1.html",
+    "title": "Módulo 1: Generalidades e introducción a R",
+    "section": "",
+    "text": "Ver las diapositivas Hacer los ejercicios Hacer la autoevaluación"
+  },
+  {
+    "objectID": "modulo-1.html#contexto",
+    "href": "modulo-1.html#contexto",
+    "title": "Módulo 1: Generalidades e introducción a R",
+    "section": "Contexto",
+    "text": "Contexto\n\nPara quién: personas que nunca han programado, o que han usado R alguna vez sin un orden claro.\nLugar en el curso: primera sesión. Todo lo que hagamos en los módulos 2 a 4 se apoya en lo que aprendemos hoy.\nDuración: 3 horas de clase virtual y unas 6 horas de trabajo autónomo."
+  },
+  {
+    "objectID": "modulo-1.html#objetivos-de-la-sesión",
+    "href": "modulo-1.html#objetivos-de-la-sesión",
+    "title": "Módulo 1: Generalidades e introducción a R",
+    "section": "Objetivos de la sesión",
+    "text": "Objetivos de la sesión\nAl terminar, podrás:\n\nInstalar R y RStudio, y organizar tu trabajo en un proyecto de R.\nUsar los tipos de datos, operadores y objetos básicos de R (vectores, factores, tablas de datos y listas).\nInstalar y cargar paquetes, e importar una tabla de datos desde un archivo csv.\nCalcular estadísticos descriptivos para variables numéricas y categóricas."
+  },
+  {
+    "objectID": "modulo-1.html#estructura",
+    "href": "modulo-1.html#estructura",
+    "title": "Módulo 1: Generalidades e introducción a R",
+    "section": "Estructura",
+    "text": "Estructura\n\n\n\n\n\n\n\n\nParte\nQué hacemos\nObjetivo\n\n\n\n\nBienvenida\nPresentación, cómo funciona el curso y la evaluación\n\n\n\n¿Por qué R?\nQué es R, qué es RStudio y por qué se usan tanto en biología y agricultura\n\n\n\nInstalación\nInstalación guiada de R y RStudio; recorrido por los paneles de RStudio\n1\n\n\nProyectos de R\nCrear un proyecto, ordenar carpetas (datos/, scripts/, resultados/) y escribir el primer script\n1\n\n\nReglas de sintaxis\nAsignación con &lt;-, nombres de objetos, comentarios, mayúsculas y minúsculas\n2\n\n\nTipos de datos y operadores\nnumeric, character, logical, factor; operadores aritméticos, de comparación y lógicos\n2\n\n\nTipos de objetos\nVectores, factores, tablas de datos (data.frame) y listas; indexación con [ ] y $\n2\n\n\nPaquetes y librerías\ninstall.packages() y library(); dónde buscar ayuda\n3\n\n\nImportación de datos\nread.csv() y readxl::read_excel(); revisar la tabla con str(), head() y summary()\n3\n\n\nOperaciones estadísticas básicas\nsum(), mean(), median(), sd(), var(), quantile(), table()\n4\n\n\nEstadísticos descriptivos\nResumir por grupos con aggregate() y tapply(); tablas de frecuencias\n4"
+  },
+  {
+    "objectID": "modulo-1.html#trabajo-autónomo",
+    "href": "modulo-1.html#trabajo-autónomo",
+    "title": "Módulo 1: Generalidades e introducción a R",
+    "section": "Trabajo autónomo",
+    "text": "Trabajo autónomo\nDespués de la clase:\n\nCrea tu proyecto de R para el curso, con la estructura de carpetas vista en clase.\nCompleta todos los ejercicios en el navegador: lo que no alcancemos en clase, incluida la Parte 4 (Más práctica), es tarea. Si te atascas, usa la pestaña Pista.\nImporta tus propios datos (o la tabla ranas.csv) en tu proyecto y calcula sus estadísticos descriptivos.\nHaz la autoevaluación para ver qué ideas necesitan un repaso."
+  },
+  {
+    "objectID": "modulo-1.html#datos-y-materiales",
+    "href": "modulo-1.html#datos-y-materiales",
+    "title": "Módulo 1: Generalidades e introducción a R",
+    "section": "Datos y materiales",
+    "text": "Datos y materiales\n\nranas.csv (descargar): experimento con renacuajos expuestos a distintos depredadores, recursos alimenticios y momentos de eclosión. Datos del Prof. Justin C. Touchon, del libro Applied Statistics with R: A Practical Guide for the Life Sciences (Oxford University Press, 2021). La usamos en todo el curso.\nDiapositivas del Módulo 1."
+  },
+  {
+    "objectID": "modulo-3.html",
+    "href": "modulo-3.html",
+    "title": "Módulo 3: Introducción al análisis de varianza",
+    "section": "",
+    "text": "Ver las diapositivas Hacer los ejercicios Hacer la autoevaluación"
+  },
+  {
+    "objectID": "modulo-3.html#contexto",
+    "href": "modulo-3.html#contexto",
+    "title": "Módulo 3: Introducción al análisis de varianza",
+    "section": "Contexto",
+    "text": "Contexto\n\nPara quién: participantes que ya saben plantear hipótesis y comparar dos grupos con una prueba t (Módulo 2).\nLugar en el curso: tercera sesión. Pasamos de comparar dos grupos a comparar tres o más.\nDuración: 3 horas de clase virtual y unas 6 horas de trabajo autónomo."
+  },
+  {
+    "objectID": "modulo-3.html#objetivos-de-la-sesión",
+    "href": "modulo-3.html#objetivos-de-la-sesión",
+    "title": "Módulo 3: Introducción al análisis de varianza",
+    "section": "Objetivos de la sesión",
+    "text": "Objetivos de la sesión\nAl terminar, podrás:\n\nExplicar por qué no hacemos muchas pruebas t, y qué compara el ANOVA.\nAjustar e interpretar un ANOVA de una vía en R.\nRevisar los supuestos del ANOVA con gráficos de diagnóstico y pruebas formales.\nIdentificar qué grupos difieren con comparaciones múltiples (Tukey), y usar Kruskal-Wallis cuando los supuestos no se cumplen."
+  },
+  {
+    "objectID": "modulo-3.html#estructura",
+    "href": "modulo-3.html#estructura",
+    "title": "Módulo 3: Introducción al análisis de varianza",
+    "section": "Estructura",
+    "text": "Estructura\n\n\n\n\n\n\n\n\nParte\nQué hacemos\nObjetivo\n\n\n\n\nUna pregunta, tres grupos\n¿Cambia la masa de los renacuajos al salir del agua según el depredador?\n1\n\n\nGraficar antes de modelar\nDiagramas de caja por grupo: “¿qué observas?”\n1\n\n\n¿Por qué no tres pruebas t?\nEl problema de las comparaciones múltiples y la tasa de error\n1\n\n\nLa idea del ANOVA\nVariación entre grupos frente a variación dentro de los grupos; el estadístico F\n1, 2\n\n\nANOVA de una vía en R\naov() y summary(); leer la tabla del ANOVA\n2\n\n\nSupuestos del ANOVA\nIndependencia, normalidad de los residuos, homogeneidad de varianzas\n3\n\n\nDiagnósticos\nplot(modelo), shapiro.test() sobre los residuos y bartlett.test()\n3\n\n\nComparaciones múltiples\nTukeyHSD(); leer diferencias, intervalos y valores p ajustados\n4\n\n\nTransformaciones\nCuando los supuestos fallan: sqrt() y log() de la respuesta, y volver a diagnosticar\n3, 4\n\n\nKruskal-Wallis\nSi la transformación no basta: kruskal.test() y pairwise.wilcox.test()\n4"
+  },
+  {
+    "objectID": "modulo-3.html#trabajo-autónomo",
+    "href": "modulo-3.html#trabajo-autónomo",
+    "title": "Módulo 3: Introducción al análisis de varianza",
+    "section": "Trabajo autónomo",
+    "text": "Trabajo autónomo\nDespués de la clase:\n\nCompleta todos los ejercicios: un ANOVA completo, desde el gráfico hasta las comparaciones múltiples. Lo que no alcancemos en clase, incluida la Parte 4 (Más práctica), es tarea.\nCon tus propios datos (o con otra variable de ranas), repite el análisis y escribe dos frases que resuman el resultado.\nHaz la autoevaluación."
+  },
+  {
+    "objectID": "modulo-3.html#datos-y-materiales",
+    "href": "modulo-3.html#datos-y-materiales",
+    "title": "Módulo 3: Introducción al análisis de varianza",
+    "section": "Datos y materiales",
+    "text": "Datos y materiales\n\nranas.csv (descargar): datos del Prof. Justin C. Touchon (ver Módulo 1).\nDiapositivas del Módulo 3."
+  },
+  {
+    "objectID": "ejercicios-1.html",
+    "href": "ejercicios-1.html",
+    "title": "Ejercicios Módulo 1",
+    "section": "",
+    "text": "Estos ejercicios siguen el Módulo 1 paso a paso. El código corre en tu navegador: no necesitas instalar nada. Escribe tu código en los recuadros y presiona Run Code. Donde veas ____, complétalo. ¿Te atascaste? Abre la pestaña Pista. Las soluciones se publican después de la sesión."
+  },
+  {
+    "objectID": "ejercicios-1.html#parte-1",
+    "href": "ejercicios-1.html#parte-1",
+    "title": "Ejercicios Módulo 1",
+    "section": "Parte 1: R como calculadora y objetos",
+    "text": "Parte 1: R como calculadora y objetos\n\nEjercicio 1.1: R como calculadora\nUn renacuajo midió 19.4 mm al inicio del experimento y 19.7 mm al salir del agua. Guarda cada medida en un objeto, calcula cuánto creció en milímetros y qué porcentaje representa ese crecimiento respecto a la medida inicial.\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nAsignamos valores con &lt;-. El porcentaje es el crecimiento dividido para la medida inicial, multiplicado por 100.\n\n\n\n\nLa solución se publicará después de la sesión del domingo 15 de noviembre. Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 1.2: Vectores\nEstas son las masas (g) de cinco renacuajos. Crea el vector masas, calcula cuántos valores tiene, su media, y cuántos renacuajos pesan más de 0.4 g.\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nmasas &gt; 0.4 devuelve un vector lógico (TRUE/FALSE). Al sumarlo, R cuenta cada TRUE como 1.\n\n\n\n\nLa solución se publicará después de la sesión del domingo 15 de noviembre. Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 1.3: Tipos de datos y factores\n¿Qué clase de objeto obtienes al combinar un número, un texto y un valor lógico? Luego convierte el vector depredador en un factor y cuenta cuántas veces aparece cada nivel.\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nUn vector solo puede contener datos de una clase, así que R convierte todo a la clase más general. Para crear un factor usa factor().\n\n\n\n\nLa solución se publicará después de la sesión del domingo 15 de noviembre. Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 1.4: Tablas de datos\nConstruye una tabla de datos con tres tanques y extrae: (a) la columna masa con $, (b) la fila del segundo tanque, y (c) la masa del tercer tanque usando [fila, columna].\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nEn tabla[fila, columna], dejar un lugar vacío significa “todas”. tanques[2, ] es toda la fila 2.\n\n\n\n\nLa solución se publicará después de la sesión del domingo 15 de noviembre. Mientras tanto, usa la pestaña Pista."
+  },
+  {
+    "objectID": "ejercicios-1.html#parte-2",
+    "href": "ejercicios-1.html#parte-2",
+    "title": "Ejercicios Módulo 1",
+    "section": "Parte 2: Importar datos",
+    "text": "Parte 2: Importar datos\n\nEjercicio 2.1: Importar un archivo csv\nImporta el archivo datos/ranas.csv en un objeto llamado ranas. ¿Cuántas filas y columnas tiene? Revisa su estructura con str().\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nLa ruta del archivo va entre comillas, incluida la carpeta: \"datos/ranas.csv\". En tu computador, la ruta es relativa a la carpeta de tu proyecto de R.\n\n\n\n\nLa solución se publicará después de la sesión del domingo 15 de noviembre. Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 2.2: Explorar una tabla\nLa tabla ranas ya está cargada. Muestra sus primeras seis filas, las primeras tres filas de las columnas Pred y SVL.final, y un resumen de todas las columnas.\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nPara elegir varias columnas por su nombre, ponlas en un vector con c(), cada nombre entre comillas.\n\n\n\n\nLa solución se publicará después de la sesión del domingo 15 de noviembre. Mientras tanto, usa la pestaña Pista."
+  },
+  {
+    "objectID": "ejercicios-1.html#parte-3",
+    "href": "ejercicios-1.html#parte-3",
+    "title": "Ejercicios Módulo 1",
+    "section": "Parte 3: Estadísticos descriptivos",
+    "text": "Parte 3: Estadísticos descriptivos\n\nEjercicio 3.1: Medidas de tendencia central y dispersión\nCalcula la media, la mediana, la desviación estándar y la varianza de la longitud final (SVL.final).\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nLas funciones son mean(), median(), sd() y var(). Todas reciben un vector, por ejemplo ranas$SVL.final.\n\n\n\n\nLa solución se publicará después de la sesión del domingo 15 de noviembre. Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 3.2: Cuartiles\nCalcula los cuartiles de SVL.final. ¿Entre qué valores está el 50% central de los tanques?\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nEl 50% central de los datos está entre el primer cuartil (0.25) y el tercer cuartil (0.75).\n\n\n\n\nLa solución se publicará después de la sesión del domingo 15 de noviembre. Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 3.3: Variables categóricas\n¿Cuántos tanques hay con cada depredador? Calcula también la proporción, y una tabla cruzada de depredador por recursos (Res).\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\ntable() cuenta las veces que aparece cada valor. prop.table() convierte esos conteos en proporciones. Con dos variables, table() hace una tabla cruzada.\n\n\n\n\nLa solución se publicará después de la sesión del domingo 15 de noviembre. Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 3.4: Resumir por grupos\nCalcula la media de SVL.final para cada depredador, primero con tapply() y luego con aggregate(). ¿Qué grupo tiene los renacuajos más grandes al salir del agua?\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\ntapply(variable, grupo, función) aplica la función a la variable dentro de cada grupo. En aggregate(), la fórmula y ~ grupo se lee “y según grupo”.\n\n\n\n\nLa solución se publicará después de la sesión del domingo 15 de noviembre. Mientras tanto, usa la pestaña Pista."
+  },
+  {
+    "objectID": "ejercicios-1.html#parte-4",
+    "href": "ejercicios-1.html#parte-4",
+    "title": "Ejercicios Módulo 1",
+    "section": "Parte 4: Más práctica",
+    "text": "Parte 4: Más práctica\n\nEjercicio 4.1: Operaciones con vectores\nConvierte las masas de los cinco renacuajos de gramos a miligramos, ordénalas de menor a mayor y redondea su media a dos decimales.\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nUn gramo tiene 1000 miligramos. sort() ordena de menor a mayor; round(x, digits = 2) redondea a dos decimales.\n\n\n\n\nLa solución se publicará después de la sesión del domingo 15 de noviembre. Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 4.2: Filtrar filas\nQuédate solo con los tanques del depredador letal (L). ¿Cuántos son y cuál es su longitud final media? Luego filtra los tanques con depredador letal y** recursos altos.**\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nDentro de [ , ], una condición lógica antes de la coma elige las filas donde es TRUE. Para exigir dos condiciones a la vez, únelas con &.\n\n\n\n\nLa solución se publicará después de la sesión del domingo 15 de noviembre. Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 4.3: Crear una columna nueva\nCrea la columna crecimiento (longitud final menos inicial). ¿Cuál es el crecimiento medio? ¿Qué tanque creció más, y con qué tratamientos? ¿Algún tanque se encogió?\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nAsignar a tabla$nombre_nuevo crea una columna. which.max() devuelve la posición del valor más alto. Para contar los tanques que se encogieron, cuenta los crecimientos menores que cero.\n\n\n\n\nLa solución se publicará después de la sesión del domingo 15 de noviembre. Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 4.4: Valores faltantes\nUna de las masas no se pudo medir y quedó como NA. ¿Qué devuelve mean()? Calcula la media sin el valor faltante.\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nSi falta un valor, R no puede saber la media y devuelve NA. El argumento na.rm (“remove NA”) le pide ignorar los valores faltantes.\n\n\n\n\nLa solución se publicará después de la sesión del domingo 15 de noviembre. Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 4.5: Varios resúmenes por grupo\nCalcula la media y la desviación estándar de la masa final (Mass.final) para cada nivel de recursos (Res).\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nUsa la misma fórmula dos veces, cambiando la función en FUN.\n\n\n\n\nLa solución se publicará después de la sesión del domingo 15 de noviembre. Mientras tanto, usa la pestaña Pista."
+  },
+  {
+    "objectID": "ejercicios-1.html#con-tus-propios-datos",
+    "href": "ejercicios-1.html#con-tus-propios-datos",
+    "title": "Ejercicios Módulo 1",
+    "section": "Con tus propios datos",
+    "text": "Con tus propios datos\nImporta en tu proyecto de R una tabla de tus propios datos (o ranas.csv, que puedes descargar aquí) y repite la Parte 3: medidas de tendencia central y dispersión de una variable numérica, conteos de una categórica, y un resumen por grupos."
+  },
+  {
+    "objectID": "ejercicios-3.html",
+    "href": "ejercicios-3.html",
+    "title": "Ejercicios Módulo 3",
+    "section": "",
+    "text": "Estos ejercicios siguen el Módulo 3: un ANOVA completo, desde el gráfico hasta las comparaciones múltiples. El código corre en tu navegador. Donde veas ____, complétalo y presiona Run Code. ¿Te atascaste? Abre la pestaña Pista. Las soluciones se publican después de la sesión.\n#| setup: true\n#| exercise:\n#|   - ex_1_1\n#|   - ex_1_2\n#|   - ex_2_1\n#|   - ex_2_2\n#|   - ex_2_3\n#|   - ex_3_1\n#|   - ex_3_2\n#|   - ex_4_1\n#|   - ex_4_2\n#|   - ex_4_3\nranas &lt;- read.csv(\"datos/ranas.csv\")\nranas$Pred  &lt;- factor(ranas$Pred)\nranas$Res   &lt;- factor(ranas$Res)\nranas$Hatch &lt;- factor(ranas$Hatch)"
+  },
+  {
+    "objectID": "ejercicios-3.html#parte-1",
+    "href": "ejercicios-3.html#parte-1",
+    "title": "Ejercicios Módulo 3",
+    "section": "Parte 1: Del gráfico al ANOVA",
+    "text": "Parte 1: Del gráfico al ANOVA\n\nEjercicio 1.1: Graficar antes de modelar\nHaz un diagrama de caja de SVL.final por depredador, y calcula la media y la desviación estándar de cada grupo. ¿Qué observas?\n\nEjercicioPistaSolución\n\n\n\n#| exercise: ex_1_1\nboxplot(SVL.final ~ ____, data = ranas,\n        xlab = \"Depredador\", ylab = \"Longitud final (mm)\")\n\ntapply(ranas$SVL.final, ranas$Pred, mean)\ntapply(ranas$SVL.final, ranas$Pred, ____)\n\n\n\n\nLa fórmula y ~ grupo funciona igual en boxplot() que en aov(). Para la desviación estándar, la función es sd.\n\n\n\n\nSolución. \nboxplot(SVL.final ~ Pred, data = ranas,\n        xlab = \"Depredador\", ylab = \"Longitud final (mm)\")\n\ntapply(ranas$SVL.final, ranas$Pred, mean)\ntapply(ranas$SVL.final, ranas$Pred, sd)\nCon el depredador letal (L), los renacuajos salen del agua más grandes (20.44 mm) que en el control (18.46 mm) o con el no letal (19.06 mm). También notamos que la dispersión no es igual: la desviación estándar del grupo L (1.43) casi duplica la del control (0.75). Lo tendremos en cuenta al revisar los supuestos.\n\n\nLa solución se publicará después de la sesión del domingo 29 de noviembre. Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 1.2: ANOVA de una vía\nAjusta un ANOVA de una vía de SVL.final según Pred y muestra la tabla del ANOVA. ¿Hay diferencias entre los depredadores?\n\nEjercicioPistaSolución\n\n\n\n#| exercise: ex_1_2\nmodelo &lt;- aov(____ ~ ____, data = ranas)\nsummary(____)\n\n\n\n\nLa respuesta va a la izquierda de ~ y el factor a la derecha. summary() de un objeto aov muestra la tabla con los grados de libertad, sumas de cuadrados, cuadrados medios, \\(F\\) y el valor p.\n\n\n\n\nSolución. \nmodelo &lt;- aov(SVL.final ~ Pred, data = ranas)\nsummary(modelo)\n\n\n\n\ngl\nSC\nCM\n\\(F\\)\n\\(p\\)\n\n\n\n\nPred\n2\n64.73\n32.36\n25.84\n\\(2.9 \\times 10^{-9}\\)\n\n\nResiduales\n75\n93.94\n1.25\n\n\n\n\n\nLa variación entre depredadores (CM = 32.36) es unas 26 veces mayor que la variación dentro de los grupos (CM = 1.25). Rechazamos la hipótesis nula: al menos un depredador tiene una media distinta. El ANOVA no dice cuál: eso lo veremos en la Parte 3, pero antes hay que revisar los supuestos.\n\n\nLa solución se publicará después de la sesión del domingo 29 de noviembre. Mientras tanto, usa la pestaña Pista."
+  },
+  {
+    "objectID": "ejercicios-3.html#parte-2",
+    "href": "ejercicios-3.html#parte-2",
+    "title": "Ejercicios Módulo 3",
+    "section": "Parte 2: Supuestos, diagnósticos y transformaciones",
+    "text": "Parte 2: Supuestos, diagnósticos y transformaciones\n\nEjercicio 2.1: Gráficos de diagnóstico\nMuestra los cuatro gráficos de diagnóstico del modelo. Fíjate sobre todo en el primero (residuos frente a valores ajustados) y en el segundo (gráfico Q-Q de los residuos).\n\nEjercicioPistaSolución\n\n\n\n#| exercise: ex_2_1\nmodelo &lt;- aov(SVL.final ~ Pred, data = ranas)\n\npar(mfrow = c(2, 2))\nplot(____)\npar(mfrow = c(1, 1))\n\n\n\n\nplot() de un modelo aov dibuja los gráficos de diagnóstico. par(mfrow = c(2, 2)) los pone en una cuadrícula de 2 por 2.\n\n\n\n\nSolución. \nmodelo &lt;- aov(SVL.final ~ Pred, data = ranas)\n\npar(mfrow = c(2, 2))\nplot(modelo)\npar(mfrow = c(1, 1))\n\nResiduos frente a ajustados: hay tres columnas de puntos, una por depredador. La del grupo L (la de valores ajustados más altos) está más dispersa: indicio de varianzas distintas.\nQ-Q: los residuos siguen bastante bien la línea, así que la normalidad parece razonable.\n\n\n\nLa solución se publicará después de la sesión del domingo 29 de noviembre. Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 2.2: Pruebas formales de los supuestos\nComprueba la normalidad de los residuos con Shapiro-Wilk y la homogeneidad de varianzas con la prueba de Bartlett. ¿Coinciden con lo que viste en los gráficos?\n\nEjercicioPistaSolución\n\n\n\n#| exercise: ex_2_2\nmodelo &lt;- aov(SVL.final ~ Pred, data = ranas)\n\nshapiro.test(residuals(____))\nbartlett.test(SVL.final ~ ____, data = ranas)\n\n\n\n\nLa normalidad del ANOVA se revisa sobre los residuos del modelo, que obtienes con residuals(modelo). En la prueba de Bartlett, la hipótesis nula es que todas las varianzas son iguales.\n\n\n\n\nSolución. \nmodelo &lt;- aov(SVL.final ~ Pred, data = ranas)\n\nshapiro.test(residuals(modelo))\nbartlett.test(SVL.final ~ Pred, data = ranas)\nLos residuos son normales (Shapiro-Wilk: \\(W = 0.986\\), \\(p = 0.58\\)), pero las varianzas no son homogéneas (Bartlett: \\(K^2 = 12.43\\), \\(gl = 2\\), \\(p = 0.002\\)). Coincide con los gráficos.\n¿Qué hacemos? El efecto del depredador es tan claro (\\(p &lt; 10^{-8}\\)) que es poco probable que cambie, pero conviene comprobarlo con una prueba que no suponga varianzas iguales. En el ejercicio 3.2 usamos Kruskal-Wallis.\n\n\nLa solución se publicará después de la sesión del domingo 29 de noviembre. Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 2.3: Transformar la respuesta\nLa edad al salir del agua (Age.FromEmergence) es un tiempo, con cola larga a la derecha. Ajusta un ANOVA según Pred y revisa sus supuestos. Luego repite todo con log(Age.FromEmergence). ¿Mejoran?\n\nEjercicioPistaSolución\n\n\n\n#| exercise: ex_2_3\nmodelo_edad &lt;- aov(Age.FromEmergence ~ Pred, data = ranas)\nshapiro.test(residuals(modelo_edad))\nbartlett.test(Age.FromEmergence ~ Pred, data = ranas)\n\nmodelo_log &lt;- aov(____(Age.FromEmergence) ~ Pred, data = ranas)\nshapiro.test(residuals(____))\nbartlett.test(log(Age.FromEmergence) ~ Pred, data = ranas)\nsummary(modelo_log)\n\n\n\n\nPuedes transformar la respuesta dentro de la fórmula: aov(log(y) ~ grupo). Para tiempos, masas y concentraciones se suele usar log(); para conteos, sqrt().\n\n\n\n\nSolución. \nmodelo_edad &lt;- aov(Age.FromEmergence ~ Pred, data = ranas)\nshapiro.test(residuals(modelo_edad))\nbartlett.test(Age.FromEmergence ~ Pred, data = ranas)\n\nmodelo_log &lt;- aov(log(Age.FromEmergence) ~ Pred, data = ranas)\nshapiro.test(residuals(modelo_log))\nbartlett.test(log(Age.FromEmergence) ~ Pred, data = ranas)\nsummary(modelo_log)\nEn días, los dos supuestos fallan: los residuos no son normales (Shapiro-Wilk: \\(p &lt; 0.001\\)) y las varianzas difieren mucho (Bartlett: \\(p &lt; 0.001\\)).\nCon el logaritmo, los residuos ya son normales (\\(p = 0.26\\)) y la diferencia entre varianzas es mucho menor (Bartlett: \\(p = 0.021\\)), aunque no desaparece del todo. El ANOVA sobre log(Age.FromEmergence) da \\(F = 12.39\\), \\(gl = 2\\) y 75, \\(p &lt; 0.001\\).\nComo las varianzas todavía difieren un poco, conviene confirmar la conclusión con Kruskal-Wallis (ejercicio 3.2).\n\n\nLa solución se publicará después de la sesión del domingo 29 de noviembre. Mientras tanto, usa la pestaña Pista."
+  },
+  {
+    "objectID": "ejercicios-3.html#parte-3",
+    "href": "ejercicios-3.html#parte-3",
+    "title": "Ejercicios Módulo 3",
+    "section": "Parte 3: ¿Qué grupos difieren?",
+    "text": "Parte 3: ¿Qué grupos difieren?\n\nEjercicio 3.1: Comparaciones múltiples de Tukey\nUsa la prueba HSD de Tukey para comparar todos los pares de depredadores. ¿Qué pares difieren? Grafica los intervalos de confianza.\n\nEjercicioPistaSolución\n\n\n\n#| exercise: ex_3_1\nmodelo &lt;- aov(SVL.final ~ Pred, data = ranas)\n\ntukey &lt;- TukeyHSD(____)\ntukey\nplot(____)\n\n\n\n\nEn la salida, diff es la diferencia entre las medias, lwr y upr los límites del intervalo del 95%, y p adj el valor p ajustado por hacer varias comparaciones. Un intervalo que no contiene el cero indica una diferencia.\n\n\n\n\nSolución. \nmodelo &lt;- aov(SVL.final ~ Pred, data = ranas)\n\ntukey &lt;- TukeyHSD(modelo)\ntukey\nplot(tukey)\n\n\n\nComparación\nDiferencia (mm)\nIC 95%\n\\(p\\) ajustado\n\n\n\n\nL - C\n1.98\n1.32 a 2.65\n&lt; 0.001\n\n\nNL - C\n0.60\n-0.26 a 1.46\n0.22\n\n\nNL - L\n-1.38\n-2.24 a -0.53\n&lt; 0.001\n\n\n\nSolo el depredador letal cambia el tamaño: los renacuajos salen del agua unos 2 mm más grandes que en el control y 1.4 mm más grandes que con el depredador no letal. Entre el control y el no letal no hay diferencia clara: su intervalo contiene el cero.\n\n\nLa solución se publicará después de la sesión del domingo 29 de noviembre. Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 3.2: Kruskal-Wallis\nCuando ni la transformación arregla los supuestos (o prefieres no transformar), la alternativa es Kruskal-Wallis. Aplícalo a Age.FromEmergence según Pred, con comparaciones por pares de Wilcoxon. ¿Coincide con el ejercicio 2.3?\n\nEjercicioPistaSolución\n\n\n\n#| exercise: ex_3_2\ntapply(ranas$Age.FromEmergence, ranas$Pred, median)\n\nkruskal.test(Age.FromEmergence ~ ____, data = ranas)\npairwise.wilcox.test(ranas$Age.FromEmergence, ranas$____)\n\n\n\n\nKruskal-Wallis es la alternativa no paramétrica al ANOVA de una vía: compara los rangos en lugar de las medias, así que resume cada grupo con la mediana. pairwise.wilcox.test(respuesta, grupo) hace todas las comparaciones por pares y ajusta los valores p (por defecto, con el método de Holm).\n\n\n\n\nSolución. \ntapply(ranas$Age.FromEmergence, ranas$Pred, median)\n\nkruskal.test(Age.FromEmergence ~ Pred, data = ranas)\npairwise.wilcox.test(ranas$Age.FromEmergence, ranas$Pred)\nLas medianas son 32.9 días (C), 14.2 (L) y 28.2 (NL). La prueba de Kruskal-Wallis da \\(\\chi^2 = 22.26\\), \\(gl = 2\\), \\(p &lt; 0.001\\): la edad al salir del agua depende del depredador, como en el ANOVA del logaritmo del ejercicio 2.3.\nPor pares, el grupo L sale antes que el control (\\(p &lt; 0.001\\)) y que el no letal (\\(p = 0.025\\)); el control y el no letal no difieren (\\(p = 0.30\\)). R puede avisar que hay empates y que usa una aproximación: es un aviso, no un error.\n\n\nLa solución se publicará después de la sesión del domingo 29 de noviembre. Mientras tanto, usa la pestaña Pista."
+  },
+  {
+    "objectID": "ejercicios-3.html#parte-4",
+    "href": "ejercicios-3.html#parte-4",
+    "title": "Ejercicios Módulo 3",
+    "section": "Parte 4: Más práctica",
+    "text": "Parte 4: Más práctica\n\nEjercicio 4.1: Un ANOVA sin diferencias\n¿Dependen los días para reabsorber la cola (Resorb.days) del depredador? Ajusta el ANOVA, revisa la normalidad de los residuos y confirma con Kruskal-Wallis.\n\nEjercicioPistaSolución\n\n\n\n#| exercise: ex_4_1\nmodelo_cola &lt;- aov(Resorb.days ~ ____, data = ranas)\nsummary(modelo_cola)\nshapiro.test(residuals(____))\n\nkruskal.test(Resorb.days ~ Pred, data = ranas)\n\n\n\n\nSi el ANOVA no es significativo, no hace falta hacer comparaciones múltiples.\n\n\n\n\nSolución. \nmodelo_cola &lt;- aov(Resorb.days ~ Pred, data = ranas)\nsummary(modelo_cola)\nshapiro.test(residuals(modelo_cola))\n\nkruskal.test(Resorb.days ~ Pred, data = ranas)\nEl ANOVA da \\(F = 1.11\\), \\(gl = 2\\) y 75, \\(p = 0.34\\). Los residuos no son normales (\\(p = 0.004\\)), pero Kruskal-Wallis llega a lo mismo (\\(p = 0.49\\)): no hay evidencia de que el depredador cambie el tiempo de reabsorción. En el Módulo 4 veremos que lo que sí lo cambia son los recursos.\n\n\nLa solución se publicará después de la sesión del domingo 29 de noviembre. Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 4.2: ANOVA con dos grupos\nCompara SVL.final entre Hi y Lo con un ANOVA y con la prueba t de Student (var.equal = TRUE). Compara el estadístico \\(F\\) con \\(t^2\\) y los dos valores p.\n\nEjercicioPistaSolución\n\n\n\n#| exercise: ex_4_2\nsummary(aov(SVL.final ~ Res, data = ranas))\n\nprueba &lt;- t.test(SVL.final ~ Res, data = ranas, var.equal = ____)\nprueba\nprueba$statistic^____\n\n\n\n\nCon dos grupos, el ANOVA de una vía y la prueba t de Student son la misma prueba: \\(F = t^2\\).\n\n\n\n\nSolución. \nsummary(aov(SVL.final ~ Res, data = ranas))\n\nprueba &lt;- t.test(SVL.final ~ Res, data = ranas, var.equal = TRUE)\nprueba\nprueba$statistic^2\n\\(t = 1.33\\) y \\(t^2 = 1.77\\), el mismo valor de \\(F\\) del ANOVA; los dos valores p son 0.19. El ANOVA generaliza la prueba t de Student a más de dos grupos.\n\n\nLa solución se publicará después de la sesión del domingo 29 de noviembre. Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 4.3: El camino completo, con la masa\nRecorre el camino del ANOVA con la masa final (Mass.final) según Pred: diagnósticos, transformación con log() si hace falta, ANOVA, Tukey y una confirmación con Kruskal-Wallis. ¿Cuántas veces más pesan los renacuajos con depredador letal que en el control?\n\nEjercicioPistaSolución\n\n\n\n#| exercise: ex_4_3\nmodelo_masa &lt;- aov(Mass.final ~ Pred, data = ranas)\nshapiro.test(residuals(modelo_masa))\nbartlett.test(Mass.final ~ Pred, data = ranas)\n\nmodelo_log &lt;- aov(log(Mass.final) ~ Pred, data = ranas)\nshapiro.test(residuals(modelo_log))\nbartlett.test(log(Mass.final) ~ Pred, data = ranas)\nsummary(modelo_log)\n\ntukey &lt;- TukeyHSD(____)\ntukey\nexp(tukey$Pred[, \"diff\"])\n\nkruskal.test(Mass.final ~ Pred, data = ranas)\n\n\n\n\nEn escala logarítmica, exp() de una diferencia de Tukey es un cociente entre medias geométricas.\n\n\n\n\nSolución. \nmodelo_masa &lt;- aov(Mass.final ~ Pred, data = ranas)\nshapiro.test(residuals(modelo_masa))\nbartlett.test(Mass.final ~ Pred, data = ranas)\n\nmodelo_log &lt;- aov(log(Mass.final) ~ Pred, data = ranas)\nshapiro.test(residuals(modelo_log))\nbartlett.test(log(Mass.final) ~ Pred, data = ranas)\nsummary(modelo_log)\n\ntukey &lt;- TukeyHSD(modelo_log)\ntukey\nexp(tukey$Pred[, \"diff\"])\n\nkruskal.test(Mass.final ~ Pred, data = ranas)\nEn gramos fallan los dos supuestos (Shapiro-Wilk: \\(p = 0.004\\); Bartlett: \\(p &lt; 0.001\\)). Con el logaritmo, los residuos ya son normales (\\(p = 0.33\\)), aunque las varianzas siguen siendo algo distintas (Bartlett: \\(p = 0.001\\)). El ANOVA del logaritmo da \\(F = 23.29\\), \\(p &lt; 0.001\\).\nTukey: L difiere del control (\\(p &lt; 0.001\\)) y del no letal (\\(p = 0.001\\)); el control y el no letal no difieren (\\(p = 0.29\\)). Con depredador letal, los renacuajos pesan 1.36 veces lo del control (un 36% más). Kruskal-Wallis confirma la conclusión (\\(p &lt; 0.001\\)), lo que da tranquilidad dado que las varianzas no son del todo iguales.\n\n\nLa solución se publicará después de la sesión del domingo 29 de noviembre. Mientras tanto, usa la pestaña Pista."
+  },
+  {
+    "objectID": "ejercicios-3.html#con-tus-propios-datos",
+    "href": "ejercicios-3.html#con-tus-propios-datos",
+    "title": "Ejercicios Módulo 3",
+    "section": "Con tus propios datos",
+    "text": "Con tus propios datos\nElige una variable de respuesta y un factor con tres o más niveles. Repite el camino de hoy: gráfico → ANOVA → diagnósticos → comparaciones múltiples (o Kruskal-Wallis si los supuestos fallan), y escribe dos frases que resuman el resultado."
+  },
+  {
+    "objectID": "autoevaluacion-1.html",
+    "href": "autoevaluacion-1.html",
+    "title": "Autoevaluación Módulo 1",
+    "section": "",
+    "text": "Ocho preguntas cortas sobre el Módulo 1, dos por cada objetivo de la sesión. Tienes dos intentos por pregunta; después verás la respuesta y una explicación. Es anónima: no se guarda ni se envía nada."
+  },
+  {
+    "objectID": "autoevaluacion-1.html#objetivo-1-r-rstudio-y-proyectos",
+    "href": "autoevaluacion-1.html#objetivo-1-r-rstudio-y-proyectos",
+    "title": "Autoevaluación Módulo 1",
+    "section": "Objetivo 1: R, RStudio y proyectos",
+    "text": "Objetivo 1: R, RStudio y proyectos\n\n1. ¿Cuál es la principal ventaja de trabajar dentro de un proyecto de R?\nHace que el código corra más rápido\nFija la carpeta de trabajo, así las rutas como\n\"datos/ranas.csv\" funcionan en cualquier computador\nInstala automáticamente todos los paquetes necesarios\nGuarda una copia de seguridad en la nubeComprobar respuesta\n\n\nAl abrir un proyecto, RStudio fija la carpeta de trabajo en la carpeta del proyecto. Las rutas relativas (datos/ranas.csv) funcionan entonces igual en tu computador y en el de un colega, sin escribir rutas como C:/Usuarios/....\n\n\n\n\n2. R y RStudio, ¿son lo mismo?\nSí, son dos nombres del mismo programa\nNo: R es el lenguaje que hace los cálculos y RStudio es un entorno para\nescribir y ejecutar código de R\nNo: RStudio es el lenguaje y R es la interfaz gráfica\nSí, pero RStudio es la versión de pagoComprobar respuesta\n\n\nR es el lenguaje y el motor de cálculo. RStudio es un entorno de desarrollo (IDE) que facilita escribir scripts, ver objetos, gráficos y ayuda. Por eso se instala primero R y luego RStudio."
+  },
+  {
+    "objectID": "autoevaluacion-1.html#objetivo-2-tipos-de-datos-operadores-y-objetos",
+    "href": "autoevaluacion-1.html#objetivo-2-tipos-de-datos-operadores-y-objetos",
+    "title": "Autoevaluación Módulo 1",
+    "section": "Objetivo 2: Tipos de datos, operadores y objetos",
+    "text": "Objetivo 2: Tipos de datos, operadores y objetos\n\n3. Queremos comprobar si x es igual a 5. ¿Qué expresión usamos?\nx = 5\nx &lt;- 5\nx == 5\nx != 5Comprobar respuesta\n\n\n== compara y devuelve TRUE o FALSE. = y &lt;- asignan el valor 5 a x, y != pregunta si es distinto de 5.\n\n\n\n\n4. ¿Qué devuelve class(c(2, \"tres\", 4))?\n\"numeric\"\n\"character\"\n\"list\"\nUn errorComprobar respuesta\n\n\nUn vector solo admite una clase. Como \"tres\" es texto, R convierte todos los elementos a texto: el resultado es \"character\". Para guardar elementos de distintas clases se usa una lista."
+  },
+  {
+    "objectID": "autoevaluacion-1.html#objetivo-3-paquetes-e-importación-de-datos",
+    "href": "autoevaluacion-1.html#objetivo-3-paquetes-e-importación-de-datos",
+    "title": "Autoevaluación Módulo 1",
+    "section": "Objetivo 3: Paquetes e importación de datos",
+    "text": "Objetivo 3: Paquetes e importación de datos\n\n5. ¿Cuál es la diferencia entre install.packages(\"readxl\") y library(readxl)?\nNinguna, hacen lo mismo\ninstall.packages() descarga el paquete una vez;\nlibrary() lo carga en cada sesión en que lo uses\nlibrary() descarga el paquete y\ninstall.packages() lo actualiza\ninstall.packages() solo funciona en WindowsComprobar respuesta\n\n\nUn paquete se instala una sola vez en tu computador, pero hay que cargarlo con library() cada vez que abres R y quieres usar sus funciones.\n\n\n\n\n6. Después de ranas &lt;- read.csv(\"datos/ranas.csv\"), ¿qué función usarías para ver de un vistazo el tipo de cada columna?\nstr(ranas)\nmean(ranas)\ntable(ranas)\nlength(ranas)Comprobar respuesta\n\n\nstr() muestra la estructura: número de filas y columnas, y la clase y primeros valores de cada columna. Es lo primero que conviene revisar después de importar."
+  },
+  {
+    "objectID": "autoevaluacion-1.html#objetivo-4-estadísticos-descriptivos",
+    "href": "autoevaluacion-1.html#objetivo-4-estadísticos-descriptivos",
+    "title": "Autoevaluación Módulo 1",
+    "section": "Objetivo 4: Estadísticos descriptivos",
+    "text": "Objetivo 4: Estadísticos descriptivos\n\n7. Una variable de tiempos tiene media 30.7 días y mediana 23.4 días. ¿Qué sugiere esto?\nLa distribución es simétrica\nHay valores altos que tiran de la media hacia arriba: la distribución\ntiene una cola a la derecha\nHay un error en los datos\nLa desviación estándar es ceroComprobar respuesta\n\n\nLa media es sensible a los valores extremos y la mediana no. Si la media es bastante mayor que la mediana, unos pocos valores altos alargan la cola derecha. Es el caso de Age.FromEmergence en ranas.\n\n\n\n\n8. ¿Qué función resume SVL.final con su media para cada nivel de Pred?\nmean(ranas$SVL.final, ranas$Pred)\ntapply(ranas$SVL.final, ranas$Pred, mean)\ntable(ranas$SVL.final, ranas$Pred)\nsummary(ranas$Pred)Comprobar respuesta\n\n\ntapply(variable, grupo, función) aplica mean a SVL.final dentro de cada depredador. aggregate(SVL.final ~ Pred, data = ranas, FUN = mean) hace lo mismo y devuelve una tabla de datos.\n\n\n\n¿Fallaste alguna? Vuelve a la parte correspondiente de las diapositivas o de los ejercicios."
+  },
+  {
+    "objectID": "autoevaluacion-3.html",
+    "href": "autoevaluacion-3.html",
+    "title": "Autoevaluación Módulo 3",
+    "section": "",
+    "text": "Nueve preguntas cortas sobre el Módulo 3: dos por cada objetivo de la sesión y una sobre transformaciones. Tienes dos intentos por pregunta; después verás la respuesta y una explicación. Es anónima: no se guarda ni se envía nada."
+  },
+  {
+    "objectID": "autoevaluacion-3.html#objetivo-1-la-idea-del-anova",
+    "href": "autoevaluacion-3.html#objetivo-1-la-idea-del-anova",
+    "title": "Autoevaluación Módulo 3",
+    "section": "Objetivo 1: La idea del ANOVA",
+    "text": "Objetivo 1: La idea del ANOVA\n\n1. Con tres grupos, hacemos las tres pruebas t posibles, cada una con \\(\\alpha = 0.05\\). Si en realidad no hay diferencias, ¿cuál es aproximadamente la probabilidad de encontrar al menos un falso positivo?\n0.05\n0.10\n0.14\n0.50Comprobar respuesta\n\n\n\\(1 - 0.95^3 \\approx 0.14\\), casi el triple del 5% que queríamos. Por eso se usa primero un ANOVA, que compara todos los grupos a la vez, y luego comparaciones múltiples con valores p ajustados.\n\n\n\n\n2. En la tabla del ANOVA, el estadístico \\(F\\) compara…\nlas medias de los dos grupos más extremos\nla variación entre los grupos con la variación dentro de los grupos\nla normalidad de los residuos\nla media de cada grupo con ceroComprobar respuesta\n\n\n\\(F = CM_{entre} / CM_{dentro}\\). Si \\(H_0\\) es cierta (todas las medias son iguales), las dos estimaciones de variación son parecidas y \\(F \\approx 1\\). Un \\(F\\) grande, como 25.84 en el ejercicio 1.2, indica que las medias difieren más de lo que esperaríamos por azar."
+  },
+  {
+    "objectID": "autoevaluacion-3.html#objetivo-2-ajustar-e-interpretar-el-anova",
+    "href": "autoevaluacion-3.html#objetivo-2-ajustar-e-interpretar-el-anova",
+    "title": "Autoevaluación Módulo 3",
+    "section": "Objetivo 2: Ajustar e interpretar el ANOVA",
+    "text": "Objetivo 2: Ajustar e interpretar el ANOVA\n\n3. Un ANOVA de una vía con 78 observaciones y 3 grupos tiene ¿cuántos grados de libertad residuales?\n77\n76\n75\n2Comprobar respuesta\n\n\nLos grados de libertad residuales son \\(n - k = 78 - 3 = 75\\). El factor tiene \\(k - 1 = 2\\) grados de libertad, y el total es \\(n - 1 = 77\\).\n\n\n\n\n4. El ANOVA da \\(p = 2.9 \\times 10^{-9}\\) para el depredador. ¿Qué podemos concluir?\nLos tres depredadores difieren entre sí\nAl menos un depredador tiene una media distinta de las demás\nEl depredador letal es el que difiere\nLos supuestos del ANOVA se cumplenComprobar respuesta\n\n\nLa hipótesis nula del ANOVA es que todas las medias son iguales. Rechazarla solo dice que al menos una difiere. Para saber cuáles, necesitamos comparaciones múltiples (Tukey). Y el valor p no dice nada sobre los supuestos: hay que revisarlos aparte."
+  },
+  {
+    "objectID": "autoevaluacion-3.html#objetivo-3-supuestos-y-diagnósticos",
+    "href": "autoevaluacion-3.html#objetivo-3-supuestos-y-diagnósticos",
+    "title": "Autoevaluación Módulo 3",
+    "section": "Objetivo 3: Supuestos y diagnósticos",
+    "text": "Objetivo 3: Supuestos y diagnósticos\n\n5. ¿Sobre qué se revisa el supuesto de normalidad en un ANOVA?\nSobre la variable de respuesta completa, sin separar por grupos\nSobre los residuos del modelo\nSobre el factor\nSobre los valores pComprobar respuesta\n\n\nEl ANOVA supone que los errores son normales. Los estimamos con los residuos (residuals(modelo)): cada observación menos la media de su grupo. La respuesta completa puede no ser normal simplemente porque mezcla grupos con medias distintas.\n\n\n\n\n6. En el gráfico de residuos frente a valores ajustados, una de las columnas de puntos está mucho más dispersa que las otras. Esto sugiere…\nque los residuos no son normales\nque las varianzas de los grupos no son homogéneas\nque hay una interacción\nque el modelo es perfectoComprobar respuesta\n\n\nCada columna corresponde a un grupo. Si su dispersión es muy distinta, las varianzas no son homogéneas. Se puede confirmar con bartlett.test(); en SVL.final dio \\(p = 0.002\\)."
+  },
+  {
+    "objectID": "autoevaluacion-3.html#objetivo-4-comparaciones-múltiples-y-kruskal-wallis",
+    "href": "autoevaluacion-3.html#objetivo-4-comparaciones-múltiples-y-kruskal-wallis",
+    "title": "Autoevaluación Módulo 3",
+    "section": "Objetivo 4: Comparaciones múltiples y Kruskal-Wallis",
+    "text": "Objetivo 4: Comparaciones múltiples y Kruskal-Wallis\n\n7. En la salida de TukeyHSD(), la comparación NL - C tiene un intervalo de -0.26 a 1.46 mm. ¿Qué significa?\nNL es 1.46 mm más grande que C\nNo hay evidencia clara de diferencia entre NL y C, porque el intervalo\ncontiene el cero\nNL es más pequeño que C\nEl intervalo es demasiado ancho para interpretarloComprobar respuesta\n\n\nSi el intervalo de la diferencia incluye el cero, una diferencia de cero es compatible con los datos: no hay evidencia clara de diferencia. Coincide con su \\(p\\) ajustado de 0.22.\n\n\n\n\n8. ¿Cuándo es razonable usar Kruskal-Wallis en lugar del ANOVA de una vía?\nSiempre, porque es más potente\nCuando los residuos claramente no son normales y una transformación no\nlo arregla\nCuando hay dos factores\nCuando hay solo dos gruposComprobar respuesta\n\n\nKruskal-Wallis compara rangos y no supone normalidad. Cuando los supuestos se cumplen, el ANOVA suele ser más potente. Con dos factores necesitamos un ANOVA de dos vías (Módulo 4); con dos grupos, la alternativa es Wilcoxon.\n\n\n\n\n9. Analizas conteos de insectos por insecticida. En los diagnósticos, la varianza crece con la media. ¿Qué transformación de la respuesta suele ayudar con conteos?\nsqrt(conteo), la raíz cuadrada\nconteo^2\n-conteo\nNinguna: los conteos nunca se transformanComprobar respuesta\n\n\nEn los conteos, la varianza suele ser proporcional a la media, y la raíz cuadrada la estabiliza. Para tiempos, masas o concentraciones, con cola a la derecha, se usa más el logaritmo. Después de transformar, siempre hay que volver a revisar los diagnósticos.\n\n\n\n¿Fallaste alguna? Vuelve a la parte correspondiente de las diapositivas o de los ejercicios."
+  },
+  {
+    "objectID": "recursos.html",
+    "href": "recursos.html",
+    "title": "Recursos",
+    "section": "",
+    "text": "Instala los programas en este orden, antes de la primera clase:\n\nR, desde CRAN: elige tu sistema operativo y descarga la versión más reciente.\nRStudio Desktop, desde Posit (versión gratuita).\nAbre RStudio y, en la consola, instala los paquetes que usaremos:\n\ninstall.packages(c(\"readxl\", \"writexl\", \"flextable\"))\n\n\n\n\n\n\n¿No puedes instalar R todavía?\n\n\n\nLos ejercicios de este sitio corren en tu navegador, así que puedes empezar a practicar mientras resuelves la instalación. Si tienes problemas, escribe al correo del curso antes del primer domingo."
+  },
+  {
+    "objectID": "recursos.html#instalacion",
+    "href": "recursos.html#instalacion",
+    "title": "Recursos",
+    "section": "",
+    "text": "Instala los programas en este orden, antes de la primera clase:\n\nR, desde CRAN: elige tu sistema operativo y descarga la versión más reciente.\nRStudio Desktop, desde Posit (versión gratuita).\nAbre RStudio y, en la consola, instala los paquetes que usaremos:\n\ninstall.packages(c(\"readxl\", \"writexl\", \"flextable\"))\n\n\n\n\n\n\n¿No puedes instalar R todavía?\n\n\n\nLos ejercicios de este sitio corren en tu navegador, así que puedes empezar a practicar mientras resuelves la instalación. Si tienes problemas, escribe al correo del curso antes del primer domingo."
+  },
+  {
+    "objectID": "recursos.html#libros-gratuitos-en-español",
+    "href": "recursos.html#libros-gratuitos-en-español",
+    "title": "Recursos",
+    "section": "Libros gratuitos en español",
+    "text": "Libros gratuitos en español\n\nR para Ciencia de Datos, de Hadley Wickham y Garrett Grolemund, traducción colaborativa de la comunidad de R de Latinoamérica: importación, manejo y visualización de datos."
+  },
+  {
+    "objectID": "recursos.html#libros-gratuitos-en-inglés",
+    "href": "recursos.html#libros-gratuitos-en-inglés",
+    "title": "Recursos",
+    "section": "Libros gratuitos en inglés",
+    "text": "Libros gratuitos en inglés\n\nLearning Statistics with R, de Danielle Navarro: una introducción amable a la estadística y a R.\nModern Statistics with R, de Måns Thulin: desde el manejo de datos hasta modelos más avanzados.\nHands-On Programming with R, de Garrett Grolemund: programación en R desde cero."
+  },
+  {
+    "objectID": "recursos.html#ayuda-dentro-de-r",
+    "href": "recursos.html#ayuda-dentro-de-r",
+    "title": "Recursos",
+    "section": "Ayuda dentro de R",
+    "text": "Ayuda dentro de R\n\n?mean o help(mean) abre la ayuda de una función.\nexample(mean) corre los ejemplos de la ayuda.\nLas hojas de referencia de Posit resumen RStudio y muchos paquetes en una página."
+  },
+  {
+    "objectID": "recursos.html#cursos-anteriores",
+    "href": "recursos.html#cursos-anteriores",
+    "title": "Recursos",
+    "section": "Cursos anteriores",
+    "text": "Cursos anteriores\n\nBioestadística en R (2025): taller de 40 horas con R, {tidyverse}, {ggplot2}, inferencia, diseño de experimentos, modelos lineales y Quarto."
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html",
+    "href": "diapositivas/modulo-1.html",
+    "title": "R y RStudio",
+    "section": "",
+    "text": "Módulo 1: Generalidades e introducción a R\n\nMauricio Moreno, PhD\nDomingo 15 de noviembre de 2026"
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#section",
+    "href": "diapositivas/modulo-1.html#section",
+    "title": "Introducción a R",
+    "section": "",
+    "text": "Módulo 1: Generalidades e introducción a R\n\nMauricio Moreno, PhD\nDomingo 15 de noviembre de 2026"
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#acerca-del-curso",
+    "href": "diapositivas/modulo-1.html#acerca-del-curso",
+    "title": "Introducción a R",
+    "section": "Acerca del curso",
+    "text": "Acerca del curso\n\nCuatro domingos, de 9H00 a 12H00: 15, 22 y 29 de noviembre, y 6 de diciembre.\nTodo el material está en la página web del curso: estas diapositivas, ejercicios interactivos, autoevaluaciones y recursos.\nLos ejercicios corren en el navegador: puedes practicar aunque todavía no tengas R instalado.\nEvaluación: 40% ejercicios en clase y 60% examen virtual. Con 7/10 obtienes el certificado de aprobación.\nPreguntas fuera de clase: mmorenozambrano@gmail.com"
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#hoy",
+    "href": "diapositivas/modulo-1.html#hoy",
+    "title": "Introducción a R",
+    "section": "Hoy",
+    "text": "Hoy\n\nR, RStudio y los proyectos de R\nReglas de sintaxis, tipos de datos y operadores\nObjetos: vectores, factores, tablas de datos y listas\nPaquetes e importación de datos\nEstadísticos descriptivos\n\n\nEntre cada bloque, ejercicios en la página del curso."
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#por-qué-r",
+    "href": "diapositivas/modulo-1.html#por-qué-r",
+    "title": "Introducción a R",
+    "section": "¿Por qué R?",
+    "text": "¿Por qué R?\n\n\n\n\n\nUso de R comparado con SAS, SPSS y JMP en Ecología (Touchon y McCoy (2016), Ecosphere 7 (8))\n\n\n\n\nEs gratuito y de código abierto.\nTiene más de 20 000 paquetes para casi cualquier análisis.\nEs el estándar en muchas áreas de la biología, la agronomía y la salud.\nTodo queda escrito en un script: el análisis se puede repetir, revisar y compartir.\nUna comunidad enorme, también en español."
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#instalación-de-r-y-rstudio",
+    "href": "diapositivas/modulo-1.html#instalación-de-r-y-rstudio",
+    "title": "Introducción a R",
+    "section": "Instalación de R y RStudio",
+    "text": "Instalación de R y RStudio\nSe instalan en este orden:\n\nR, desde CRAN: es el lenguaje, el que hace los cálculos.\nRStudio Desktop, desde Posit: es el entorno donde escribimos y ejecutamos el código.\n\n\n\n\n\n\n\n\nLa guía paso a paso está en la sección Recursos de la página del curso."
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#rstudio",
+    "href": "diapositivas/modulo-1.html#rstudio",
+    "title": "Introducción a R",
+    "section": "RStudio",
+    "text": "RStudio"
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#los-cuatro-paneles",
+    "href": "diapositivas/modulo-1.html#los-cuatro-paneles",
+    "title": "Introducción a R",
+    "section": "Los cuatro paneles",
+    "text": "Los cuatro paneles\n\nScript (arriba a la izquierda): donde escribimos el código que queremos guardar. Ctrl + Enter ejecuta la línea actual.\nConsola (abajo a la izquierda): donde R ejecuta el código y muestra los resultados.\nEntorno (arriba a la derecha): los objetos que hemos creado.\nArchivos, gráficos, paquetes y ayuda (abajo a la derecha)."
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#por-qué-un-proyecto",
+    "href": "diapositivas/modulo-1.html#por-qué-un-proyecto",
+    "title": "Introducción a R",
+    "section": "¿Por qué un proyecto?",
+    "text": "¿Por qué un proyecto?\n\nUn proyecto de R es una carpeta con un archivo .Rproj.\nAl abrirlo, RStudio fija esa carpeta como carpeta de trabajo.\nAsí podemos usar rutas relativas: \"datos/ranas.csv\" en lugar de \"C:/Users/Mauricio/Documentos/curso/datos/ranas.csv\".\nEl mismo código funciona en tu computador, en el mío y en el de un colega."
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#creando-un-proyecto",
+    "href": "diapositivas/modulo-1.html#creando-un-proyecto",
+    "title": "Introducción a R",
+    "section": "Creando un proyecto",
+    "text": "Creando un proyecto\n\n\n\n\n\n\n\n\n\nFile (Archivo) → New Project… (Nuevo proyecto…)\nNew Directory (Nuevo directorio)\nNew Project (Nuevo proyecto)\nElegimos el nombre de la carpeta y dónde crearla."
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#creando-un-proyecto-1",
+    "href": "diapositivas/modulo-1.html#creando-un-proyecto-1",
+    "title": "Introducción a R",
+    "section": "Creando un proyecto",
+    "text": "Creando un proyecto"
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#una-estructura-sencilla",
+    "href": "diapositivas/modulo-1.html#una-estructura-sencilla",
+    "title": "Introducción a R",
+    "section": "Una estructura sencilla",
+    "text": "Una estructura sencilla\n\n\ncurso_R/\n├── curso_R.Rproj\n├── datos/\n│   └── ranas.csv\n├── scripts/\n│   └── modulo_1.R\n└── resultados/\n\n\ndatos/: los datos originales. No se modifican a mano.\nscripts/: el código, un archivo por tarea o por sesión.\nresultados/: tablas y gráficos que produce el código."
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#reglas-generales",
+    "href": "diapositivas/modulo-1.html#reglas-generales",
+    "title": "Introducción a R",
+    "section": "Reglas generales",
+    "text": "Reglas generales\n\nR distingue mayúsculas y minúsculas: Tabla y tabla son objetos distintos.\nAsignamos con &lt;- (también funciona =): x &lt;- 5.\nLos nombres no pueden empezar con un número ni tener espacios: mejor masa_final que masa final.\nTodo lo que va después de # es un comentario: R no lo ejecuta.\nEvitemos nombres que ya usa R, como T, F, c o mean.\n\n\n\n# Longitud de un renacuajo, en mm\nlongitud &lt;- 19.7\nlongitud * 2\n\n[1] 39.4"
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#tipos-de-datos",
+    "href": "diapositivas/modulo-1.html#tipos-de-datos",
+    "title": "Introducción a R",
+    "section": "Tipos de datos",
+    "text": "Tipos de datos\n\n\n\nTipo\nEjemplo\nPara qué\n\n\n\n\nnumeric\n19.7, -3\nmediciones\n\n\ninteger\n5L\nconteos\n\n\ncharacter\n\"Hi\", \"control\"\ntexto\n\n\nlogical\nTRUE, FALSE\nsí o no\n\n\nfactor\nfactor(c(\"C\", \"L\"))\ngrupos o tratamientos\n\n\n\n\n\nclass(19.7)\n\n[1] \"numeric\"\n\nclass(\"control\")\n\n[1] \"character\""
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#operadores",
+    "href": "diapositivas/modulo-1.html#operadores",
+    "title": "Introducción a R",
+    "section": "Operadores",
+    "text": "Operadores\n\n\nAritméticos\n+  -  *  /  ^\n\n2^10\n\n[1] 1024\n\n(19.7 - 19.4) / 19.4 * 100\n\n[1] 1.546392\n\n\n\nDe comparación\n==  !=  &lt;  &gt;  &lt;=  &gt;=\n\n5 == 5\n\n[1] TRUE\n\n5 != 3\n\n[1] TRUE\n\n\n\nLógicos\n& (y), | (o), ! (no)\n\n(5 &gt; 3) & (2 &gt; 4)\n\n[1] FALSE\n\n(5 &gt; 3) | (2 &gt; 4)\n\n[1] TRUE"
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#vectores",
+    "href": "diapositivas/modulo-1.html#vectores",
+    "title": "Introducción a R",
+    "section": "Vectores",
+    "text": "Vectores\nUn vector guarda varios valores del mismo tipo. Se crea con c().\n\nmasas &lt;- c(0.42, 0.38, 0.41, 0.38, 0.49)\nlength(masas)\n\n[1] 5\n\nmasas[2]\n\n[1] 0.38\n\nmasas[masas &gt; 0.4]\n\n[1] 0.42 0.41 0.49\n\n\n\nLas operaciones se aplican a todos los elementos:\n\nmasas * 1000\n\n[1] 420 380 410 380 490"
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#factores",
+    "href": "diapositivas/modulo-1.html#factores",
+    "title": "Introducción a R",
+    "section": "Factores",
+    "text": "Factores\nUn factor es un vector de grupos, con niveles.\n\ndepredador &lt;- factor(c(\"C\", \"L\", \"NL\", \"C\", \"L\"))\ndepredador\n\n[1] C  L  NL C  L \nLevels: C L NL\n\nlevels(depredador)\n\n[1] \"C\"  \"L\"  \"NL\"\n\ntable(depredador)\n\ndepredador\n C  L NL \n 2  2  1 \n\n\n\nLos tratamientos de un experimento casi siempre son factores. Lo usaremos mucho en el ANOVA."
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#tablas-de-datos",
+    "href": "diapositivas/modulo-1.html#tablas-de-datos",
+    "title": "Introducción a R",
+    "section": "Tablas de datos",
+    "text": "Tablas de datos\nUn data.frame es una tabla: cada columna es un vector, y todas tienen el mismo largo.\n\ntanques &lt;- data.frame(\n  tanque = c(1, 2, 3),\n  depredador = c(\"C\", \"L\", \"NL\"),\n  masa = c(0.38, 0.51, 0.40)\n)\ntanques\n\n  tanque depredador masa\n1      1          C 0.38\n2      2          L 0.51\n3      3         NL 0.40\n\n\n\n\ntanques$masa          # una columna, con $\n\n[1] 0.38 0.51 0.40\n\ntanques[2, ]          # una fila: [fila, columna]\n\n  tanque depredador masa\n2      2          L 0.51\n\ntanques[3, \"masa\"]    # un valor\n\n[1] 0.4"
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#listas",
+    "href": "diapositivas/modulo-1.html#listas",
+    "title": "Introducción a R",
+    "section": "Listas",
+    "text": "Listas\nUna lista guarda objetos de cualquier tipo, incluso otras tablas.\n\nexperimento &lt;- list(nombre = \"ranas\", tanques = 78, tabla = tanques)\nexperimento$tanques\n\n[1] 78\n\n\n\nMuchos resultados de R, como los de t.test() o aov(), son listas."
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#section-1",
+    "href": "diapositivas/modulo-1.html#section-1",
+    "title": "Introducción a R",
+    "section": "",
+    "text": "Ejercicios, Parte 1"
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#paquetes",
+    "href": "diapositivas/modulo-1.html#paquetes",
+    "title": "Introducción a R",
+    "section": "Paquetes",
+    "text": "Paquetes\n\nUn paquete agrega funciones a R. Se descargan de CRAN.\nSe instalan una sola vez en tu computador:\n\n\n\ninstall.packages(\"readxl\")\n\n\n\n\nSe cargan en cada sesión en que los uses:\n\n\n\n\nlibrary(readxl)"
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#ayuda-en-r",
+    "href": "diapositivas/modulo-1.html#ayuda-en-r",
+    "title": "Introducción a R",
+    "section": "Ayuda en R",
+    "text": "Ayuda en R\n\n\n\n?mean\nhelp(sd)\nexample(mean)\n\n\nLa ayuda explica los argumentos de cada función y trae ejemplos al final.\nUn mensaje de error copiado en un buscador casi siempre tiene respuesta."
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#importar-un-archivo-csv",
+    "href": "diapositivas/modulo-1.html#importar-un-archivo-csv",
+    "title": "Introducción a R",
+    "section": "Importar un archivo csv",
+    "text": "Importar un archivo csv\nEn tu proyecto, con el archivo en la carpeta datos/:\n\nranas &lt;- read.csv(\"datos/ranas.csv\")\n\n\nLo primero, siempre: revisar lo que importamos.\n\nstr(ranas)\n\n'data.frame':   78 obs. of  12 variables:\n $ Block            : int  1 1 1 1 1 1 1 1 1 1 ...\n $ Tank.Unique      : int  1 2 3 4 5 6 7 8 9 10 ...\n $ Pred             : chr  \"NL\" \"C\" \"C\" \"L\" ...\n $ Hatch            : chr  \"L\" \"E\" \"L\" \"L\" ...\n $ Res              : chr  \"Hi\" \"Hi\" \"Hi\" \"Lo\" ...\n $ Age.DPO          : num  47.2 45.4 53.8 56.9 64.8 ...\n $ Age.FromEmergence: num  13.2 11.4 19.8 22.9 30.8 ...\n $ SVL.initial      : num  19.4 18.4 18.9 18.8 19.7 ...\n $ Tail.initial     : num  4.83 5.37 4.8 4.63 5.43 ...\n $ SVL.final        : num  19.7 19 19.1 19.1 20.1 ...\n $ Mass.final       : num  0.418 0.382 0.412 0.382 0.486 ...\n $ Resorb.days      : num  3.49 3.79 3.51 3.65 4.22 ..."
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#importar-un-archivo-de-excel",
+    "href": "diapositivas/modulo-1.html#importar-un-archivo-de-excel",
+    "title": "Introducción a R",
+    "section": "Importar un archivo de Excel",
+    "text": "Importar un archivo de Excel\n\nlibrary(readxl)\nranas &lt;- read_excel(\"datos/ranas.xlsx\", sheet = 1)\n\n\n\n\n\n\n\n\nAntes de importar\n\n\n\nUna fila por observación y una columna por variable.\nNombres de columna cortos, sin espacios ni tildes.\nSin celdas combinadas, colores ni totales al final."
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#los-datos-del-curso",
+    "href": "diapositivas/modulo-1.html#los-datos-del-curso",
+    "title": "Introducción a R",
+    "section": "Los datos del curso",
+    "text": "Los datos del curso\nranas.csv: 78 tanques de un experimento con renacuajos (datos del Prof. Justin C. Touchon).\n\n\n\nVariable\nQué es\n\n\n\n\nPred\ndepredador: C control, NL no letal, L letal\n\n\nRes\nrecursos alimenticios: Hi altos, Lo bajos\n\n\nHatch\nmomento de eclosión: E temprano, L tardío\n\n\nSVL.final\nlongitud hocico-cloaca al salir del agua (mm)\n\n\nMass.final\nmasa al salir del agua (g)\n\n\nAge.FromEmergence\nedad al salir del agua (días)\n\n\nResorb.days\ndías para reabsorber la cola"
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#section-2",
+    "href": "diapositivas/modulo-1.html#section-2",
+    "title": "Introducción a R",
+    "section": "",
+    "text": "Ejercicios, Parte 2"
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#tendencia-central",
+    "href": "diapositivas/modulo-1.html#tendencia-central",
+    "title": "Introducción a R",
+    "section": "Tendencia central",
+    "text": "Tendencia central\n\nmean(ranas$SVL.final)\n\n[1] 19.38128\n\nmedian(ranas$SVL.final)\n\n[1] 19.2299\n\n\n\n\nLa media es sensible a los valores extremos; la mediana, no.\nSi la media es bastante mayor que la mediana, hay una cola de valores altos.\n\n\n\n\nmean(ranas$Age.FromEmergence)\n\n[1] 30.68677\n\nmedian(ranas$Age.FromEmergence)\n\n[1] 23.43932"
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#dispersión",
+    "href": "diapositivas/modulo-1.html#dispersión",
+    "title": "Introducción a R",
+    "section": "Dispersión",
+    "text": "Dispersión\n\\[\ns = \\sqrt{\\frac{\\sum_{i=1}^{n}(x_i - \\bar{x})^2}{n - 1}}\n\\]\n\nsd(ranas$SVL.final)\n\n[1] 1.435498\n\nvar(ranas$SVL.final)\n\n[1] 2.060656\n\nrange(ranas$SVL.final)\n\n[1] 16.68182 23.30000\n\nquantile(ranas$SVL.final)\n\n      0%      25%      50%      75%     100% \n16.68182 18.28758 19.22990 20.01676 23.30000"
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#todo-a-la-vez",
+    "href": "diapositivas/modulo-1.html#todo-a-la-vez",
+    "title": "Introducción a R",
+    "section": "Todo a la vez",
+    "text": "Todo a la vez\n\nsummary(ranas$SVL.final)\n\n   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. \n  16.68   18.29   19.23   19.38   20.02   23.30 \n\n\n\n\nboxplot(ranas$SVL.final, horizontal = TRUE, xlab = \"Longitud final (mm)\")"
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#resumir-por-grupos",
+    "href": "diapositivas/modulo-1.html#resumir-por-grupos",
+    "title": "Introducción a R",
+    "section": "Resumir por grupos",
+    "text": "Resumir por grupos\n\ntapply(ranas$SVL.final, ranas$Pred, mean)\n\n       C        L       NL \n18.45971 20.44345 19.05992 \n\n\n\n\naggregate(SVL.final ~ Pred, data = ranas, FUN = mean)\n\n  Pred SVL.final\n1    C  18.45971\n2    L  20.44345\n3   NL  19.05992\n\n\n\n\n\nboxplot(SVL.final ~ Pred, data = ranas, xlab = \"Depredador\", ylab = \"Longitud final (mm)\")"
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#variables-categóricas",
+    "href": "diapositivas/modulo-1.html#variables-categóricas",
+    "title": "Introducción a R",
+    "section": "Variables categóricas",
+    "text": "Variables categóricas\n\ntable(ranas$Pred)\n\n\n C  L NL \n32 32 14 \n\nprop.table(table(ranas$Pred))\n\n\n        C         L        NL \n0.4102564 0.4102564 0.1794872 \n\ntable(ranas$Pred, ranas$Res)\n\n    \n     Hi Lo\n  C  16 16\n  L  16 16\n  NL  7  7"
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#section-3",
+    "href": "diapositivas/modulo-1.html#section-3",
+    "title": "Introducción a R",
+    "section": "",
+    "text": "Ejercicios, Parte 3"
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#antes-del-próximo-domingo",
+    "href": "diapositivas/modulo-1.html#antes-del-próximo-domingo",
+    "title": "Introducción a R",
+    "section": "Antes del próximo domingo",
+    "text": "Antes del próximo domingo\n\nCrea tu proyecto de R para el curso, con las carpetas datos/, scripts/ y resultados/.\nCompleta todos los ejercicios del Módulo 1: lo que no alcanzamos en clase, incluida la Parte 4, es tarea.\nImporta tus propios datos y calcula sus estadísticos descriptivos.\nHaz la autoevaluación del Módulo 1."
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#section-4",
+    "href": "diapositivas/modulo-1.html#section-4",
+    "title": "Introducción a R",
+    "section": "",
+    "text": "Fin del módulo 1\n\n\n\n\n\n\n\nCréditos de fotos\n\n\nPortada por Becomes Co en Unsplash\nFoto final por Wolfgang Hasselmann en Unsplash\nResto de fotos: varias fuentes"
+  },
+  {
+    "objectID": "diapositivas/modulo-3.html",
+    "href": "diapositivas/modulo-3.html",
+    "title": "ANOVA de una vía",
+    "section": "",
+    "text": "Módulo 3: Introducción al análisis de varianza\n\nMauricio Moreno, PhD\nDomingo 29 de noviembre de 2026"
+  },
+  {
+    "objectID": "diapositivas/modulo-3.html#section",
+    "href": "diapositivas/modulo-3.html#section",
+    "title": "ANOVA de una vía",
+    "section": "",
+    "text": "Módulo 3: Introducción al análisis de varianza\n\nMauricio Moreno, PhD\nDomingo 29 de noviembre de 2026"
+  },
+  {
+    "objectID": "diapositivas/modulo-3.html#hoy",
+    "href": "diapositivas/modulo-3.html#hoy",
+    "title": "ANOVA de una vía",
+    "section": "Hoy",
+    "text": "Hoy\n\n¿Por qué no hacer muchas pruebas t?\nLa idea del ANOVA y el ANOVA de una vía en R\nSupuestos y diagnósticos\nComparaciones múltiples\nCuando los supuestos fallan: transformaciones y Kruskal-Wallis"
+  },
+  {
+    "objectID": "diapositivas/modulo-3.html#los-datos-de-hoy",
+    "href": "diapositivas/modulo-3.html#los-datos-de-hoy",
+    "title": "ANOVA de una vía",
+    "section": "Los datos de hoy",
+    "text": "Los datos de hoy\nUsamos la tabla ranas del Módulo 1, con los tratamientos como factores.\n\n\nMostrar el código\nranas &lt;- read.csv(\"datos/ranas.csv\")\nranas$Pred  &lt;- factor(ranas$Pred)\nranas$Res   &lt;- factor(ranas$Res)\nranas$Hatch &lt;- factor(ranas$Hatch)\nstr(ranas)\n\n\n'data.frame':   78 obs. of  12 variables:\n $ Block            : int  1 1 1 1 1 1 1 1 1 1 ...\n $ Tank.Unique      : int  1 2 3 4 5 6 7 8 9 10 ...\n $ Pred             : Factor w/ 3 levels \"C\",\"L\",\"NL\": 3 1 1 2 3 2 3 1 2 1 ...\n $ Hatch            : Factor w/ 2 levels \"E\",\"L\": 2 1 2 2 1 1 2 1 2 2 ...\n $ Res              : Factor w/ 2 levels \"Hi\",\"Lo\": 1 1 1 2 1 1 2 2 1 2 ...\n $ Age.DPO          : num  47.2 45.4 53.8 56.9 64.8 ...\n $ Age.FromEmergence: num  13.2 11.4 19.8 22.9 30.8 ...\n $ SVL.initial      : num  19.4 18.4 18.9 18.8 19.7 ...\n $ Tail.initial     : num  4.83 5.37 4.8 4.63 5.43 ...\n $ SVL.final        : num  19.7 19 19.1 19.1 20.1 ...\n $ Mass.final       : num  0.418 0.382 0.412 0.382 0.486 ...\n $ Resorb.days      : num  3.49 3.79 3.51 3.65 4.22 ..."
+  },
+  {
+    "objectID": "diapositivas/modulo-3.html#una-pregunta-tres-grupos",
+    "href": "diapositivas/modulo-3.html#una-pregunta-tres-grupos",
+    "title": "ANOVA de una vía",
+    "section": "Una pregunta, tres grupos",
+    "text": "Una pregunta, tres grupos\n¿Cambia la masa de los renacuajos al salir del agua según el depredador?\n\nboxplot(Mass.final ~ Pred, data = ranas, xlab = \"Depredador\", ylab = \"Masa final (g)\")\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nGraficar antes de modelar: ¿qué observas?"
+  },
+  {
+    "objectID": "diapositivas/modulo-3.html#por-qué-no-tres-pruebas-t",
+    "href": "diapositivas/modulo-3.html#por-qué-no-tres-pruebas-t",
+    "title": "ANOVA de una vía",
+    "section": "¿Por qué no tres pruebas t?",
+    "text": "¿Por qué no tres pruebas t?\n\n\nCon tres grupos hay tres pares: C-L, C-NL y L-NL.\nCada prueba con \\(\\alpha = 0.05\\) tiene un 5% de riesgo de un falso positivo.\nCon tres pruebas, el riesgo de al menos un falso positivo es \\(1 - 0.95^3 \\approx 0.14\\).\nCon 10 grupos (45 pares), sería casi del 90%.\nEl ANOVA compara todos los grupos a la vez, con una sola prueba."
+  },
+  {
+    "objectID": "diapositivas/modulo-3.html#la-idea-del-anova",
+    "href": "diapositivas/modulo-3.html#la-idea-del-anova",
+    "title": "ANOVA de una vía",
+    "section": "La idea del ANOVA",
+    "text": "La idea del ANOVA\n\\(H_0: \\mu_C = \\mu_L = \\mu_{NL}\\) frente a \\(H_1\\): al menos una media es distinta.\n. . .\n\n\nLa variación total de los datos se divide en dos partes:\n\nvariación entre los grupos: cuánto se alejan las medias de los grupos de la media general;\nvariación dentro de los grupos: cuánto se alejan los datos de la media de su grupo.\n\nEl estadístico \\(F\\) las compara:\n\n\n. . .\n\\[\nF = \\frac{CM_{entre}}{CM_{dentro}}\n\\]\nSi \\(H_0\\) es verdadera, \\(F \\approx 1\\). Un \\(F\\) grande indica que las medias difieren más de lo esperado por azar."
+  },
+  {
+    "objectID": "diapositivas/modulo-3.html#anova-de-una-vía-en-r",
+    "href": "diapositivas/modulo-3.html#anova-de-una-vía-en-r",
+    "title": "ANOVA de una vía",
+    "section": "ANOVA de una vía en R",
+    "text": "ANOVA de una vía en R\n\nmodelo &lt;- aov(Mass.final ~ Pred, data = ranas)\nsummary(modelo)\n\n            Df Sum Sq Mean Sq F value   Pr(&gt;F)    \nPred         2 0.3297 0.16484   21.16 5.17e-08 ***\nResiduals   75 0.5842 0.00779                     \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\n\n. . .\n\n\nDf: grados de libertad. Factor: \\(k - 1 = 2\\); residuales: \\(n - k = 75\\).\nSum Sq y Mean Sq: sumas de cuadrados y cuadrados medios (\\(CM = SC / gl\\)).\nF value y Pr(&gt;F): el estadístico \\(F\\) y su valor p."
+  },
+  {
+    "objectID": "diapositivas/modulo-3.html#section-1",
+    "href": "diapositivas/modulo-3.html#section-1",
+    "title": "ANOVA de una vía",
+    "section": "",
+    "text": "Ejercicios, Parte 1"
+  },
+  {
+    "objectID": "diapositivas/modulo-3.html#supuestos-del-anova",
+    "href": "diapositivas/modulo-3.html#supuestos-del-anova",
+    "title": "ANOVA de una vía",
+    "section": "Supuestos del ANOVA",
+    "text": "Supuestos del ANOVA\n\n\nObservaciones independientes (depende del diseño del experimento).\nResiduos normales: los residuos son cada observación menos la media de su grupo.\nVarianzas homogéneas entre los grupos.\n\n\n. . .\n\n\n\n\n\n\nLa normalidad se revisa sobre los residuos del modelo, no sobre la respuesta completa."
+  },
+  {
+    "objectID": "diapositivas/modulo-3.html#gráficos-de-diagnóstico",
+    "href": "diapositivas/modulo-3.html#gráficos-de-diagnóstico",
+    "title": "ANOVA de una vía",
+    "section": "Gráficos de diagnóstico",
+    "text": "Gráficos de diagnóstico\n\npar(mfrow = c(1, 2))\nplot(modelo, which = 1:2)\n\n\n\n\n\n\n\n\nResiduos frente a ajustados: ¿la dispersión es parecida en cada columna? Q-Q: ¿los puntos siguen la línea?"
+  },
+  {
+    "objectID": "diapositivas/modulo-3.html#pruebas-formales",
+    "href": "diapositivas/modulo-3.html#pruebas-formales",
+    "title": "ANOVA de una vía",
+    "section": "Pruebas formales",
+    "text": "Pruebas formales\n\nshapiro.test(residuals(modelo))\n\n\n    Shapiro-Wilk normality test\n\ndata:  residuals(modelo)\nW = 0.94902, p-value = 0.003519\n\nbartlett.test(Mass.final ~ Pred, data = ranas)\n\n\n    Bartlett test of homogeneity of variances\n\ndata:  Mass.final by Pred\nBartlett's K-squared = 31.832, df = 2, p-value = 1.224e-07\n\n\n. . .\n\n\n\n\n\n\nSi los supuestos fallan: transformar la respuesta (por ejemplo, con log()), o usar una prueba que no los necesite, como Kruskal-Wallis."
+  },
+  {
+    "objectID": "diapositivas/modulo-3.html#section-2",
+    "href": "diapositivas/modulo-3.html#section-2",
+    "title": "ANOVA de una vía",
+    "section": "",
+    "text": "Ejercicios, Parte 2"
+  },
+  {
+    "objectID": "diapositivas/modulo-3.html#qué-grupos-difieren",
+    "href": "diapositivas/modulo-3.html#qué-grupos-difieren",
+    "title": "ANOVA de una vía",
+    "section": "¿Qué grupos difieren?",
+    "text": "¿Qué grupos difieren?\nEl ANOVA dice que al menos una media difiere. La prueba HSD de Tukey compara todos los pares y ajusta los valores p.\n\nTukeyHSD(modelo)\n\n  Tukey multiple comparisons of means\n    95% family-wise confidence level\n\nFit: aov(formula = Mass.final ~ Pred, data = ranas)\n\n$Pred\n            diff         lwr         upr     p adj\nL-C   0.14042208  0.08766233  0.19318183 0.0000000\nNL-C  0.03507404 -0.03255024  0.10269831 0.4334988\nNL-L -0.10534804 -0.17297232 -0.03772377 0.0010842"
+  },
+  {
+    "objectID": "diapositivas/modulo-3.html#tukey-en-un-gráfico",
+    "href": "diapositivas/modulo-3.html#tukey-en-un-gráfico",
+    "title": "ANOVA de una vía",
+    "section": "Tukey en un gráfico",
+    "text": "Tukey en un gráfico\n\nplot(TukeyHSD(modelo))\n\n\n\n\n\n\n\n\nUn intervalo que no contiene el cero indica una diferencia entre ese par de grupos."
+  },
+  {
+    "objectID": "diapositivas/modulo-3.html#cuando-los-supuestos-fallan-1",
+    "href": "diapositivas/modulo-3.html#cuando-los-supuestos-fallan-1",
+    "title": "ANOVA de una vía",
+    "section": "Cuando los supuestos fallan",
+    "text": "Cuando los supuestos fallan\nDatos InsectSprays, incluidos en R: número de insectos tras aplicar seis insecticidas.\n\nboxplot(count ~ spray, data = InsectSprays, xlab = \"Insecticida\", ylab = \"Insectos\")\n\n\n\n\n\n\n\n\n\nmodelo_insectos &lt;- aov(count ~ spray, data = InsectSprays)\nshapiro.test(residuals(modelo_insectos))$p.value\n\n[1] 0.02225989\n\nbartlett.test(count ~ spray, data = InsectSprays)$p.value\n\n[1] 9.085122e-05"
+  },
+  {
+    "objectID": "diapositivas/modulo-3.html#opción-1-transformar-la-respuesta",
+    "href": "diapositivas/modulo-3.html#opción-1-transformar-la-respuesta",
+    "title": "ANOVA de una vía",
+    "section": "Opción 1: transformar la respuesta",
+    "text": "Opción 1: transformar la respuesta\nEn los conteos, la varianza crece con la media. La raíz cuadrada suele estabilizarla.\n\nmodelo_raiz &lt;- aov(sqrt(count) ~ spray, data = InsectSprays)\nshapiro.test(residuals(modelo_raiz))$p.value\n\n[1] 0.6813773\n\nbartlett.test(sqrt(count) ~ spray, data = InsectSprays)$p.value\n\n[1] 0.5855673\n\nsummary(modelo_raiz)\n\n            Df Sum Sq Mean Sq F value Pr(&gt;F)    \nspray        5  88.44  17.688    44.8 &lt;2e-16 ***\nResiduals   66  26.06   0.395                   \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1"
+  },
+  {
+    "objectID": "diapositivas/modulo-3.html#opción-1-transformar-la-respuesta-1",
+    "href": "diapositivas/modulo-3.html#opción-1-transformar-la-respuesta-1",
+    "title": "ANOVA de una vía",
+    "section": "Opción 1: transformar la respuesta",
+    "text": "Opción 1: transformar la respuesta\n\n\nMostrar el código\npar(mfrow = c(1, 2))\nplot(modelo_insectos, which = 1, main = \"conteo\")\nplot(modelo_raiz, which = 1, main = \"sqrt(conteo)\")\n\n\n\n\n\n\n\n\n\n\n\nDespués de transformar, siempre hay que volver a revisar los diagnósticos.\nTukey sobre el modelo transformado compara las medias en la escala transformada."
+  },
+  {
+    "objectID": "diapositivas/modulo-3.html#opción-2-kruskal-wallis",
+    "href": "diapositivas/modulo-3.html#opción-2-kruskal-wallis",
+    "title": "ANOVA de una vía",
+    "section": "Opción 2: Kruskal-Wallis",
+    "text": "Opción 2: Kruskal-Wallis\nLa alternativa no paramétrica al ANOVA de una vía: compara rangos. Útil cuando ninguna transformación funciona, o si prefieres no transformar.\n\nkruskal.test(count ~ spray, data = InsectSprays)\n\n\n    Kruskal-Wallis rank sum test\n\ndata:  count by spray\nKruskal-Wallis chi-squared = 54.691, df = 5, p-value = 1.511e-10\n\n\n. . .\nY las comparaciones por pares, con valores p ajustados (método de Holm):\n\npairwise.wilcox.test(InsectSprays$count, InsectSprays$spray, exact = FALSE)\n\n\n    Pairwise comparisons using Wilcoxon rank sum test with continuity correction \n\ndata:  InsectSprays$count and InsectSprays$spray \n\n  A       B       C       D       E      \nB 1.00000 -       -       -       -      \nC 0.00051 0.00051 -       -       -      \nD 0.00062 0.00062 0.01591 -       -      \nE 0.00051 0.00051 0.26287 0.69778 -      \nF 1.00000 1.00000 0.00051 0.00062 0.00051\n\nP value adjustment method: holm"
+  },
+  {
+    "objectID": "diapositivas/modulo-3.html#section-3",
+    "href": "diapositivas/modulo-3.html#section-3",
+    "title": "ANOVA de una vía",
+    "section": "",
+    "text": "Ejercicios, Parte 3"
+  },
+  {
+    "objectID": "diapositivas/modulo-3.html#el-camino-del-anova",
+    "href": "diapositivas/modulo-3.html#el-camino-del-anova",
+    "title": "ANOVA de una vía",
+    "section": "El camino del ANOVA",
+    "text": "El camino del ANOVA\n\nGraficar los datos por grupo.\nAjustar el modelo: aov(y ~ grupo).\nDiagnosticar: residuos normales y varianzas homogéneas.\nSi fallan: transformar (log(), sqrt()) y volver a diagnosticar, o usar Kruskal-Wallis.\nComparar los grupos: Tukey (o Wilcoxon por pares).\nResumir en una frase: qué grupos difieren, cuánto y con qué incertidumbre."
+  },
+  {
+    "objectID": "diapositivas/modulo-3.html#antes-del-próximo-domingo",
+    "href": "diapositivas/modulo-3.html#antes-del-próximo-domingo",
+    "title": "ANOVA de una vía",
+    "section": "Antes del próximo domingo",
+    "text": "Antes del próximo domingo\n\n\nCompleta todos los ejercicios del Módulo 3: lo que no alcanzamos en clase, incluida la Parte 4, es tarea.\nCon tus propios datos (o con otra variable de ranas), recorre el camino del ANOVA y escribe dos frases con el resultado.\nHaz la autoevaluación del Módulo 3."
+  },
+  {
+    "objectID": "diapositivas/modulo-3.html#section-4",
+    "href": "diapositivas/modulo-3.html#section-4",
+    "title": "ANOVA de una vía",
+    "section": "",
+    "text": "Fin del módulo 3\n\n\n\n\n\n\n\nCréditos de fotos\n\n\n\nPortada por Pat Whelen en Unsplash\nFoto final por Chris Leipelt en Unsplash\nResto de fotos: varias fuentes"
+  }
+]

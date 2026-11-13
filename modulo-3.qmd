@@ -1,0 +1,49 @@
+---
+title: "Módulo 3: Introducción al análisis de varianza"
+subtitle: "Domingo 29 de noviembre de 2026 · 9H00 a 12H00"
+---
+
+[Ver las diapositivas](diapositivas/modulo-3.html){.btn .btn-primary target="_blank"} [Hacer los ejercicios](ejercicios-3.qmd){.btn .btn-outline-primary} [Hacer la autoevaluación](autoevaluacion-3.qmd){.btn .btn-outline-primary}
+
+## Contexto
+
+- **Para quién:** participantes que ya saben plantear hipótesis y comparar dos grupos con una prueba t ([Módulo 2](modulo-2.qmd)).
+- **Lugar en el curso:** tercera sesión. Pasamos de comparar **dos** grupos a comparar **tres o más**.
+- **Duración:** 3 horas de clase virtual y unas 6 horas de trabajo autónomo.
+
+## Objetivos de la sesión
+
+Al terminar, podrás:
+
+1. **Explicar** por qué no hacemos muchas pruebas t, y qué compara el ANOVA.
+2. **Ajustar e interpretar** un ANOVA de una vía en R.
+3. **Revisar** los supuestos del ANOVA con gráficos de diagnóstico y pruebas formales.
+4. **Identificar** qué grupos difieren con comparaciones múltiples (Tukey), y **usar** Kruskal-Wallis cuando los supuestos no se cumplen.
+
+## Estructura
+
+| Parte | Qué hacemos | Objetivo |
+|:--|:--|:--:|
+| Una pregunta, tres grupos | ¿Cambia la masa de los renacuajos al salir del agua según el depredador? | 1 |
+| **Graficar antes de modelar** | Diagramas de caja por grupo: "¿qué observas?" | 1 |
+| ¿Por qué no tres pruebas t? | El problema de las comparaciones múltiples y la tasa de error | 1 |
+| La idea del ANOVA | Variación entre grupos frente a variación dentro de los grupos; el estadístico F | 1, 2 |
+| ANOVA de una vía en R | `aov()` y `summary()`; leer la tabla del ANOVA | 2 |
+| Supuestos del ANOVA | Independencia, normalidad de los residuos, homogeneidad de varianzas | 3 |
+| Diagnósticos | `plot(modelo)`, `shapiro.test()` sobre los residuos y `bartlett.test()` | 3 |
+| Comparaciones múltiples | `TukeyHSD()`; leer diferencias, intervalos y valores p ajustados | 4 |
+| Transformaciones | Cuando los supuestos fallan: `sqrt()` y `log()` de la respuesta, y volver a diagnosticar | 3, 4 |
+| Kruskal-Wallis | Si la transformación no basta: `kruskal.test()` y `pairwise.wilcox.test()` | 4 |
+
+## Trabajo autónomo
+
+Después de la clase:
+
+1. **Completa todos los [ejercicios](ejercicios-3.qmd)**: un ANOVA completo, desde el gráfico hasta las comparaciones múltiples. Lo que no alcancemos en clase, incluida la Parte 4 (Más práctica), es tarea.
+2. **Con tus propios datos** (o con otra variable de `ranas`), repite el análisis y escribe dos frases que resuman el resultado.
+3. Haz la **[autoevaluación](autoevaluacion-3.qmd)**.
+
+## Datos y materiales
+
+- **`ranas.csv`** ([descargar](datos/ranas.csv)): datos del Prof. Justin C. Touchon (ver [Módulo 1](modulo-1.qmd#datos-y-materiales)).
+- [Diapositivas del Módulo 3](diapositivas/modulo-3.html){target="_blank"}.

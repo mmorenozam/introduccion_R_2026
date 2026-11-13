@@ -1,0 +1,673 @@
+---
+title: "Ejercicios Módulo 4"
+subtitle: "ANOVA de múltiples vías y exportación de resultados"
+lang: es
+format:
+  live-html:
+    theme:
+      light: [cosmo, theme.scss]
+    toc: true
+    toc-location: right
+    toc-title: En esta página
+    code-copy: true
+    code-overflow: wrap
+webr:
+  resources:
+    - datos/ranas.csv
+# Soluciones de este módulo: cambia a true después de la sesión y vuelve a renderizar.
+live:
+  show-solutions: false
+filters:
+  - soluciones.lua
+engine: knitr
+---
+
+{{< include ./_extensions/r-wasm/live/_knitr.qmd >}}
+
+
+Estos ejercicios siguen el [Módulo 4](modulo-4.qmd). Los de las partes 1 y 2 corren **en tu navegador**; los de exportar a Excel y Word se hacen **en RStudio**, porque crean archivos en tu computador. Donde veas `____`, complétalo. ¿Te atascaste? Abre la pestaña **Pista**. Las soluciones se publican después de la sesión.
+
+::: {.callout-note}
+## Antes de empezar
+- La primera vez, cargar R en el navegador puede tardar hasta un minuto.
+- La tabla `ranas` (78 tanques; datos del Prof. Justin C. Touchon) ya está cargada, con `Pred`, `Res` y `Hatch` convertidos en **factores**.
+- Hoy cruzamos dos factores: el depredador (`Pred`: `C`, `L`, `NL`) y los recursos alimenticios (`Res`: `Hi` altos, `Lo` bajos). Cada combinación tiene entre 7 y 16 tanques.
+:::
+
+```{webr}
+#| setup: true
+#| exercise:
+#|   - ex_1_1
+#|   - ex_1_2
+#|   - ex_2_1
+#|   - ex_2_2
+#|   - ex_2_3
+#|   - ex_3_1
+#|   - ex_4_1
+#|   - ex_4_2
+#|   - ex_4_3
+#|   - ex_4_4
+ranas <- read.csv("datos/ranas.csv")
+ranas$Pred  <- factor(ranas$Pred)
+ranas$Res   <- factor(ranas$Res)
+ranas$Hatch <- factor(ranas$Hatch)
+```
+
+::: {.callout-important appearance="simple"}
+## Lo que no terminemos en clase es tarea
+En clase avanzamos por las partes 1 a 3. **Completa todos los ejercicios de esta página antes del próximo domingo**, incluida la **Parte 4: Más práctica**.
+:::
+
+::: {.callout-tip collapse="true"}
+## Ver el código que prepara los datos
+
+Este código ya se ejecutó por ti en esta página. En RStudio, córrelo al inicio de tu script.
+
+```r
+ranas <- read.csv("datos/ranas.csv")
+ranas$Pred  <- factor(ranas$Pred)
+ranas$Res   <- factor(ranas$Res)
+ranas$Hatch <- factor(ranas$Hatch)
+```
+:::
+
+## Parte 1: ANOVA aditivo de dos vías {#parte-1}
+
+### Ejercicio 1.1: Dos factores a la vez
+
+**¿Dependen los días para reabsorber la cola (`Resorb.days`) del depredador, de los recursos, o de ambos? Ajusta un ANOVA aditivo de dos vías y revisa la normalidad de los residuos.**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_1_1
+boxplot(Resorb.days ~ Pred + Res, data = ranas)
+
+aditivo <- aov(Resorb.days ~ Pred ____ Res, data = ranas)
+summary(aditivo)
+
+shapiro.test(residuals(____))
+```
+
+## Pista
+
+::: {.hint exercise="ex_1_1"}
+En un modelo **aditivo**, los factores se unen con `+`: cada uno tiene su propio efecto y los efectos se suman.
+:::
+
+## Solución
+
+::: {.solution exercise="ex_1_1"}
+```r
+boxplot(Resorb.days ~ Pred + Res, data = ranas)
+
+aditivo <- aov(Resorb.days ~ Pred + Res, data = ranas)
+summary(aditivo)
+
+shapiro.test(residuals(aditivo))
+```
+
+| | gl | SC | CM | $F$ | $p$ |
+|:--|--:|--:|--:|--:|--:|
+| Pred | 2 | 0.78 | 0.39 | 1.31 | 0.28 |
+| Res | 1 | 4.35 | 4.35 | 14.53 | 0.0003 |
+| Residuales | 74 | 22.14 | 0.30 | | |
+
+Los **recursos** sí afectan el tiempo de reabsorción, el **depredador** no. Los residuos son normales (Shapiro-Wilk: $p = 0.27$). Con recursos bajos, la cola tarda en promedio medio día más en reabsorberse.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión del domingo 6 de diciembre. Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+### Ejercicio 1.2: ¿Es razonable el modelo aditivo?
+
+**El modelo aditivo supone que el efecto de los recursos es el mismo con cualquier depredador. Compruébalo con un gráfico de interacción y con un modelo que incluya la interacción.**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_1_2
+interaction.plot(x.factor = ranas$Pred, trace.factor = ranas$____,
+                 response = ranas$Resorb.days,
+                 xlab = "Depredador", ylab = "Días para reabsorber la cola",
+                 trace.label = "Recursos")
+
+con_interaccion <- aov(Resorb.days ~ Pred ____ Res, data = ranas)
+summary(con_interaccion)
+```
+
+## Pista
+
+::: {.hint exercise="ex_1_2"}
+`Pred * Res` es una abreviatura de `Pred + Res + Pred:Res`, donde `Pred:Res` es la interacción. En el gráfico, líneas más o menos **paralelas** indican que no hay interacción.
+:::
+
+## Solución
+
+::: {.solution exercise="ex_1_2"}
+```r
+interaction.plot(x.factor = ranas$Pred, trace.factor = ranas$Res,
+                 response = ranas$Resorb.days,
+                 xlab = "Depredador", ylab = "Días para reabsorber la cola",
+                 trace.label = "Recursos")
+
+con_interaccion <- aov(Resorb.days ~ Pred * Res, data = ranas)
+summary(con_interaccion)
+```
+
+Las líneas no son perfectamente paralelas, pero la interacción no es significativa ($F = 0.86$, $gl = 2$ y 72, $p = 0.43$): las diferencias que vemos son compatibles con el azar. El modelo aditivo del ejercicio 1.1 es razonable.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión del domingo 6 de diciembre. Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+## Parte 2: ANOVA no aditivo de dos vías {#parte-2}
+
+### Ejercicio 2.1: Una interacción
+
+**Repite el análisis con la edad al salir del agua (`Age.FromEmergence`). Dibuja el gráfico de interacción y ajusta el modelo con interacción. ¿Qué observas?**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_2_1
+interaction.plot(x.factor = ranas$Pred, trace.factor = ranas$Res,
+                 response = ranas$____,
+                 xlab = "Depredador", ylab = "Edad al salir del agua (días)",
+                 trace.label = "Recursos")
+
+no_aditivo <- aov(Age.FromEmergence ~ ____, data = ranas)
+summary(no_aditivo)
+```
+
+## Pista
+
+::: {.hint exercise="ex_2_1"}
+Usa la misma estructura del ejercicio 1.2, cambiando la variable de respuesta.
+:::
+
+## Solución
+
+::: {.solution exercise="ex_2_1"}
+```r
+interaction.plot(x.factor = ranas$Pred, trace.factor = ranas$Res,
+                 response = ranas$Age.FromEmergence,
+                 xlab = "Depredador", ylab = "Edad al salir del agua (días)",
+                 trace.label = "Recursos")
+
+no_aditivo <- aov(Age.FromEmergence ~ Pred * Res, data = ranas)
+summary(no_aditivo)
+```
+
+| | gl | SC | CM | $F$ | $p$ |
+|:--|--:|--:|--:|--:|--:|
+| Pred | 2 | 9466.9 | 4733.4 | 15.90 | < 0.001 |
+| Res | 1 | 9963.5 | 9963.5 | 33.48 | < 0.001 |
+| Pred:Res | 2 | 2605.9 | 1303.0 | 4.38 | 0.016 |
+| Residuales | 72 | 21429.3 | 297.6 | | |
+
+Las líneas **no** son paralelas y la interacción es significativa: con recursos bajos, los renacuajos salen del agua más tarde, pero el retraso es mucho mayor en el control (de 25 a 59 días) que con el depredador letal (de 13 a 22 días). Cuando hay interacción, no se puede hablar del efecto de los recursos sin decir con qué depredador. Pero antes de concluir... ¡los supuestos!
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión del domingo 6 de diciembre. Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+### Ejercicio 2.2: Diagnósticos del modelo no aditivo
+
+**Revisa la normalidad de los residuos del modelo `no_aditivo` y la homogeneidad de varianzas entre las seis combinaciones de depredador y recursos.**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_2_2
+no_aditivo <- aov(Age.FromEmergence ~ Pred * Res, data = ranas)
+
+par(mfrow = c(2, 2))
+plot(no_aditivo)
+par(mfrow = c(1, 1))
+
+shapiro.test(residuals(____))
+bartlett.test(Age.FromEmergence ~ interaction(Pred, ____), data = ranas)
+```
+
+## Pista
+
+::: {.hint exercise="ex_2_2"}
+`interaction(Pred, Res)` crea un factor con las seis combinaciones (`C.Hi`, `L.Hi`, ...), así `bartlett.test()` compara las varianzas de todas ellas.
+:::
+
+## Solución
+
+::: {.solution exercise="ex_2_2"}
+```r
+no_aditivo <- aov(Age.FromEmergence ~ Pred * Res, data = ranas)
+
+par(mfrow = c(2, 2))
+plot(no_aditivo)
+par(mfrow = c(1, 1))
+
+shapiro.test(residuals(no_aditivo))
+bartlett.test(Age.FromEmergence ~ interaction(Pred, Res), data = ranas)
+```
+
+Los dos supuestos fallan: los residuos no son normales (Shapiro-Wilk: $p = 0.010$) y las varianzas son muy distintas (Bartlett: $p < 0.001$). En el gráfico de residuos frente a ajustados, la dispersión **crece** con la media, en forma de embudo. Es una señal típica de que conviene transformar la respuesta con el logaritmo.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión del domingo 6 de diciembre. Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+### Ejercicio 2.3: La interacción que desaparece
+
+**Ajusta el mismo modelo con el logaritmo de la edad. ¿Mejoran los supuestos? ¿Sigue siendo significativa la interacción?**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_2_3
+log_no_aditivo <- aov(____(Age.FromEmergence) ~ Pred * Res, data = ranas)
+summary(log_no_aditivo)
+
+shapiro.test(residuals(log_no_aditivo))
+bartlett.test(log(Age.FromEmergence) ~ interaction(Pred, Res), data = ranas)
+```
+
+## Pista
+
+::: {.hint exercise="ex_2_3"}
+Puedes transformar la respuesta dentro de la fórmula: `log(y) ~ A * B`. En R, `log()` es el logaritmo natural.
+:::
+
+## Solución
+
+::: {.solution exercise="ex_2_3"}
+```r
+log_no_aditivo <- aov(log(Age.FromEmergence) ~ Pred * Res, data = ranas)
+summary(log_no_aditivo)
+
+shapiro.test(residuals(log_no_aditivo))
+bartlett.test(log(Age.FromEmergence) ~ interaction(Pred, Res), data = ranas)
+```
+
+Los supuestos mejoran mucho: los residuos ya son compatibles con la normalidad (Shapiro-Wilk: $p = 0.10$) y la diferencia entre varianzas es bastante menor (Bartlett: $p = 0.022$, frente a $p < 0.001$ antes). Y la interacción **ya no es significativa** ($F = 1.47$, $p = 0.24$); depredador y recursos siguen siendo muy significativos ($p < 0.001$).
+
+¿Qué pasó? En la escala logarítmica, los efectos se **multiplican** en lugar de sumarse. Con recursos bajos, la edad al salir del agua se multiplica por un factor que no difiere claramente entre depredadores; en días, un mismo factor se ve como un retraso mayor donde la edad ya era mayor. La "interacción" del ejercicio 2.1 era sobre todo un efecto de la escala. **Moraleja: revisa los diagnósticos antes de interpretar una interacción.**
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión del domingo 6 de diciembre. Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+## Parte 3: Comparaciones múltiples y exportación {#parte-3}
+
+### Ejercicio 3.1: Tukey con dos factores, y exportar a csv
+
+**Ajusta el modelo aditivo con el logaritmo de la edad y compara los depredadores con Tukey. Luego guarda la tabla del ANOVA en un archivo csv y vuelve a leerlo para comprobar que se guardó bien.**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_3_1
+log_aditivo <- aov(log(Age.FromEmergence) ~ Pred + Res, data = ranas)
+TukeyHSD(log_aditivo, which = "____")
+
+tabla_anova <- as.data.frame(summary(log_aditivo)[[1]])
+tabla_anova
+
+write.csv(____, "tabla_anova.csv")
+read.csv("____")
+```
+
+## Pista
+
+::: {.hint exercise="ex_3_1"}
+Con varios factores, `which = "Pred"` le dice a `TukeyHSD()` qué factor comparar. `summary(modelo)[[1]]` extrae la tabla del ANOVA; `as.data.frame()` la convierte en una tabla de datos que se puede exportar.
+:::
+
+## Solución
+
+::: {.solution exercise="ex_3_1"}
+```r
+log_aditivo <- aov(log(Age.FromEmergence) ~ Pred + Res, data = ranas)
+TukeyHSD(log_aditivo, which = "Pred")
+
+tabla_anova <- as.data.frame(summary(log_aditivo)[[1]])
+tabla_anova
+
+write.csv(tabla_anova, "tabla_anova.csv")
+read.csv("tabla_anova.csv")
+```
+
+En escala logarítmica, la diferencia L - C es -0.77 ($p < 0.001$), NL - C es -0.27 ($p = 0.26$) y NL - L es 0.50 ($p = 0.011$). Para interpretarlas, vuelve a la escala original con `exp()`: con el depredador letal, la edad al salir del agua es `exp(-0.77)` $\approx$ 0.46 veces la del control, es decir, **un 54% menor**.
+
+`write.csv()` guarda el archivo en la carpeta de trabajo (en tu computador, la de tu proyecto de R). Al leerlo, los nombres de las filas aparecen en una columna `X`; para recuperarlos como nombres de filas, usa `read.csv("tabla_anova.csv", row.names = 1)`.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión del domingo 6 de diciembre. Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+### Ejercicio 3.2: Exportar a Excel
+
+**Guarda en un solo archivo de Excel dos hojas: la tabla del ANOVA del ejercicio 3.1 y las medias de la edad para cada combinación de depredador y recursos.**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+::: {.callout-tip appearance="simple"}
+Este ejercicio se hace **en RStudio**, en tu proyecto del curso: copia el código, complétalo y córrelo.
+:::
+
+```r
+# install.packages("writexl")   # solo la primera vez
+library(writexl)
+
+ranas <- read.csv("datos/ranas.csv")
+log_aditivo <- aov(log(Age.FromEmergence) ~ Pred + Res, data = ranas)
+
+tabla_anova <- as.data.frame(summary(log_aditivo)[[1]])
+tabla_anova <- cbind(Fuente = rownames(tabla_anova), tabla_anova)
+
+medias <- aggregate(Age.FromEmergence ~ Pred + Res, data = ranas, FUN = ____)
+
+write_xlsx(list(anova = ____, medias = medias),
+           path = "resultados/resultados_edad.xlsx")
+```
+
+## Pista
+
+`write_xlsx()` acepta una **lista con nombres**: cada elemento se guarda en una hoja con ese nombre. Crea antes la carpeta `resultados/` en tu proyecto. Los nombres de las filas no se exportan, por eso los pasamos a una columna `Fuente` con `cbind()`.
+
+## Solución
+
+::: {.solucion-local}
+```r
+library(writexl)
+
+ranas <- read.csv("datos/ranas.csv")
+log_aditivo <- aov(log(Age.FromEmergence) ~ Pred + Res, data = ranas)
+
+tabla_anova <- as.data.frame(summary(log_aditivo)[[1]])
+tabla_anova <- cbind(Fuente = rownames(tabla_anova), tabla_anova)
+
+medias <- aggregate(Age.FromEmergence ~ Pred + Res, data = ranas, FUN = mean)
+
+write_xlsx(list(anova = tabla_anova, medias = medias),
+           path = "resultados/resultados_edad.xlsx")
+```
+
+El archivo `resultados_edad.xlsx` tiene dos hojas, `anova` y `medias`, y se abre en Excel o LibreOffice.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión del domingo 6 de diciembre. Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+### Ejercicio 3.3: Exportar a Word
+
+**Convierte la tabla del ANOVA en una tabla con formato, con números redondeados, y guárdala en un documento de Word listo para tu informe.**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+::: {.callout-tip appearance="simple"}
+Este ejercicio se hace **en RStudio**, en tu proyecto del curso: copia el código, complétalo y córrelo.
+:::
+
+```r
+# install.packages("flextable")   # solo la primera vez
+library(flextable)
+
+ranas <- read.csv("datos/ranas.csv")
+log_aditivo <- aov(log(Age.FromEmergence) ~ Pred + Res, data = ranas)
+
+tabla_anova <- as.data.frame(summary(log_aditivo)[[1]])
+tabla_anova <- cbind(Fuente = rownames(tabla_anova), tabla_anova)
+names(tabla_anova) <- c("Fuente", "gl", "SC", "CM", "F", "p")
+
+tabla_word <- flextable(tabla_anova)
+tabla_word <- colformat_double(tabla_word, digits = ____)
+tabla_word <- autofit(tabla_word)
+tabla_word
+
+save_as_docx(____, path = "resultados/tabla_anova.docx")
+```
+
+## Pista
+
+`colformat_double()` controla los decimales de las columnas numéricas. `save_as_docx()` recibe la tabla de `{flextable}` y la ruta del archivo.
+
+## Solución
+
+::: {.solucion-local}
+```r
+library(flextable)
+
+ranas <- read.csv("datos/ranas.csv")
+log_aditivo <- aov(log(Age.FromEmergence) ~ Pred + Res, data = ranas)
+
+tabla_anova <- as.data.frame(summary(log_aditivo)[[1]])
+tabla_anova <- cbind(Fuente = rownames(tabla_anova), tabla_anova)
+names(tabla_anova) <- c("Fuente", "gl", "SC", "CM", "F", "p")
+
+tabla_word <- flextable(tabla_anova)
+tabla_word <- colformat_double(tabla_word, digits = 3)
+tabla_word <- autofit(tabla_word)
+tabla_word
+
+save_as_docx(tabla_word, path = "resultados/tabla_anova.docx")
+```
+
+Abre `tabla_anova.docx`: la tabla ya es una tabla de Word, que puedes editar. Los valores p muy pequeños aparecen como 0.000; en un informe, escríbelos como $p < 0.001$.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión del domingo 6 de diciembre. Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+## Parte 4: Más práctica {#parte-4}
+
+### Ejercicio 4.1: ¿Hace falta la interacción?
+
+**Ajusta `SVL.final ~ Pred * Res`. Si la interacción no es significativa, ajusta el modelo aditivo e interpreta los efectos principales.**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_4_1
+con_interaccion <- aov(SVL.final ~ Pred ____ Res, data = ranas)
+summary(con_interaccion)
+
+aditivo <- aov(SVL.final ~ Pred ____ Res, data = ranas)
+summary(aditivo)
+```
+
+## Pista
+
+::: {.hint exercise="ex_4_1"}
+`*` incluye la interacción y `+` no. Si la interacción no aporta, el modelo más simple (aditivo) es más fácil de interpretar.
+:::
+
+## Solución
+
+::: {.solution exercise="ex_4_1"}
+```r
+con_interaccion <- aov(SVL.final ~ Pred * Res, data = ranas)
+summary(con_interaccion)
+
+aditivo <- aov(SVL.final ~ Pred + Res, data = ranas)
+summary(aditivo)
+```
+
+La interacción no es significativa ($F = 0.37$, $p = 0.69$). En el modelo aditivo, el depredador tiene un efecto claro ($F = 26.51$, $p < 0.001$) y los recursos no llegan a ser significativos ($F = 2.95$, $p = 0.09$).
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión del domingo 6 de diciembre. Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+### Ejercicio 4.2: Gráfico de interacción para la masa
+
+**Dibuja el gráfico de interacción de `Mass.final` (depredador en el eje x, una línea por nivel de recursos) y compruébalo con el modelo con interacción.**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_4_2
+interaction.plot(x.factor = ranas$____, trace.factor = ranas$____,
+                 response = ranas$Mass.final,
+                 xlab = "Depredador", ylab = "Masa final (g)",
+                 trace.label = "Recursos")
+
+summary(aov(Mass.final ~ Pred * Res, data = ranas))
+```
+
+## Pista
+
+::: {.hint exercise="ex_4_2"}
+`x.factor` va en el eje horizontal y `trace.factor` define las líneas.
+:::
+
+## Solución
+
+::: {.solution exercise="ex_4_2"}
+```r
+interaction.plot(x.factor = ranas$Pred, trace.factor = ranas$Res,
+                 response = ranas$Mass.final,
+                 xlab = "Depredador", ylab = "Masa final (g)",
+                 trace.label = "Recursos")
+
+summary(aov(Mass.final ~ Pred * Res, data = ranas))
+```
+
+Las líneas son casi paralelas y la interacción no es significativa ($F = 0.15$, $p = 0.86$): el efecto de los recursos sobre la masa es parecido con cualquier depredador.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión del domingo 6 de diciembre. Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+### Ejercicio 4.3: Tukey en el modelo aditivo de la masa
+
+**Ajusta `Mass.final ~ Pred + Res` y compara los depredadores con Tukey. ¿Qué pares difieren y por cuántos gramos?**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_4_3
+aditivo_masa <- aov(Mass.final ~ Pred + Res, data = ranas)
+TukeyHSD(aditivo_masa, which = "____")
+```
+
+## Pista
+
+::: {.hint exercise="ex_4_3"}
+`which = "Pred"` limita las comparaciones al factor depredador.
+:::
+
+## Solución
+
+::: {.solution exercise="ex_4_3"}
+```r
+aditivo_masa <- aov(Mass.final ~ Pred + Res, data = ranas)
+TukeyHSD(aditivo_masa, which = "Pred")
+```
+
+`L` pesa 0.14 g más que el control ($p < 0.001$) y 0.11 g más que `NL` ($p = 0.001$); el control y `NL` no difieren ($p = 0.43$). Recuerda que, en el ejercicio 4.3 del [Módulo 3](ejercicios-3.qmd), los diagnósticos de la masa sugerían usar `log()`: hazlo y comprueba que las conclusiones no cambian.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión del domingo 6 de diciembre. Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+### Ejercicio 4.4: Exportar la tabla de medias
+
+**Calcula la longitud final media para cada combinación de depredador y recursos, guárdala en `medias.csv` sin los nombres de las filas y vuelve a leerla.**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_4_4
+medias <- aggregate(SVL.final ~ Pred + Res, data = ranas, FUN = mean)
+medias
+
+write.csv(medias, "medias.csv", row.names = ____)
+read.csv("____")
+```
+
+## Pista
+
+::: {.hint exercise="ex_4_4"}
+Con `row.names = FALSE`, `write.csv()` no guarda la columna con los números de fila.
+:::
+
+## Solución
+
+::: {.solution exercise="ex_4_4"}
+```r
+medias <- aggregate(SVL.final ~ Pred + Res, data = ranas, FUN = mean)
+medias
+
+write.csv(medias, "medias.csv", row.names = FALSE)
+read.csv("medias.csv")
+```
+
+La tabla tiene seis filas, una por combinación; por ejemplo, `L` con recursos altos tiene una media de 20.53 mm y el control con recursos bajos, 18.17 mm. Al leerla, ya no aparece la columna `X`.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión del domingo 6 de diciembre. Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+## Con tus propios datos
+
+Elige una respuesta y dos factores de tus datos. Dibuja el gráfico de interacción, ajusta el modelo con interacción, revisa los diagnósticos (y transforma si hace falta), decide entre el modelo aditivo y el no aditivo, y exporta la tabla final a Word.

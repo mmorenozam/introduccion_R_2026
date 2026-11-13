@@ -1,0 +1,112 @@
+---
+title: "Introducción a R"
+subtitle: "Herramientas estadísticas de aplicación inmediata, desde la primera hora de clase"
+toc: false
+---
+
+::: {.callout-important appearance="simple"}
+## Anuncios
+
+- **Bienvenidos.** La primera clase es el **domingo 15 de noviembre, a las 9H00**. Antes, revisa los [requisitos](programa.qmd#requisitos) e instala R y RStudio siguiendo la guía de [Recursos](recursos.qmd#instalacion).
+:::
+
+Este curso brinda herramientas estadísticas de aplicación inmediata mediante el uso del lenguaje R. Está pensado para una audiencia diversa: **no hace falta un conocimiento profundo de teoría estadística ni experiencia previa en programación**.
+
+Desde la primera hora de clase vas a usar R para analizar datos, y avanzarás paso a paso desde la estadística descriptiva y las pruebas de hipótesis básicas hasta el análisis de varianza (ANOVA). Al terminar, podrás obtener un certificado de aprobación.
+
+## Cuatro módulos, un mismo camino
+
+::: {.grid}
+
+::: {.g-col-12 .g-col-md-6 .g-col-lg-3}
+::: {.card-box .mod-1}
+[Domingo 15 de noviembre]{.mod-meta}
+
+### 1. Generalidades e introducción a R
+
+R y RStudio, proyectos, objetos, paquetes, importación de datos y estadísticos descriptivos.
+
+[Ir al módulo](modulo-1.qmd)
+:::
+:::
+
+::: {.g-col-12 .g-col-md-6 .g-col-lg-3}
+::: {.card-box .mod-2}
+[Domingo 22 de noviembre]{.mod-meta}
+
+### 2. Estadística inferencial
+
+Muestras y poblaciones, intervalos de confianza, pruebas t y pruebas de Wilcoxon.
+
+[Ir al módulo](modulo-2.qmd)
+:::
+:::
+
+::: {.g-col-12 .g-col-md-6 .g-col-lg-3}
+::: {.card-box .mod-3}
+[Domingo 29 de noviembre]{.mod-meta}
+
+### 3. Análisis de varianza
+
+ANOVA de una vía, supuestos y diagnósticos, comparaciones múltiples y Kruskal-Wallis.
+
+[Ir al módulo](modulo-3.qmd)
+:::
+:::
+
+::: {.g-col-12 .g-col-md-6 .g-col-lg-3}
+::: {.card-box .mod-4}
+[Domingo 6 de diciembre]{.mod-meta}
+
+### 4. ANOVA de múltiples vías y exportación
+
+ANOVA aditivo y no aditivo de dos vías; exportar resultados a csv, Excel y Word.
+
+[Ir al módulo](modulo-4.qmd)
+:::
+:::
+
+:::
+
+[Ver el programa completo →](programa.qmd){.btn .btn-primary}
+
+## Cómo aprendemos
+
+- **Primero la pregunta, luego el código.** Cada prueba estadística empieza con la pregunta que responde y con un gráfico de los datos.
+- **Practicar desde el primer día.** Exposiciones cortas seguidas de trabajo práctico en R, en clase y en casa.
+- **Tus propios datos.** Te animamos a aplicar cada método a tus datos, a la par de los ejemplos del curso.
+- **Buenas prácticas desde el inicio.** Proyectos de R, scripts ordenados y análisis reproducibles.
+- **Materiales abiertos.** Diapositivas, ejercicios y datos están disponibles en este sitio.
+
+## Explora
+
+::: {.grid}
+
+::: {.g-col-12 .g-col-md-4}
+::: {.card-box}
+### Ejercicios
+Ejercicios interactivos de R que corren **en tu navegador**, sin instalar nada. Cada uno tiene pistas, y las soluciones se publican al terminar cada módulo.
+
+[Empezar con el Módulo 1](ejercicios-1.qmd)
+:::
+:::
+
+::: {.g-col-12 .g-col-md-4}
+::: {.card-box}
+### Autoevaluación
+Preguntas cortas de opción múltiple, anónimas, con explicaciones. Te muestran qué ideas necesitan un repaso.
+
+[Autoevaluación del Módulo 1](autoevaluacion-1.qmd)
+:::
+:::
+
+::: {.g-col-12 .g-col-md-4}
+::: {.card-box}
+### Evaluación y certificado
+40% ejercicios en clase, 60% examen virtual. Con 7 de 10 puntos obtienes el certificado de aprobación.
+
+[Cómo se evalúa](programa.qmd#evaluacion)
+:::
+:::
+
+:::

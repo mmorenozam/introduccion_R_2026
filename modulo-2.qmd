@@ -1,0 +1,51 @@
+---
+title: "Módulo 2: Introducción a la estadística inferencial con R"
+subtitle: "Domingo 22 de noviembre de 2026 · 9H00 a 12H00"
+---
+
+[Ver las diapositivas](diapositivas/modulo-2.html){.btn .btn-primary target="_blank"} [Hacer los ejercicios](ejercicios-2.qmd){.btn .btn-outline-primary} [Hacer la autoevaluación](autoevaluacion-2.qmd){.btn .btn-outline-primary}
+
+## Contexto
+
+- **Para quién:** participantes que ya saben importar una tabla y calcular estadísticos descriptivos en R ([Módulo 1](modulo-1.qmd)).
+- **Lugar en el curso:** segunda sesión. Pasamos de *describir* una muestra a *sacar conclusiones* sobre la población de la que viene.
+- **Duración:** 3 horas de clase virtual y unas 6 horas de trabajo autónomo.
+
+## Objetivos de la sesión
+
+Al terminar, podrás:
+
+1. **Distinguir** entre muestra y población, y entre parámetro y estadístico.
+2. **Calcular e interpretar** un intervalo de confianza para la media.
+3. **Plantear** las hipótesis nula y alternativa de una pregunta de investigación, e **interpretar** el valor p.
+4. **Elegir y ejecutar** la prueba adecuada (t de una muestra, de muestras independientes o emparejadas, o su alternativa de Wilcoxon) después de revisar sus supuestos.
+
+## Estructura
+
+| Parte | Qué hacemos | Objetivo |
+|:--|:--|:--:|
+| Repaso | Muestras, poblaciones y tipos de muestreo | 1 |
+| Parámetros y estadísticos | Media, desviación estándar y varianza: de la población y de la muestra | 1 |
+| Intervalos de confianza | Qué significa "95% de confianza"; cálculo con `t.test()` | 2 |
+| Pruebas de hipótesis | Hipótesis nula y alternativa, errores tipo I y II, potencia, pruebas de una y dos colas, el valor p | 3 |
+| Supuestos | Normalidad (gráfico Q-Q, `shapiro.test()`) y homogeneidad de varianzas (`var.test()`) | 4 |
+| Prueba t de una muestra | ¿Es la media distinta de un valor de referencia? | 4 |
+| Prueba t de muestras independientes | ¿Difieren las medias de dos grupos? Student y Welch | 4 |
+| Prueba t de muestras emparejadas | Mediciones antes y después en los mismos individuos | 4 |
+| **¿Qué prueba uso?** | Una tabla para elegir entre las pruebas t y de Wilcoxon según la pregunta y los datos | 3, 4 |
+| Pruebas de Wilcoxon | Alternativas no paramétricas para una y dos muestras | 4 |
+| Transformaciones | `log()` y `sqrt()` cuando los datos no son normales; volver a la escala original con `exp()` | 4 |
+
+## Trabajo autónomo
+
+Después de la clase:
+
+1. **Completa todos los [ejercicios](ejercicios-2.qmd)**: un intervalo de confianza y una prueba de cada tipo, con los datos de las ranas y dos ejemplos cortos. Lo que no alcancemos en clase, incluida la Parte 4 (Más práctica), es tarea.
+2. **Con tus propios datos**, escribe una pregunta que se responda con una prueba t, plantea las hipótesis y revisa los supuestos antes de correrla.
+3. Haz la **[autoevaluación](autoevaluacion-2.qmd)**.
+
+## Datos y materiales
+
+- **`ranas.csv`** ([descargar](datos/ranas.csv)): datos del Prof. Justin C. Touchon (ver [Módulo 1](modulo-1.qmd#datos-y-materiales)).
+- Los datos de glucosa en ratones y de germinación son **ilustrativos**, escritos para los ejercicios.
+- [Diapositivas del Módulo 2](diapositivas/modulo-2.html){target="_blank"}.

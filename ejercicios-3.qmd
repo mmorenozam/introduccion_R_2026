@@ -1,0 +1,550 @@
+---
+title: "Ejercicios Módulo 3"
+subtitle: "Introducción al análisis de varianza"
+lang: es
+format:
+  live-html:
+    theme:
+      light: [cosmo, theme.scss]
+    toc: true
+    toc-location: right
+    toc-title: En esta página
+    code-copy: true
+    code-overflow: wrap
+webr:
+  resources:
+    - datos/ranas.csv
+# Soluciones de este módulo: cambia a true después de la sesión y vuelve a renderizar.
+live:
+  show-solutions: false
+filters:
+  - soluciones.lua
+engine: knitr
+---
+
+{{< include ./_extensions/r-wasm/live/_knitr.qmd >}}
+
+
+Estos ejercicios siguen el [Módulo 3](modulo-3.qmd): un ANOVA completo, desde el gráfico hasta las comparaciones múltiples. El código corre **en tu navegador**. Donde veas `____`, complétalo y presiona **Run Code**. ¿Te atascaste? Abre la pestaña **Pista**. Las soluciones se publican después de la sesión.
+
+::: {.callout-note}
+## Antes de empezar
+- La primera vez, cargar R en el navegador puede tardar hasta un minuto.
+- La tabla `ranas` (78 tanques; datos del Prof. Justin C. Touchon) ya está cargada, con `Pred`, `Res` y `Hatch` convertidos en **factores**.
+- **La pregunta de hoy:** ¿cambia el tamaño de los renacuajos al salir del agua (`SVL.final`, en mm) según el depredador (`Pred`: `C` control, `L` letal, `NL` no letal)?
+:::
+
+```{webr}
+#| setup: true
+#| exercise:
+#|   - ex_1_1
+#|   - ex_1_2
+#|   - ex_2_1
+#|   - ex_2_2
+#|   - ex_2_3
+#|   - ex_3_1
+#|   - ex_3_2
+#|   - ex_4_1
+#|   - ex_4_2
+#|   - ex_4_3
+ranas <- read.csv("datos/ranas.csv")
+ranas$Pred  <- factor(ranas$Pred)
+ranas$Res   <- factor(ranas$Res)
+ranas$Hatch <- factor(ranas$Hatch)
+```
+
+::: {.callout-important appearance="simple"}
+## Lo que no terminemos en clase es tarea
+En clase avanzamos por las partes 1 a 3. **Completa todos los ejercicios de esta página antes del próximo domingo**, incluida la **Parte 4: Más práctica**.
+:::
+
+::: {.callout-tip collapse="true"}
+## Ver el código que prepara los datos
+
+Este código ya se ejecutó por ti en esta página. En RStudio, córrelo al inicio de tu script.
+
+```r
+ranas <- read.csv("datos/ranas.csv")
+ranas$Pred  <- factor(ranas$Pred)
+ranas$Res   <- factor(ranas$Res)
+ranas$Hatch <- factor(ranas$Hatch)
+```
+:::
+
+## Parte 1: Del gráfico al ANOVA {#parte-1}
+
+### Ejercicio 1.1: Graficar antes de modelar
+
+**Haz un diagrama de caja de `SVL.final` por depredador, y calcula la media y la desviación estándar de cada grupo. ¿Qué observas?**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_1_1
+boxplot(SVL.final ~ ____, data = ranas,
+        xlab = "Depredador", ylab = "Longitud final (mm)")
+
+tapply(ranas$SVL.final, ranas$Pred, mean)
+tapply(ranas$SVL.final, ranas$Pred, ____)
+```
+
+## Pista
+
+::: {.hint exercise="ex_1_1"}
+La fórmula `y ~ grupo` funciona igual en `boxplot()` que en `aov()`. Para la desviación estándar, la función es `sd`.
+:::
+
+## Solución
+
+::: {.solution exercise="ex_1_1"}
+```r
+boxplot(SVL.final ~ Pred, data = ranas,
+        xlab = "Depredador", ylab = "Longitud final (mm)")
+
+tapply(ranas$SVL.final, ranas$Pred, mean)
+tapply(ranas$SVL.final, ranas$Pred, sd)
+```
+
+Con el depredador letal (`L`), los renacuajos salen del agua más grandes (20.44 mm) que en el control (18.46 mm) o con el no letal (19.06 mm). También notamos que la **dispersión** no es igual: la desviación estándar del grupo `L` (1.43) casi duplica la del control (0.75). Lo tendremos en cuenta al revisar los supuestos.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión del domingo 29 de noviembre. Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+### Ejercicio 1.2: ANOVA de una vía
+
+**Ajusta un ANOVA de una vía de `SVL.final` según `Pred` y muestra la tabla del ANOVA. ¿Hay diferencias entre los depredadores?**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_1_2
+modelo <- aov(____ ~ ____, data = ranas)
+summary(____)
+```
+
+## Pista
+
+::: {.hint exercise="ex_1_2"}
+La respuesta va a la izquierda de `~` y el factor a la derecha. `summary()` de un objeto `aov` muestra la tabla con los grados de libertad, sumas de cuadrados, cuadrados medios, $F$ y el valor p.
+:::
+
+## Solución
+
+::: {.solution exercise="ex_1_2"}
+```r
+modelo <- aov(SVL.final ~ Pred, data = ranas)
+summary(modelo)
+```
+
+| | gl | SC | CM | $F$ | $p$ |
+|:--|--:|--:|--:|--:|--:|
+| Pred | 2 | 64.73 | 32.36 | 25.84 | $2.9 \times 10^{-9}$ |
+| Residuales | 75 | 93.94 | 1.25 | | |
+
+La variación **entre** depredadores (CM = 32.36) es unas 26 veces mayor que la variación **dentro** de los grupos (CM = 1.25). Rechazamos la hipótesis nula: al menos un depredador tiene una media distinta. El ANOVA no dice *cuál*: eso lo veremos en la Parte 3, pero antes hay que revisar los supuestos.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión del domingo 29 de noviembre. Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+## Parte 2: Supuestos, diagnósticos y transformaciones {#parte-2}
+
+### Ejercicio 2.1: Gráficos de diagnóstico
+
+**Muestra los cuatro gráficos de diagnóstico del modelo. Fíjate sobre todo en el primero (residuos frente a valores ajustados) y en el segundo (gráfico Q-Q de los residuos).**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_2_1
+modelo <- aov(SVL.final ~ Pred, data = ranas)
+
+par(mfrow = c(2, 2))
+plot(____)
+par(mfrow = c(1, 1))
+```
+
+## Pista
+
+::: {.hint exercise="ex_2_1"}
+`plot()` de un modelo `aov` dibuja los gráficos de diagnóstico. `par(mfrow = c(2, 2))` los pone en una cuadrícula de 2 por 2.
+:::
+
+## Solución
+
+::: {.solution exercise="ex_2_1"}
+```r
+modelo <- aov(SVL.final ~ Pred, data = ranas)
+
+par(mfrow = c(2, 2))
+plot(modelo)
+par(mfrow = c(1, 1))
+```
+
+- **Residuos frente a ajustados:** hay tres columnas de puntos, una por depredador. La del grupo `L` (la de valores ajustados más altos) está más dispersa: indicio de varianzas distintas.
+- **Q-Q:** los residuos siguen bastante bien la línea, así que la normalidad parece razonable.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión del domingo 29 de noviembre. Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+### Ejercicio 2.2: Pruebas formales de los supuestos
+
+**Comprueba la normalidad de los residuos con Shapiro-Wilk y la homogeneidad de varianzas con la prueba de Bartlett. ¿Coinciden con lo que viste en los gráficos?**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_2_2
+modelo <- aov(SVL.final ~ Pred, data = ranas)
+
+shapiro.test(residuals(____))
+bartlett.test(SVL.final ~ ____, data = ranas)
+```
+
+## Pista
+
+::: {.hint exercise="ex_2_2"}
+La normalidad del ANOVA se revisa sobre los **residuos** del modelo, que obtienes con `residuals(modelo)`. En la prueba de Bartlett, la hipótesis nula es que todas las varianzas son iguales.
+:::
+
+## Solución
+
+::: {.solution exercise="ex_2_2"}
+```r
+modelo <- aov(SVL.final ~ Pred, data = ranas)
+
+shapiro.test(residuals(modelo))
+bartlett.test(SVL.final ~ Pred, data = ranas)
+```
+
+Los residuos son normales (Shapiro-Wilk: $W = 0.986$, $p = 0.58$), pero las varianzas **no** son homogéneas (Bartlett: $K^2 = 12.43$, $gl = 2$, $p = 0.002$). Coincide con los gráficos.
+
+¿Qué hacemos? El efecto del depredador es tan claro ($p < 10^{-8}$) que es poco probable que cambie, pero conviene comprobarlo con una prueba que no suponga varianzas iguales. En el ejercicio 3.2 usamos Kruskal-Wallis.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión del domingo 29 de noviembre. Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+### Ejercicio 2.3: Transformar la respuesta
+
+**La edad al salir del agua (`Age.FromEmergence`) es un tiempo, con cola larga a la derecha. Ajusta un ANOVA según `Pred` y revisa sus supuestos. Luego repite todo con `log(Age.FromEmergence)`. ¿Mejoran?**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_2_3
+modelo_edad <- aov(Age.FromEmergence ~ Pred, data = ranas)
+shapiro.test(residuals(modelo_edad))
+bartlett.test(Age.FromEmergence ~ Pred, data = ranas)
+
+modelo_log <- aov(____(Age.FromEmergence) ~ Pred, data = ranas)
+shapiro.test(residuals(____))
+bartlett.test(log(Age.FromEmergence) ~ Pred, data = ranas)
+summary(modelo_log)
+```
+
+## Pista
+
+::: {.hint exercise="ex_2_3"}
+Puedes transformar la respuesta dentro de la fórmula: `aov(log(y) ~ grupo)`. Para tiempos, masas y concentraciones se suele usar `log()`; para conteos, `sqrt()`.
+:::
+
+## Solución
+
+::: {.solution exercise="ex_2_3"}
+```r
+modelo_edad <- aov(Age.FromEmergence ~ Pred, data = ranas)
+shapiro.test(residuals(modelo_edad))
+bartlett.test(Age.FromEmergence ~ Pred, data = ranas)
+
+modelo_log <- aov(log(Age.FromEmergence) ~ Pred, data = ranas)
+shapiro.test(residuals(modelo_log))
+bartlett.test(log(Age.FromEmergence) ~ Pred, data = ranas)
+summary(modelo_log)
+```
+
+En días, los dos supuestos fallan: los residuos no son normales (Shapiro-Wilk: $p < 0.001$) y las varianzas difieren mucho (Bartlett: $p < 0.001$).
+
+Con el logaritmo, los residuos ya son normales ($p = 0.26$) y la diferencia entre varianzas es mucho menor (Bartlett: $p = 0.021$), aunque no desaparece del todo. El ANOVA sobre `log(Age.FromEmergence)` da $F = 12.39$, $gl = 2$ y 75, $p < 0.001$.
+
+Como las varianzas todavía difieren un poco, conviene confirmar la conclusión con Kruskal-Wallis (ejercicio 3.2).
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión del domingo 29 de noviembre. Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+## Parte 3: ¿Qué grupos difieren? {#parte-3}
+
+### Ejercicio 3.1: Comparaciones múltiples de Tukey
+
+**Usa la prueba HSD de Tukey para comparar todos los pares de depredadores. ¿Qué pares difieren? Grafica los intervalos de confianza.**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_3_1
+modelo <- aov(SVL.final ~ Pred, data = ranas)
+
+tukey <- TukeyHSD(____)
+tukey
+plot(____)
+```
+
+## Pista
+
+::: {.hint exercise="ex_3_1"}
+En la salida, `diff` es la diferencia entre las medias, `lwr` y `upr` los límites del intervalo del 95%, y `p adj` el valor p **ajustado** por hacer varias comparaciones. Un intervalo que no contiene el cero indica una diferencia.
+:::
+
+## Solución
+
+::: {.solution exercise="ex_3_1"}
+```r
+modelo <- aov(SVL.final ~ Pred, data = ranas)
+
+tukey <- TukeyHSD(modelo)
+tukey
+plot(tukey)
+```
+
+| Comparación | Diferencia (mm) | IC 95% | $p$ ajustado |
+|:--|--:|:--:|--:|
+| L - C | 1.98 | 1.32 a 2.65 | < 0.001 |
+| NL - C | 0.60 | -0.26 a 1.46 | 0.22 |
+| NL - L | -1.38 | -2.24 a -0.53 | < 0.001 |
+
+Solo el depredador **letal** cambia el tamaño: los renacuajos salen del agua unos 2 mm más grandes que en el control y 1.4 mm más grandes que con el depredador no letal. Entre el control y el no letal no hay diferencia clara: su intervalo contiene el cero.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión del domingo 29 de noviembre. Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+### Ejercicio 3.2: Kruskal-Wallis
+
+**Cuando ni la transformación arregla los supuestos (o prefieres no transformar), la alternativa es Kruskal-Wallis. Aplícalo a `Age.FromEmergence` según `Pred`, con comparaciones por pares de Wilcoxon. ¿Coincide con el ejercicio 2.3?**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_3_2
+tapply(ranas$Age.FromEmergence, ranas$Pred, median)
+
+kruskal.test(Age.FromEmergence ~ ____, data = ranas)
+pairwise.wilcox.test(ranas$Age.FromEmergence, ranas$____)
+```
+
+## Pista
+
+::: {.hint exercise="ex_3_2"}
+Kruskal-Wallis es la alternativa no paramétrica al ANOVA de una vía: compara los rangos en lugar de las medias, así que resume cada grupo con la **mediana**. `pairwise.wilcox.test(respuesta, grupo)` hace todas las comparaciones por pares y ajusta los valores p (por defecto, con el método de Holm).
+:::
+
+## Solución
+
+::: {.solution exercise="ex_3_2"}
+```r
+tapply(ranas$Age.FromEmergence, ranas$Pred, median)
+
+kruskal.test(Age.FromEmergence ~ Pred, data = ranas)
+pairwise.wilcox.test(ranas$Age.FromEmergence, ranas$Pred)
+```
+
+Las medianas son 32.9 días (`C`), 14.2 (`L`) y 28.2 (`NL`). La prueba de Kruskal-Wallis da $\chi^2 = 22.26$, $gl = 2$, $p < 0.001$: la edad al salir del agua depende del depredador, como en el ANOVA del logaritmo del ejercicio 2.3.
+
+Por pares, el grupo `L` sale antes que el control ($p < 0.001$) y que el no letal ($p = 0.025$); el control y el no letal no difieren ($p = 0.30$). R puede avisar que hay empates y que usa una aproximación: es un aviso, no un error.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión del domingo 29 de noviembre. Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+## Parte 4: Más práctica {#parte-4}
+
+### Ejercicio 4.1: Un ANOVA sin diferencias
+
+**¿Dependen los días para reabsorber la cola (`Resorb.days`) del depredador? Ajusta el ANOVA, revisa la normalidad de los residuos y confirma con Kruskal-Wallis.**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_4_1
+modelo_cola <- aov(Resorb.days ~ ____, data = ranas)
+summary(modelo_cola)
+shapiro.test(residuals(____))
+
+kruskal.test(Resorb.days ~ Pred, data = ranas)
+```
+
+## Pista
+
+::: {.hint exercise="ex_4_1"}
+Si el ANOVA no es significativo, no hace falta hacer comparaciones múltiples.
+:::
+
+## Solución
+
+::: {.solution exercise="ex_4_1"}
+```r
+modelo_cola <- aov(Resorb.days ~ Pred, data = ranas)
+summary(modelo_cola)
+shapiro.test(residuals(modelo_cola))
+
+kruskal.test(Resorb.days ~ Pred, data = ranas)
+```
+
+El ANOVA da $F = 1.11$, $gl = 2$ y 75, $p = 0.34$. Los residuos no son normales ($p = 0.004$), pero Kruskal-Wallis llega a lo mismo ($p = 0.49$): **no hay evidencia** de que el depredador cambie el tiempo de reabsorción. En el [Módulo 4](ejercicios-4.qmd) veremos que lo que sí lo cambia son los recursos.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión del domingo 29 de noviembre. Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+### Ejercicio 4.2: ANOVA con dos grupos
+
+**Compara `SVL.final` entre `Hi` y `Lo` con un ANOVA y con la prueba t de Student (`var.equal = TRUE`). Compara el estadístico $F$ con $t^2$ y los dos valores p.**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_4_2
+summary(aov(SVL.final ~ Res, data = ranas))
+
+prueba <- t.test(SVL.final ~ Res, data = ranas, var.equal = ____)
+prueba
+prueba$statistic^____
+```
+
+## Pista
+
+::: {.hint exercise="ex_4_2"}
+Con dos grupos, el ANOVA de una vía y la prueba t de Student son la misma prueba: $F = t^2$.
+:::
+
+## Solución
+
+::: {.solution exercise="ex_4_2"}
+```r
+summary(aov(SVL.final ~ Res, data = ranas))
+
+prueba <- t.test(SVL.final ~ Res, data = ranas, var.equal = TRUE)
+prueba
+prueba$statistic^2
+```
+
+$t = 1.33$ y $t^2 = 1.77$, el mismo valor de $F$ del ANOVA; los dos valores p son 0.19. El ANOVA **generaliza** la prueba t de Student a más de dos grupos.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión del domingo 29 de noviembre. Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+### Ejercicio 4.3: El camino completo, con la masa
+
+**Recorre el camino del ANOVA con la masa final (`Mass.final`) según `Pred`: diagnósticos, transformación con `log()` si hace falta, ANOVA, Tukey y una confirmación con Kruskal-Wallis. ¿Cuántas veces más pesan los renacuajos con depredador letal que en el control?**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_4_3
+modelo_masa <- aov(Mass.final ~ Pred, data = ranas)
+shapiro.test(residuals(modelo_masa))
+bartlett.test(Mass.final ~ Pred, data = ranas)
+
+modelo_log <- aov(log(Mass.final) ~ Pred, data = ranas)
+shapiro.test(residuals(modelo_log))
+bartlett.test(log(Mass.final) ~ Pred, data = ranas)
+summary(modelo_log)
+
+tukey <- TukeyHSD(____)
+tukey
+exp(tukey$Pred[, "diff"])
+
+kruskal.test(Mass.final ~ Pred, data = ranas)
+```
+
+## Pista
+
+::: {.hint exercise="ex_4_3"}
+En escala logarítmica, `exp()` de una diferencia de Tukey es un **cociente** entre medias geométricas.
+:::
+
+## Solución
+
+::: {.solution exercise="ex_4_3"}
+```r
+modelo_masa <- aov(Mass.final ~ Pred, data = ranas)
+shapiro.test(residuals(modelo_masa))
+bartlett.test(Mass.final ~ Pred, data = ranas)
+
+modelo_log <- aov(log(Mass.final) ~ Pred, data = ranas)
+shapiro.test(residuals(modelo_log))
+bartlett.test(log(Mass.final) ~ Pred, data = ranas)
+summary(modelo_log)
+
+tukey <- TukeyHSD(modelo_log)
+tukey
+exp(tukey$Pred[, "diff"])
+
+kruskal.test(Mass.final ~ Pred, data = ranas)
+```
+
+En gramos fallan los dos supuestos (Shapiro-Wilk: $p = 0.004$; Bartlett: $p < 0.001$). Con el logaritmo, los residuos ya son normales ($p = 0.33$), aunque las varianzas siguen siendo algo distintas (Bartlett: $p = 0.001$). El ANOVA del logaritmo da $F = 23.29$, $p < 0.001$.
+
+Tukey: `L` difiere del control ($p < 0.001$) y del no letal ($p = 0.001$); el control y el no letal no difieren ($p = 0.29$). Con depredador letal, los renacuajos pesan **1.36 veces** lo del control (un 36% más). Kruskal-Wallis confirma la conclusión ($p < 0.001$), lo que da tranquilidad dado que las varianzas no son del todo iguales.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión del domingo 29 de noviembre. Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+## Con tus propios datos
+
+Elige una variable de respuesta y un factor con tres o más niveles. Repite el camino de hoy: **gráfico → ANOVA → diagnósticos → comparaciones múltiples** (o Kruskal-Wallis si los supuestos fallan), y escribe dos frases que resuman el resultado.

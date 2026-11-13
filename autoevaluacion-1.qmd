@@ -1,0 +1,129 @@
+---
+title: "Autoevaluación Módulo 1"
+subtitle: "Generalidades e introducción a R"
+filters:
+  - selfcheck.lua
+include-after-body: selfcheck.html
+toc: false
+---
+
+Ocho preguntas cortas sobre el [Módulo 1](modulo-1.qmd), dos por cada objetivo de la sesión. Tienes dos intentos por pregunta; después verás la respuesta y una explicación. **Es anónima: no se guarda ni se envía nada.**
+
+::: {.callout-note appearance="simple"}
+<span id="sc-score"></span>
+:::
+
+
+## Objetivo 1: R, RStudio y proyectos
+
+::: {.selfcheck}
+**1. ¿Cuál es la principal ventaja de trabajar dentro de un proyecto de R?**
+
+- [ ] Hace que el código corra más rápido
+- [x] Fija la carpeta de trabajo, así las rutas como `"datos/ranas.csv"` funcionan en cualquier computador
+- [ ] Instala automáticamente todos los paquetes necesarios
+- [ ] Guarda una copia de seguridad en la nube
+
+::: {.explanation}
+Al abrir un proyecto, RStudio fija la carpeta de trabajo en la carpeta del proyecto. Las rutas relativas (`datos/ranas.csv`) funcionan entonces igual en tu computador y en el de un colega, sin escribir rutas como `C:/Usuarios/...`.
+:::
+:::
+
+::: {.selfcheck}
+**2. R y RStudio, ¿son lo mismo?**
+
+- [ ] Sí, son dos nombres del mismo programa
+- [x] No: R es el lenguaje que hace los cálculos y RStudio es un entorno para escribir y ejecutar código de R
+- [ ] No: RStudio es el lenguaje y R es la interfaz gráfica
+- [ ] Sí, pero RStudio es la versión de pago
+
+::: {.explanation}
+R es el lenguaje y el motor de cálculo. RStudio es un entorno de desarrollo (IDE) que facilita escribir scripts, ver objetos, gráficos y ayuda. Por eso se instala **primero R** y luego RStudio.
+:::
+:::
+
+## Objetivo 2: Tipos de datos, operadores y objetos
+
+::: {.selfcheck}
+**3. Queremos comprobar si `x` es igual a 5. ¿Qué expresión usamos?**
+
+- [ ] `x = 5`
+- [ ] `x <- 5`
+- [x] `x == 5`
+- [ ] `x != 5`
+
+::: {.explanation}
+`==` compara y devuelve `TRUE` o `FALSE`. `=` y `<-` **asignan** el valor 5 a `x`, y `!=` pregunta si es *distinto* de 5.
+:::
+:::
+
+::: {.selfcheck}
+**4. ¿Qué devuelve `class(c(2, "tres", 4))`?**
+
+- [ ] `"numeric"`
+- [x] `"character"`
+- [ ] `"list"`
+- [ ] Un error
+
+::: {.explanation}
+Un vector solo admite una clase. Como `"tres"` es texto, R convierte todos los elementos a texto: el resultado es `"character"`. Para guardar elementos de distintas clases se usa una **lista**.
+:::
+:::
+
+## Objetivo 3: Paquetes e importación de datos
+
+::: {.selfcheck}
+**5. ¿Cuál es la diferencia entre `install.packages("readxl")` y `library(readxl)`?**
+
+- [ ] Ninguna, hacen lo mismo
+- [x] `install.packages()` descarga el paquete una vez; `library()` lo carga en cada sesión en que lo uses
+- [ ] `library()` descarga el paquete y `install.packages()` lo actualiza
+- [ ] `install.packages()` solo funciona en Windows
+
+::: {.explanation}
+Un paquete se **instala** una sola vez en tu computador, pero hay que **cargarlo** con `library()` cada vez que abres R y quieres usar sus funciones.
+:::
+:::
+
+::: {.selfcheck}
+**6. Después de `ranas <- read.csv("datos/ranas.csv")`, ¿qué función usarías para ver de un vistazo el tipo de cada columna?**
+
+- [x] `str(ranas)`
+- [ ] `mean(ranas)`
+- [ ] `table(ranas)`
+- [ ] `length(ranas)`
+
+::: {.explanation}
+`str()` muestra la **estructura**: número de filas y columnas, y la clase y primeros valores de cada columna. Es lo primero que conviene revisar después de importar.
+:::
+:::
+
+## Objetivo 4: Estadísticos descriptivos
+
+::: {.selfcheck}
+**7. Una variable de tiempos tiene media 30.7 días y mediana 23.4 días. ¿Qué sugiere esto?**
+
+- [ ] La distribución es simétrica
+- [x] Hay valores altos que tiran de la media hacia arriba: la distribución tiene una cola a la derecha
+- [ ] Hay un error en los datos
+- [ ] La desviación estándar es cero
+
+::: {.explanation}
+La media es sensible a los valores extremos y la mediana no. Si la media es bastante mayor que la mediana, unos pocos valores altos alargan la cola derecha. Es el caso de `Age.FromEmergence` en `ranas`.
+:::
+:::
+
+::: {.selfcheck}
+**8. ¿Qué función resume `SVL.final` con su media para cada nivel de `Pred`?**
+
+- [ ] `mean(ranas$SVL.final, ranas$Pred)`
+- [x] `tapply(ranas$SVL.final, ranas$Pred, mean)`
+- [ ] `table(ranas$SVL.final, ranas$Pred)`
+- [ ] `summary(ranas$Pred)`
+
+::: {.explanation}
+`tapply(variable, grupo, función)` aplica `mean` a `SVL.final` dentro de cada depredador. `aggregate(SVL.final ~ Pred, data = ranas, FUN = mean)` hace lo mismo y devuelve una tabla de datos.
+:::
+:::
+
+¿Fallaste alguna? Vuelve a la parte correspondiente de las [diapositivas](diapositivas/modulo-1.html){target="_blank"} o de los [ejercicios](ejercicios-1.qmd).

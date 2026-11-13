@@ -1,0 +1,1417 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.31">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Ejercicios Módulo 4 – Introducción a R</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./icon1.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-10d5b5b9bdfd596dfb1fd64658c28bd2.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Sin resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<meta property="og:title" content="Ejercicios Módulo 4 – Introducción a R">
+<meta property="og:description" content="ANOVA de múltiples vías y exportación de resultados">
+<meta property="og:image" content="icon1.png">
+<meta property="og:site_name" content="Introducción a R">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="./index.html" class="navbar-brand navbar-brand-logo">
+    <img src="./icon1.png" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Introducción a R</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Buscar"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Navegación de palanca" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">Inicio</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./programa.html"> 
+<span class="menu-text">Programa</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-módulos" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Módulos</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-módulos">    
+        <li>
+    <a class="dropdown-item" href="./modulo-1.html">
+ <span class="dropdown-text">Módulo 1: Generalidades e introducción a R</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./modulo-2.html">
+ <span class="dropdown-text">Módulo 2: Estadística inferencial</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./modulo-3.html">
+ <span class="dropdown-text">Módulo 3: Análisis de varianza</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./modulo-4.html">
+ <span class="dropdown-text">Módulo 4: ANOVA de múltiples vías y exportación</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-diapositivas" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Diapositivas</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-diapositivas">    
+        <li>
+    <a class="dropdown-item" href="./diapositivas/modulo-1.html">
+ <span class="dropdown-text">Diapositivas Módulo 1</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./diapositivas/modulo-2.html">
+ <span class="dropdown-text">Diapositivas Módulo 2</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./diapositivas/modulo-3.html">
+ <span class="dropdown-text">Diapositivas Módulo 3</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./diapositivas/modulo-4.html">
+ <span class="dropdown-text">Diapositivas Módulo 4</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-ejercicios" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Ejercicios</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-ejercicios">    
+        <li>
+    <a class="dropdown-item" href="./ejercicios-1.html">
+ <span class="dropdown-text">Ejercicios Módulo 1</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./ejercicios-2.html">
+ <span class="dropdown-text">Ejercicios Módulo 2</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./ejercicios-3.html">
+ <span class="dropdown-text">Ejercicios Módulo 3</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./ejercicios-4.html">
+ <span class="dropdown-text">Ejercicios Módulo 4</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-autoevaluación" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Autoevaluación</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-autoevaluación">    
+        <li>
+    <a class="dropdown-item" href="./autoevaluacion-1.html">
+ <span class="dropdown-text">Autoevaluación Módulo 1</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./autoevaluacion-2.html">
+ <span class="dropdown-text">Autoevaluación Módulo 2</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./autoevaluacion-3.html">
+ <span class="dropdown-text">Autoevaluación Módulo 3</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./autoevaluacion-4.html">
+ <span class="dropdown-text">Autoevaluación Módulo 4</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./recursos.html"> 
+<span class="menu-text">Recursos</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./acerca.html"> 
+<span class="menu-text">Acerca de</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">En esta página</h2>
+   
+  <ul>
+  <li><a href="#parte-1" id="toc-parte-1" class="nav-link active" data-scroll-target="#parte-1">Parte 1: ANOVA aditivo de dos vías</a>
+  <ul class="collapse">
+  <li><a href="#ejercicio-1.1-dos-factores-a-la-vez" id="toc-ejercicio-1.1-dos-factores-a-la-vez" class="nav-link" data-scroll-target="#ejercicio-1.1-dos-factores-a-la-vez">Ejercicio 1.1: Dos factores a la vez</a></li>
+  <li><a href="#ejercicio-1.2-es-razonable-el-modelo-aditivo" id="toc-ejercicio-1.2-es-razonable-el-modelo-aditivo" class="nav-link" data-scroll-target="#ejercicio-1.2-es-razonable-el-modelo-aditivo">Ejercicio 1.2: ¿Es razonable el modelo aditivo?</a></li>
+  </ul></li>
+  <li><a href="#parte-2" id="toc-parte-2" class="nav-link" data-scroll-target="#parte-2">Parte 2: ANOVA no aditivo de dos vías</a>
+  <ul class="collapse">
+  <li><a href="#ejercicio-2.1-una-interacción" id="toc-ejercicio-2.1-una-interacción" class="nav-link" data-scroll-target="#ejercicio-2.1-una-interacción">Ejercicio 2.1: Una interacción</a></li>
+  <li><a href="#ejercicio-2.2-diagnósticos-del-modelo-no-aditivo" id="toc-ejercicio-2.2-diagnósticos-del-modelo-no-aditivo" class="nav-link" data-scroll-target="#ejercicio-2.2-diagnósticos-del-modelo-no-aditivo">Ejercicio 2.2: Diagnósticos del modelo no aditivo</a></li>
+  <li><a href="#ejercicio-2.3-la-interacción-que-desaparece" id="toc-ejercicio-2.3-la-interacción-que-desaparece" class="nav-link" data-scroll-target="#ejercicio-2.3-la-interacción-que-desaparece">Ejercicio 2.3: La interacción que desaparece</a></li>
+  </ul></li>
+  <li><a href="#parte-3" id="toc-parte-3" class="nav-link" data-scroll-target="#parte-3">Parte 3: Comparaciones múltiples y exportación</a>
+  <ul class="collapse">
+  <li><a href="#ejercicio-3.1-tukey-con-dos-factores-y-exportar-a-csv" id="toc-ejercicio-3.1-tukey-con-dos-factores-y-exportar-a-csv" class="nav-link" data-scroll-target="#ejercicio-3.1-tukey-con-dos-factores-y-exportar-a-csv">Ejercicio 3.1: Tukey con dos factores, y exportar a csv</a></li>
+  <li><a href="#ejercicio-3.2-exportar-a-excel" id="toc-ejercicio-3.2-exportar-a-excel" class="nav-link" data-scroll-target="#ejercicio-3.2-exportar-a-excel">Ejercicio 3.2: Exportar a Excel</a></li>
+  <li><a href="#ejercicio-3.3-exportar-a-word" id="toc-ejercicio-3.3-exportar-a-word" class="nav-link" data-scroll-target="#ejercicio-3.3-exportar-a-word">Ejercicio 3.3: Exportar a Word</a></li>
+  </ul></li>
+  <li><a href="#parte-4" id="toc-parte-4" class="nav-link" data-scroll-target="#parte-4">Parte 4: Más práctica</a>
+  <ul class="collapse">
+  <li><a href="#ejercicio-4.1-hace-falta-la-interacción" id="toc-ejercicio-4.1-hace-falta-la-interacción" class="nav-link" data-scroll-target="#ejercicio-4.1-hace-falta-la-interacción">Ejercicio 4.1: ¿Hace falta la interacción?</a></li>
+  <li><a href="#ejercicio-4.2-gráfico-de-interacción-para-la-masa" id="toc-ejercicio-4.2-gráfico-de-interacción-para-la-masa" class="nav-link" data-scroll-target="#ejercicio-4.2-gráfico-de-interacción-para-la-masa">Ejercicio 4.2: Gráfico de interacción para la masa</a></li>
+  <li><a href="#ejercicio-4.3-tukey-en-el-modelo-aditivo-de-la-masa" id="toc-ejercicio-4.3-tukey-en-el-modelo-aditivo-de-la-masa" class="nav-link" data-scroll-target="#ejercicio-4.3-tukey-en-el-modelo-aditivo-de-la-masa">Ejercicio 4.3: Tukey en el modelo aditivo de la masa</a></li>
+  <li><a href="#ejercicio-4.4-exportar-la-tabla-de-medias" id="toc-ejercicio-4.4-exportar-la-tabla-de-medias" class="nav-link" data-scroll-target="#ejercicio-4.4-exportar-la-tabla-de-medias">Ejercicio 4.4: Exportar la tabla de medias</a></li>
+  </ul></li>
+  <li><a href="#con-tus-propios-datos" id="toc-con-tus-propios-datos" class="nav-link" data-scroll-target="#con-tus-propios-datos">Con tus propios datos</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Ejercicios Módulo 4</h1>
+<p class="subtitle lead">ANOVA de múltiples vías y exportación de resultados</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Estos ejercicios siguen el <a href="./modulo-4.html">Módulo 4</a>. Los de las partes 1 y 2 corren <strong>en tu navegador</strong>; los de exportar a Excel y Word se hacen <strong>en RStudio</strong>, porque crean archivos en tu computador. Donde veas <code>____</code>, complétalo. ¿Te atascaste? Abre la pestaña <strong>Pista</strong>. Las soluciones se publican después de la sesión.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Antes de empezar
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>La primera vez, cargar R en el navegador puede tardar hasta un minuto.</li>
+<li>La tabla <code>ranas</code> (78 tanques; datos del Prof.&nbsp;Justin C. Touchon) ya está cargada, con <code>Pred</code>, <code>Res</code> y <code>Hatch</code> convertidos en <strong>factores</strong>.</li>
+<li>Hoy cruzamos dos factores: el depredador (<code>Pred</code>: <code>C</code>, <code>L</code>, <code>NL</code>) y los recursos alimenticios (<code>Res</code>: <code>Hi</code> altos, <code>Lo</code> bajos). Cada combinación tiene entre 7 y 16 tanques.</li>
+</ul>
+</div>
+</div>
+<div class="cell" data-setup="true" data-exercise="[&quot;ex_1_1&quot;,&quot;ex_1_2&quot;,&quot;ex_2_1&quot;,&quot;ex_2_2&quot;,&quot;ex_2_3&quot;,&quot;ex_3_1&quot;,&quot;ex_4_1&quot;,&quot;ex_4_2&quot;,&quot;ex_4_3&quot;,&quot;ex_4_4&quot;]">
+<pre class="{webr}"><code>#| setup: true
+#| exercise:
+#|   - ex_1_1
+#|   - ex_1_2
+#|   - ex_2_1
+#|   - ex_2_2
+#|   - ex_2_3
+#|   - ex_3_1
+#|   - ex_4_1
+#|   - ex_4_2
+#|   - ex_4_3
+#|   - ex_4_4
+ranas &lt;- read.csv("datos/ranas.csv")
+ranas$Pred  &lt;- factor(ranas$Pred)
+ranas$Res   &lt;- factor(ranas$Res)
+ranas$Hatch &lt;- factor(ranas$Hatch)</code></pre>
+</div>
+<div class="callout callout-style-simple callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Lo que no terminemos en clase es tarea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>En clase avanzamos por las partes 1 a 3. <strong>Completa todos los ejercicios de esta página antes del próximo domingo</strong>, incluida la <strong>Parte 4: Más práctica</strong>.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Ver el código que prepara los datos
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Este código ya se ejecutó por ti en esta página. En RStudio, córrelo al inicio de tu script.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>ranas <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"datos/ranas.csv"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>ranas<span class="sc">$</span>Pred  <span class="ot">&lt;-</span> <span class="fu">factor</span>(ranas<span class="sc">$</span>Pred)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>ranas<span class="sc">$</span>Res   <span class="ot">&lt;-</span> <span class="fu">factor</span>(ranas<span class="sc">$</span>Res)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>ranas<span class="sc">$</span>Hatch <span class="ot">&lt;-</span> <span class="fu">factor</span>(ranas<span class="sc">$</span>Hatch)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+<section id="parte-1" class="level2">
+<h2 class="anchored" data-anchor-id="parte-1">Parte 1: ANOVA aditivo de dos vías</h2>
+<section id="ejercicio-1.1-dos-factores-a-la-vez" class="level3">
+<h3 class="anchored" data-anchor-id="ejercicio-1.1-dos-factores-a-la-vez">Ejercicio 1.1: Dos factores a la vez</h3>
+<p><strong>¿Dependen los días para reabsorber la cola (<code>Resorb.days</code>) del depredador, de los recursos, o de ambos? Ajusta un ANOVA aditivo de dos vías y revisa la normalidad de los residuos.</strong></p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">Ejercicio</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Pista</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false">Solución</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div class="cell" data-exercise="ex_1_1">
+<pre class="{webr}"><code>#| exercise: ex_1_1
+boxplot(Resorb.days ~ Pred + Res, data = ranas)
+
+aditivo &lt;- aov(Resorb.days ~ Pred ____ Res, data = ranas)
+summary(aditivo)
+
+shapiro.test(residuals(____))</code></pre>
+</div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div class="hint" data-exercise="ex_1_1">
+<p>En un modelo <strong>aditivo</strong>, los factores se unen con <code>+</code>: cada uno tiene su propio efecto y los efectos se suman.</p>
+</div>
+</div>
+<div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
+<div class="proof solution" data-exercise="ex_1_1">
+<p><span class="proof-title"><em>Solución</em>. </span></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(Resorb.days <span class="sc">~</span> Pred <span class="sc">+</span> Res, <span class="at">data =</span> ranas)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>aditivo <span class="ot">&lt;-</span> <span class="fu">aov</span>(Resorb.days <span class="sc">~</span> Pred <span class="sc">+</span> Res, <span class="at">data =</span> ranas)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(aditivo)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(<span class="fu">residuals</span>(aditivo))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;">gl</th>
+<th style="text-align: right;">SC</th>
+<th style="text-align: right;">CM</th>
+<th style="text-align: right;"><span class="math inline">\(F\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(p\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Pred</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0.78</td>
+<td style="text-align: right;">0.39</td>
+<td style="text-align: right;">1.31</td>
+<td style="text-align: right;">0.28</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Res</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">4.35</td>
+<td style="text-align: right;">4.35</td>
+<td style="text-align: right;">14.53</td>
+<td style="text-align: right;">0.0003</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Residuales</td>
+<td style="text-align: right;">74</td>
+<td style="text-align: right;">22.14</td>
+<td style="text-align: right;">0.30</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+</tbody>
+</table>
+<p>Los <strong>recursos</strong> sí afectan el tiempo de reabsorción, el <strong>depredador</strong> no. Los residuos son normales (Shapiro-Wilk: <span class="math inline">\(p = 0.27\)</span>). Con recursos bajos, la cola tarda en promedio medio día más en reabsorberse.</p>
+</div>
+<div class="sol-pendiente">
+<p>La solución se publicará después de la sesión del domingo 6 de diciembre. Mientras tanto, usa la pestaña <strong>Pista</strong>.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="ejercicio-1.2-es-razonable-el-modelo-aditivo" class="level3">
+<h3 class="anchored" data-anchor-id="ejercicio-1.2-es-razonable-el-modelo-aditivo">Ejercicio 1.2: ¿Es razonable el modelo aditivo?</h3>
+<p><strong>El modelo aditivo supone que el efecto de los recursos es el mismo con cualquier depredador. Compruébalo con un gráfico de interacción y con un modelo que incluya la interacción.</strong></p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">Ejercicio</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">Pista</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-3" role="tab" aria-controls="tabset-2-3" aria-selected="false">Solución</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<div class="cell" data-exercise="ex_1_2">
+<pre class="{webr}"><code>#| exercise: ex_1_2
+interaction.plot(x.factor = ranas$Pred, trace.factor = ranas$____,
+                 response = ranas$Resorb.days,
+                 xlab = "Depredador", ylab = "Días para reabsorber la cola",
+                 trace.label = "Recursos")
+
+con_interaccion &lt;- aov(Resorb.days ~ Pred ____ Res, data = ranas)
+summary(con_interaccion)</code></pre>
+</div>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<div class="hint" data-exercise="ex_1_2">
+<p><code>Pred * Res</code> es una abreviatura de <code>Pred + Res + Pred:Res</code>, donde <code>Pred:Res</code> es la interacción. En el gráfico, líneas más o menos <strong>paralelas</strong> indican que no hay interacción.</p>
+</div>
+</div>
+<div id="tabset-2-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-3-tab">
+<div class="proof solution" data-exercise="ex_1_2">
+<p><span class="proof-title"><em>Solución</em>. </span></p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">interaction.plot</span>(<span class="at">x.factor =</span> ranas<span class="sc">$</span>Pred, <span class="at">trace.factor =</span> ranas<span class="sc">$</span>Res,</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">response =</span> ranas<span class="sc">$</span>Resorb.days,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">xlab =</span> <span class="st">"Depredador"</span>, <span class="at">ylab =</span> <span class="st">"Días para reabsorber la cola"</span>,</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">trace.label =</span> <span class="st">"Recursos"</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>con_interaccion <span class="ot">&lt;-</span> <span class="fu">aov</span>(Resorb.days <span class="sc">~</span> Pred <span class="sc">*</span> Res, <span class="at">data =</span> ranas)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(con_interaccion)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Las líneas no son perfectamente paralelas, pero la interacción no es significativa (<span class="math inline">\(F = 0.86\)</span>, <span class="math inline">\(gl = 2\)</span> y 72, <span class="math inline">\(p = 0.43\)</span>): las diferencias que vemos son compatibles con el azar. El modelo aditivo del ejercicio 1.1 es razonable.</p>
+</div>
+<div class="sol-pendiente">
+<p>La solución se publicará después de la sesión del domingo 6 de diciembre. Mientras tanto, usa la pestaña <strong>Pista</strong>.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="parte-2" class="level2">
+<h2 class="anchored" data-anchor-id="parte-2">Parte 2: ANOVA no aditivo de dos vías</h2>
+<section id="ejercicio-2.1-una-interacción" class="level3">
+<h3 class="anchored" data-anchor-id="ejercicio-2.1-una-interacción">Ejercicio 2.1: Una interacción</h3>
+<p><strong>Repite el análisis con la edad al salir del agua (<code>Age.FromEmergence</code>). Dibuja el gráfico de interacción y ajusta el modelo con interacción. ¿Qué observas?</strong></p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true">Ejercicio</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false">Pista</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-3" role="tab" aria-controls="tabset-3-3" aria-selected="false">Solución</a></li></ul>
+<div class="tab-content">
+<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
+<div class="cell" data-exercise="ex_2_1">
+<pre class="{webr}"><code>#| exercise: ex_2_1
+interaction.plot(x.factor = ranas$Pred, trace.factor = ranas$Res,
+                 response = ranas$____,
+                 xlab = "Depredador", ylab = "Edad al salir del agua (días)",
+                 trace.label = "Recursos")
+
+no_aditivo &lt;- aov(Age.FromEmergence ~ ____, data = ranas)
+summary(no_aditivo)</code></pre>
+</div>
+</div>
+<div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
+<div class="hint" data-exercise="ex_2_1">
+<p>Usa la misma estructura del ejercicio 1.2, cambiando la variable de respuesta.</p>
+</div>
+</div>
+<div id="tabset-3-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-3-tab">
+<div class="proof solution" data-exercise="ex_2_1">
+<p><span class="proof-title"><em>Solución</em>. </span></p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">interaction.plot</span>(<span class="at">x.factor =</span> ranas<span class="sc">$</span>Pred, <span class="at">trace.factor =</span> ranas<span class="sc">$</span>Res,</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">response =</span> ranas<span class="sc">$</span>Age.FromEmergence,</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">xlab =</span> <span class="st">"Depredador"</span>, <span class="at">ylab =</span> <span class="st">"Edad al salir del agua (días)"</span>,</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">trace.label =</span> <span class="st">"Recursos"</span>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>no_aditivo <span class="ot">&lt;-</span> <span class="fu">aov</span>(Age.FromEmergence <span class="sc">~</span> Pred <span class="sc">*</span> Res, <span class="at">data =</span> ranas)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(no_aditivo)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;">gl</th>
+<th style="text-align: right;">SC</th>
+<th style="text-align: right;">CM</th>
+<th style="text-align: right;"><span class="math inline">\(F\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(p\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Pred</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">9466.9</td>
+<td style="text-align: right;">4733.4</td>
+<td style="text-align: right;">15.90</td>
+<td style="text-align: right;">&lt; 0.001</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Res</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">9963.5</td>
+<td style="text-align: right;">9963.5</td>
+<td style="text-align: right;">33.48</td>
+<td style="text-align: right;">&lt; 0.001</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Pred:Res</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2605.9</td>
+<td style="text-align: right;">1303.0</td>
+<td style="text-align: right;">4.38</td>
+<td style="text-align: right;">0.016</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Residuales</td>
+<td style="text-align: right;">72</td>
+<td style="text-align: right;">21429.3</td>
+<td style="text-align: right;">297.6</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+</tbody>
+</table>
+<p>Las líneas <strong>no</strong> son paralelas y la interacción es significativa: con recursos bajos, los renacuajos salen del agua más tarde, pero el retraso es mucho mayor en el control (de 25 a 59 días) que con el depredador letal (de 13 a 22 días). Cuando hay interacción, no se puede hablar del efecto de los recursos sin decir con qué depredador. Pero antes de concluir… ¡los supuestos!</p>
+</div>
+<div class="sol-pendiente">
+<p>La solución se publicará después de la sesión del domingo 6 de diciembre. Mientras tanto, usa la pestaña <strong>Pista</strong>.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="ejercicio-2.2-diagnósticos-del-modelo-no-aditivo" class="level3">
+<h3 class="anchored" data-anchor-id="ejercicio-2.2-diagnósticos-del-modelo-no-aditivo">Ejercicio 2.2: Diagnósticos del modelo no aditivo</h3>
+<p><strong>Revisa la normalidad de los residuos del modelo <code>no_aditivo</code> y la homogeneidad de varianzas entre las seis combinaciones de depredador y recursos.</strong></p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true">Ejercicio</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false">Pista</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-3" role="tab" aria-controls="tabset-4-3" aria-selected="false">Solución</a></li></ul>
+<div class="tab-content">
+<div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
+<div class="cell" data-exercise="ex_2_2">
+<pre class="{webr}"><code>#| exercise: ex_2_2
+no_aditivo &lt;- aov(Age.FromEmergence ~ Pred * Res, data = ranas)
+
+par(mfrow = c(2, 2))
+plot(no_aditivo)
+par(mfrow = c(1, 1))
+
+shapiro.test(residuals(____))
+bartlett.test(Age.FromEmergence ~ interaction(Pred, ____), data = ranas)</code></pre>
+</div>
+</div>
+<div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
+<div class="hint" data-exercise="ex_2_2">
+<p><code>interaction(Pred, Res)</code> crea un factor con las seis combinaciones (<code>C.Hi</code>, <code>L.Hi</code>, …), así <code>bartlett.test()</code> compara las varianzas de todas ellas.</p>
+</div>
+</div>
+<div id="tabset-4-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-3-tab">
+<div class="proof solution" data-exercise="ex_2_2">
+<p><span class="proof-title"><em>Solución</em>. </span></p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>no_aditivo <span class="ot">&lt;-</span> <span class="fu">aov</span>(Age.FromEmergence <span class="sc">~</span> Pred <span class="sc">*</span> Res, <span class="at">data =</span> ranas)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(no_aditivo)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(<span class="fu">residuals</span>(no_aditivo))</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="fu">bartlett.test</span>(Age.FromEmergence <span class="sc">~</span> <span class="fu">interaction</span>(Pred, Res), <span class="at">data =</span> ranas)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Los dos supuestos fallan: los residuos no son normales (Shapiro-Wilk: <span class="math inline">\(p = 0.010\)</span>) y las varianzas son muy distintas (Bartlett: <span class="math inline">\(p &lt; 0.001\)</span>). En el gráfico de residuos frente a ajustados, la dispersión <strong>crece</strong> con la media, en forma de embudo. Es una señal típica de que conviene transformar la respuesta con el logaritmo.</p>
+</div>
+<div class="sol-pendiente">
+<p>La solución se publicará después de la sesión del domingo 6 de diciembre. Mientras tanto, usa la pestaña <strong>Pista</strong>.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="ejercicio-2.3-la-interacción-que-desaparece" class="level3">
+<h3 class="anchored" data-anchor-id="ejercicio-2.3-la-interacción-que-desaparece">Ejercicio 2.3: La interacción que desaparece</h3>
+<p><strong>Ajusta el mismo modelo con el logaritmo de la edad. ¿Mejoran los supuestos? ¿Sigue siendo significativa la interacción?</strong></p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true">Ejercicio</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-2" role="tab" aria-controls="tabset-5-2" aria-selected="false">Pista</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-3" role="tab" aria-controls="tabset-5-3" aria-selected="false">Solución</a></li></ul>
+<div class="tab-content">
+<div id="tabset-5-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-5-1-tab">
+<div class="cell" data-exercise="ex_2_3">
+<pre class="{webr}"><code>#| exercise: ex_2_3
+log_no_aditivo &lt;- aov(____(Age.FromEmergence) ~ Pred * Res, data = ranas)
+summary(log_no_aditivo)
+
+shapiro.test(residuals(log_no_aditivo))
+bartlett.test(log(Age.FromEmergence) ~ interaction(Pred, Res), data = ranas)</code></pre>
+</div>
+</div>
+<div id="tabset-5-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-2-tab">
+<div class="hint" data-exercise="ex_2_3">
+<p>Puedes transformar la respuesta dentro de la fórmula: <code>log(y) ~ A * B</code>. En R, <code>log()</code> es el logaritmo natural.</p>
+</div>
+</div>
+<div id="tabset-5-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-3-tab">
+<div class="proof solution" data-exercise="ex_2_3">
+<p><span class="proof-title"><em>Solución</em>. </span></p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>log_no_aditivo <span class="ot">&lt;-</span> <span class="fu">aov</span>(<span class="fu">log</span>(Age.FromEmergence) <span class="sc">~</span> Pred <span class="sc">*</span> Res, <span class="at">data =</span> ranas)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(log_no_aditivo)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(<span class="fu">residuals</span>(log_no_aditivo))</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="fu">bartlett.test</span>(<span class="fu">log</span>(Age.FromEmergence) <span class="sc">~</span> <span class="fu">interaction</span>(Pred, Res), <span class="at">data =</span> ranas)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Los supuestos mejoran mucho: los residuos ya son compatibles con la normalidad (Shapiro-Wilk: <span class="math inline">\(p = 0.10\)</span>) y la diferencia entre varianzas es bastante menor (Bartlett: <span class="math inline">\(p = 0.022\)</span>, frente a <span class="math inline">\(p &lt; 0.001\)</span> antes). Y la interacción <strong>ya no es significativa</strong> (<span class="math inline">\(F = 1.47\)</span>, <span class="math inline">\(p = 0.24\)</span>); depredador y recursos siguen siendo muy significativos (<span class="math inline">\(p &lt; 0.001\)</span>).</p>
+<p>¿Qué pasó? En la escala logarítmica, los efectos se <strong>multiplican</strong> en lugar de sumarse. Con recursos bajos, la edad al salir del agua se multiplica por un factor que no difiere claramente entre depredadores; en días, un mismo factor se ve como un retraso mayor donde la edad ya era mayor. La “interacción” del ejercicio 2.1 era sobre todo un efecto de la escala. <strong>Moraleja: revisa los diagnósticos antes de interpretar una interacción.</strong></p>
+</div>
+<div class="sol-pendiente">
+<p>La solución se publicará después de la sesión del domingo 6 de diciembre. Mientras tanto, usa la pestaña <strong>Pista</strong>.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="parte-3" class="level2">
+<h2 class="anchored" data-anchor-id="parte-3">Parte 3: Comparaciones múltiples y exportación</h2>
+<section id="ejercicio-3.1-tukey-con-dos-factores-y-exportar-a-csv" class="level3">
+<h3 class="anchored" data-anchor-id="ejercicio-3.1-tukey-con-dos-factores-y-exportar-a-csv">Ejercicio 3.1: Tukey con dos factores, y exportar a csv</h3>
+<p><strong>Ajusta el modelo aditivo con el logaritmo de la edad y compara los depredadores con Tukey. Luego guarda la tabla del ANOVA en un archivo csv y vuelve a leerlo para comprobar que se guardó bien.</strong></p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-6-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-1" role="tab" aria-controls="tabset-6-1" aria-selected="true">Ejercicio</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-2" role="tab" aria-controls="tabset-6-2" aria-selected="false">Pista</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-3" role="tab" aria-controls="tabset-6-3" aria-selected="false">Solución</a></li></ul>
+<div class="tab-content">
+<div id="tabset-6-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-6-1-tab">
+<div class="cell" data-exercise="ex_3_1">
+<pre class="{webr}"><code>#| exercise: ex_3_1
+log_aditivo &lt;- aov(log(Age.FromEmergence) ~ Pred + Res, data = ranas)
+TukeyHSD(log_aditivo, which = "____")
+
+tabla_anova &lt;- as.data.frame(summary(log_aditivo)[[1]])
+tabla_anova
+
+write.csv(____, "tabla_anova.csv")
+read.csv("____")</code></pre>
+</div>
+</div>
+<div id="tabset-6-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-2-tab">
+<div class="hint" data-exercise="ex_3_1">
+<p>Con varios factores, <code>which = "Pred"</code> le dice a <code>TukeyHSD()</code> qué factor comparar. <code>summary(modelo)[[1]]</code> extrae la tabla del ANOVA; <code>as.data.frame()</code> la convierte en una tabla de datos que se puede exportar.</p>
+</div>
+</div>
+<div id="tabset-6-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-3-tab">
+<div class="proof solution" data-exercise="ex_3_1">
+<p><span class="proof-title"><em>Solución</em>. </span></p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>log_aditivo <span class="ot">&lt;-</span> <span class="fu">aov</span>(<span class="fu">log</span>(Age.FromEmergence) <span class="sc">~</span> Pred <span class="sc">+</span> Res, <span class="at">data =</span> ranas)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">TukeyHSD</span>(log_aditivo, <span class="at">which =</span> <span class="st">"Pred"</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>tabla_anova <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">summary</span>(log_aditivo)[[<span class="dv">1</span>]])</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>tabla_anova</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(tabla_anova, <span class="st">"tabla_anova.csv"</span>)</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="fu">read.csv</span>(<span class="st">"tabla_anova.csv"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>En escala logarítmica, la diferencia L - C es -0.77 (<span class="math inline">\(p &lt; 0.001\)</span>), NL - C es -0.27 (<span class="math inline">\(p = 0.26\)</span>) y NL - L es 0.50 (<span class="math inline">\(p = 0.011\)</span>). Para interpretarlas, vuelve a la escala original con <code>exp()</code>: con el depredador letal, la edad al salir del agua es <code>exp(-0.77)</code> <span class="math inline">\(\approx\)</span> 0.46 veces la del control, es decir, <strong>un 54% menor</strong>.</p>
+<p><code>write.csv()</code> guarda el archivo en la carpeta de trabajo (en tu computador, la de tu proyecto de R). Al leerlo, los nombres de las filas aparecen en una columna <code>X</code>; para recuperarlos como nombres de filas, usa <code>read.csv("tabla_anova.csv", row.names = 1)</code>.</p>
+</div>
+<div class="sol-pendiente">
+<p>La solución se publicará después de la sesión del domingo 6 de diciembre. Mientras tanto, usa la pestaña <strong>Pista</strong>.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="ejercicio-3.2-exportar-a-excel" class="level3">
+<h3 class="anchored" data-anchor-id="ejercicio-3.2-exportar-a-excel">Ejercicio 3.2: Exportar a Excel</h3>
+<p><strong>Guarda en un solo archivo de Excel dos hojas: la tabla del ANOVA del ejercicio 3.1 y las medias de la edad para cada combinación de depredador y recursos.</strong></p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-7-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-1" role="tab" aria-controls="tabset-7-1" aria-selected="true">Ejercicio</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-7-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-2" role="tab" aria-controls="tabset-7-2" aria-selected="false">Pista</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-7-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-3" role="tab" aria-controls="tabset-7-3" aria-selected="false">Solución</a></li></ul>
+<div class="tab-content">
+<div id="tabset-7-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-7-1-tab">
+<div class="callout callout-style-simple callout-tip">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>Este ejercicio se hace <strong>en RStudio</strong>, en tu proyecto del curso: copia el código, complétalo y córrelo.</p>
+</div>
+</div>
+</div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("writexl")   # solo la primera vez</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(writexl)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>ranas <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"datos/ranas.csv"</span>)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>log_aditivo <span class="ot">&lt;-</span> <span class="fu">aov</span>(<span class="fu">log</span>(Age.FromEmergence) <span class="sc">~</span> Pred <span class="sc">+</span> Res, <span class="at">data =</span> ranas)</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>tabla_anova <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">summary</span>(log_aditivo)[[<span class="dv">1</span>]])</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>tabla_anova <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="at">Fuente =</span> <span class="fu">rownames</span>(tabla_anova), tabla_anova)</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>medias <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(Age.FromEmergence <span class="sc">~</span> Pred <span class="sc">+</span> Res, <span class="at">data =</span> ranas, <span class="at">FUN =</span> ____)</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="fu">write_xlsx</span>(<span class="fu">list</span>(<span class="at">anova =</span> ____, <span class="at">medias =</span> medias),</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>           <span class="at">path =</span> <span class="st">"resultados/resultados_edad.xlsx"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="tabset-7-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-7-2-tab">
+<p><code>write_xlsx()</code> acepta una <strong>lista con nombres</strong>: cada elemento se guarda en una hoja con ese nombre. Crea antes la carpeta <code>resultados/</code> en tu proyecto. Los nombres de las filas no se exportan, por eso los pasamos a una columna <code>Fuente</code> con <code>cbind()</code>.</p>
+</div>
+<div id="tabset-7-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-7-3-tab">
+<div class="sol-pendiente">
+<p>La solución se publicará después de la sesión del domingo 6 de diciembre. Mientras tanto, usa la pestaña <strong>Pista</strong>.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="ejercicio-3.3-exportar-a-word" class="level3">
+<h3 class="anchored" data-anchor-id="ejercicio-3.3-exportar-a-word">Ejercicio 3.3: Exportar a Word</h3>
+<p><strong>Convierte la tabla del ANOVA en una tabla con formato, con números redondeados, y guárdala en un documento de Word listo para tu informe.</strong></p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-8-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-1" role="tab" aria-controls="tabset-8-1" aria-selected="true">Ejercicio</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-8-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-2" role="tab" aria-controls="tabset-8-2" aria-selected="false">Pista</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-8-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-3" role="tab" aria-controls="tabset-8-3" aria-selected="false">Solución</a></li></ul>
+<div class="tab-content">
+<div id="tabset-8-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-8-1-tab">
+<div class="callout callout-style-simple callout-tip">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>Este ejercicio se hace <strong>en RStudio</strong>, en tu proyecto del curso: copia el código, complétalo y córrelo.</p>
+</div>
+</div>
+</div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("flextable")   # solo la primera vez</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(flextable)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>ranas <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"datos/ranas.csv"</span>)</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>log_aditivo <span class="ot">&lt;-</span> <span class="fu">aov</span>(<span class="fu">log</span>(Age.FromEmergence) <span class="sc">~</span> Pred <span class="sc">+</span> Res, <span class="at">data =</span> ranas)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>tabla_anova <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">summary</span>(log_aditivo)[[<span class="dv">1</span>]])</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>tabla_anova <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="at">Fuente =</span> <span class="fu">rownames</span>(tabla_anova), tabla_anova)</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(tabla_anova) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Fuente"</span>, <span class="st">"gl"</span>, <span class="st">"SC"</span>, <span class="st">"CM"</span>, <span class="st">"F"</span>, <span class="st">"p"</span>)</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>tabla_word <span class="ot">&lt;-</span> <span class="fu">flextable</span>(tabla_anova)</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>tabla_word <span class="ot">&lt;-</span> <span class="fu">colformat_double</span>(tabla_word, <span class="at">digits =</span> ____)</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>tabla_word <span class="ot">&lt;-</span> <span class="fu">autofit</span>(tabla_word)</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>tabla_word</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a><span class="fu">save_as_docx</span>(____, <span class="at">path =</span> <span class="st">"resultados/tabla_anova.docx"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="tabset-8-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-8-2-tab">
+<p><code>colformat_double()</code> controla los decimales de las columnas numéricas. <code>save_as_docx()</code> recibe la tabla de <code>{flextable}</code> y la ruta del archivo.</p>
+</div>
+<div id="tabset-8-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-8-3-tab">
+<div class="sol-pendiente">
+<p>La solución se publicará después de la sesión del domingo 6 de diciembre. Mientras tanto, usa la pestaña <strong>Pista</strong>.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="parte-4" class="level2">
+<h2 class="anchored" data-anchor-id="parte-4">Parte 4: Más práctica</h2>
+<section id="ejercicio-4.1-hace-falta-la-interacción" class="level3">
+<h3 class="anchored" data-anchor-id="ejercicio-4.1-hace-falta-la-interacción">Ejercicio 4.1: ¿Hace falta la interacción?</h3>
+<p><strong>Ajusta <code>SVL.final ~ Pred * Res</code>. Si la interacción no es significativa, ajusta el modelo aditivo e interpreta los efectos principales.</strong></p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-9-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-9-1" role="tab" aria-controls="tabset-9-1" aria-selected="true">Ejercicio</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-9-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-9-2" role="tab" aria-controls="tabset-9-2" aria-selected="false">Pista</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-9-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-9-3" role="tab" aria-controls="tabset-9-3" aria-selected="false">Solución</a></li></ul>
+<div class="tab-content">
+<div id="tabset-9-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-9-1-tab">
+<div class="cell" data-exercise="ex_4_1">
+<pre class="{webr}"><code>#| exercise: ex_4_1
+con_interaccion &lt;- aov(SVL.final ~ Pred ____ Res, data = ranas)
+summary(con_interaccion)
+
+aditivo &lt;- aov(SVL.final ~ Pred ____ Res, data = ranas)
+summary(aditivo)</code></pre>
+</div>
+</div>
+<div id="tabset-9-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-9-2-tab">
+<div class="hint" data-exercise="ex_4_1">
+<p><code>*</code> incluye la interacción y <code>+</code> no. Si la interacción no aporta, el modelo más simple (aditivo) es más fácil de interpretar.</p>
+</div>
+</div>
+<div id="tabset-9-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-9-3-tab">
+<div class="proof solution" data-exercise="ex_4_1">
+<p><span class="proof-title"><em>Solución</em>. </span></p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>con_interaccion <span class="ot">&lt;-</span> <span class="fu">aov</span>(SVL.final <span class="sc">~</span> Pred <span class="sc">*</span> Res, <span class="at">data =</span> ranas)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(con_interaccion)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>aditivo <span class="ot">&lt;-</span> <span class="fu">aov</span>(SVL.final <span class="sc">~</span> Pred <span class="sc">+</span> Res, <span class="at">data =</span> ranas)</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(aditivo)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>La interacción no es significativa (<span class="math inline">\(F = 0.37\)</span>, <span class="math inline">\(p = 0.69\)</span>). En el modelo aditivo, el depredador tiene un efecto claro (<span class="math inline">\(F = 26.51\)</span>, <span class="math inline">\(p &lt; 0.001\)</span>) y los recursos no llegan a ser significativos (<span class="math inline">\(F = 2.95\)</span>, <span class="math inline">\(p = 0.09\)</span>).</p>
+</div>
+<div class="sol-pendiente">
+<p>La solución se publicará después de la sesión del domingo 6 de diciembre. Mientras tanto, usa la pestaña <strong>Pista</strong>.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="ejercicio-4.2-gráfico-de-interacción-para-la-masa" class="level3">
+<h3 class="anchored" data-anchor-id="ejercicio-4.2-gráfico-de-interacción-para-la-masa">Ejercicio 4.2: Gráfico de interacción para la masa</h3>
+<p><strong>Dibuja el gráfico de interacción de <code>Mass.final</code> (depredador en el eje x, una línea por nivel de recursos) y compruébalo con el modelo con interacción.</strong></p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-10-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-10-1" role="tab" aria-controls="tabset-10-1" aria-selected="true">Ejercicio</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-10-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-10-2" role="tab" aria-controls="tabset-10-2" aria-selected="false">Pista</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-10-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-10-3" role="tab" aria-controls="tabset-10-3" aria-selected="false">Solución</a></li></ul>
+<div class="tab-content">
+<div id="tabset-10-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-10-1-tab">
+<div class="cell" data-exercise="ex_4_2">
+<pre class="{webr}"><code>#| exercise: ex_4_2
+interaction.plot(x.factor = ranas$____, trace.factor = ranas$____,
+                 response = ranas$Mass.final,
+                 xlab = "Depredador", ylab = "Masa final (g)",
+                 trace.label = "Recursos")
+
+summary(aov(Mass.final ~ Pred * Res, data = ranas))</code></pre>
+</div>
+</div>
+<div id="tabset-10-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-10-2-tab">
+<div class="hint" data-exercise="ex_4_2">
+<p><code>x.factor</code> va en el eje horizontal y <code>trace.factor</code> define las líneas.</p>
+</div>
+</div>
+<div id="tabset-10-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-10-3-tab">
+<div class="proof solution" data-exercise="ex_4_2">
+<p><span class="proof-title"><em>Solución</em>. </span></p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">interaction.plot</span>(<span class="at">x.factor =</span> ranas<span class="sc">$</span>Pred, <span class="at">trace.factor =</span> ranas<span class="sc">$</span>Res,</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">response =</span> ranas<span class="sc">$</span>Mass.final,</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">xlab =</span> <span class="st">"Depredador"</span>, <span class="at">ylab =</span> <span class="st">"Masa final (g)"</span>,</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">trace.label =</span> <span class="st">"Recursos"</span>)</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">aov</span>(Mass.final <span class="sc">~</span> Pred <span class="sc">*</span> Res, <span class="at">data =</span> ranas))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Las líneas son casi paralelas y la interacción no es significativa (<span class="math inline">\(F = 0.15\)</span>, <span class="math inline">\(p = 0.86\)</span>): el efecto de los recursos sobre la masa es parecido con cualquier depredador.</p>
+</div>
+<div class="sol-pendiente">
+<p>La solución se publicará después de la sesión del domingo 6 de diciembre. Mientras tanto, usa la pestaña <strong>Pista</strong>.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="ejercicio-4.3-tukey-en-el-modelo-aditivo-de-la-masa" class="level3">
+<h3 class="anchored" data-anchor-id="ejercicio-4.3-tukey-en-el-modelo-aditivo-de-la-masa">Ejercicio 4.3: Tukey en el modelo aditivo de la masa</h3>
+<p><strong>Ajusta <code>Mass.final ~ Pred + Res</code> y compara los depredadores con Tukey. ¿Qué pares difieren y por cuántos gramos?</strong></p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-11-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-11-1" role="tab" aria-controls="tabset-11-1" aria-selected="true">Ejercicio</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-11-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-11-2" role="tab" aria-controls="tabset-11-2" aria-selected="false">Pista</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-11-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-11-3" role="tab" aria-controls="tabset-11-3" aria-selected="false">Solución</a></li></ul>
+<div class="tab-content">
+<div id="tabset-11-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-11-1-tab">
+<div class="cell" data-exercise="ex_4_3">
+<pre class="{webr}"><code>#| exercise: ex_4_3
+aditivo_masa &lt;- aov(Mass.final ~ Pred + Res, data = ranas)
+TukeyHSD(aditivo_masa, which = "____")</code></pre>
+</div>
+</div>
+<div id="tabset-11-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-11-2-tab">
+<div class="hint" data-exercise="ex_4_3">
+<p><code>which = "Pred"</code> limita las comparaciones al factor depredador.</p>
+</div>
+</div>
+<div id="tabset-11-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-11-3-tab">
+<div class="proof solution" data-exercise="ex_4_3">
+<p><span class="proof-title"><em>Solución</em>. </span></p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>aditivo_masa <span class="ot">&lt;-</span> <span class="fu">aov</span>(Mass.final <span class="sc">~</span> Pred <span class="sc">+</span> Res, <span class="at">data =</span> ranas)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">TukeyHSD</span>(aditivo_masa, <span class="at">which =</span> <span class="st">"Pred"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>L</code> pesa 0.14 g más que el control (<span class="math inline">\(p &lt; 0.001\)</span>) y 0.11 g más que <code>NL</code> (<span class="math inline">\(p = 0.001\)</span>); el control y <code>NL</code> no difieren (<span class="math inline">\(p = 0.43\)</span>). Recuerda que, en el ejercicio 4.3 del <a href="./ejercicios-3.html">Módulo 3</a>, los diagnósticos de la masa sugerían usar <code>log()</code>: hazlo y comprueba que las conclusiones no cambian.</p>
+</div>
+<div class="sol-pendiente">
+<p>La solución se publicará después de la sesión del domingo 6 de diciembre. Mientras tanto, usa la pestaña <strong>Pista</strong>.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="ejercicio-4.4-exportar-la-tabla-de-medias" class="level3">
+<h3 class="anchored" data-anchor-id="ejercicio-4.4-exportar-la-tabla-de-medias">Ejercicio 4.4: Exportar la tabla de medias</h3>
+<p><strong>Calcula la longitud final media para cada combinación de depredador y recursos, guárdala en <code>medias.csv</code> sin los nombres de las filas y vuelve a leerla.</strong></p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-12-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-12-1" role="tab" aria-controls="tabset-12-1" aria-selected="true">Ejercicio</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-12-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-12-2" role="tab" aria-controls="tabset-12-2" aria-selected="false">Pista</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-12-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-12-3" role="tab" aria-controls="tabset-12-3" aria-selected="false">Solución</a></li></ul>
+<div class="tab-content">
+<div id="tabset-12-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-12-1-tab">
+<div class="cell" data-exercise="ex_4_4">
+<pre class="{webr}"><code>#| exercise: ex_4_4
+medias &lt;- aggregate(SVL.final ~ Pred + Res, data = ranas, FUN = mean)
+medias
+
+write.csv(medias, "medias.csv", row.names = ____)
+read.csv("____")</code></pre>
+</div>
+</div>
+<div id="tabset-12-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-12-2-tab">
+<div class="hint" data-exercise="ex_4_4">
+<p>Con <code>row.names = FALSE</code>, <code>write.csv()</code> no guarda la columna con los números de fila.</p>
+</div>
+</div>
+<div id="tabset-12-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-12-3-tab">
+<div class="proof solution" data-exercise="ex_4_4">
+<p><span class="proof-title"><em>Solución</em>. </span></p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>medias <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(SVL.final <span class="sc">~</span> Pred <span class="sc">+</span> Res, <span class="at">data =</span> ranas, <span class="at">FUN =</span> mean)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>medias</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(medias, <span class="st">"medias.csv"</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="fu">read.csv</span>(<span class="st">"medias.csv"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>La tabla tiene seis filas, una por combinación; por ejemplo, <code>L</code> con recursos altos tiene una media de 20.53 mm y el control con recursos bajos, 18.17 mm. Al leerla, ya no aparece la columna <code>X</code>.</p>
+</div>
+<div class="sol-pendiente">
+<p>La solución se publicará después de la sesión del domingo 6 de diciembre. Mientras tanto, usa la pestaña <strong>Pista</strong>.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="con-tus-propios-datos" class="level2">
+<h2 class="anchored" data-anchor-id="con-tus-propios-datos">Con tus propios datos</h2>
+<p>Elige una respuesta y dos factores de tus datos. Dibuja el gráfico de interacción, ajusta el modelo con interacción, revisa los diagnósticos (y transforma si hace falta), decide entre el modelo aditivo y el no aditivo, y exporta la tabla final a Word.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiado");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiado");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>Introducción a R · Mauricio Moreno, PhD · 2026</p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

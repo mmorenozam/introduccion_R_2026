@@ -1,0 +1,49 @@
+---
+title: "Módulo 4: ANOVA de múltiples vías y exportación de resultados"
+subtitle: "Domingo 6 de diciembre de 2026 · 9H00 a 12H00"
+---
+
+[Ver las diapositivas](diapositivas/modulo-4.html){.btn .btn-primary target="_blank"} [Hacer los ejercicios](ejercicios-4.qmd){.btn .btn-outline-primary} [Hacer la autoevaluación](autoevaluacion-4.qmd){.btn .btn-outline-primary}
+
+## Contexto
+
+- **Para quién:** participantes que ya saben ajustar y diagnosticar un ANOVA de una vía ([Módulo 3](modulo-3.qmd)).
+- **Lugar en el curso:** última sesión. Añadimos un segundo factor al ANOVA y aprendemos a llevar los resultados de R a un informe.
+- **Duración:** 3 horas de clase virtual y unas 6 horas de trabajo autónomo, incluido el examen virtual.
+
+## Objetivos de la sesión
+
+Al terminar, podrás:
+
+1. **Ajustar e interpretar** un ANOVA aditivo de dos vías.
+2. **Reconocer** una interacción en un gráfico, y **ajustar e interpretar** un ANOVA no aditivo de dos vías.
+3. **Decidir**, con los diagnósticos, si una transformación de la respuesta cambia las conclusiones.
+4. **Exportar** tablas de resultados a csv, Excel y Word.
+
+## Estructura
+
+| Parte | Qué hacemos | Objetivo |
+|:--|:--|:--:|
+| Dos factores a la vez | Depredador y recursos: ¿por qué no dos ANOVAs separados? | 1 |
+| ANOVA aditivo de dos vías | `aov(y ~ A + B)`; leer cada efecto principal | 1 |
+| **¿Qué observas?** | Gráfico de interacción con `interaction.plot()`: líneas paralelas o no | 2 |
+| ANOVA no aditivo de dos vías | `aov(y ~ A * B)`; qué significa una interacción | 2 |
+| Diagnósticos y transformaciones | La interacción que desaparece al transformar con `log()` | 3 |
+| Comparaciones múltiples | `TukeyHSD()` con dos factores | 1, 2 |
+| Exportar a csv y Excel | `write.csv()` y `writexl::write_xlsx()` | 4 |
+| Exportar a Word | Tablas con `{flextable}` y `save_as_docx()` | 4 |
+| Antes de terminar | Repaso del curso, examen virtual y certificado | |
+
+## Trabajo autónomo
+
+Después de la clase:
+
+1. **Completa todos los [ejercicios](ejercicios-4.qmd)**: un ANOVA aditivo, uno no aditivo y la exportación de sus tablas. Lo que no alcancemos en clase, incluida la Parte 4 (Más práctica), es tarea.
+2. **Exporta a Word** la tabla de un ANOVA de tus propios datos, lista para un informe.
+3. Haz la **[autoevaluación](autoevaluacion-4.qmd)** y luego el **examen virtual**, disponible a partir del 7 de diciembre (ver [Evaluación](programa.qmd#evaluacion)).
+
+## Datos y materiales
+
+- **`ranas.csv`** ([descargar](datos/ranas.csv)): datos del Prof. Justin C. Touchon (ver [Módulo 1](modulo-1.qmd#datos-y-materiales)).
+- Paquetes para trabajar en tu computador: `{writexl}` y `{flextable}`.
+- [Diapositivas del Módulo 4](diapositivas/modulo-4.html){target="_blank"}.

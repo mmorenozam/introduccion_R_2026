@@ -1,0 +1,129 @@
+---
+title: "Autoevaluación Módulo 4"
+subtitle: "ANOVA de múltiples vías y exportación de resultados"
+filters:
+  - selfcheck.lua
+include-after-body: selfcheck.html
+toc: false
+---
+
+Ocho preguntas cortas sobre el [Módulo 4](modulo-4.qmd), dos por cada objetivo de la sesión. Tienes dos intentos por pregunta; después verás la respuesta y una explicación. **Es anónima: no se guarda ni se envía nada.**
+
+::: {.callout-note appearance="simple"}
+<span id="sc-score"></span>
+:::
+
+
+## Objetivo 1: ANOVA aditivo de dos vías
+
+::: {.selfcheck}
+**1. ¿Qué supone el modelo `aov(y ~ Pred + Res)`?**
+
+- [ ] Que solo importa el depredador
+- [x] Que el efecto de los recursos es el mismo con cualquier depredador
+- [ ] Que los dos factores interactúan
+- [ ] Que las observaciones están emparejadas
+
+::: {.explanation}
+En un modelo **aditivo**, cada factor tiene su propio efecto y los efectos se suman: pasar de recursos altos a bajos cambia la respuesta en la misma cantidad, sea cual sea el depredador. Si eso no se cumple, necesitamos la interacción `Pred:Res`.
+:::
+:::
+
+::: {.selfcheck}
+**2. En el ANOVA aditivo de `Resorb.days`, `Res` tiene $p = 0.0003$ y `Pred` tiene $p = 0.28$. La conclusión es...**
+
+- [ ] ninguno de los factores importa
+- [x] los recursos afectan el tiempo de reabsorción y no hay evidencia de un efecto del depredador
+- [ ] el depredador afecta el tiempo de reabsorción
+- [ ] hay una interacción
+
+::: {.explanation}
+Cada fila de la tabla prueba un factor, teniendo en cuenta el otro. Recursos: efecto claro. Depredador: no hay evidencia de efecto (lo que no prueba que el efecto sea exactamente cero).
+:::
+:::
+
+## Objetivo 2: Interacciones
+
+::: {.selfcheck}
+**3. En un gráfico de interacción, las líneas de recursos altos y bajos se cruzan o se separan mucho de un depredador a otro. Esto sugiere...**
+
+- [ ] que no hay efecto de los recursos
+- [x] una interacción: el efecto de los recursos depende del depredador
+- [ ] que los residuos no son normales
+- [ ] que el diseño está desbalanceado
+
+::: {.explanation}
+Líneas paralelas significan efectos aditivos. Si no son paralelas, el efecto de un factor cambia según el nivel del otro: eso es una **interacción**, que se prueba con el término `Pred:Res` del modelo `Pred * Res`.
+:::
+:::
+
+::: {.selfcheck}
+**4. ¿Qué es `y ~ Pred * Res` en R?**
+
+- [ ] Un modelo con el producto de las dos variables como única variable
+- [x] Una abreviatura de `y ~ Pred + Res + Pred:Res`
+- [ ] Lo mismo que `y ~ Pred + Res`
+- [ ] Un error, porque no se pueden multiplicar factores
+
+::: {.explanation}
+`*` incluye los dos efectos principales **y** su interacción. `Pred:Res` sola es solo la interacción, y casi nunca se usa sin los efectos principales.
+:::
+:::
+
+## Objetivo 3: Diagnósticos y transformaciones
+
+::: {.selfcheck}
+**5. En el gráfico de residuos frente a ajustados, la dispersión de los residuos crece con los valores ajustados, en forma de embudo. ¿Qué conviene probar?**
+
+- [ ] Quitar los puntos más alejados
+- [x] Transformar la respuesta, por ejemplo con `log()`
+- [ ] Agregar más factores al modelo
+- [ ] Nada, el ANOVA no tiene supuestos
+
+::: {.explanation}
+Cuando la variación crece con la media (típico de tiempos, conteos y masas), el logaritmo suele estabilizar la varianza y acercar los residuos a la normalidad. Quitar datos para que el modelo "funcione" no es una buena práctica.
+:::
+:::
+
+::: {.selfcheck}
+**6. Con `Age.FromEmergence` la interacción era significativa ($p = 0.016$), pero con `log(Age.FromEmergence)` ya no lo es ($p = 0.24$). ¿Cuál es la mejor interpretación?**
+
+- [ ] El logaritmo eliminó información importante
+- [x] La interacción era sobre todo un efecto de la escala: en escala logarítmica, los efectos son aproximadamente multiplicativos y no interactúan
+- [ ] Hay que reportar siempre el modelo con el valor p más pequeño
+- [ ] Los datos tienen un error
+
+::: {.explanation}
+Si los recursos bajos multiplican la edad por un factor similar con cualquier depredador, en días el retraso parece mayor donde la edad ya era mayor. El modelo con `log()` cumple mejor los supuestos y describe los datos de forma más simple. Lo que no se vale es elegir el modelo según qué valor p conviene.
+:::
+:::
+
+## Objetivo 4: Exportar resultados
+
+::: {.selfcheck}
+**7. ¿Qué hace `write.csv(tabla, "resultados/tabla.csv")`?**
+
+- [ ] Lee el archivo `tabla.csv`
+- [x] Guarda `tabla` como archivo csv en la carpeta `resultados` del proyecto
+- [ ] Guarda la tabla en Excel
+- [ ] Imprime la tabla en la consola
+
+::: {.explanation}
+`write.csv()` escribe una tabla de datos en un archivo de texto separado por comas, que se abre en Excel, LibreOffice o cualquier editor. La ruta es relativa a la carpeta de trabajo, por eso conviene trabajar en un proyecto de R.
+:::
+:::
+
+::: {.selfcheck}
+**8. Quieres guardar dos tablas en un mismo archivo de Excel, cada una en su hoja. ¿Qué usas?**
+
+- [ ] Dos llamadas a `write.csv()`
+- [x] `writexl::write_xlsx(list(anova = t1, medias = t2), "resultados.xlsx")`
+- [ ] `flextable::save_as_docx(t1, t2)`
+- [ ] `read.csv("resultados.xlsx")`
+
+::: {.explanation}
+`write_xlsx()` recibe una lista con nombres: cada elemento es una hoja. Un archivo csv solo puede tener una tabla, y `save_as_docx()` crea documentos de Word.
+:::
+:::
+
+¿Fallaste alguna? Vuelve a la parte correspondiente de las [diapositivas](diapositivas/modulo-4.html){target="_blank"} o de los [ejercicios](ejercicios-4.qmd). Cuando estés listo, haz el **examen virtual**, disponible a partir del 7 de diciembre.

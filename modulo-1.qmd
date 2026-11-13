@@ -1,0 +1,51 @@
+---
+title: "Módulo 1: Generalidades e introducción a R"
+subtitle: "Domingo 15 de noviembre de 2026 · 9H00 a 12H00"
+---
+
+[Ver las diapositivas](diapositivas/modulo-1.html){.btn .btn-primary target="_blank"} [Hacer los ejercicios](ejercicios-1.qmd){.btn .btn-outline-primary} [Hacer la autoevaluación](autoevaluacion-1.qmd){.btn .btn-outline-primary}
+
+## Contexto
+
+- **Para quién:** personas que nunca han programado, o que han usado R alguna vez sin un orden claro.
+- **Lugar en el curso:** primera sesión. Todo lo que hagamos en los módulos 2 a 4 se apoya en lo que aprendemos hoy.
+- **Duración:** 3 horas de clase virtual y unas 6 horas de trabajo autónomo.
+
+## Objetivos de la sesión
+
+Al terminar, podrás:
+
+1. **Instalar** R y RStudio, y **organizar** tu trabajo en un proyecto de R.
+2. **Usar** los tipos de datos, operadores y objetos básicos de R (vectores, factores, tablas de datos y listas).
+3. **Instalar y cargar** paquetes, e **importar** una tabla de datos desde un archivo csv.
+4. **Calcular** estadísticos descriptivos para variables numéricas y categóricas.
+
+## Estructura
+
+| Parte | Qué hacemos | Objetivo |
+|:--|:--|:--:|
+| Bienvenida | Presentación, cómo funciona el curso y la evaluación | |
+| ¿Por qué R? | Qué es R, qué es RStudio y por qué se usan tanto en biología y agricultura | |
+| Instalación | Instalación guiada de R y RStudio; recorrido por los paneles de RStudio | 1 |
+| Proyectos de R | Crear un proyecto, ordenar carpetas (`datos/`, `scripts/`, `resultados/`) y escribir el primer script | 1 |
+| Reglas de sintaxis | Asignación con `<-`, nombres de objetos, comentarios, mayúsculas y minúsculas | 2 |
+| Tipos de datos y operadores | `numeric`, `character`, `logical`, `factor`; operadores aritméticos, de comparación y lógicos | 2 |
+| Tipos de objetos | Vectores, factores, tablas de datos (`data.frame`) y listas; indexación con `[ ]` y `$` | 2 |
+| Paquetes y librerías | `install.packages()` y `library()`; dónde buscar ayuda | 3 |
+| Importación de datos | `read.csv()` y `readxl::read_excel()`; revisar la tabla con `str()`, `head()` y `summary()` | 3 |
+| Operaciones estadísticas básicas | `sum()`, `mean()`, `median()`, `sd()`, `var()`, `quantile()`, `table()` | 4 |
+| Estadísticos descriptivos | Resumir por grupos con `aggregate()` y `tapply()`; tablas de frecuencias | 4 |
+
+## Trabajo autónomo
+
+Después de la clase:
+
+1. **Crea tu proyecto de R** para el curso, con la estructura de carpetas vista en clase.
+2. **Completa todos los [ejercicios](ejercicios-1.qmd)** en el navegador: lo que no alcancemos en clase, incluida la Parte 4 (Más práctica), es tarea. Si te atascas, usa la pestaña **Pista**.
+3. **Importa tus propios datos** (o la tabla `ranas.csv`) en tu proyecto y calcula sus estadísticos descriptivos.
+4. Haz la **[autoevaluación](autoevaluacion-1.qmd)** para ver qué ideas necesitan un repaso.
+
+## Datos y materiales
+
+- **`ranas.csv`** ([descargar](datos/ranas.csv)): experimento con renacuajos expuestos a distintos depredadores, recursos alimenticios y momentos de eclosión. Datos del Prof. Justin C. Touchon, del libro *Applied Statistics with R: A Practical Guide for the Life Sciences* (Oxford University Press, 2021). La usamos en todo el curso.
+- [Diapositivas del Módulo 1](diapositivas/modulo-1.html){target="_blank"}.

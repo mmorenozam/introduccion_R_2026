@@ -1,0 +1,95 @@
+---
+title: "Programa"
+subtitle: "De las primeras líneas de código al ANOVA de múltiples vías"
+---
+
+El curso tiene cuatro módulos de tres horas, uno por domingo. Cada módulo se apoya en el anterior: primero aprendemos a trabajar con R y a describir los datos, luego a hacer inferencias sobre una o dos poblaciones, y finalmente a comparar muchos grupos con el análisis de varianza.
+
+```{mermaid}
+flowchart LR
+  M1["<b>Módulo 1</b><br/>Generalidades e<br/>introducción a R"] --> M2["<b>Módulo 2</b><br/>Estadística<br/>inferencial"]
+  M2 --> M3["<b>Módulo 3</b><br/>Análisis de<br/>varianza"]
+  M3 --> M4["<b>Módulo 4</b><br/>ANOVA de múltiples vías<br/>y exportación"]
+  classDef default fill:#ffffff,stroke:#333333,color:#000000;
+  style M1 fill:#ffffff,stroke:#0072B2,stroke-width:3px,color:#000000
+  style M2 fill:#ffffff,stroke:#D55E00,stroke-width:3px,color:#000000
+  style M3 fill:#ffffff,stroke:#009E73,stroke-width:3px,color:#000000
+  style M4 fill:#ffffff,stroke:#CC79A7,stroke-width:3px,color:#000000
+```
+
+## Objetivos de aprendizaje
+
+Al finalizar el curso podrás:
+
+1. **Utilizar** el entorno de R y RStudio para realizar operaciones básicas y gestionar conjuntos de datos.
+2. **Aplicar** conceptos fundamentales de estadística descriptiva para resumir y explorar datos numéricos y categóricos.
+3. **Ejecutar** pruebas de hipótesis básicas (como la prueba t) con funciones de R.
+4. **Realizar** análisis de varianza (ANOVA) para comparar medias entre múltiples grupos.
+5. **Interpretar** resultados estadísticos y presentarlos de manera clara y sustentada.
+6. **Integrar** buenas prácticas de programación y organización de proyectos en R para análisis reproducibles.
+
+## Formato y horario
+
+- **Modalidad:** 100% en línea, clases virtuales en tiempo real.
+- **Horario:** cuatro domingos, de 9H00 a 12H00.
+- **Duración:** 12 horas de clases virtuales y 24 horas de aprendizaje autónomo individual, **36 horas** en total.
+- **Cada sesión** combina exposiciones cortas con trabajo práctico en R. Lo que no se alcance en clase queda como tarea: se espera que completes **todos** los ejercicios de cada módulo. Los ejercicios se resuelven a la par de la clase, con ayuda del tutor y de los demás participantes.
+
+| Sesión | Fecha | Módulo |
+|:--|:--|:--|
+| 1 | Domingo 15 de noviembre de 2026 | [Generalidades e introducción a R](modulo-1.qmd) |
+| 2 | Domingo 22 de noviembre de 2026 | [Introducción a la estadística inferencial con R](modulo-2.qmd) |
+| 3 | Domingo 29 de noviembre de 2026 | [Introducción al análisis de varianza](modulo-3.qmd) |
+| 4 | Domingo 6 de diciembre de 2026 | [ANOVA de múltiples vías y exportación de resultados](modulo-4.qmd) |
+
+: Calendario del curso. {tbl-colwidths="[10,30,60]"}
+
+## Requisitos {#requisitos}
+
+**Indispensables:**
+
+- Computador con al menos 2 GB de RAM y procesador de 64 bits, para los talleres y las tareas.
+- Conexión estable a internet.
+
+**Ideales, pero no indispensables:**
+
+- Conocimientos básicos de estadística.
+- Sistema operativo Windows 10/11.
+- Microsoft Office (o LibreOffice).
+
+## Contenidos y alineación
+
+Cada módulo indica qué podrás hacer al terminarlo, cómo lo practicamos y cómo se comprueba. Los números entre paréntesis remiten a los objetivos de aprendizaje.
+
+::: {.alignment}
+
+| Módulo | Al terminar podrás... | Actividades | Evaluación |
+|:--|:--|:--|:--|
+| **[1. Generalidades e introducción a R](modulo-1.qmd)** | instalar R y RStudio y trabajar en un proyecto de R; usar tipos de datos, operadores, objetos y paquetes; importar una tabla de datos; calcular estadísticos descriptivos (1, 2, 6) | instalación guiada, programación en vivo, ejercicios cortos | [ejercicios](ejercicios-1.qmd) en clase, [autoevaluación](autoevaluacion-1.qmd) |
+| **[2. Estadística inferencial](modulo-2.qmd)** | distinguir muestra y población, parámetro y estadístico; calcular intervalos de confianza; plantear hipótesis; elegir y ejecutar pruebas t y de Wilcoxon (3, 5) | tabla "¿qué prueba uso?", ejercicios guiados | [ejercicios](ejercicios-2.qmd) en clase, [autoevaluación](autoevaluacion-2.qmd) |
+| **[3. Análisis de varianza](modulo-3.qmd)** | ajustar un ANOVA de una vía; revisar sus supuestos con gráficos y pruebas; hacer comparaciones múltiples; usar Kruskal-Wallis cuando los supuestos fallan (4, 5) | "graficar antes de modelar", diagnóstico de un modelo en grupo | [ejercicios](ejercicios-3.qmd) en clase, [autoevaluación](autoevaluacion-3.qmd) |
+| **[4. ANOVA de múltiples vías y exportación](modulo-4.qmd)** | ajustar e interpretar ANOVAs aditivos y no aditivos de dos vías; exportar tablas de resultados a csv, Excel y Word (4, 5, 6) | interpretar un gráfico de interacción, exportar una tabla lista para un informe | [ejercicios](ejercicios-4.qmd) en clase, [autoevaluación](autoevaluacion-4.qmd), examen virtual |
+
+:::
+
+## Evaluación {#evaluacion}
+
+La nota final se pondera sobre un máximo de **10 puntos**:
+
+| Componente | Peso |
+|:--|:--:|
+| Resolución de ejercicios durante cada sesión | 40% |
+| Examen virtual (la fecha límite se anunciará durante el curso) | 60% |
+
+- El **examen** es un script de R para completar: recibes el código con espacios en blanco, lo completas en tu proyecto con los datos del examen y entregas el archivo `.R`.
+- Con una nota de **7 puntos o más** obtienes el **certificado de aprobación**.
+- Si no alcanzas la nota mínima, tienes derecho a un **certificado de asistencia**.
+- Las [autoevaluaciones](autoevaluacion-1.qmd) de este sitio no cuentan para la nota: son para que compruebes por tu cuenta qué ideas necesitan un repaso.
+
+## Comunicación
+
+Las preguntas fuera de la hora de clase se dirigen al correo electrónico **mmorenozambrano\@gmail.com**.
+
+## ¿Y después?
+
+Este curso es el primero de dos. El segundo, **Visualización de datos en R**, cubre `{tidyverse}`, `{ggplot2}` y reportes con Quarto. Lo ideal es tomar los dos en orden, aunque el segundo incluye un módulo introductorio para quienes no hayan tomado este.

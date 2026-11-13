@@ -1,0 +1,627 @@
+---
+title: "Ejercicios Módulo 2"
+subtitle: "Introducción a la estadística inferencial con R"
+lang: es
+format:
+  live-html:
+    theme:
+      light: [cosmo, theme.scss]
+    toc: true
+    toc-location: right
+    toc-title: En esta página
+    code-copy: true
+    code-overflow: wrap
+webr:
+  resources:
+    - datos/ranas.csv
+# Soluciones de este módulo: cambia a true después de la sesión y vuelve a renderizar.
+live:
+  show-solutions: false
+filters:
+  - soluciones.lua
+engine: knitr
+---
+
+{{< include ./_extensions/r-wasm/live/_knitr.qmd >}}
+
+
+Estos ejercicios siguen el [Módulo 2](modulo-2.qmd). El código corre **en tu navegador**. Donde veas `____`, complétalo y presiona **Run Code**. ¿Te atascaste? Abre la pestaña **Pista**. Las soluciones se publican después de la sesión.
+
+::: {.callout-note}
+## Antes de empezar
+- La primera vez, cargar R en el navegador puede tardar hasta un minuto.
+- Ya están cargados (abre "Ver el código que prepara los datos" para ver cómo):
+  - `ranas`: la tabla del [Módulo 1](ejercicios-1.qmd) (78 tanques; datos del Prof. Justin C. Touchon).
+  - `glucosa`: concentración de glucosa (mg/dL) en 10 ratones de una línea que podría servir como modelo de hiperglucemia.
+  - `antes` y `despues`: glucosa (mg/dL) de 12 ratones antes y después de un tratamiento.
+  - `germinacion`: días hasta la germinación de 12 semillas.
+- Los datos de ratones y semillas son **ilustrativos**.
+- **Regla de la casa:** antes de cada prueba, revisa sus supuestos.
+:::
+
+```{webr}
+#| setup: true
+#| exercise:
+#|   - ex_1_1
+#|   - ex_2_1
+#|   - ex_2_2
+#|   - ex_2_3
+#|   - ex_2_4
+#|   - ex_3_1
+#|   - ex_3_2
+#|   - ex_3_3
+#|   - ex_4_1
+#|   - ex_4_2
+#|   - ex_4_3
+#|   - ex_4_4
+ranas <- read.csv("datos/ranas.csv")
+glucosa <- c(108.7, 93.7, 52.7, 79.0, 74.7, 131.9, 99.5, 63.3, 98.6, 92.7)
+antes   <- c(142, 128, 155, 136, 149, 131, 160, 138, 145, 152, 127, 140)
+despues <- c(131, 125, 140, 130, 139, 129, 147, 131, 141, 139, 126, 128)
+germinacion <- c(4.2, 5.1, 3.8, 6.9, 4.6, 12.4, 5.5, 4.9, 9.8, 5.3, 4.3, 15.2)
+```
+
+::: {.callout-important appearance="simple"}
+## Lo que no terminemos en clase es tarea
+En clase avanzamos por las partes 1 a 3. **Completa todos los ejercicios de esta página antes del próximo domingo**, incluida la **Parte 4: Más práctica**.
+:::
+
+::: {.callout-tip collapse="true"}
+## Ver el código que prepara los datos
+
+Este código ya se ejecutó por ti en esta página. En RStudio, córrelo al inicio de tu script.
+
+```r
+ranas <- read.csv("datos/ranas.csv")
+glucosa <- c(108.7, 93.7, 52.7, 79.0, 74.7, 131.9, 99.5, 63.3, 98.6, 92.7)
+antes   <- c(142, 128, 155, 136, 149, 131, 160, 138, 145, 152, 127, 140)
+despues <- c(131, 125, 140, 130, 139, 129, 147, 131, 141, 139, 126, 128)
+germinacion <- c(4.2, 5.1, 3.8, 6.9, 4.6, 12.4, 5.5, 4.9, 9.8, 5.3, 4.3, 15.2)
+```
+:::
+
+## Parte 1: Estadísticos e intervalos de confianza {#parte-1}
+
+### Ejercicio 1.1: Intervalo de confianza para la media
+
+**Calcula la media y la desviación estándar de `glucosa`, y su intervalo de confianza del 95%: primero "a mano" con la distribución t de Student, y luego con `t.test()`.**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_1_1
+n <- length(glucosa)
+media <- mean(glucosa)
+de <- ____(glucosa)
+media
+de
+
+error_estandar <- de / sqrt(____)
+t_critico <- qt(0.975, df = n - 1)
+media - t_critico * error_estandar
+media + ____ * error_estandar
+
+t.test(glucosa)$conf.int
+```
+
+## Pista
+
+::: {.hint exercise="ex_1_1"}
+El error estándar de la media es $s / \sqrt{n}$. El intervalo es $\bar{x} \pm t_{0.975,\, n-1} \cdot s/\sqrt{n}$.
+:::
+
+## Solución
+
+::: {.solution exercise="ex_1_1"}
+```r
+n <- length(glucosa)
+media <- mean(glucosa)
+de <- sd(glucosa)
+media
+de
+
+error_estandar <- de / sqrt(n)
+t_critico <- qt(0.975, df = n - 1)
+media - t_critico * error_estandar
+media + t_critico * error_estandar
+
+t.test(glucosa)$conf.int
+```
+
+La media es 89.48 mg/dL y la desviación estándar 22.97 mg/dL. El intervalo de confianza del 95% va de **73.05 a 105.91 mg/dL**, igual con los dos métodos. Con solo 10 ratones y tanta variación, el intervalo es ancho.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión del domingo 22 de noviembre. Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+## Parte 2: Pruebas t {#parte-2}
+
+### Ejercicio 2.1: Prueba t de una muestra
+
+**En ratones sanos, la glucosa está entre 80 y 100 mg/dL. ¿Hay evidencia de que la media de esta línea de ratones está *por encima* de 100 mg/dL? Revisa primero la normalidad.**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_2_1
+qqnorm(glucosa); qqline(glucosa)
+shapiro.test(____)
+
+t.test(glucosa, mu = ____, alternative = "____")
+```
+
+## Pista
+
+::: {.hint exercise="ex_2_1"}
+La hipótesis alternativa es "la media es **mayor** que 100": en `t.test()` eso es `alternative = "greater"`. Las otras opciones son `"less"` y `"two.sided"`.
+:::
+
+## Solución
+
+::: {.solution exercise="ex_2_1"}
+```r
+qqnorm(glucosa); qqline(glucosa)
+shapiro.test(glucosa)
+
+t.test(glucosa, mu = 100, alternative = "greater")
+```
+
+Los puntos siguen la línea del gráfico Q-Q y Shapiro-Wilk no rechaza la normalidad ($W = 0.978$, $p = 0.95$), así que la prueba t es adecuada.
+
+La prueba da $t = -1.45$, $gl = 9$, $p = 0.91$. **No hay evidencia** de que la media supere los 100 mg/dL: de hecho, la media de la muestra (89.48) está por debajo. Con estos datos, esta línea no parece un buen modelo de hiperglucemia.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión del domingo 22 de noviembre. Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+### Ejercicio 2.2: Dos muestras independientes: los supuestos
+
+**Queremos comparar los días para reabsorber la cola (`Resorb.days`) entre tanques con recursos altos y bajos (`Res`). Revisa la normalidad de cada grupo y la homogeneidad de sus varianzas.**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_2_2
+boxplot(Resorb.days ~ Res, data = ranas)
+
+shapiro.test(ranas$Resorb.days[ranas$Res == "Hi"])
+shapiro.test(ranas$Resorb.days[ranas$Res == "____"])
+
+var.test(Resorb.days ~ ____, data = ranas)
+```
+
+## Pista
+
+::: {.hint exercise="ex_2_2"}
+`ranas$Resorb.days[ranas$Res == "Hi"]` toma solo los valores del grupo `Hi`. En `var.test()` la hipótesis nula es que las dos varianzas son iguales.
+:::
+
+## Solución
+
+::: {.solution exercise="ex_2_2"}
+```r
+boxplot(Resorb.days ~ Res, data = ranas)
+
+shapiro.test(ranas$Resorb.days[ranas$Res == "Hi"])
+shapiro.test(ranas$Resorb.days[ranas$Res == "Lo"])
+
+var.test(Resorb.days ~ Res, data = ranas)
+```
+
+Los dos grupos parecen normales (Shapiro-Wilk: $p = 0.42$ para `Hi` y $p = 0.52$ para `Lo`). Pero las varianzas **no** son iguales: $F = 0.40$, $p = 0.006$. El grupo `Lo` varía más, como se ve en el diagrama de caja. Esto decide qué versión de la prueba t usar en el siguiente ejercicio.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión del domingo 22 de noviembre. Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+### Ejercicio 2.3: Dos muestras independientes: la prueba
+
+**Compara la media de `Resorb.days` entre `Hi` y `Lo` con la prueba t de Welch, que no supone varianzas iguales. ¿Qué cambia si usas `var.equal = TRUE`?**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_2_3
+t.test(Resorb.days ~ Res, data = ____)
+
+t.test(Resorb.days ~ Res, data = ranas, var.equal = ____)
+```
+
+## Pista
+
+::: {.hint exercise="ex_2_3"}
+Por defecto, `t.test()` ya hace la prueba de **Welch**. La prueba t de Student clásica necesita `var.equal = TRUE`.
+:::
+
+## Solución
+
+::: {.solution exercise="ex_2_3"}
+```r
+t.test(Resorb.days ~ Res, data = ranas)
+
+t.test(Resorb.days ~ Res, data = ranas, var.equal = TRUE)
+```
+
+Prueba de Welch: $t = -3.80$, $gl = 64.3$, $p = 0.0003$. Con recursos bajos, los renacuajos tardan en promedio 4.64 días en reabsorber la cola, frente a 4.16 días con recursos altos: una diferencia de 0.47 días (IC 95%: 0.22 a 0.72). R la muestra como `Hi` menos `Lo`, por eso aparece con signo negativo.
+
+Con `var.equal = TRUE` cambian los grados de libertad (76) y el valor p ($p = 0.0003$), pero la conclusión es la misma. Como las varianzas difieren, la versión correcta aquí es la de Welch.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión del domingo 22 de noviembre. Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+### Ejercicio 2.4: Muestras emparejadas
+
+**Los vectores `antes` y `despues` son la glucosa de los mismos 12 ratones antes y después de un tratamiento. ¿Bajó la glucosa? Revisa la normalidad de las *diferencias* y haz la prueba emparejada.**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_2_4
+diferencias <- despues - ____
+mean(diferencias)
+shapiro.test(____)
+
+t.test(despues, antes, paired = ____)
+```
+
+## Pista
+
+::: {.hint exercise="ex_2_4"}
+En una prueba emparejada, el supuesto de normalidad se revisa sobre las **diferencias** dentro de cada ratón, no sobre cada grupo por separado.
+:::
+
+## Solución
+
+::: {.solution exercise="ex_2_4"}
+```r
+diferencias <- despues - antes
+mean(diferencias)
+shapiro.test(diferencias)
+
+t.test(despues, antes, paired = TRUE)
+```
+
+Las diferencias son normales (Shapiro-Wilk: $p = 0.35$). En promedio, la glucosa bajó 8.08 mg/dL después del tratamiento (IC 95%: 5.00 a 11.17 mg/dL; $t = -5.77$, $gl = 11$, $p = 0.0001$).
+
+¿Por qué emparejar? Cada ratón es su propio control: la diferencia entre ratones (de 127 a 160 mg/dL antes del tratamiento) no se mezcla con el efecto del tratamiento.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión del domingo 22 de noviembre. Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+## Parte 3: Wilcoxon y transformaciones {#parte-3}
+
+### Ejercicio 3.1: Wilcoxon para una muestra
+
+**El proveedor de las semillas indica que la mediana de germinación es de 4.5 días. Revisa la normalidad de `germinacion` y elige la prueba adecuada para comprobarlo.**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_3_1
+hist(germinacion)
+shapiro.test(____)
+median(germinacion)
+
+wilcox.test(germinacion, mu = ____)
+```
+
+## Pista
+
+::: {.hint exercise="ex_3_1"}
+Si Shapiro-Wilk rechaza la normalidad y la muestra es pequeña, la prueba de Wilcoxon de una muestra compara la **mediana** con un valor de referencia.
+:::
+
+## Solución
+
+::: {.solution exercise="ex_3_1"}
+```r
+hist(germinacion)
+shapiro.test(germinacion)
+median(germinacion)
+
+wilcox.test(germinacion, mu = 4.5)
+```
+
+Los datos no son normales: dos semillas tardaron mucho más que el resto (Shapiro-Wilk: $p = 0.004$). La prueba de Wilcoxon da $V = 67$, $p = 0.027$: la mediana de germinación (5.2 días) es **distinta** de los 4.5 días que indica el proveedor; en estas semillas, es mayor.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión del domingo 22 de noviembre. Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+### Ejercicio 3.2: Wilcoxon para dos muestras
+
+**¿Difiere la edad al salir del agua (`Age.FromEmergence`) entre tanques con recursos altos y bajos? Revisa la normalidad de cada grupo y elige la prueba.**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_3_2
+boxplot(Age.FromEmergence ~ Res, data = ranas)
+
+shapiro.test(ranas$Age.FromEmergence[ranas$Res == "Hi"])
+shapiro.test(ranas$Age.FromEmergence[ranas$Res == "Lo"])
+
+tapply(ranas$Age.FromEmergence, ranas$Res, ____)
+wilcox.test(Age.FromEmergence ~ ____, data = ranas)
+```
+
+## Pista
+
+::: {.hint exercise="ex_3_2"}
+Si alguno de los grupos no es normal, la prueba de Wilcoxon para dos muestras (también llamada de Mann-Whitney) es la alternativa a la prueba t. Como compara posiciones, resume cada grupo con la **mediana**.
+:::
+
+## Solución
+
+::: {.solution exercise="ex_3_2"}
+```r
+boxplot(Age.FromEmergence ~ Res, data = ranas)
+
+shapiro.test(ranas$Age.FromEmergence[ranas$Res == "Hi"])
+shapiro.test(ranas$Age.FromEmergence[ranas$Res == "Lo"])
+
+tapply(ranas$Age.FromEmergence, ranas$Res, median)
+wilcox.test(Age.FromEmergence ~ Res, data = ranas)
+```
+
+Ninguno de los dos grupos es normal (Shapiro-Wilk: $p = 0.013$ y $p = 0.003$). La prueba de Wilcoxon da $W = 371$, $p = 0.0001$: con recursos bajos, los renacuajos salen del agua más tarde (mediana de 33.7 días frente a 16.2).
+
+R avisa que no puede calcular el valor p exacto porque hay valores empatados, y usa una aproximación normal. Es un aviso, no un error.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión del domingo 22 de noviembre. Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+### Ejercicio 3.3: Transformar antes de abandonar la prueba t
+
+**Los tiempos suelen tener una cola larga a la derecha. Repite la comparación del ejercicio 3.2 con el logaritmo de `Age.FromEmergence`: revisa la normalidad de cada grupo, haz la prueba t y vuelve a la escala original con `exp()`.**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_3_3
+ranas$log_edad <- ____(ranas$Age.FromEmergence)
+
+shapiro.test(ranas$log_edad[ranas$Res == "Hi"])
+shapiro.test(ranas$log_edad[ranas$Res == "Lo"])
+
+prueba <- t.test(log_edad ~ Res, data = ranas)
+prueba
+
+exp(prueba$estimate)
+exp(prueba$conf.int)
+```
+
+## Pista
+
+::: {.hint exercise="ex_3_3"}
+`log()` es el logaritmo natural. En escala logarítmica, una **diferencia** de medias se convierte, con `exp()`, en un **cociente**: cuántas veces es mayor un grupo que el otro. `exp()` de la media de los logaritmos es la **media geométrica**.
+:::
+
+## Solución
+
+::: {.solution exercise="ex_3_3"}
+```r
+ranas$log_edad <- log(ranas$Age.FromEmergence)
+
+shapiro.test(ranas$log_edad[ranas$Res == "Hi"])
+shapiro.test(ranas$log_edad[ranas$Res == "Lo"])
+
+prueba <- t.test(log_edad ~ Res, data = ranas)
+prueba
+
+exp(prueba$estimate)
+exp(prueba$conf.int)
+```
+
+En escala logarítmica, los dos grupos ya son compatibles con la normalidad (Shapiro-Wilk: $p = 0.52$ para `Hi` y $p = 0.055$ para `Lo`). La prueba de Welch da $t = -4.62$, $gl = 69.5$, $p < 0.001$.
+
+De vuelta en días: las medias geométricas son 17.0 días (`Hi`) y 33.1 días (`Lo`). El intervalo de `exp(prueba$conf.int)` va de 0.39 a 0.69: con recursos altos, los renacuajos salen del agua en **un 31% a 61% menos tiempo**; en promedio, en la mitad (0.51 veces) del tiempo.
+
+La conclusión coincide con la del ejercicio 3.2, pero ahora tenemos además el **tamaño** del efecto y su intervalo de confianza.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión del domingo 22 de noviembre. Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+## Parte 4: Más práctica {#parte-4}
+
+### Ejercicio 4.1: Cambiar el nivel de confianza
+
+**Calcula el intervalo de confianza del 99% para la media de `SVL.final` y compáralo con el del 95%. ¿Cuál es más ancho, y por qué?**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_4_1
+t.test(ranas$SVL.final)$conf.int
+t.test(ranas$SVL.final, conf.level = ____)$conf.int
+```
+
+## Pista
+
+::: {.hint exercise="ex_4_1"}
+El argumento `conf.level` de `t.test()` cambia el nivel de confianza; por defecto es 0.95.
+:::
+
+## Solución
+
+::: {.solution exercise="ex_4_1"}
+```r
+t.test(ranas$SVL.final)$conf.int
+t.test(ranas$SVL.final, conf.level = 0.99)$conf.int
+```
+
+El intervalo del 99% va de 18.95 a 19.81 mm y es **más ancho** que el del 95%. Para estar más seguros de capturar $\mu$, necesitamos un intervalo más amplio: el valor crítico de $t$ pasa de 1.99 a 2.64.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión del domingo 22 de noviembre. Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+### Ejercicio 4.2: Una cola, con los datos de las ranas
+
+**¿Hay evidencia de que la masa media al salir del agua (`Mass.final`) es *mayor* que 0.40 g?**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_4_2
+mean(ranas$Mass.final)
+t.test(ranas$Mass.final, mu = ____, alternative = "____")
+```
+
+## Pista
+
+::: {.hint exercise="ex_4_2"}
+La hipótesis alternativa es "mayor que 0.40": `alternative = "greater"`.
+:::
+
+## Solución
+
+::: {.solution exercise="ex_4_2"}
+```r
+mean(ranas$Mass.final)
+t.test(ranas$Mass.final, mu = 0.40, alternative = "greater")
+```
+
+La media es 0.430 g y la prueba da $t = 2.44$, $gl = 77$, $p = 0.008$: hay evidencia de que la masa media supera los 0.40 g. Con 78 tanques, la prueba t es robusta a desviaciones moderadas de la normalidad.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión del domingo 22 de noviembre. Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+### Ejercicio 4.3: Una diferencia que no aparece
+
+**¿Difiere la longitud final (`SVL.final`) entre recursos altos y bajos? Haz la prueba de Welch e interpreta tanto el valor p como el intervalo de confianza.**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_4_3
+tapply(ranas$SVL.final, ranas$Res, mean)
+t.test(SVL.final ~ ____, data = ranas)
+```
+
+## Pista
+
+::: {.hint exercise="ex_4_3"}
+Un intervalo de confianza de la diferencia que contiene el cero es compatible con "no hay diferencia".
+:::
+
+## Solución
+
+::: {.solution exercise="ex_4_3"}
+```r
+tapply(ranas$SVL.final, ranas$Res, mean)
+t.test(SVL.final ~ Res, data = ranas)
+```
+
+Las medias son 19.60 mm (`Hi`) y 19.17 mm (`Lo`). La prueba da $t = 1.33$, $gl = 72.9$, $p = 0.19$, y el intervalo de la diferencia va de -0.21 a 1.07 mm: contiene el cero. **No hay evidencia** de una diferencia, lo que no es lo mismo que demostrar que no la hay: el intervalo deja abierta una diferencia de hasta 1 mm.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión del domingo 22 de noviembre. Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+### Ejercicio 4.4: Wilcoxon para muestras emparejadas
+
+**¿Crecieron los renacuajos entre la medición inicial (`SVL.initial`) y la final (`SVL.final`)? Revisa la normalidad de las diferencias y elige entre la prueba t emparejada y la de Wilcoxon emparejada.**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_4_4
+diferencias <- ranas$SVL.final - ranas$SVL.initial
+shapiro.test(____)
+median(diferencias)
+
+wilcox.test(ranas$SVL.final, ranas$SVL.initial, paired = ____)
+```
+
+## Pista
+
+::: {.hint exercise="ex_4_4"}
+Como en la prueba t emparejada, la normalidad se revisa sobre las **diferencias**. Si no son normales, `wilcox.test(..., paired = TRUE)` es la alternativa.
+:::
+
+## Solución
+
+::: {.solution exercise="ex_4_4"}
+```r
+diferencias <- ranas$SVL.final - ranas$SVL.initial
+shapiro.test(diferencias)
+median(diferencias)
+
+wilcox.test(ranas$SVL.final, ranas$SVL.initial, paired = TRUE)
+```
+
+Las diferencias no son normales (Shapiro-Wilk: $p = 0.001$), así que usamos Wilcoxon emparejada: $V = 3077$, $p < 0.001$. La mediana del crecimiento es 0.36 mm: los renacuajos sí crecieron.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión del domingo 22 de noviembre. Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+## Con tus propios datos
+
+Escribe una pregunta de investigación sobre tus datos que compare dos grupos o una muestra con un valor de referencia. Plantea $H_0$ y $H_1$, revisa los supuestos, elige entre la prueba t y la de Wilcoxon, y resume el resultado en una frase con el estadístico, los grados de libertad (si los hay) y el valor p.

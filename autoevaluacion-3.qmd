@@ -1,0 +1,142 @@
+---
+title: "Autoevaluación Módulo 3"
+subtitle: "Introducción al análisis de varianza"
+filters:
+  - selfcheck.lua
+include-after-body: selfcheck.html
+toc: false
+---
+
+Nueve preguntas cortas sobre el [Módulo 3](modulo-3.qmd): dos por cada objetivo de la sesión y una sobre transformaciones. Tienes dos intentos por pregunta; después verás la respuesta y una explicación. **Es anónima: no se guarda ni se envía nada.**
+
+::: {.callout-note appearance="simple"}
+<span id="sc-score"></span>
+:::
+
+
+## Objetivo 1: La idea del ANOVA
+
+::: {.selfcheck}
+**1. Con tres grupos, hacemos las tres pruebas t posibles, cada una con $\alpha = 0.05$. Si en realidad no hay diferencias, ¿cuál es aproximadamente la probabilidad de encontrar al menos un falso positivo?**
+
+- [ ] 0.05
+- [ ] 0.10
+- [x] 0.14
+- [ ] 0.50
+
+::: {.explanation}
+$1 - 0.95^3 \approx 0.14$, casi el triple del 5% que queríamos. Por eso se usa primero un ANOVA, que compara todos los grupos a la vez, y luego comparaciones múltiples con valores p ajustados.
+:::
+:::
+
+::: {.selfcheck}
+**2. En la tabla del ANOVA, el estadístico $F$ compara...**
+
+- [ ] las medias de los dos grupos más extremos
+- [x] la variación entre los grupos con la variación dentro de los grupos
+- [ ] la normalidad de los residuos
+- [ ] la media de cada grupo con cero
+
+::: {.explanation}
+$F = CM_{entre} / CM_{dentro}$. Si $H_0$ es cierta (todas las medias son iguales), las dos estimaciones de variación son parecidas y $F \approx 1$. Un $F$ grande, como 25.84 en el ejercicio 1.2, indica que las medias difieren más de lo que esperaríamos por azar.
+:::
+:::
+
+## Objetivo 2: Ajustar e interpretar el ANOVA
+
+::: {.selfcheck}
+**3. Un ANOVA de una vía con 78 observaciones y 3 grupos tiene ¿cuántos grados de libertad residuales?**
+
+- [ ] 77
+- [ ] 76
+- [x] 75
+- [ ] 2
+
+::: {.explanation}
+Los grados de libertad residuales son $n - k = 78 - 3 = 75$. El factor tiene $k - 1 = 2$ grados de libertad, y el total es $n - 1 = 77$.
+:::
+:::
+
+::: {.selfcheck}
+**4. El ANOVA da $p = 2.9 \times 10^{-9}$ para el depredador. ¿Qué podemos concluir?**
+
+- [ ] Los tres depredadores difieren entre sí
+- [x] Al menos un depredador tiene una media distinta de las demás
+- [ ] El depredador letal es el que difiere
+- [ ] Los supuestos del ANOVA se cumplen
+
+::: {.explanation}
+La hipótesis nula del ANOVA es que **todas** las medias son iguales. Rechazarla solo dice que al menos una difiere. Para saber cuáles, necesitamos comparaciones múltiples (Tukey). Y el valor p no dice nada sobre los supuestos: hay que revisarlos aparte.
+:::
+:::
+
+## Objetivo 3: Supuestos y diagnósticos
+
+::: {.selfcheck}
+**5. ¿Sobre qué se revisa el supuesto de normalidad en un ANOVA?**
+
+- [ ] Sobre la variable de respuesta completa, sin separar por grupos
+- [x] Sobre los residuos del modelo
+- [ ] Sobre el factor
+- [ ] Sobre los valores p
+
+::: {.explanation}
+El ANOVA supone que los **errores** son normales. Los estimamos con los residuos (`residuals(modelo)`): cada observación menos la media de su grupo. La respuesta completa puede no ser normal simplemente porque mezcla grupos con medias distintas.
+:::
+:::
+
+::: {.selfcheck}
+**6. En el gráfico de residuos frente a valores ajustados, una de las columnas de puntos está mucho más dispersa que las otras. Esto sugiere...**
+
+- [ ] que los residuos no son normales
+- [x] que las varianzas de los grupos no son homogéneas
+- [ ] que hay una interacción
+- [ ] que el modelo es perfecto
+
+::: {.explanation}
+Cada columna corresponde a un grupo. Si su dispersión es muy distinta, las varianzas no son homogéneas. Se puede confirmar con `bartlett.test()`; en `SVL.final` dio $p = 0.002$.
+:::
+:::
+
+## Objetivo 4: Comparaciones múltiples y Kruskal-Wallis
+
+::: {.selfcheck}
+**7. En la salida de `TukeyHSD()`, la comparación NL - C tiene un intervalo de -0.26 a 1.46 mm. ¿Qué significa?**
+
+- [ ] NL es 1.46 mm más grande que C
+- [x] No hay evidencia clara de diferencia entre NL y C, porque el intervalo contiene el cero
+- [ ] NL es más pequeño que C
+- [ ] El intervalo es demasiado ancho para interpretarlo
+
+::: {.explanation}
+Si el intervalo de la diferencia incluye el cero, una diferencia de cero es compatible con los datos: no hay evidencia clara de diferencia. Coincide con su $p$ ajustado de 0.22.
+:::
+:::
+
+::: {.selfcheck}
+**8. ¿Cuándo es razonable usar Kruskal-Wallis en lugar del ANOVA de una vía?**
+
+- [ ] Siempre, porque es más potente
+- [x] Cuando los residuos claramente no son normales y una transformación no lo arregla
+- [ ] Cuando hay dos factores
+- [ ] Cuando hay solo dos grupos
+
+::: {.explanation}
+Kruskal-Wallis compara rangos y no supone normalidad. Cuando los supuestos se cumplen, el ANOVA suele ser más potente. Con dos factores necesitamos un ANOVA de dos vías ([Módulo 4](modulo-4.qmd)); con dos grupos, la alternativa es Wilcoxon.
+:::
+:::
+
+::: {.selfcheck}
+**9. Analizas conteos de insectos por insecticida. En los diagnósticos, la varianza crece con la media. ¿Qué transformación de la respuesta suele ayudar con conteos?**
+
+- [x] `sqrt(conteo)`, la raíz cuadrada
+- [ ] `conteo^2`
+- [ ] `-conteo`
+- [ ] Ninguna: los conteos nunca se transforman
+
+::: {.explanation}
+En los conteos, la varianza suele ser proporcional a la media, y la **raíz cuadrada** la estabiliza. Para tiempos, masas o concentraciones, con cola a la derecha, se usa más el **logaritmo**. Después de transformar, siempre hay que volver a revisar los diagnósticos.
+:::
+:::
+
+¿Fallaste alguna? Vuelve a la parte correspondiente de las [diapositivas](diapositivas/modulo-3.html){target="_blank"} o de los [ejercicios](ejercicios-3.qmd).

@@ -1,0 +1,1472 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.31">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Módulo 2: Introducción a la estadística inferencial con R – Introducción a R</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../icon1.png" rel="icon" type="image/png">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-10d5b5b9bdfd596dfb1fd64658c28bd2.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-contrib/quarto-timer-1.0.0/timer.js"></script>
+<link href="../site_libs/quarto-contrib/quarto-timer-1.0.0/timer.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Sin resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<meta property="og:title" content="Módulo 2: Introducción a la estadística inferencial con R">
+<meta property="og:description" content="Curso en línea de Introducción a R: desde las primeras líneas de código hasta el ANOVA de múltiples vías. UCE 2026.">
+<meta property="og:image" content="images/cover.png">
+<meta property="og:site_name" content="Introducción a R">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../icon1.png" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Introducción a R</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Buscar"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Navegación de palanca" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Inicio</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../programa.html"> 
+<span class="menu-text">Programa</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-módulos" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Módulos</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-módulos">    
+        <li>
+    <a class="dropdown-item" href="../modulo-1.html">
+ <span class="dropdown-text">Módulo 1: Generalidades e introducción a R</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../modulo-2.html">
+ <span class="dropdown-text">Módulo 2: Estadística inferencial</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../modulo-3.html">
+ <span class="dropdown-text">Módulo 3: Análisis de varianza</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../modulo-4.html">
+ <span class="dropdown-text">Módulo 4: ANOVA de múltiples vías y exportación</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-diapositivas" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Diapositivas</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-diapositivas">    
+        <li>
+    <a class="dropdown-item" href="../diapositivas/modulo-1.html">
+ <span class="dropdown-text">Diapositivas Módulo 1</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../diapositivas/modulo-2.html">
+ <span class="dropdown-text">Diapositivas Módulo 2</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../diapositivas/modulo-3.html">
+ <span class="dropdown-text">Diapositivas Módulo 3</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../diapositivas/modulo-4.html">
+ <span class="dropdown-text">Diapositivas Módulo 4</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-ejercicios" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Ejercicios</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-ejercicios">    
+        <li>
+    <a class="dropdown-item" href="../ejercicios-1.html">
+ <span class="dropdown-text">Ejercicios Módulo 1</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../ejercicios-2.html">
+ <span class="dropdown-text">Ejercicios Módulo 2</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../ejercicios-3.html">
+ <span class="dropdown-text">Ejercicios Módulo 3</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../ejercicios-4.html">
+ <span class="dropdown-text">Ejercicios Módulo 4</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-autoevaluación" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Autoevaluación</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-autoevaluación">    
+        <li>
+    <a class="dropdown-item" href="../autoevaluacion-1.html">
+ <span class="dropdown-text">Autoevaluación Módulo 1</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../autoevaluacion-2.html">
+ <span class="dropdown-text">Autoevaluación Módulo 2</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../autoevaluacion-3.html">
+ <span class="dropdown-text">Autoevaluación Módulo 3</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../autoevaluacion-4.html">
+ <span class="dropdown-text">Autoevaluación Módulo 4</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../recursos.html"> 
+<span class="menu-text">Recursos</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../acerca.html"> 
+<span class="menu-text">Acerca de</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">En esta página</h2>
+   
+  <ul>
+  <li><a href="#section" id="toc-section" class="nav-link active" data-scroll-target="#section"></a></li>
+  <li><a href="#hoy" id="toc-hoy" class="nav-link" data-scroll-target="#hoy">Hoy</a></li>
+  <li><a href="#los-datos-de-hoy" id="toc-los-datos-de-hoy" class="nav-link" data-scroll-target="#los-datos-de-hoy">Los datos de hoy</a></li>
+  <li><a href="#muestras-y-poblaciones" id="toc-muestras-y-poblaciones" class="nav-link" data-scroll-target="#muestras-y-poblaciones">Muestras y poblaciones</a>
+  <ul class="collapse">
+  <li><a href="#población-y-muestra" id="toc-población-y-muestra" class="nav-link" data-scroll-target="#población-y-muestra">Población y muestra</a></li>
+  <li><a href="#parámetros-y-estadísticos" id="toc-parámetros-y-estadísticos" class="nav-link" data-scroll-target="#parámetros-y-estadísticos">Parámetros y estadísticos</a></li>
+  <li><a href="#intervalos-de-confianza" id="toc-intervalos-de-confianza" class="nav-link" data-scroll-target="#intervalos-de-confianza">Intervalos de confianza</a></li>
+  <li><a href="#intervalos-de-confianza-1" id="toc-intervalos-de-confianza-1" class="nav-link" data-scroll-target="#intervalos-de-confianza-1">Intervalos de confianza</a></li>
+  <li><a href="#section-1" id="toc-section-1" class="nav-link" data-scroll-target="#section-1"></a></li>
+  </ul></li>
+  <li><a href="#pruebas-de-hipótesis" id="toc-pruebas-de-hipótesis" class="nav-link" data-scroll-target="#pruebas-de-hipótesis">Pruebas de hipótesis</a>
+  <ul class="collapse">
+  <li><a href="#de-la-pregunta-a-las-hipótesis" id="toc-de-la-pregunta-a-las-hipótesis" class="nav-link" data-scroll-target="#de-la-pregunta-a-las-hipótesis">De la pregunta a las hipótesis</a></li>
+  <li><a href="#tipos-de-errores" id="toc-tipos-de-errores" class="nav-link" data-scroll-target="#tipos-de-errores">Tipos de errores</a></li>
+  <li><a href="#pruebas-de-dos-colas-y-de-una-cola" id="toc-pruebas-de-dos-colas-y-de-una-cola" class="nav-link" data-scroll-target="#pruebas-de-dos-colas-y-de-una-cola">Pruebas de dos colas y de una cola</a></li>
+  <li><a href="#el-valor-p" id="toc-el-valor-p" class="nav-link" data-scroll-target="#el-valor-p">El valor p</a></li>
+  </ul></li>
+  <li><a href="#pruebas-t" id="toc-pruebas-t" class="nav-link" data-scroll-target="#pruebas-t">Pruebas t</a>
+  <ul class="collapse">
+  <li><a href="#supuestos" id="toc-supuestos" class="nav-link" data-scroll-target="#supuestos">Supuestos</a></li>
+  <li><a href="#normalidad-shapiro-wilk" id="toc-normalidad-shapiro-wilk" class="nav-link" data-scroll-target="#normalidad-shapiro-wilk">Normalidad: Shapiro-Wilk</a></li>
+  <li><a href="#prueba-t-de-una-muestra" id="toc-prueba-t-de-una-muestra" class="nav-link" data-scroll-target="#prueba-t-de-una-muestra">Prueba t de una muestra</a></li>
+  <li><a href="#prueba-t-de-muestras-independientes" id="toc-prueba-t-de-muestras-independientes" class="nav-link" data-scroll-target="#prueba-t-de-muestras-independientes">Prueba t de muestras independientes</a></li>
+  <li><a href="#student-o-welch" id="toc-student-o-welch" class="nav-link" data-scroll-target="#student-o-welch">Student o Welch</a></li>
+  <li><a href="#prueba-t-de-muestras-emparejadas" id="toc-prueba-t-de-muestras-emparejadas" class="nav-link" data-scroll-target="#prueba-t-de-muestras-emparejadas">Prueba t de muestras emparejadas</a></li>
+  <li><a href="#section-2" id="toc-section-2" class="nav-link" data-scroll-target="#section-2"></a></li>
+  </ul></li>
+  <li><a href="#pruebas-de-wilcoxon-y-transformaciones" id="toc-pruebas-de-wilcoxon-y-transformaciones" class="nav-link" data-scroll-target="#pruebas-de-wilcoxon-y-transformaciones">Pruebas de Wilcoxon y transformaciones</a>
+  <ul class="collapse">
+  <li><a href="#y-si-los-datos-no-son-normales" id="toc-y-si-los-datos-no-son-normales" class="nav-link" data-scroll-target="#y-si-los-datos-no-son-normales">¿Y si los datos no son normales?</a></li>
+  <li><a href="#wilcoxon-para-una-y-dos-muestras" id="toc-wilcoxon-para-una-y-dos-muestras" class="nav-link" data-scroll-target="#wilcoxon-para-una-y-dos-muestras">Wilcoxon para una y dos muestras</a></li>
+  <li><a href="#otra-opción-transformar" id="toc-otra-opción-transformar" class="nav-link" data-scroll-target="#otra-opción-transformar">Otra opción: transformar</a></li>
+  <li><a href="#prueba-t-sobre-el-logaritmo" id="toc-prueba-t-sobre-el-logaritmo" class="nav-link" data-scroll-target="#prueba-t-sobre-el-logaritmo">Prueba t sobre el logaritmo</a></li>
+  <li><a href="#qué-prueba-uso" id="toc-qué-prueba-uso" class="nav-link" data-scroll-target="#qué-prueba-uso">¿Qué prueba uso?</a></li>
+  <li><a href="#section-3" id="toc-section-3" class="nav-link" data-scroll-target="#section-3"></a></li>
+  <li><a href="#antes-del-próximo-domingo" id="toc-antes-del-próximo-domingo" class="nav-link" data-scroll-target="#antes-del-próximo-domingo">Antes del próximo domingo</a></li>
+  <li><a href="#section-4" id="toc-section-4" class="nav-link" data-scroll-target="#section-4"></a></li>
+  </ul></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Otros formatos</h2><ul><li><a href="modulo-2.html"><i class="bi bi-file-slides"></i>RevealJS (letterbox)</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+
+
+
+
+<section id="section" class="level2">
+<h2 class="anchored" data-anchor-id="section"></h2>
+<div class="columns">
+<div class="column" style="width:37.5%;">
+<p><img src="images/icon1_nb.png" class="img-fluid" style="margin-left:-60px"></p>
+</div><div class="column" style="width:60%;">
+<div class="title" data-id="title">
+<p>Módulo 2: Introducción a la estadística inferencial con R</p>
+</div>
+<p>Mauricio Moreno, PhD</p>
+<p>Domingo 22 de noviembre de 2026</p>
+</div>
+</div>
+<p><img src="images/cover.png" class="image-left img-fluid"></p>
+</section>
+<section id="hoy" class="level2">
+<h2 class="anchored" data-anchor-id="hoy">Hoy</h2>
+<ol type="1">
+<li>Muestras, poblaciones, parámetros y estadísticos</li>
+<li>Intervalos de confianza</li>
+<li>Pruebas de hipótesis y el valor p</li>
+<li>Pruebas t: una muestra, dos muestras independientes, muestras emparejadas</li>
+<li>Pruebas de Wilcoxon y transformaciones</li>
+</ol>
+<p>. . .</p>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>El domingo pasado aprendimos a <strong>describir</strong> una muestra. Hoy usamos la muestra para <strong>sacar conclusiones sobre la población</strong> de la que viene.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="los-datos-de-hoy" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="los-datos-de-hoy">Los datos de hoy</h2>
+<p>Usamos la tabla <code>ranas</code> del <a href="modulo-1.html">Módulo 1</a>, con los tratamientos como <strong>factores</strong>.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Mostrar el código</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>ranas <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"datos/ranas.csv"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>ranas<span class="sc">$</span>Pred  <span class="ot">&lt;-</span> <span class="fu">factor</span>(ranas<span class="sc">$</span>Pred)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>ranas<span class="sc">$</span>Res   <span class="ot">&lt;-</span> <span class="fu">factor</span>(ranas<span class="sc">$</span>Res)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>ranas<span class="sc">$</span>Hatch <span class="ot">&lt;-</span> <span class="fu">factor</span>(ranas<span class="sc">$</span>Hatch)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(ranas)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   78 obs. of  12 variables:
+ $ Block            : int  1 1 1 1 1 1 1 1 1 1 ...
+ $ Tank.Unique      : int  1 2 3 4 5 6 7 8 9 10 ...
+ $ Pred             : Factor w/ 3 levels "C","L","NL": 3 1 1 2 3 2 3 1 2 1 ...
+ $ Hatch            : Factor w/ 2 levels "E","L": 2 1 2 2 1 1 2 1 2 2 ...
+ $ Res              : Factor w/ 2 levels "Hi","Lo": 1 1 1 2 1 1 2 2 1 2 ...
+ $ Age.DPO          : num  47.2 45.4 53.8 56.9 64.8 ...
+ $ Age.FromEmergence: num  13.2 11.4 19.8 22.9 30.8 ...
+ $ SVL.initial      : num  19.4 18.4 18.9 18.8 19.7 ...
+ $ Tail.initial     : num  4.83 5.37 4.8 4.63 5.43 ...
+ $ SVL.final        : num  19.7 19 19.1 19.1 20.1 ...
+ $ Mass.final       : num  0.418 0.382 0.412 0.382 0.486 ...
+ $ Resorb.days      : num  3.49 3.79 3.51 3.65 4.22 ...</code></pre>
+</div>
+</div>
+</section>
+<section id="muestras-y-poblaciones" class="level1">
+<h1>Muestras y poblaciones</h1>
+<section id="población-y-muestra" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="población-y-muestra">Población y muestra</h2>
+<div class="columns">
+<div class="column" style="width:55%;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/simple1.png" class="img-fluid figure-img"></p>
+<figcaption>Tomado de <a href="https://learningstatisticswithr.com/" target="_blank"><em>Learning Statistics with R</em></a></figcaption>
+</figure>
+</div>
+</div><div class="column" style="width:45%;">
+<div class="incremental">
+<ul class="incremental">
+<li><strong>Población:</strong> todos los individuos sobre los que queremos concluir (todos los renacuajos de la especie).</li>
+<li><strong>Muestra:</strong> los que realmente medimos (78 tanques).</li>
+<li>En un <strong>muestreo aleatorio simple</strong>, cada individuo tiene la misma probabilidad de ser elegido.</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="parámetros-y-estadísticos" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="parámetros-y-estadísticos">Parámetros y estadísticos</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: center;">Población (<strong>parámetro</strong>)</th>
+<th style="text-align: center;">Muestra (<strong>estadístico</strong>)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Media</td>
+<td style="text-align: center;"><span class="math inline">\(\mu\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\bar{x}\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Desviación estándar</td>
+<td style="text-align: center;"><span class="math inline">\(\sigma\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(s\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Varianza</td>
+<td style="text-align: center;"><span class="math inline">\(\sigma^2\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(s^2\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>. . .</p>
+<div class="incremental">
+<ul class="incremental">
+<li>Los parámetros casi nunca los conocemos: los <strong>estimamos</strong> con los estadísticos.</li>
+<li>Otra muestra daría otra <span class="math inline">\(\bar{x}\)</span>. ¿Cuánto puede cambiar? Eso nos lo dice el <strong>error estándar</strong>, <span class="math inline">\(s / \sqrt{n}\)</span>.</li>
+</ul>
+</div>
+</section>
+<section id="intervalos-de-confianza" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="intervalos-de-confianza">Intervalos de confianza</h2>
+<p>Un intervalo de confianza del 95% para la media:</p>
+<p><span class="math display">\[
+\bar{x} \pm t_{0.975,\ n-1} \cdot \frac{s}{\sqrt{n}}
+\]</span></p>
+<p>. . .</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(ranas<span class="sc">$</span>SVL.final)<span class="sc">$</span>conf.int</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 19.05763 19.70493
+attr(,"conf.level")
+[1] 0.95</code></pre>
+</div>
+</div>
+<p>. . .</p>
+<div class="callout callout-style-simple callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+¿Qué significa “95% de confianza”?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Si repitiéramos el estudio muchas veces, el 95% de los intervalos calculados así contendría la media verdadera <span class="math inline">\(\mu\)</span>.</p>
+</div>
+</div>
+</section>
+<section id="intervalos-de-confianza-1" class="level2 smaller" data-visibility="uncounted">
+<h2 class="smaller anchored" data-visibility="uncounted" data-anchor-id="intervalos-de-confianza-1">Intervalos de confianza</h2>
+<p>50 muestras de <span class="math inline">\(n = 10\)</span> de una población con <span class="math inline">\(\mu = 90\)</span>:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Mostrar el código</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2026</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>ic <span class="ot">&lt;-</span> <span class="fu">t</span>(<span class="fu">replicate</span>(<span class="dv">50</span>, <span class="fu">t.test</span>(<span class="fu">rnorm</span>(<span class="dv">10</span>, <span class="at">mean =</span> <span class="dv">90</span>, <span class="at">sd =</span> <span class="dv">20</span>))<span class="sc">$</span>conf.int))</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>fuera <span class="ot">&lt;-</span> ic[, <span class="dv">1</span>] <span class="sc">&gt;</span> <span class="dv">90</span> <span class="sc">|</span> ic[, <span class="dv">2</span>] <span class="sc">&lt;</span> <span class="dv">90</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="cn">NULL</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">50</span>), <span class="at">ylim =</span> <span class="fu">range</span>(ic), <span class="at">xlab =</span> <span class="st">"Muestra"</span>, <span class="at">ylab =</span> <span class="st">"IC 95%"</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">segments</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>, ic[, <span class="dv">1</span>], <span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>, ic[, <span class="dv">2</span>], <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="fu">ifelse</span>(fuera, <span class="st">"#D55E00"</span>, <span class="st">"#0072B2"</span>))</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">90</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="modulo-2_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="1056"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Los intervalos en naranja no contienen a <span class="math inline">\(\mu\)</span>: son 3 de 50.</p>
+</section>
+<section id="section-1" class="level2">
+<h2 class="anchored" data-anchor-id="section-1"></h2>
+<div class="columns">
+<div class="column" style="width:37.5%;">
+
+</div><div class="column" style="width:60%;">
+<div class="title" data-id="title">
+<p><a href="../ejercicios-2.html#parte-1" target="_blank">Ejercicios, Parte 1</a></p>
+</div>
+                    <div id="Timer1"></div>
+                    <script>
+                        document.addEventListener("DOMContentLoaded", function () {
+                            initializeTimer("Timer1", 600, "interaction");
+                        });
+                    </script>
+                
+</div>
+</div>
+<p><img src="images/snop.png" class="image-left img-fluid"></p>
+</section>
+</section>
+<section id="pruebas-de-hipótesis" class="level1">
+<h1>Pruebas de hipótesis</h1>
+<section id="de-la-pregunta-a-las-hipótesis" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="de-la-pregunta-a-las-hipótesis">De la pregunta a las hipótesis</h2>
+<div class="incremental">
+<ul class="incremental">
+<li><strong>Pregunta de investigación:</strong> ¿la escasez de alimento cambia el tiempo que tardan los renacuajos en reabsorber la cola?</li>
+<li><strong>Hipótesis nula</strong>, <span class="math inline">\(H_0\)</span>: no hay diferencia, <span class="math inline">\(\mu_{Hi} = \mu_{Lo}\)</span>.</li>
+<li><strong>Hipótesis alternativa</strong>, <span class="math inline">\(H_1\)</span>: sí hay diferencia, <span class="math inline">\(\mu_{Hi} \neq \mu_{Lo}\)</span>.</li>
+<li>La prueba estadística mide <strong>qué tan compatibles</strong> son los datos con <span class="math inline">\(H_0\)</span>.</li>
+</ul>
+</div>
+</section>
+<section id="tipos-de-errores" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="tipos-de-errores">Tipos de errores</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 27%">
+<col style="width: 36%">
+<col style="width: 36%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: center;"><span class="math inline">\(H_0\)</span> es verdadera</th>
+<th style="text-align: center;"><span class="math inline">\(H_0\)</span> es falsa</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Rechazamos</strong> <span class="math inline">\(H_0\)</span></td>
+<td style="text-align: center;">Error tipo I (<span class="math inline">\(\alpha\)</span>)</td>
+<td style="text-align: center;">Correcto (potencia, <span class="math inline">\(1 - \beta\)</span>)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>No rechazamos</strong> <span class="math inline">\(H_0\)</span></td>
+<td style="text-align: center;">Correcto</td>
+<td style="text-align: center;">Error tipo II (<span class="math inline">\(\beta\)</span>)</td>
+</tr>
+</tbody>
+</table>
+<p>. . .</p>
+<div class="incremental">
+<ul class="incremental">
+<li><span class="math inline">\(\alpha\)</span>, el <strong>nivel de significancia</strong>, lo fijamos nosotros: por lo general 0.05.</li>
+<li>La <strong>potencia</strong> crece con el tamaño de la muestra y con el tamaño del efecto.</li>
+</ul>
+</div>
+</section>
+<section id="pruebas-de-dos-colas-y-de-una-cola" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="pruebas-de-dos-colas-y-de-una-cola">Pruebas de dos colas y de una cola</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/dcolas.gif" class="img-fluid figure-img" width="400"></p>
+<figcaption>Dos colas: <span class="math inline">\(H_1: \mu \neq \mu_0\)</span></figcaption>
+</figure>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/ucolagreat.gif" class="img-fluid figure-img" width="400"></p>
+<figcaption>Una cola: <span class="math inline">\(H_1: \mu &gt; \mu_0\)</span></figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>En R: <code>alternative = "two.sided"</code> (por defecto), <code>"greater"</code> o <code>"less"</code>.</p>
+<div class="footer">
+<p>Imágenes: <a href="https://stats.oarc.ucla.edu/other/mult-pkg/faq/general/faq-what-are-the-differences-between-one-tailed-and-two-tailed-tests/" target="_blank">UCLA Advanced Research Computing</a></p>
+</div>
+</section>
+<section id="el-valor-p" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="el-valor-p">El valor p</h2>
+<div class="columns">
+<div class="column" style="width:45%;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/pval.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div>
+</div><div class="column" style="width:55%;">
+<div class="incremental">
+<ul class="incremental">
+<li>Es la probabilidad de obtener datos <strong>tan extremos como los nuestros, o más</strong>, <em>si</em> <span class="math inline">\(H_0\)</span> fuera verdadera.</li>
+<li>Si <span class="math inline">\(p &lt; \alpha\)</span>, rechazamos <span class="math inline">\(H_0\)</span>.</li>
+<li><strong>No</strong> es la probabilidad de que <span class="math inline">\(H_0\)</span> sea verdadera.</li>
+<li><strong>No</strong> dice si el efecto es grande o importante: para eso, mira la diferencia y su intervalo.</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="pruebas-t" class="level1">
+<h1>Pruebas t</h1>
+<section id="supuestos" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="supuestos">Supuestos</h2>
+<div class="incremental">
+<ol class="incremental" type="1">
+<li>Observaciones <strong>independientes</strong>.</li>
+<li>Datos (o diferencias) con distribución <strong>normal</strong>, o una muestra grande.</li>
+<li>Para dos muestras independientes: <strong>varianzas homogéneas</strong> (solo para la prueba de Student).</li>
+</ol>
+</div>
+<p>. . .</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(ranas<span class="sc">$</span>Mass.final, <span class="at">main =</span> <span class="st">""</span>, <span class="at">xlab =</span> <span class="st">"Masa final (g)"</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(ranas<span class="sc">$</span>Mass.final, <span class="at">main =</span> <span class="st">""</span>); <span class="fu">qqline</span>(ranas<span class="sc">$</span>Mass.final)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="modulo-2_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="normalidad-shapiro-wilk" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="normalidad-shapiro-wilk">Normalidad: Shapiro-Wilk</h2>
+<p><span class="math inline">\(H_0\)</span>: los datos vienen de una distribución normal.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(ranas<span class="sc">$</span>Mass.final)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Shapiro-Wilk normality test
+
+data:  ranas$Mass.final
+W = 0.84713, p-value = 1.717e-07</code></pre>
+</div>
+</div>
+<p>. . .</p>
+<div class="callout callout-style-simple callout-tip">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>Con muestras grandes, Shapiro-Wilk detecta desviaciones mínimas y sin importancia. Mira siempre <strong>también el gráfico Q-Q</strong>.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="prueba-t-de-una-muestra" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="prueba-t-de-una-muestra">Prueba t de una muestra</h2>
+<p>¿Es la masa media al salir del agua distinta de 0.40 g?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(ranas<span class="sc">$</span>Mass.final, <span class="at">mu =</span> <span class="fl">0.40</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    One Sample t-test
+
+data:  ranas$Mass.final
+t = 2.4427, df = 77, p-value = 0.01687
+alternative hypothesis: true mean is not equal to 0.4
+95 percent confidence interval:
+ 0.4055686 0.4546950
+sample estimates:
+mean of x 
+0.4301318 </code></pre>
+</div>
+</div>
+</section>
+<section id="prueba-t-de-muestras-independientes" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="prueba-t-de-muestras-independientes">Prueba t de muestras independientes</h2>
+<p>¿Difiere la longitud final entre renacuajos de eclosión temprana (<code>E</code>) y tardía (<code>L</code>)?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">var.test</span>(SVL.final <span class="sc">~</span> Hatch, <span class="at">data =</span> ranas)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    F test to compare two variances
+
+data:  SVL.final by Hatch
+F = 1.51, num df = 38, denom df = 38, p-value = 0.2085
+alternative hypothesis: true ratio of variances is not equal to 1
+95 percent confidence interval:
+ 0.7918426 2.8796646
+sample estimates:
+ratio of variances 
+          1.510047 </code></pre>
+</div>
+</div>
+<p>. . .</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(SVL.final <span class="sc">~</span> Hatch, <span class="at">data =</span> ranas)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Welch Two Sample t-test
+
+data:  SVL.final by Hatch
+t = 0.6054, df = 72.986, p-value = 0.5468
+alternative hypothesis: true difference in means between group E and group L is not equal to 0
+95 percent confidence interval:
+ -0.4529452  0.8481748
+sample estimates:
+mean in group E mean in group L 
+       19.48009        19.28247 </code></pre>
+</div>
+</div>
+</section>
+<section id="student-o-welch" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="student-o-welch">Student o Welch</h2>
+<div class="incremental">
+<ul class="incremental">
+<li>Por defecto, <code>t.test()</code> hace la prueba de <strong>Welch</strong>, que no supone varianzas iguales. Por eso sus grados de libertad tienen decimales.</li>
+<li>La prueba de <strong>Student</strong> clásica necesita <code>var.equal = TRUE</code>.</li>
+<li>Si las varianzas son parecidas, las dos dan casi lo mismo. Si no lo son, Welch es la segura.</li>
+</ul>
+</div>
+<p>. . .</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(SVL.final <span class="sc">~</span> Hatch, <span class="at">data =</span> ranas, <span class="at">var.equal =</span> <span class="cn">TRUE</span>)<span class="sc">$</span>p.value</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.546719</code></pre>
+</div>
+</div>
+</section>
+<section id="prueba-t-de-muestras-emparejadas" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="prueba-t-de-muestras-emparejadas">Prueba t de muestras emparejadas</h2>
+<p>Datos <code>sleep</code>, incluidos en R: horas extra de sueño de <strong>los mismos</strong> 10 pacientes con dos medicamentos.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Mostrar el código</summary>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>droga_1 <span class="ot">&lt;-</span> sleep<span class="sc">$</span>extra[sleep<span class="sc">$</span>group <span class="sc">==</span> <span class="dv">1</span>]</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>droga_2 <span class="ot">&lt;-</span> sleep<span class="sc">$</span>extra[sleep<span class="sc">$</span>group <span class="sc">==</span> <span class="dv">2</span>]</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(droga_2 <span class="sc">-</span> droga_1)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Shapiro-Wilk normality test
+
+data:  droga_2 - droga_1
+W = 0.82987, p-value = 0.03334</code></pre>
+</div>
+</div>
+<p>. . .</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(droga_2, droga_1, <span class="at">paired =</span> <span class="cn">TRUE</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Paired t-test
+
+data:  droga_2 and droga_1
+t = 4.0621, df = 9, p-value = 0.002833
+alternative hypothesis: true mean difference is not equal to 0
+95 percent confidence interval:
+ 0.7001142 2.4598858
+sample estimates:
+mean difference 
+           1.58 </code></pre>
+</div>
+</div>
+</section>
+<section id="section-2" class="level2">
+<h2 class="anchored" data-anchor-id="section-2"></h2>
+<div class="columns">
+<div class="column" style="width:37.5%;">
+
+</div><div class="column" style="width:60%;">
+<div class="title" data-id="title">
+<p><a href="../ejercicios-2.html#parte-2" target="_blank">Ejercicios, Parte 2</a></p>
+</div>
+                    <div id="Timer2"></div>
+                    <script>
+                        document.addEventListener("DOMContentLoaded", function () {
+                            initializeTimer("Timer2", 1500, "interaction");
+                        });
+                    </script>
+                
+</div>
+</div>
+<p><img src="images/marcha.png" class="image-left img-fluid"></p>
+</section>
+</section>
+<section id="pruebas-de-wilcoxon-y-transformaciones" class="level1">
+<h1>Pruebas de Wilcoxon y transformaciones</h1>
+<section id="y-si-los-datos-no-son-normales" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="y-si-los-datos-no-son-normales">¿Y si los datos no son normales?</h2>
+<div class="incremental">
+<ul class="incremental">
+<li>Las pruebas de <strong>Wilcoxon</strong> comparan <strong>rangos</strong> (posiciones) en lugar de medias.</li>
+<li>No suponen normalidad, pero sí observaciones independientes.</li>
+<li>Una muestra: ¿la mediana es distinta de un valor de referencia?</li>
+<li>Dos muestras (también llamada de Mann-Whitney): ¿un grupo tiende a tener valores más altos que el otro?</li>
+</ul>
+</div>
+<p>. . .</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(ranas<span class="sc">$</span>Age.FromEmergence)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Shapiro-Wilk normality test
+
+data:  ranas$Age.FromEmergence
+W = 0.82366, p-value = 3.143e-08</code></pre>
+</div>
+</div>
+</section>
+<section id="wilcoxon-para-una-y-dos-muestras" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="wilcoxon-para-una-y-dos-muestras">Wilcoxon para una y dos muestras</h2>
+<p>¿La mediana de la edad al salir del agua es distinta de 20 días?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wilcox.test</span>(ranas<span class="sc">$</span>Age.FromEmergence, <span class="at">mu =</span> <span class="dv">20</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Wilcoxon signed rank test with continuity correction
+
+data:  ranas$Age.FromEmergence
+V = 2106, p-value = 0.004891
+alternative hypothesis: true location is not equal to 20</code></pre>
+</div>
+</div>
+<p>. . .</p>
+<p>¿Difiere entre eclosión temprana y tardía?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wilcox.test</span>(Age.FromEmergence <span class="sc">~</span> Hatch, <span class="at">data =</span> ranas)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Wilcoxon rank sum exact test
+
+data:  Age.FromEmergence by Hatch
+W = 633, p-value = 0.2047
+alternative hypothesis: true location shift is not equal to 0</code></pre>
+</div>
+</div>
+</section>
+<section id="otra-opción-transformar" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="otra-opción-transformar">Otra opción: transformar</h2>
+<p>Si los datos tienen una cola larga a la derecha, una <strong>transformación</strong> puede acercarlos a la normalidad y permitir la prueba t.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Transformación</th>
+<th style="text-align: left;">En R</th>
+<th style="text-align: left;">Cuándo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Logaritmo</td>
+<td style="text-align: left;"><code>log(y)</code></td>
+<td style="text-align: left;">tiempos, masas, concentraciones (valores positivos)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Logaritmo con ceros</td>
+<td style="text-align: left;"><code>log(y + 1)</code></td>
+<td style="text-align: left;">como la anterior, si hay ceros</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Raíz cuadrada</td>
+<td style="text-align: left;"><code>sqrt(y)</code></td>
+<td style="text-align: left;">conteos</td>
+</tr>
+</tbody>
+</table>
+<p>. . .</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Mostrar el código</summary>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(ranas<span class="sc">$</span>Age.FromEmergence, <span class="at">main =</span> <span class="st">"En días"</span>, <span class="at">xlab =</span> <span class="st">"Edad al salir del agua"</span>)</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">log</span>(ranas<span class="sc">$</span>Age.FromEmergence), <span class="at">main =</span> <span class="st">"En logaritmo"</span>, <span class="at">xlab =</span> <span class="st">"log(edad)"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="modulo-2_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="1056"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="prueba-t-sobre-el-logaritmo" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="prueba-t-sobre-el-logaritmo">Prueba t sobre el logaritmo</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(<span class="fu">log</span>(ranas<span class="sc">$</span>Age.FromEmergence[ranas<span class="sc">$</span>Hatch <span class="sc">==</span> <span class="st">"E"</span>]))<span class="sc">$</span>p.value</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.2168169</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(<span class="fu">log</span>(ranas<span class="sc">$</span>Age.FromEmergence[ranas<span class="sc">$</span>Hatch <span class="sc">==</span> <span class="st">"L"</span>]))<span class="sc">$</span>p.value</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.3431191</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>prueba_log <span class="ot">&lt;-</span> <span class="fu">t.test</span>(<span class="fu">log</span>(Age.FromEmergence) <span class="sc">~</span> Hatch, <span class="at">data =</span> ranas)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>prueba_log<span class="sc">$</span>p.value</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.283308</code></pre>
+</div>
+</div>
+<p>. . .</p>
+<p>Para interpretar, volvemos a la escala original con <code>exp()</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(prueba_log<span class="sc">$</span>estimate)   <span class="co"># medias geométricas, en días</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>mean in group E mean in group L 
+       21.76614        25.90847 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(prueba_log<span class="sc">$</span>conf.int)   <span class="co"># cociente E / L, con su IC 95%</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.6093341 1.1583076
+attr(,"conf.level")
+[1] 0.95</code></pre>
+</div>
+</div>
+<div class="callout callout-style-simple callout-tip">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>En escala logarítmica, una <strong>diferencia</strong> de medias se convierte en un <strong>cociente</strong>: cuántas veces más (o menos) tarda un grupo que el otro.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="qué-prueba-uso" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="qué-prueba-uso">¿Qué prueba uso?</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Pregunta</th>
+<th style="text-align: left;">Datos normales</th>
+<th style="text-align: left;">Datos no normales</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">¿Media (o mediana) igual a un valor?</td>
+<td style="text-align: left;"><code>t.test(x, mu = )</code></td>
+<td style="text-align: left;">transformar, o <code>wilcox.test(x, mu = )</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">¿Difieren dos grupos independientes?</td>
+<td style="text-align: left;"><code>t.test(y ~ grupo)</code></td>
+<td style="text-align: left;">transformar, o <code>wilcox.test(y ~ grupo)</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">¿Cambian los mismos individuos?</td>
+<td style="text-align: left;"><code>t.test(x2, x1, paired = TRUE)</code></td>
+<td style="text-align: left;"><code>wilcox.test(x2, x1, paired = TRUE)</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">¿Difieren <strong>tres o más</strong> grupos?</td>
+<td style="text-align: left;">ANOVA (<a href="modulo-3.html">Módulo 3</a>)</td>
+<td style="text-align: left;">Kruskal-Wallis (<a href="modulo-3.html">Módulo 3</a>)</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="section-3" class="level2">
+<h2 class="anchored" data-anchor-id="section-3"></h2>
+<div class="columns">
+<div class="column" style="width:37.5%;">
+
+</div><div class="column" style="width:60%;">
+<div class="title" data-id="title">
+<p><a href="../ejercicios-2.html#parte-3" target="_blank">Ejercicios, Parte 3</a></p>
+</div>
+                    <div id="Timer3"></div>
+                    <script>
+                        document.addEventListener("DOMContentLoaded", function () {
+                            initializeTimer("Timer3", 900, "interaction");
+                        });
+                    </script>
+                
+</div>
+</div>
+<p><img src="images/ragun.png" class="image-left img-fluid"></p>
+</section>
+<section id="antes-del-próximo-domingo" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="antes-del-próximo-domingo">Antes del próximo domingo</h2>
+<div class="incremental">
+<ol class="incremental" type="1">
+<li>Completa <strong>todos</strong> los <a href="../ejercicios-2.html" target="_blank">ejercicios</a> del Módulo 2: lo que no alcanzamos en clase, incluida la Parte 4, es tarea.</li>
+<li>Con tus propios datos, escribe una pregunta que se responda con una prueba t: plantea <span class="math inline">\(H_0\)</span> y <span class="math inline">\(H_1\)</span> y revisa los supuestos antes de correrla.</li>
+<li>Haz la <a href="../autoevaluacion-2.html" target="_blank">autoevaluación</a> del Módulo 2.</li>
+</ol>
+</div>
+</section>
+<section id="section-4" class="level2">
+<h2 class="anchored" data-anchor-id="section-4"></h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<div class="title" data-id="title">
+<p>Fin del módulo 2</p>
+</div>
+<div class="callout callout-style-simple callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Créditos de fotos
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Foto final por <a href="https://unsplash.com/@hongkyu?utm_content=creditCopyText&amp;utm_medium=referral&amp;utm_source=unsplash">PARK HONG KYU</a> en <a href="https://unsplash.com/photos/white-and-black-boat-on-sea-during-sunset-f7efwMH5esE?utm_content=creditCopyText&amp;utm_medium=referral&amp;utm_source=unsplash">Unsplash</a></p>
+<p>Resto de fotos: varias fuentes</p>
+</div>
+</div>
+</div><div class="column" style="width:37.5%;">
+<p><img src="images/icon1_nb.png" class="img-fluid" style="margin-left:120px"></p>
+</div>
+</div>
+<p><img src="images/park-hong-kyu-f7efwMH5esE-unsplash.jpg" class="image-right img-fluid"></p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiado");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiado");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>Introducción a R · Mauricio Moreno, PhD · 2026</p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

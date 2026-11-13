@@ -1,0 +1,731 @@
+---
+title: "Ejercicios Módulo 1"
+subtitle: "Generalidades e introducción a R"
+lang: es
+format:
+  live-html:
+    theme:
+      light: [cosmo, theme.scss]
+    toc: true
+    toc-location: right
+    toc-title: En esta página
+    code-copy: true
+    code-overflow: wrap
+webr:
+  resources:
+    - datos/ranas.csv
+# Soluciones de este módulo: cambia a true después de la sesión y vuelve a renderizar.
+live:
+  show-solutions: false
+filters:
+  - soluciones.lua
+engine: knitr
+---
+
+{{< include ./_extensions/r-wasm/live/_knitr.qmd >}}
+
+
+Estos ejercicios siguen el [Módulo 1](modulo-1.qmd) paso a paso. El código corre **en tu navegador**: no necesitas instalar nada. Escribe tu código en los recuadros y presiona **Run Code**. Donde veas `____`, complétalo. ¿Te atascaste? Abre la pestaña **Pista**. Las soluciones se publican después de la sesión.
+
+::: {.callout-note}
+## Antes de empezar
+- La primera vez, cargar R en el navegador puede tardar hasta un minuto. Espera a que los recuadros estén listos.
+- El archivo `datos/ranas.csv` ya está disponible para importarlo. Contiene 78 tanques de un experimento con renacuajos del Prof. Justin C. Touchon:
+  - `Pred`: depredador (`C` control, `NL` no letal, `L` letal); `Hatch`: momento de eclosión (`E` temprano, `L` tardío); `Res`: recursos alimenticios (`Hi` altos, `Lo` bajos).
+  - `SVL.initial` y `SVL.final`: longitud hocico-cloaca (mm) al inicio y al salir del agua; `Tail.initial`: longitud de la cola al inicio (mm); `Mass.final`: masa al salir del agua (g).
+  - `Age.DPO` y `Age.FromEmergence`: edad (días) al salir del agua; `Resorb.days`: días para reabsorber la cola.
+:::
+
+::: {.callout-important appearance="simple"}
+## Lo que no terminemos en clase es tarea
+En clase avanzamos por las partes 1 a 3. **Completa todos los ejercicios de esta página antes del próximo domingo**, incluida la **Parte 4: Más práctica**.
+:::
+
+::: {.callout-tip collapse="true"}
+## Ver el código que prepara los datos
+
+Este código ya se ejecutó por ti en esta página. En RStudio, córrelo al inicio de tu script.
+
+```r
+ranas <- read.csv("datos/ranas.csv")
+```
+:::
+
+## Parte 1: R como calculadora y objetos {#parte-1}
+
+### Ejercicio 1.1: R como calculadora
+
+**Un renacuajo midió 19.4 mm al inicio del experimento y 19.7 mm al salir del agua. Guarda cada medida en un objeto, calcula cuánto creció en milímetros y qué porcentaje representa ese crecimiento respecto a la medida inicial.**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_1_1
+inicial <- 19.4
+final <- ____
+
+crecimiento <- final - ____
+crecimiento
+
+porcentaje <- crecimiento / ____ * 100
+porcentaje
+```
+
+## Pista
+
+::: {.hint exercise="ex_1_1"}
+Asignamos valores con `<-`. El porcentaje es el crecimiento dividido para la medida **inicial**, multiplicado por 100.
+:::
+
+## Solución
+
+::: {.solution exercise="ex_1_1"}
+```r
+inicial <- 19.4
+final <- 19.7
+
+crecimiento <- final - inicial
+crecimiento
+
+porcentaje <- crecimiento / inicial * 100
+porcentaje
+```
+
+Creció 0.3 mm, un 1.55% de su longitud inicial.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión del domingo 15 de noviembre. Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+### Ejercicio 1.2: Vectores
+
+**Estas son las masas (g) de cinco renacuajos. Crea el vector `masas`, calcula cuántos valores tiene, su media, y cuántos renacuajos pesan más de 0.4 g.**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_1_2
+masas <- c(0.42, 0.38, 0.41, 0.38, 0.49)
+
+length(____)
+mean(____)
+
+masas > 0.4
+sum(masas ____ 0.4)
+```
+
+## Pista
+
+::: {.hint exercise="ex_1_2"}
+`masas > 0.4` devuelve un vector lógico (`TRUE`/`FALSE`). Al sumarlo, R cuenta cada `TRUE` como 1.
+:::
+
+## Solución
+
+::: {.solution exercise="ex_1_2"}
+```r
+masas <- c(0.42, 0.38, 0.41, 0.38, 0.49)
+
+length(masas)
+mean(masas)
+
+masas > 0.4
+sum(masas > 0.4)
+```
+
+Son 5 valores con una media de 0.416 g, y 3 renacuajos pesan más de 0.4 g.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión del domingo 15 de noviembre. Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+### Ejercicio 1.3: Tipos de datos y factores
+
+**¿Qué clase de objeto obtienes al combinar un número, un texto y un valor lógico? Luego convierte el vector `depredador` en un factor y cuenta cuántas veces aparece cada nivel.**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_1_3
+mezcla <- c(1, "a", TRUE)
+class(mezcla)
+
+depredador <- c("C", "L", "NL", "C", "L")
+depredador <- ____(depredador)
+
+levels(depredador)
+table(____)
+```
+
+## Pista
+
+::: {.hint exercise="ex_1_3"}
+Un vector solo puede contener datos de **una** clase, así que R convierte todo a la clase más general. Para crear un factor usa `factor()`.
+:::
+
+## Solución
+
+::: {.solution exercise="ex_1_3"}
+```r
+mezcla <- c(1, "a", TRUE)
+class(mezcla)
+
+depredador <- c("C", "L", "NL", "C", "L")
+depredador <- factor(depredador)
+
+levels(depredador)
+table(depredador)
+```
+
+`mezcla` es de clase `"character"`: R convirtió el número y el valor lógico en texto. El factor tiene tres niveles, `C`, `L` y `NL`, que aparecen 2, 2 y 1 veces.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión del domingo 15 de noviembre. Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+### Ejercicio 1.4: Tablas de datos
+
+**Construye una tabla de datos con tres tanques y extrae: (a) la columna `masa` con `$`, (b) la fila del segundo tanque, y (c) la masa del tercer tanque usando `[fila, columna]`.**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_1_4
+tanques <- data.frame(
+  tanque = c(1, 2, 3),
+  depredador = c("C", "L", "NL"),
+  masa = c(0.38, 0.51, 0.40)
+)
+
+tanques$____
+tanques[____, ]
+tanques[3, "____"]
+```
+
+## Pista
+
+::: {.hint exercise="ex_1_4"}
+En `tabla[fila, columna]`, dejar un lugar vacío significa "todas". `tanques[2, ]` es toda la fila 2.
+:::
+
+## Solución
+
+::: {.solution exercise="ex_1_4"}
+```r
+tanques <- data.frame(
+  tanque = c(1, 2, 3),
+  depredador = c("C", "L", "NL"),
+  masa = c(0.38, 0.51, 0.40)
+)
+
+tanques$masa
+tanques[2, ]
+tanques[3, "masa"]
+```
+
+La masa del tercer tanque es 0.40 g. Fíjate que `tanques[2, ]` devuelve una tabla de una fila, mientras que `tanques$masa` devuelve un vector.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión del domingo 15 de noviembre. Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+```{webr}
+#| setup: true
+#| exercise:
+#|   - ex_2_2
+#|   - ex_3_1
+#|   - ex_3_2
+#|   - ex_3_3
+#|   - ex_3_4
+#|   - ex_4_1
+#|   - ex_4_2
+#|   - ex_4_3
+#|   - ex_4_4
+#|   - ex_4_5
+ranas <- read.csv("datos/ranas.csv")
+```
+
+## Parte 2: Importar datos {#parte-2}
+
+### Ejercicio 2.1: Importar un archivo csv
+
+**Importa el archivo `datos/ranas.csv` en un objeto llamado `ranas`. ¿Cuántas filas y columnas tiene? Revisa su estructura con `str()`.**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_2_1
+ranas <- read.csv("____")
+
+nrow(ranas)
+ncol(____)
+str(____)
+```
+
+## Pista
+
+::: {.hint exercise="ex_2_1"}
+La ruta del archivo va entre comillas, incluida la carpeta: `"datos/ranas.csv"`. En tu computador, la ruta es relativa a la carpeta de tu **proyecto de R**.
+:::
+
+## Solución
+
+::: {.solution exercise="ex_2_1"}
+```r
+ranas <- read.csv("datos/ranas.csv")
+
+nrow(ranas)
+ncol(ranas)
+str(ranas)
+```
+
+La tabla tiene 78 filas (una por tanque) y 12 columnas. `str()` muestra que `Pred`, `Hatch` y `Res` se importaron como texto (`chr`) y las mediciones como números (`num` o `int`).
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión del domingo 15 de noviembre. Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+### Ejercicio 2.2: Explorar una tabla
+
+**La tabla `ranas` ya está cargada. Muestra sus primeras seis filas, las primeras tres filas de las columnas `Pred` y `SVL.final`, y un resumen de todas las columnas.**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_2_2
+head(____)
+ranas[1:3, c("____", "____")]
+summary(ranas)
+```
+
+## Pista
+
+::: {.hint exercise="ex_2_2"}
+Para elegir varias columnas por su nombre, ponlas en un vector con `c()`, cada nombre entre comillas.
+:::
+
+## Solución
+
+::: {.solution exercise="ex_2_2"}
+```r
+head(ranas)
+ranas[1:3, c("Pred", "SVL.final")]
+summary(ranas)
+```
+
+Los tres primeros tanques tienen los depredadores `NL`, `C` y `C`. `summary()` da el mínimo, los cuartiles, la media y el máximo de cada columna numérica.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión del domingo 15 de noviembre. Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+## Parte 3: Estadísticos descriptivos {#parte-3}
+
+### Ejercicio 3.1: Medidas de tendencia central y dispersión
+
+**Calcula la media, la mediana, la desviación estándar y la varianza de la longitud final (`SVL.final`).**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_3_1
+mean(ranas$SVL.final)
+____(ranas$SVL.final)
+sd(____)
+____(ranas$SVL.final)
+```
+
+## Pista
+
+::: {.hint exercise="ex_3_1"}
+Las funciones son `mean()`, `median()`, `sd()` y `var()`. Todas reciben un vector, por ejemplo `ranas$SVL.final`.
+:::
+
+## Solución
+
+::: {.solution exercise="ex_3_1"}
+```r
+mean(ranas$SVL.final)
+median(ranas$SVL.final)
+sd(ranas$SVL.final)
+var(ranas$SVL.final)
+```
+
+Media 19.38 mm, mediana 19.23 mm, desviación estándar 1.44 mm y varianza 2.06 mm². La varianza es la desviación estándar al cuadrado.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión del domingo 15 de noviembre. Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+### Ejercicio 3.2: Cuartiles
+
+**Calcula los cuartiles de `SVL.final`. ¿Entre qué valores está el 50% central de los tanques?**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_3_2
+quantile(ranas$____)
+quantile(ranas$SVL.final, probs = c(0.25, ____))
+```
+
+## Pista
+
+::: {.hint exercise="ex_3_2"}
+El 50% central de los datos está entre el primer cuartil (0.25) y el tercer cuartil (0.75).
+:::
+
+## Solución
+
+::: {.solution exercise="ex_3_2"}
+```r
+quantile(ranas$SVL.final)
+quantile(ranas$SVL.final, probs = c(0.25, 0.75))
+```
+
+El 50% central de los tanques tiene una longitud final entre 18.29 y 20.02 mm.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión del domingo 15 de noviembre. Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+### Ejercicio 3.3: Variables categóricas
+
+**¿Cuántos tanques hay con cada depredador? Calcula también la proporción, y una tabla cruzada de depredador por recursos (`Res`).**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_3_3
+table(ranas$Pred)
+prop.table(table(ranas$____))
+table(ranas$Pred, ranas$____)
+```
+
+## Pista
+
+::: {.hint exercise="ex_3_3"}
+`table()` cuenta las veces que aparece cada valor. `prop.table()` convierte esos conteos en proporciones. Con dos variables, `table()` hace una tabla cruzada.
+:::
+
+## Solución
+
+::: {.solution exercise="ex_3_3"}
+```r
+table(ranas$Pred)
+prop.table(table(ranas$Pred))
+table(ranas$Pred, ranas$Res)
+```
+
+Hay 32 tanques control (`C`), 32 con depredador letal (`L`) y 14 con depredador no letal (`NL`): 41%, 41% y 18%. Cada depredador tiene la mitad de sus tanques con recursos altos y la mitad con recursos bajos.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión del domingo 15 de noviembre. Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+### Ejercicio 3.4: Resumir por grupos
+
+**Calcula la media de `SVL.final` para cada depredador, primero con `tapply()` y luego con `aggregate()`. ¿Qué grupo tiene los renacuajos más grandes al salir del agua?**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_3_4
+tapply(ranas$SVL.final, ranas$____, mean)
+
+aggregate(SVL.final ~ ____, data = ranas, FUN = ____)
+```
+
+## Pista
+
+::: {.hint exercise="ex_3_4"}
+`tapply(variable, grupo, función)` aplica la función a la variable dentro de cada grupo. En `aggregate()`, la fórmula `y ~ grupo` se lee "y según grupo".
+:::
+
+## Solución
+
+::: {.solution exercise="ex_3_4"}
+```r
+tapply(ranas$SVL.final, ranas$Pred, mean)
+
+aggregate(SVL.final ~ Pred, data = ranas, FUN = mean)
+```
+
+Las medias son 18.46 mm (`C`), 20.44 mm (`L`) y 19.06 mm (`NL`). Los renacuajos expuestos al depredador letal salen del agua más grandes. ¿Es esa diferencia mayor que la que esperaríamos por azar? Lo veremos en el [Módulo 3](modulo-3.qmd).
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión del domingo 15 de noviembre. Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+## Parte 4: Más práctica {#parte-4}
+
+### Ejercicio 4.1: Operaciones con vectores
+
+**Convierte las masas de los cinco renacuajos de gramos a miligramos, ordénalas de menor a mayor y redondea su media a dos decimales.**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_4_1
+masas <- c(0.42, 0.38, 0.41, 0.38, 0.49)
+
+masas * ____
+sort(____)
+round(mean(masas), digits = ____)
+```
+
+## Pista
+
+::: {.hint exercise="ex_4_1"}
+Un gramo tiene 1000 miligramos. `sort()` ordena de menor a mayor; `round(x, digits = 2)` redondea a dos decimales.
+:::
+
+## Solución
+
+::: {.solution exercise="ex_4_1"}
+```r
+masas <- c(0.42, 0.38, 0.41, 0.38, 0.49)
+
+masas * 1000
+sort(masas)
+round(mean(masas), digits = 2)
+```
+
+En miligramos: 420, 380, 410, 380 y 490. Ordenadas: 0.38, 0.38, 0.41, 0.42 y 0.49 g. La media redondeada es 0.42 g.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión del domingo 15 de noviembre. Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+### Ejercicio 4.2: Filtrar filas
+
+**Quédate solo con los tanques del depredador letal (`L`). ¿Cuántos son y cuál es su longitud final media? Luego filtra los tanques con depredador letal **y** recursos altos.**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_4_2
+letal <- ranas[ranas$Pred == "____", ]
+nrow(letal)
+mean(letal$SVL.final)
+
+letal_altos <- ranas[ranas$Pred == "L" ____ ranas$Res == "Hi", ]
+nrow(letal_altos)
+mean(letal_altos$SVL.final)
+```
+
+## Pista
+
+::: {.hint exercise="ex_4_2"}
+Dentro de `[ , ]`, una condición lógica antes de la coma elige las **filas** donde es `TRUE`. Para exigir dos condiciones a la vez, únelas con `&`.
+:::
+
+## Solución
+
+::: {.solution exercise="ex_4_2"}
+```r
+letal <- ranas[ranas$Pred == "L", ]
+nrow(letal)
+mean(letal$SVL.final)
+
+letal_altos <- ranas[ranas$Pred == "L" & ranas$Res == "Hi", ]
+nrow(letal_altos)
+mean(letal_altos$SVL.final)
+```
+
+Hay 32 tanques con depredador letal, con una longitud final media de 20.44 mm. De ellos, 16 tienen recursos altos, con una media de 20.53 mm.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión del domingo 15 de noviembre. Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+### Ejercicio 4.3: Crear una columna nueva
+
+**Crea la columna `crecimiento` (longitud final menos inicial). ¿Cuál es el crecimiento medio? ¿Qué tanque creció más, y con qué tratamientos? ¿Algún tanque se encogió?**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_4_3
+ranas$crecimiento <- ranas$SVL.final - ranas$____
+
+mean(ranas$crecimiento)
+fila <- which.max(ranas$____)
+ranas[fila, c("Pred", "Res", "Hatch", "crecimiento")]
+
+sum(ranas$crecimiento ____ 0)
+```
+
+## Pista
+
+::: {.hint exercise="ex_4_3"}
+Asignar a `tabla$nombre_nuevo` crea una columna. `which.max()` devuelve la **posición** del valor más alto. Para contar los tanques que se encogieron, cuenta los crecimientos menores que cero.
+:::
+
+## Solución
+
+::: {.solution exercise="ex_4_3"}
+```r
+ranas$crecimiento <- ranas$SVL.final - ranas$SVL.initial
+
+mean(ranas$crecimiento)
+fila <- which.max(ranas$crecimiento)
+ranas[fila, c("Pred", "Res", "Hatch", "crecimiento")]
+
+sum(ranas$crecimiento < 0)
+```
+
+En promedio, los renacuajos crecieron 0.38 mm. El que más creció (1.18 mm, fila 75) tenía depredador letal, recursos bajos y eclosión temprana. Dos tanques tienen un crecimiento negativo.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión del domingo 15 de noviembre. Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+### Ejercicio 4.4: Valores faltantes
+
+**Una de las masas no se pudo medir y quedó como `NA`. ¿Qué devuelve `mean()`? Calcula la media sin el valor faltante.**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_4_4
+masas <- c(0.42, 0.38, NA, 0.41, 0.49)
+
+mean(masas)
+mean(masas, na.rm = ____)
+sum(is.na(masas))
+```
+
+## Pista
+
+::: {.hint exercise="ex_4_4"}
+Si falta un valor, R no puede saber la media y devuelve `NA`. El argumento `na.rm` ("remove NA") le pide ignorar los valores faltantes.
+:::
+
+## Solución
+
+::: {.solution exercise="ex_4_4"}
+```r
+masas <- c(0.42, 0.38, NA, 0.41, 0.49)
+
+mean(masas)
+mean(masas, na.rm = TRUE)
+sum(is.na(masas))
+```
+
+`mean(masas)` devuelve `NA`. Sin el valor faltante, la media es 0.425 g. `is.na()` encuentra los faltantes: hay uno. `sd()`, `median()`, `sum()` y muchas otras funciones también tienen `na.rm`.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión del domingo 15 de noviembre. Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+### Ejercicio 4.5: Varios resúmenes por grupo
+
+**Calcula la media y la desviación estándar de la masa final (`Mass.final`) para cada nivel de recursos (`Res`).**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_4_5
+aggregate(Mass.final ~ Res, data = ranas, FUN = ____)
+aggregate(Mass.final ~ Res, data = ranas, FUN = ____)
+```
+
+## Pista
+
+::: {.hint exercise="ex_4_5"}
+Usa la misma fórmula dos veces, cambiando la función en `FUN`.
+:::
+
+## Solución
+
+::: {.solution exercise="ex_4_5"}
+```r
+aggregate(Mass.final ~ Res, data = ranas, FUN = mean)
+aggregate(Mass.final ~ Res, data = ranas, FUN = sd)
+```
+
+Con recursos altos: media 0.444 g (desviación estándar 0.100 g). Con recursos bajos: media 0.416 g (0.117 g).
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión del domingo 15 de noviembre. Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+## Con tus propios datos
+
+Importa en tu proyecto de R una tabla de tus propios datos (o `ranas.csv`, que puedes [descargar aquí](datos/ranas.csv)) y repite la Parte 3: medidas de tendencia central y dispersión de una variable numérica, conteos de una categórica, y un resumen por grupos.
