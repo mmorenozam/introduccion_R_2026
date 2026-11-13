@@ -76,6 +76,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-10d5b5b9bdfd596dfb1fd64658c28bd2.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-contrib/live-runtime/live-runtime.js" type="module"></script>
+<link href="site_libs/quarto-contrib/live-runtime/live-runtime.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -103,36 +105,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Buscar"
   }
 }</script>
+<script type="module" src="site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <meta property="og:title" content="Ejercicios Módulo 4 – Introducción a R">
 <meta property="og:description" content="ANOVA de múltiples vías y exportación de resultados">
@@ -356,22 +331,36 @@ Antes de empezar
 </div>
 </div>
 <div class="cell" data-setup="true" data-exercise="[&quot;ex_1_1&quot;,&quot;ex_1_2&quot;,&quot;ex_2_1&quot;,&quot;ex_2_2&quot;,&quot;ex_2_3&quot;,&quot;ex_3_1&quot;,&quot;ex_4_1&quot;,&quot;ex_4_2&quot;,&quot;ex_4_3&quot;,&quot;ex_4_4&quot;]">
-<pre class="{webr}"><code>#| setup: true
-#| exercise:
-#|   - ex_1_1
-#|   - ex_1_2
-#|   - ex_2_1
-#|   - ex_2_2
-#|   - ex_2_3
-#|   - ex_3_1
-#|   - ex_4_1
-#|   - ex_4_2
-#|   - ex_4_3
-#|   - ex_4_4
-ranas &lt;- read.csv("datos/ranas.csv")
-ranas$Pred  &lt;- factor(ranas$Pred)
-ranas$Res   &lt;- factor(ranas$Res)
-ranas$Hatch &lt;- factor(ranas$Hatch)</code></pre>
+<script type="exercise-setup-ex_1_1-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjpbImV4XzFfMSIsImV4XzFfMiIsImV4XzJfMSIsImV4XzJfMiIsImV4XzJfMyIsImV4XzNfMSIsImV4XzRfMSIsImV4XzRfMiIsImV4XzRfMyIsImV4XzRfNCJdLCJzZXR1cCI6dHJ1ZX0sImNvZGUiOiJyYW5hcyA8LSByZWFkLmNzdihcImRhdG9zL3JhbmFzLmNzdlwiKVxucmFuYXMkUHJlZCAgPC0gZmFjdG9yKHJhbmFzJFByZWQpXG5yYW5hcyRSZXMgICA8LSBmYWN0b3IocmFuYXMkUmVzKVxucmFuYXMkSGF0Y2ggPC0gZmFjdG9yKHJhbmFzJEhhdGNoKSJ9
+</script>
+<script type="exercise-setup-ex_1_2-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjpbImV4XzFfMSIsImV4XzFfMiIsImV4XzJfMSIsImV4XzJfMiIsImV4XzJfMyIsImV4XzNfMSIsImV4XzRfMSIsImV4XzRfMiIsImV4XzRfMyIsImV4XzRfNCJdLCJzZXR1cCI6dHJ1ZX0sImNvZGUiOiJyYW5hcyA8LSByZWFkLmNzdihcImRhdG9zL3JhbmFzLmNzdlwiKVxucmFuYXMkUHJlZCAgPC0gZmFjdG9yKHJhbmFzJFByZWQpXG5yYW5hcyRSZXMgICA8LSBmYWN0b3IocmFuYXMkUmVzKVxucmFuYXMkSGF0Y2ggPC0gZmFjdG9yKHJhbmFzJEhhdGNoKSJ9
+</script>
+<script type="exercise-setup-ex_2_1-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjpbImV4XzFfMSIsImV4XzFfMiIsImV4XzJfMSIsImV4XzJfMiIsImV4XzJfMyIsImV4XzNfMSIsImV4XzRfMSIsImV4XzRfMiIsImV4XzRfMyIsImV4XzRfNCJdLCJzZXR1cCI6dHJ1ZX0sImNvZGUiOiJyYW5hcyA8LSByZWFkLmNzdihcImRhdG9zL3JhbmFzLmNzdlwiKVxucmFuYXMkUHJlZCAgPC0gZmFjdG9yKHJhbmFzJFByZWQpXG5yYW5hcyRSZXMgICA8LSBmYWN0b3IocmFuYXMkUmVzKVxucmFuYXMkSGF0Y2ggPC0gZmFjdG9yKHJhbmFzJEhhdGNoKSJ9
+</script>
+<script type="exercise-setup-ex_2_2-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjpbImV4XzFfMSIsImV4XzFfMiIsImV4XzJfMSIsImV4XzJfMiIsImV4XzJfMyIsImV4XzNfMSIsImV4XzRfMSIsImV4XzRfMiIsImV4XzRfMyIsImV4XzRfNCJdLCJzZXR1cCI6dHJ1ZX0sImNvZGUiOiJyYW5hcyA8LSByZWFkLmNzdihcImRhdG9zL3JhbmFzLmNzdlwiKVxucmFuYXMkUHJlZCAgPC0gZmFjdG9yKHJhbmFzJFByZWQpXG5yYW5hcyRSZXMgICA8LSBmYWN0b3IocmFuYXMkUmVzKVxucmFuYXMkSGF0Y2ggPC0gZmFjdG9yKHJhbmFzJEhhdGNoKSJ9
+</script>
+<script type="exercise-setup-ex_2_3-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjpbImV4XzFfMSIsImV4XzFfMiIsImV4XzJfMSIsImV4XzJfMiIsImV4XzJfMyIsImV4XzNfMSIsImV4XzRfMSIsImV4XzRfMiIsImV4XzRfMyIsImV4XzRfNCJdLCJzZXR1cCI6dHJ1ZX0sImNvZGUiOiJyYW5hcyA8LSByZWFkLmNzdihcImRhdG9zL3JhbmFzLmNzdlwiKVxucmFuYXMkUHJlZCAgPC0gZmFjdG9yKHJhbmFzJFByZWQpXG5yYW5hcyRSZXMgICA8LSBmYWN0b3IocmFuYXMkUmVzKVxucmFuYXMkSGF0Y2ggPC0gZmFjdG9yKHJhbmFzJEhhdGNoKSJ9
+</script>
+<script type="exercise-setup-ex_3_1-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjpbImV4XzFfMSIsImV4XzFfMiIsImV4XzJfMSIsImV4XzJfMiIsImV4XzJfMyIsImV4XzNfMSIsImV4XzRfMSIsImV4XzRfMiIsImV4XzRfMyIsImV4XzRfNCJdLCJzZXR1cCI6dHJ1ZX0sImNvZGUiOiJyYW5hcyA8LSByZWFkLmNzdihcImRhdG9zL3JhbmFzLmNzdlwiKVxucmFuYXMkUHJlZCAgPC0gZmFjdG9yKHJhbmFzJFByZWQpXG5yYW5hcyRSZXMgICA8LSBmYWN0b3IocmFuYXMkUmVzKVxucmFuYXMkSGF0Y2ggPC0gZmFjdG9yKHJhbmFzJEhhdGNoKSJ9
+</script>
+<script type="exercise-setup-ex_4_1-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjpbImV4XzFfMSIsImV4XzFfMiIsImV4XzJfMSIsImV4XzJfMiIsImV4XzJfMyIsImV4XzNfMSIsImV4XzRfMSIsImV4XzRfMiIsImV4XzRfMyIsImV4XzRfNCJdLCJzZXR1cCI6dHJ1ZX0sImNvZGUiOiJyYW5hcyA8LSByZWFkLmNzdihcImRhdG9zL3JhbmFzLmNzdlwiKVxucmFuYXMkUHJlZCAgPC0gZmFjdG9yKHJhbmFzJFByZWQpXG5yYW5hcyRSZXMgICA8LSBmYWN0b3IocmFuYXMkUmVzKVxucmFuYXMkSGF0Y2ggPC0gZmFjdG9yKHJhbmFzJEhhdGNoKSJ9
+</script>
+<script type="exercise-setup-ex_4_2-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjpbImV4XzFfMSIsImV4XzFfMiIsImV4XzJfMSIsImV4XzJfMiIsImV4XzJfMyIsImV4XzNfMSIsImV4XzRfMSIsImV4XzRfMiIsImV4XzRfMyIsImV4XzRfNCJdLCJzZXR1cCI6dHJ1ZX0sImNvZGUiOiJyYW5hcyA8LSByZWFkLmNzdihcImRhdG9zL3JhbmFzLmNzdlwiKVxucmFuYXMkUHJlZCAgPC0gZmFjdG9yKHJhbmFzJFByZWQpXG5yYW5hcyRSZXMgICA8LSBmYWN0b3IocmFuYXMkUmVzKVxucmFuYXMkSGF0Y2ggPC0gZmFjdG9yKHJhbmFzJEhhdGNoKSJ9
+</script>
+<script type="exercise-setup-ex_4_3-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjpbImV4XzFfMSIsImV4XzFfMiIsImV4XzJfMSIsImV4XzJfMiIsImV4XzJfMyIsImV4XzNfMSIsImV4XzRfMSIsImV4XzRfMiIsImV4XzRfMyIsImV4XzRfNCJdLCJzZXR1cCI6dHJ1ZX0sImNvZGUiOiJyYW5hcyA8LSByZWFkLmNzdihcImRhdG9zL3JhbmFzLmNzdlwiKVxucmFuYXMkUHJlZCAgPC0gZmFjdG9yKHJhbmFzJFByZWQpXG5yYW5hcyRSZXMgICA8LSBmYWN0b3IocmFuYXMkUmVzKVxucmFuYXMkSGF0Y2ggPC0gZmFjdG9yKHJhbmFzJEhhdGNoKSJ9
+</script>
+<script type="exercise-setup-ex_4_4-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjpbImV4XzFfMSIsImV4XzFfMiIsImV4XzJfMSIsImV4XzJfMiIsImV4XzJfMyIsImV4XzNfMSIsImV4XzRfMSIsImV4XzRfMiIsImV4XzRfMyIsImV4XzRfNCJdLCJzZXR1cCI6dHJ1ZX0sImNvZGUiOiJyYW5hcyA8LSByZWFkLmNzdihcImRhdG9zL3JhbmFzLmNzdlwiKVxucmFuYXMkUHJlZCAgPC0gZmFjdG9yKHJhbmFzJFByZWQpXG5yYW5hcyRSZXMgICA8LSBmYWN0b3IocmFuYXMkUmVzKVxucmFuYXMkSGF0Y2ggPC0gZmFjdG9yKHJhbmFzJEhhdGNoKSJ9
+</script>
 </div>
 <div class="callout callout-style-simple callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -399,10 +388,10 @@ Ver el código que prepara los datos
 <div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Este código ya se ejecutó por ti en esta página. En RStudio, córrelo al inicio de tu script.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>ranas <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"datos/ranas.csv"</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>ranas<span class="sc">$</span>Pred  <span class="ot">&lt;-</span> <span class="fu">factor</span>(ranas<span class="sc">$</span>Pred)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>ranas<span class="sc">$</span>Res   <span class="ot">&lt;-</span> <span class="fu">factor</span>(ranas<span class="sc">$</span>Res)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>ranas<span class="sc">$</span>Hatch <span class="ot">&lt;-</span> <span class="fu">factor</span>(ranas<span class="sc">$</span>Hatch)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>ranas <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"datos/ranas.csv"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>ranas<span class="sc">$</span>Pred  <span class="ot">&lt;-</span> <span class="fu">factor</span>(ranas<span class="sc">$</span>Pred)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>ranas<span class="sc">$</span>Res   <span class="ot">&lt;-</span> <span class="fu">factor</span>(ranas<span class="sc">$</span>Res)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>ranas<span class="sc">$</span>Hatch <span class="ot">&lt;-</span> <span class="fu">factor</span>(ranas<span class="sc">$</span>Hatch)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -416,69 +405,22 @@ Ver el código que prepara los datos
 <div class="tab-content">
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
 <div class="cell" data-exercise="ex_1_1">
-<pre class="{webr}"><code>#| exercise: ex_1_1
-boxplot(Resorb.days ~ Pred + Res, data = ranas)
+<div>
+<div id="webr-2" class="exercise-cell">
 
-aditivo &lt;- aov(Resorb.days ~ Pred ____ Res, data = ranas)
-summary(aditivo)
-
-shapiro.test(residuals(____))</code></pre>
+</div>
+<script type="webr-2-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiZXhfMV8xIn0sImNvZGUiOiJib3hwbG90KFJlc29yYi5kYXlzIH4gUHJlZCArIFJlcywgZGF0YSA9IHJhbmFzKVxuXG5hZGl0aXZvIDwtIGFvdihSZXNvcmIuZGF5cyB+IFByZWQgX19fXyBSZXMsIGRhdGEgPSByYW5hcylcbnN1bW1hcnkoYWRpdGl2bylcblxuc2hhcGlyby50ZXN0KHJlc2lkdWFscyhfX19fKSkifQ==
+</script>
+</div>
 </div>
 </div>
 <div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
-<div class="hint" data-exercise="ex_1_1">
+<div class="hint webr-ojs-exercise exercise-hint d-none" data-exercise="ex_1_1">
 <p>En un modelo <strong>aditivo</strong>, los factores se unen con <code>+</code>: cada uno tiene su propio efecto y los efectos se suman.</p>
 </div>
 </div>
 <div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
-<div class="proof solution" data-exercise="ex_1_1">
-<p><span class="proof-title"><em>Solución</em>. </span></p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(Resorb.days <span class="sc">~</span> Pred <span class="sc">+</span> Res, <span class="at">data =</span> ranas)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>aditivo <span class="ot">&lt;-</span> <span class="fu">aov</span>(Resorb.days <span class="sc">~</span> Pred <span class="sc">+</span> Res, <span class="at">data =</span> ranas)</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(aditivo)</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(<span class="fu">residuals</span>(aditivo))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th style="text-align: left;"></th>
-<th style="text-align: right;">gl</th>
-<th style="text-align: right;">SC</th>
-<th style="text-align: right;">CM</th>
-<th style="text-align: right;"><span class="math inline">\(F\)</span></th>
-<th style="text-align: right;"><span class="math inline">\(p\)</span></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Pred</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">0.78</td>
-<td style="text-align: right;">0.39</td>
-<td style="text-align: right;">1.31</td>
-<td style="text-align: right;">0.28</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Res</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">4.35</td>
-<td style="text-align: right;">4.35</td>
-<td style="text-align: right;">14.53</td>
-<td style="text-align: right;">0.0003</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Residuales</td>
-<td style="text-align: right;">74</td>
-<td style="text-align: right;">22.14</td>
-<td style="text-align: right;">0.30</td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-</tr>
-</tbody>
-</table>
-<p>Los <strong>recursos</strong> sí afectan el tiempo de reabsorción, el <strong>depredador</strong> no. Los residuos son normales (Shapiro-Wilk: <span class="math inline">\(p = 0.27\)</span>). Con recursos bajos, la cola tarda en promedio medio día más en reabsorberse.</p>
-</div>
 <div class="sol-pendiente">
 <p>La solución se publicará después de la sesión del domingo 6 de diciembre. Mientras tanto, usa la pestaña <strong>Pista</strong>.</p>
 </div>
@@ -494,33 +436,22 @@ shapiro.test(residuals(____))</code></pre>
 <div class="tab-content">
 <div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
 <div class="cell" data-exercise="ex_1_2">
-<pre class="{webr}"><code>#| exercise: ex_1_2
-interaction.plot(x.factor = ranas$Pred, trace.factor = ranas$____,
-                 response = ranas$Resorb.days,
-                 xlab = "Depredador", ylab = "Días para reabsorber la cola",
-                 trace.label = "Recursos")
+<div>
+<div id="webr-3" class="exercise-cell">
 
-con_interaccion &lt;- aov(Resorb.days ~ Pred ____ Res, data = ranas)
-summary(con_interaccion)</code></pre>
+</div>
+<script type="webr-3-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiZXhfMV8yIn0sImNvZGUiOiJpbnRlcmFjdGlvbi5wbG90KHguZmFjdG9yID0gcmFuYXMkUHJlZCwgdHJhY2UuZmFjdG9yID0gcmFuYXMkX19fXyxcbiAgICAgICAgICAgICAgICAgcmVzcG9uc2UgPSByYW5hcyRSZXNvcmIuZGF5cyxcbiAgICAgICAgICAgICAgICAgeGxhYiA9IFwiRGVwcmVkYWRvclwiLCB5bGFiID0gXCJEw61hcyBwYXJhIHJlYWJzb3JiZXIgbGEgY29sYVwiLFxuICAgICAgICAgICAgICAgICB0cmFjZS5sYWJlbCA9IFwiUmVjdXJzb3NcIilcblxuY29uX2ludGVyYWNjaW9uIDwtIGFvdihSZXNvcmIuZGF5cyB+IFByZWQgX19fXyBSZXMsIGRhdGEgPSByYW5hcylcbnN1bW1hcnkoY29uX2ludGVyYWNjaW9uKSJ9
+</script>
+</div>
 </div>
 </div>
 <div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
-<div class="hint" data-exercise="ex_1_2">
+<div class="hint webr-ojs-exercise exercise-hint d-none" data-exercise="ex_1_2">
 <p><code>Pred * Res</code> es una abreviatura de <code>Pred + Res + Pred:Res</code>, donde <code>Pred:Res</code> es la interacción. En el gráfico, líneas más o menos <strong>paralelas</strong> indican que no hay interacción.</p>
 </div>
 </div>
 <div id="tabset-2-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-3-tab">
-<div class="proof solution" data-exercise="ex_1_2">
-<p><span class="proof-title"><em>Solución</em>. </span></p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">interaction.plot</span>(<span class="at">x.factor =</span> ranas<span class="sc">$</span>Pred, <span class="at">trace.factor =</span> ranas<span class="sc">$</span>Res,</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">response =</span> ranas<span class="sc">$</span>Resorb.days,</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">xlab =</span> <span class="st">"Depredador"</span>, <span class="at">ylab =</span> <span class="st">"Días para reabsorber la cola"</span>,</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">trace.label =</span> <span class="st">"Recursos"</span>)</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>con_interaccion <span class="ot">&lt;-</span> <span class="fu">aov</span>(Resorb.days <span class="sc">~</span> Pred <span class="sc">*</span> Res, <span class="at">data =</span> ranas)</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(con_interaccion)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Las líneas no son perfectamente paralelas, pero la interacción no es significativa (<span class="math inline">\(F = 0.86\)</span>, <span class="math inline">\(gl = 2\)</span> y 72, <span class="math inline">\(p = 0.43\)</span>): las diferencias que vemos son compatibles con el azar. El modelo aditivo del ejercicio 1.1 es razonable.</p>
-</div>
 <div class="sol-pendiente">
 <p>La solución se publicará después de la sesión del domingo 6 de diciembre. Mientras tanto, usa la pestaña <strong>Pista</strong>.</p>
 </div>
@@ -539,79 +470,22 @@ summary(con_interaccion)</code></pre>
 <div class="tab-content">
 <div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
 <div class="cell" data-exercise="ex_2_1">
-<pre class="{webr}"><code>#| exercise: ex_2_1
-interaction.plot(x.factor = ranas$Pred, trace.factor = ranas$Res,
-                 response = ranas$____,
-                 xlab = "Depredador", ylab = "Edad al salir del agua (días)",
-                 trace.label = "Recursos")
+<div>
+<div id="webr-4" class="exercise-cell">
 
-no_aditivo &lt;- aov(Age.FromEmergence ~ ____, data = ranas)
-summary(no_aditivo)</code></pre>
+</div>
+<script type="webr-4-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiZXhfMl8xIn0sImNvZGUiOiJpbnRlcmFjdGlvbi5wbG90KHguZmFjdG9yID0gcmFuYXMkUHJlZCwgdHJhY2UuZmFjdG9yID0gcmFuYXMkUmVzLFxuICAgICAgICAgICAgICAgICByZXNwb25zZSA9IHJhbmFzJF9fX18sXG4gICAgICAgICAgICAgICAgIHhsYWIgPSBcIkRlcHJlZGFkb3JcIiwgeWxhYiA9IFwiRWRhZCBhbCBzYWxpciBkZWwgYWd1YSAoZMOtYXMpXCIsXG4gICAgICAgICAgICAgICAgIHRyYWNlLmxhYmVsID0gXCJSZWN1cnNvc1wiKVxuXG5ub19hZGl0aXZvIDwtIGFvdihBZ2UuRnJvbUVtZXJnZW5jZSB+IF9fX18sIGRhdGEgPSByYW5hcylcbnN1bW1hcnkobm9fYWRpdGl2bykifQ==
+</script>
+</div>
 </div>
 </div>
 <div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
-<div class="hint" data-exercise="ex_2_1">
+<div class="hint webr-ojs-exercise exercise-hint d-none" data-exercise="ex_2_1">
 <p>Usa la misma estructura del ejercicio 1.2, cambiando la variable de respuesta.</p>
 </div>
 </div>
 <div id="tabset-3-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-3-tab">
-<div class="proof solution" data-exercise="ex_2_1">
-<p><span class="proof-title"><em>Solución</em>. </span></p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">interaction.plot</span>(<span class="at">x.factor =</span> ranas<span class="sc">$</span>Pred, <span class="at">trace.factor =</span> ranas<span class="sc">$</span>Res,</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">response =</span> ranas<span class="sc">$</span>Age.FromEmergence,</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">xlab =</span> <span class="st">"Depredador"</span>, <span class="at">ylab =</span> <span class="st">"Edad al salir del agua (días)"</span>,</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">trace.label =</span> <span class="st">"Recursos"</span>)</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>no_aditivo <span class="ot">&lt;-</span> <span class="fu">aov</span>(Age.FromEmergence <span class="sc">~</span> Pred <span class="sc">*</span> Res, <span class="at">data =</span> ranas)</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(no_aditivo)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th style="text-align: left;"></th>
-<th style="text-align: right;">gl</th>
-<th style="text-align: right;">SC</th>
-<th style="text-align: right;">CM</th>
-<th style="text-align: right;"><span class="math inline">\(F\)</span></th>
-<th style="text-align: right;"><span class="math inline">\(p\)</span></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Pred</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">9466.9</td>
-<td style="text-align: right;">4733.4</td>
-<td style="text-align: right;">15.90</td>
-<td style="text-align: right;">&lt; 0.001</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Res</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">9963.5</td>
-<td style="text-align: right;">9963.5</td>
-<td style="text-align: right;">33.48</td>
-<td style="text-align: right;">&lt; 0.001</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Pred:Res</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">2605.9</td>
-<td style="text-align: right;">1303.0</td>
-<td style="text-align: right;">4.38</td>
-<td style="text-align: right;">0.016</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Residuales</td>
-<td style="text-align: right;">72</td>
-<td style="text-align: right;">21429.3</td>
-<td style="text-align: right;">297.6</td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-</tr>
-</tbody>
-</table>
-<p>Las líneas <strong>no</strong> son paralelas y la interacción es significativa: con recursos bajos, los renacuajos salen del agua más tarde, pero el retraso es mucho mayor en el control (de 25 a 59 días) que con el depredador letal (de 13 a 22 días). Cuando hay interacción, no se puede hablar del efecto de los recursos sin decir con qué depredador. Pero antes de concluir… ¡los supuestos!</p>
-</div>
 <div class="sol-pendiente">
 <p>La solución se publicará después de la sesión del domingo 6 de diciembre. Mientras tanto, usa la pestaña <strong>Pista</strong>.</p>
 </div>
@@ -627,35 +501,22 @@ summary(no_aditivo)</code></pre>
 <div class="tab-content">
 <div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
 <div class="cell" data-exercise="ex_2_2">
-<pre class="{webr}"><code>#| exercise: ex_2_2
-no_aditivo &lt;- aov(Age.FromEmergence ~ Pred * Res, data = ranas)
+<div>
+<div id="webr-5" class="exercise-cell">
 
-par(mfrow = c(2, 2))
-plot(no_aditivo)
-par(mfrow = c(1, 1))
-
-shapiro.test(residuals(____))
-bartlett.test(Age.FromEmergence ~ interaction(Pred, ____), data = ranas)</code></pre>
+</div>
+<script type="webr-5-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiZXhfMl8yIn0sImNvZGUiOiJub19hZGl0aXZvIDwtIGFvdihBZ2UuRnJvbUVtZXJnZW5jZSB+IFByZWQgKiBSZXMsIGRhdGEgPSByYW5hcylcblxucGFyKG1mcm93ID0gYygyLCAyKSlcbnBsb3Qobm9fYWRpdGl2bylcbnBhcihtZnJvdyA9IGMoMSwgMSkpXG5cbnNoYXBpcm8udGVzdChyZXNpZHVhbHMoX19fXykpXG5iYXJ0bGV0dC50ZXN0KEFnZS5Gcm9tRW1lcmdlbmNlIH4gaW50ZXJhY3Rpb24oUHJlZCwgX19fXyksIGRhdGEgPSByYW5hcykifQ==
+</script>
+</div>
 </div>
 </div>
 <div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
-<div class="hint" data-exercise="ex_2_2">
+<div class="hint webr-ojs-exercise exercise-hint d-none" data-exercise="ex_2_2">
 <p><code>interaction(Pred, Res)</code> crea un factor con las seis combinaciones (<code>C.Hi</code>, <code>L.Hi</code>, …), así <code>bartlett.test()</code> compara las varianzas de todas ellas.</p>
 </div>
 </div>
 <div id="tabset-4-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-3-tab">
-<div class="proof solution" data-exercise="ex_2_2">
-<p><span class="proof-title"><em>Solución</em>. </span></p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>no_aditivo <span class="ot">&lt;-</span> <span class="fu">aov</span>(Age.FromEmergence <span class="sc">~</span> Pred <span class="sc">*</span> Res, <span class="at">data =</span> ranas)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(no_aditivo)</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(<span class="fu">residuals</span>(no_aditivo))</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="fu">bartlett.test</span>(Age.FromEmergence <span class="sc">~</span> <span class="fu">interaction</span>(Pred, Res), <span class="at">data =</span> ranas)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Los dos supuestos fallan: los residuos no son normales (Shapiro-Wilk: <span class="math inline">\(p = 0.010\)</span>) y las varianzas son muy distintas (Bartlett: <span class="math inline">\(p &lt; 0.001\)</span>). En el gráfico de residuos frente a ajustados, la dispersión <strong>crece</strong> con la media, en forma de embudo. Es una señal típica de que conviene transformar la respuesta con el logaritmo.</p>
-</div>
 <div class="sol-pendiente">
 <p>La solución se publicará después de la sesión del domingo 6 de diciembre. Mientras tanto, usa la pestaña <strong>Pista</strong>.</p>
 </div>
@@ -671,30 +532,22 @@ bartlett.test(Age.FromEmergence ~ interaction(Pred, ____), data = ranas)</code><
 <div class="tab-content">
 <div id="tabset-5-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-5-1-tab">
 <div class="cell" data-exercise="ex_2_3">
-<pre class="{webr}"><code>#| exercise: ex_2_3
-log_no_aditivo &lt;- aov(____(Age.FromEmergence) ~ Pred * Res, data = ranas)
-summary(log_no_aditivo)
+<div>
+<div id="webr-6" class="exercise-cell">
 
-shapiro.test(residuals(log_no_aditivo))
-bartlett.test(log(Age.FromEmergence) ~ interaction(Pred, Res), data = ranas)</code></pre>
+</div>
+<script type="webr-6-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiZXhfMl8zIn0sImNvZGUiOiJsb2dfbm9fYWRpdGl2byA8LSBhb3YoX19fXyhBZ2UuRnJvbUVtZXJnZW5jZSkgfiBQcmVkICogUmVzLCBkYXRhID0gcmFuYXMpXG5zdW1tYXJ5KGxvZ19ub19hZGl0aXZvKVxuXG5zaGFwaXJvLnRlc3QocmVzaWR1YWxzKGxvZ19ub19hZGl0aXZvKSlcbmJhcnRsZXR0LnRlc3QobG9nKEFnZS5Gcm9tRW1lcmdlbmNlKSB+IGludGVyYWN0aW9uKFByZWQsIFJlcyksIGRhdGEgPSByYW5hcykifQ==
+</script>
+</div>
 </div>
 </div>
 <div id="tabset-5-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-2-tab">
-<div class="hint" data-exercise="ex_2_3">
+<div class="hint webr-ojs-exercise exercise-hint d-none" data-exercise="ex_2_3">
 <p>Puedes transformar la respuesta dentro de la fórmula: <code>log(y) ~ A * B</code>. En R, <code>log()</code> es el logaritmo natural.</p>
 </div>
 </div>
 <div id="tabset-5-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-3-tab">
-<div class="proof solution" data-exercise="ex_2_3">
-<p><span class="proof-title"><em>Solución</em>. </span></p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>log_no_aditivo <span class="ot">&lt;-</span> <span class="fu">aov</span>(<span class="fu">log</span>(Age.FromEmergence) <span class="sc">~</span> Pred <span class="sc">*</span> Res, <span class="at">data =</span> ranas)</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(log_no_aditivo)</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(<span class="fu">residuals</span>(log_no_aditivo))</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="fu">bartlett.test</span>(<span class="fu">log</span>(Age.FromEmergence) <span class="sc">~</span> <span class="fu">interaction</span>(Pred, Res), <span class="at">data =</span> ranas)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Los supuestos mejoran mucho: los residuos ya son compatibles con la normalidad (Shapiro-Wilk: <span class="math inline">\(p = 0.10\)</span>) y la diferencia entre varianzas es bastante menor (Bartlett: <span class="math inline">\(p = 0.022\)</span>, frente a <span class="math inline">\(p &lt; 0.001\)</span> antes). Y la interacción <strong>ya no es significativa</strong> (<span class="math inline">\(F = 1.47\)</span>, <span class="math inline">\(p = 0.24\)</span>); depredador y recursos siguen siendo muy significativos (<span class="math inline">\(p &lt; 0.001\)</span>).</p>
-<p>¿Qué pasó? En la escala logarítmica, los efectos se <strong>multiplican</strong> en lugar de sumarse. Con recursos bajos, la edad al salir del agua se multiplica por un factor que no difiere claramente entre depredadores; en días, un mismo factor se ve como un retraso mayor donde la edad ya era mayor. La “interacción” del ejercicio 2.1 era sobre todo un efecto de la escala. <strong>Moraleja: revisa los diagnósticos antes de interpretar una interacción.</strong></p>
-</div>
 <div class="sol-pendiente">
 <p>La solución se publicará después de la sesión del domingo 6 de diciembre. Mientras tanto, usa la pestaña <strong>Pista</strong>.</p>
 </div>
@@ -713,36 +566,22 @@ bartlett.test(log(Age.FromEmergence) ~ interaction(Pred, Res), data = ranas)</co
 <div class="tab-content">
 <div id="tabset-6-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-6-1-tab">
 <div class="cell" data-exercise="ex_3_1">
-<pre class="{webr}"><code>#| exercise: ex_3_1
-log_aditivo &lt;- aov(log(Age.FromEmergence) ~ Pred + Res, data = ranas)
-TukeyHSD(log_aditivo, which = "____")
+<div>
+<div id="webr-7" class="exercise-cell">
 
-tabla_anova &lt;- as.data.frame(summary(log_aditivo)[[1]])
-tabla_anova
-
-write.csv(____, "tabla_anova.csv")
-read.csv("____")</code></pre>
+</div>
+<script type="webr-7-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiZXhfM18xIn0sImNvZGUiOiJsb2dfYWRpdGl2byA8LSBhb3YobG9nKEFnZS5Gcm9tRW1lcmdlbmNlKSB+IFByZWQgKyBSZXMsIGRhdGEgPSByYW5hcylcblR1a2V5SFNEKGxvZ19hZGl0aXZvLCB3aGljaCA9IFwiX19fX1wiKVxuXG50YWJsYV9hbm92YSA8LSBhcy5kYXRhLmZyYW1lKHN1bW1hcnkobG9nX2FkaXRpdm8pW1sxXV0pXG50YWJsYV9hbm92YVxuXG53cml0ZS5jc3YoX19fXywgXCJ0YWJsYV9hbm92YS5jc3ZcIilcbnJlYWQuY3N2KFwiX19fX1wiKSJ9
+</script>
+</div>
 </div>
 </div>
 <div id="tabset-6-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-2-tab">
-<div class="hint" data-exercise="ex_3_1">
+<div class="hint webr-ojs-exercise exercise-hint d-none" data-exercise="ex_3_1">
 <p>Con varios factores, <code>which = "Pred"</code> le dice a <code>TukeyHSD()</code> qué factor comparar. <code>summary(modelo)[[1]]</code> extrae la tabla del ANOVA; <code>as.data.frame()</code> la convierte en una tabla de datos que se puede exportar.</p>
 </div>
 </div>
 <div id="tabset-6-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-3-tab">
-<div class="proof solution" data-exercise="ex_3_1">
-<p><span class="proof-title"><em>Solución</em>. </span></p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>log_aditivo <span class="ot">&lt;-</span> <span class="fu">aov</span>(<span class="fu">log</span>(Age.FromEmergence) <span class="sc">~</span> Pred <span class="sc">+</span> Res, <span class="at">data =</span> ranas)</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">TukeyHSD</span>(log_aditivo, <span class="at">which =</span> <span class="st">"Pred"</span>)</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>tabla_anova <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">summary</span>(log_aditivo)[[<span class="dv">1</span>]])</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>tabla_anova</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(tabla_anova, <span class="st">"tabla_anova.csv"</span>)</span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="fu">read.csv</span>(<span class="st">"tabla_anova.csv"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>En escala logarítmica, la diferencia L - C es -0.77 (<span class="math inline">\(p &lt; 0.001\)</span>), NL - C es -0.27 (<span class="math inline">\(p = 0.26\)</span>) y NL - L es 0.50 (<span class="math inline">\(p = 0.011\)</span>). Para interpretarlas, vuelve a la escala original con <code>exp()</code>: con el depredador letal, la edad al salir del agua es <code>exp(-0.77)</code> <span class="math inline">\(\approx\)</span> 0.46 veces la del control, es decir, <strong>un 54% menor</strong>.</p>
-<p><code>write.csv()</code> guarda el archivo en la carpeta de trabajo (en tu computador, la de tu proyecto de R). Al leerlo, los nombres de las filas aparecen en una columna <code>X</code>; para recuperarlos como nombres de filas, usa <code>read.csv("tabla_anova.csv", row.names = 1)</code>.</p>
-</div>
 <div class="sol-pendiente">
 <p>La solución se publicará después de la sesión del domingo 6 de diciembre. Mientras tanto, usa la pestaña <strong>Pista</strong>.</p>
 </div>
@@ -767,19 +606,19 @@ read.csv("____")</code></pre>
 </div>
 </div>
 </div>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("writexl")   # solo la primera vez</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(writexl)</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>ranas <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"datos/ranas.csv"</span>)</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>log_aditivo <span class="ot">&lt;-</span> <span class="fu">aov</span>(<span class="fu">log</span>(Age.FromEmergence) <span class="sc">~</span> Pred <span class="sc">+</span> Res, <span class="at">data =</span> ranas)</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>tabla_anova <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">summary</span>(log_aditivo)[[<span class="dv">1</span>]])</span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>tabla_anova <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="at">Fuente =</span> <span class="fu">rownames</span>(tabla_anova), tabla_anova)</span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>medias <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(Age.FromEmergence <span class="sc">~</span> Pred <span class="sc">+</span> Res, <span class="at">data =</span> ranas, <span class="at">FUN =</span> ____)</span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="fu">write_xlsx</span>(<span class="fu">list</span>(<span class="at">anova =</span> ____, <span class="at">medias =</span> medias),</span>
-<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>           <span class="at">path =</span> <span class="st">"resultados/resultados_edad.xlsx"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("writexl")   # solo la primera vez</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(writexl)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>ranas <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"datos/ranas.csv"</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>log_aditivo <span class="ot">&lt;-</span> <span class="fu">aov</span>(<span class="fu">log</span>(Age.FromEmergence) <span class="sc">~</span> Pred <span class="sc">+</span> Res, <span class="at">data =</span> ranas)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>tabla_anova <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">summary</span>(log_aditivo)[[<span class="dv">1</span>]])</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>tabla_anova <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="at">Fuente =</span> <span class="fu">rownames</span>(tabla_anova), tabla_anova)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>medias <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(Age.FromEmergence <span class="sc">~</span> Pred <span class="sc">+</span> Res, <span class="at">data =</span> ranas, <span class="at">FUN =</span> ____)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="fu">write_xlsx</span>(<span class="fu">list</span>(<span class="at">anova =</span> ____, <span class="at">medias =</span> medias),</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>           <span class="at">path =</span> <span class="st">"resultados/resultados_edad.xlsx"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div id="tabset-7-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-7-2-tab">
 <p><code>write_xlsx()</code> acepta una <strong>lista con nombres</strong>: cada elemento se guarda en una hoja con ese nombre. Crea antes la carpeta <code>resultados/</code> en tu proyecto. Los nombres de las filas no se exportan, por eso los pasamos a una columna <code>Fuente</code> con <code>cbind()</code>.</p>
@@ -809,22 +648,22 @@ read.csv("____")</code></pre>
 </div>
 </div>
 </div>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("flextable")   # solo la primera vez</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(flextable)</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>ranas <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"datos/ranas.csv"</span>)</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>log_aditivo <span class="ot">&lt;-</span> <span class="fu">aov</span>(<span class="fu">log</span>(Age.FromEmergence) <span class="sc">~</span> Pred <span class="sc">+</span> Res, <span class="at">data =</span> ranas)</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>tabla_anova <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">summary</span>(log_aditivo)[[<span class="dv">1</span>]])</span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>tabla_anova <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="at">Fuente =</span> <span class="fu">rownames</span>(tabla_anova), tabla_anova)</span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(tabla_anova) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Fuente"</span>, <span class="st">"gl"</span>, <span class="st">"SC"</span>, <span class="st">"CM"</span>, <span class="st">"F"</span>, <span class="st">"p"</span>)</span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>tabla_word <span class="ot">&lt;-</span> <span class="fu">flextable</span>(tabla_anova)</span>
-<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>tabla_word <span class="ot">&lt;-</span> <span class="fu">colformat_double</span>(tabla_word, <span class="at">digits =</span> ____)</span>
-<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>tabla_word <span class="ot">&lt;-</span> <span class="fu">autofit</span>(tabla_word)</span>
-<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>tabla_word</span>
-<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a><span class="fu">save_as_docx</span>(____, <span class="at">path =</span> <span class="st">"resultados/tabla_anova.docx"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("flextable")   # solo la primera vez</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(flextable)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>ranas <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"datos/ranas.csv"</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>log_aditivo <span class="ot">&lt;-</span> <span class="fu">aov</span>(<span class="fu">log</span>(Age.FromEmergence) <span class="sc">~</span> Pred <span class="sc">+</span> Res, <span class="at">data =</span> ranas)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>tabla_anova <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">summary</span>(log_aditivo)[[<span class="dv">1</span>]])</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>tabla_anova <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="at">Fuente =</span> <span class="fu">rownames</span>(tabla_anova), tabla_anova)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(tabla_anova) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Fuente"</span>, <span class="st">"gl"</span>, <span class="st">"SC"</span>, <span class="st">"CM"</span>, <span class="st">"F"</span>, <span class="st">"p"</span>)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>tabla_word <span class="ot">&lt;-</span> <span class="fu">flextable</span>(tabla_anova)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>tabla_word <span class="ot">&lt;-</span> <span class="fu">colformat_double</span>(tabla_word, <span class="at">digits =</span> ____)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>tabla_word <span class="ot">&lt;-</span> <span class="fu">autofit</span>(tabla_word)</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>tabla_word</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="fu">save_as_docx</span>(____, <span class="at">path =</span> <span class="st">"resultados/tabla_anova.docx"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div id="tabset-8-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-8-2-tab">
 <p><code>colformat_double()</code> controla los decimales de las columnas numéricas. <code>save_as_docx()</code> recibe la tabla de <code>{flextable}</code> y la ruta del archivo.</p>
@@ -848,29 +687,22 @@ read.csv("____")</code></pre>
 <div class="tab-content">
 <div id="tabset-9-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-9-1-tab">
 <div class="cell" data-exercise="ex_4_1">
-<pre class="{webr}"><code>#| exercise: ex_4_1
-con_interaccion &lt;- aov(SVL.final ~ Pred ____ Res, data = ranas)
-summary(con_interaccion)
+<div>
+<div id="webr-8" class="exercise-cell">
 
-aditivo &lt;- aov(SVL.final ~ Pred ____ Res, data = ranas)
-summary(aditivo)</code></pre>
+</div>
+<script type="webr-8-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiZXhfNF8xIn0sImNvZGUiOiJjb25faW50ZXJhY2Npb24gPC0gYW92KFNWTC5maW5hbCB+IFByZWQgX19fXyBSZXMsIGRhdGEgPSByYW5hcylcbnN1bW1hcnkoY29uX2ludGVyYWNjaW9uKVxuXG5hZGl0aXZvIDwtIGFvdihTVkwuZmluYWwgfiBQcmVkIF9fX18gUmVzLCBkYXRhID0gcmFuYXMpXG5zdW1tYXJ5KGFkaXRpdm8pIn0=
+</script>
+</div>
 </div>
 </div>
 <div id="tabset-9-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-9-2-tab">
-<div class="hint" data-exercise="ex_4_1">
+<div class="hint webr-ojs-exercise exercise-hint d-none" data-exercise="ex_4_1">
 <p><code>*</code> incluye la interacción y <code>+</code> no. Si la interacción no aporta, el modelo más simple (aditivo) es más fácil de interpretar.</p>
 </div>
 </div>
 <div id="tabset-9-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-9-3-tab">
-<div class="proof solution" data-exercise="ex_4_1">
-<p><span class="proof-title"><em>Solución</em>. </span></p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>con_interaccion <span class="ot">&lt;-</span> <span class="fu">aov</span>(SVL.final <span class="sc">~</span> Pred <span class="sc">*</span> Res, <span class="at">data =</span> ranas)</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(con_interaccion)</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>aditivo <span class="ot">&lt;-</span> <span class="fu">aov</span>(SVL.final <span class="sc">~</span> Pred <span class="sc">+</span> Res, <span class="at">data =</span> ranas)</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(aditivo)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>La interacción no es significativa (<span class="math inline">\(F = 0.37\)</span>, <span class="math inline">\(p = 0.69\)</span>). En el modelo aditivo, el depredador tiene un efecto claro (<span class="math inline">\(F = 26.51\)</span>, <span class="math inline">\(p &lt; 0.001\)</span>) y los recursos no llegan a ser significativos (<span class="math inline">\(F = 2.95\)</span>, <span class="math inline">\(p = 0.09\)</span>).</p>
-</div>
 <div class="sol-pendiente">
 <p>La solución se publicará después de la sesión del domingo 6 de diciembre. Mientras tanto, usa la pestaña <strong>Pista</strong>.</p>
 </div>
@@ -886,31 +718,22 @@ summary(aditivo)</code></pre>
 <div class="tab-content">
 <div id="tabset-10-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-10-1-tab">
 <div class="cell" data-exercise="ex_4_2">
-<pre class="{webr}"><code>#| exercise: ex_4_2
-interaction.plot(x.factor = ranas$____, trace.factor = ranas$____,
-                 response = ranas$Mass.final,
-                 xlab = "Depredador", ylab = "Masa final (g)",
-                 trace.label = "Recursos")
+<div>
+<div id="webr-9" class="exercise-cell">
 
-summary(aov(Mass.final ~ Pred * Res, data = ranas))</code></pre>
+</div>
+<script type="webr-9-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiZXhfNF8yIn0sImNvZGUiOiJpbnRlcmFjdGlvbi5wbG90KHguZmFjdG9yID0gcmFuYXMkX19fXywgdHJhY2UuZmFjdG9yID0gcmFuYXMkX19fXyxcbiAgICAgICAgICAgICAgICAgcmVzcG9uc2UgPSByYW5hcyRNYXNzLmZpbmFsLFxuICAgICAgICAgICAgICAgICB4bGFiID0gXCJEZXByZWRhZG9yXCIsIHlsYWIgPSBcIk1hc2EgZmluYWwgKGcpXCIsXG4gICAgICAgICAgICAgICAgIHRyYWNlLmxhYmVsID0gXCJSZWN1cnNvc1wiKVxuXG5zdW1tYXJ5KGFvdihNYXNzLmZpbmFsIH4gUHJlZCAqIFJlcywgZGF0YSA9IHJhbmFzKSkifQ==
+</script>
+</div>
 </div>
 </div>
 <div id="tabset-10-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-10-2-tab">
-<div class="hint" data-exercise="ex_4_2">
+<div class="hint webr-ojs-exercise exercise-hint d-none" data-exercise="ex_4_2">
 <p><code>x.factor</code> va en el eje horizontal y <code>trace.factor</code> define las líneas.</p>
 </div>
 </div>
 <div id="tabset-10-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-10-3-tab">
-<div class="proof solution" data-exercise="ex_4_2">
-<p><span class="proof-title"><em>Solución</em>. </span></p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">interaction.plot</span>(<span class="at">x.factor =</span> ranas<span class="sc">$</span>Pred, <span class="at">trace.factor =</span> ranas<span class="sc">$</span>Res,</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">response =</span> ranas<span class="sc">$</span>Mass.final,</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">xlab =</span> <span class="st">"Depredador"</span>, <span class="at">ylab =</span> <span class="st">"Masa final (g)"</span>,</span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">trace.label =</span> <span class="st">"Recursos"</span>)</span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">aov</span>(Mass.final <span class="sc">~</span> Pred <span class="sc">*</span> Res, <span class="at">data =</span> ranas))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Las líneas son casi paralelas y la interacción no es significativa (<span class="math inline">\(F = 0.15\)</span>, <span class="math inline">\(p = 0.86\)</span>): el efecto de los recursos sobre la masa es parecido con cualquier depredador.</p>
-</div>
 <div class="sol-pendiente">
 <p>La solución se publicará después de la sesión del domingo 6 de diciembre. Mientras tanto, usa la pestaña <strong>Pista</strong>.</p>
 </div>
@@ -926,23 +749,22 @@ summary(aov(Mass.final ~ Pred * Res, data = ranas))</code></pre>
 <div class="tab-content">
 <div id="tabset-11-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-11-1-tab">
 <div class="cell" data-exercise="ex_4_3">
-<pre class="{webr}"><code>#| exercise: ex_4_3
-aditivo_masa &lt;- aov(Mass.final ~ Pred + Res, data = ranas)
-TukeyHSD(aditivo_masa, which = "____")</code></pre>
+<div>
+<div id="webr-10" class="exercise-cell">
+
+</div>
+<script type="webr-10-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiZXhfNF8zIn0sImNvZGUiOiJhZGl0aXZvX21hc2EgPC0gYW92KE1hc3MuZmluYWwgfiBQcmVkICsgUmVzLCBkYXRhID0gcmFuYXMpXG5UdWtleUhTRChhZGl0aXZvX21hc2EsIHdoaWNoID0gXCJfX19fXCIpIn0=
+</script>
+</div>
 </div>
 </div>
 <div id="tabset-11-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-11-2-tab">
-<div class="hint" data-exercise="ex_4_3">
+<div class="hint webr-ojs-exercise exercise-hint d-none" data-exercise="ex_4_3">
 <p><code>which = "Pred"</code> limita las comparaciones al factor depredador.</p>
 </div>
 </div>
 <div id="tabset-11-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-11-3-tab">
-<div class="proof solution" data-exercise="ex_4_3">
-<p><span class="proof-title"><em>Solución</em>. </span></p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>aditivo_masa <span class="ot">&lt;-</span> <span class="fu">aov</span>(Mass.final <span class="sc">~</span> Pred <span class="sc">+</span> Res, <span class="at">data =</span> ranas)</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">TukeyHSD</span>(aditivo_masa, <span class="at">which =</span> <span class="st">"Pred"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><code>L</code> pesa 0.14 g más que el control (<span class="math inline">\(p &lt; 0.001\)</span>) y 0.11 g más que <code>NL</code> (<span class="math inline">\(p = 0.001\)</span>); el control y <code>NL</code> no difieren (<span class="math inline">\(p = 0.43\)</span>). Recuerda que, en el ejercicio 4.3 del <a href="./ejercicios-3.html">Módulo 3</a>, los diagnósticos de la masa sugerían usar <code>log()</code>: hazlo y comprueba que las conclusiones no cambian.</p>
-</div>
 <div class="sol-pendiente">
 <p>La solución se publicará después de la sesión del domingo 6 de diciembre. Mientras tanto, usa la pestaña <strong>Pista</strong>.</p>
 </div>
@@ -958,29 +780,22 @@ TukeyHSD(aditivo_masa, which = "____")</code></pre>
 <div class="tab-content">
 <div id="tabset-12-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-12-1-tab">
 <div class="cell" data-exercise="ex_4_4">
-<pre class="{webr}"><code>#| exercise: ex_4_4
-medias &lt;- aggregate(SVL.final ~ Pred + Res, data = ranas, FUN = mean)
-medias
+<div>
+<div id="webr-11" class="exercise-cell">
 
-write.csv(medias, "medias.csv", row.names = ____)
-read.csv("____")</code></pre>
+</div>
+<script type="webr-11-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiZXhfNF80In0sImNvZGUiOiJtZWRpYXMgPC0gYWdncmVnYXRlKFNWTC5maW5hbCB+IFByZWQgKyBSZXMsIGRhdGEgPSByYW5hcywgRlVOID0gbWVhbilcbm1lZGlhc1xuXG53cml0ZS5jc3YobWVkaWFzLCBcIm1lZGlhcy5jc3ZcIiwgcm93Lm5hbWVzID0gX19fXylcbnJlYWQuY3N2KFwiX19fX1wiKSJ9
+</script>
+</div>
 </div>
 </div>
 <div id="tabset-12-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-12-2-tab">
-<div class="hint" data-exercise="ex_4_4">
+<div class="hint webr-ojs-exercise exercise-hint d-none" data-exercise="ex_4_4">
 <p>Con <code>row.names = FALSE</code>, <code>write.csv()</code> no guarda la columna con los números de fila.</p>
 </div>
 </div>
 <div id="tabset-12-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-12-3-tab">
-<div class="proof solution" data-exercise="ex_4_4">
-<p><span class="proof-title"><em>Solución</em>. </span></p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>medias <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(SVL.final <span class="sc">~</span> Pred <span class="sc">+</span> Res, <span class="at">data =</span> ranas, <span class="at">FUN =</span> mean)</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>medias</span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(medias, <span class="st">"medias.csv"</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="fu">read.csv</span>(<span class="st">"medias.csv"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>La tabla tiene seis filas, una por combinación; por ejemplo, <code>L</code> con recursos altos tiene una media de 20.53 mm y el control con recursos bajos, 18.17 mm. Al leerla, ya no aparece la columna <code>X</code>.</p>
-</div>
 <div class="sol-pendiente">
 <p>La solución se publicará después de la sesión del domingo 6 de diciembre. Mientras tanto, usa la pestaña <strong>Pista</strong>.</p>
 </div>
@@ -994,9 +809,37 @@ read.csv("____")</code></pre>
 <p>Elige una respuesta y dos factores de tus datos. Dibuja el gráfico de interacción, ajusta el modelo con interacción, revisa los diagnósticos (y transforma si hace falta), decide entre el modelo aditivo y el no aditivo, y exporta la tabla final a Word.</p>
 
 
+<script type="webr-data">
+eyJvcHRpb25zIjp7ImJhc2VVcmwiOiJodHRwczovL3dlYnIuci13YXNtLm9yZy92MC40LjIvIn0sInBhY2thZ2VzIjp7InBrZ3MiOlsiZXZhbHVhdGUiLCJrbml0ciIsImh0bWx0b29scyJdLCJyZXBvcyI6W119LCJyZW5kZXJfZGYiOiJkZWZhdWx0In0=
+</script>
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W3siY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0xMSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMTE7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0xMSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzExID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMTEtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICAvLyBEZWZhdWx0IGV4ZXJjaXNlIGNvbmZpZ3VyYXRpb25cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oXG4gICAge1xuICAgICAgaWQ6IFwid2Vici0xMS1jb250ZW50c1wiLFxuICAgICAgZW52aXI6IGBleGVyY2lzZS1lbnYtJHtibG9jay5hdHRyLmV4ZXJjaXNlfWAsXG4gICAgICBlcnJvcjogZmFsc2UsXG4gICAgICBjYXB0aW9uOiAnRXhlcmNpc2UnLFxuICAgIH0sXG4gICAgYmxvY2suYXR0clxuICApO1xuXG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG4gIHJldHVybiBlZGl0b3IuY29udGFpbmVyO1xufVxudmlld29mIF93ZWJyX3ZhbHVlXzExID0gd2ViUk9qcy5wcm9jZXNzKF93ZWJyX2VkaXRvcl8xMSwge30pO1xuX3dlYnJfZmVlZGJhY2tfMTEgPSB7XG4gIGNvbnN0IHsgV2ViUkdyYWRlciB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcbiAgY29uc3QgZW1wdHlGZWVkYmFjayA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ2RpdicpO1xuXG4gIGNvbnN0IGdyYWRlciA9IG5ldyBXZWJSR3JhZGVyKF93ZWJyX3ZhbHVlXzExLmV2YWx1YXRvcik7XG4gIGNvbnN0IGZlZWRiYWNrID0gYXdhaXQgZ3JhZGVyLmdyYWRlRXhlcmNpc2UoKTtcbiAgaWYgKCFmZWVkYmFjaykgcmV0dXJuIGVtcHR5RmVlZGJhY2s7XG4gIHJldHVybiBmZWVkYmFjaztcbn1cbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0xMCIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMTA7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0xMCIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzEwID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMTAtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICAvLyBEZWZhdWx0IGV4ZXJjaXNlIGNvbmZpZ3VyYXRpb25cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oXG4gICAge1xuICAgICAgaWQ6IFwid2Vici0xMC1jb250ZW50c1wiLFxuICAgICAgZW52aXI6IGBleGVyY2lzZS1lbnYtJHtibG9jay5hdHRyLmV4ZXJjaXNlfWAsXG4gICAgICBlcnJvcjogZmFsc2UsXG4gICAgICBjYXB0aW9uOiAnRXhlcmNpc2UnLFxuICAgIH0sXG4gICAgYmxvY2suYXR0clxuICApO1xuXG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG4gIHJldHVybiBlZGl0b3IuY29udGFpbmVyO1xufVxudmlld29mIF93ZWJyX3ZhbHVlXzEwID0gd2ViUk9qcy5wcm9jZXNzKF93ZWJyX2VkaXRvcl8xMCwge30pO1xuX3dlYnJfZmVlZGJhY2tfMTAgPSB7XG4gIGNvbnN0IHsgV2ViUkdyYWRlciB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcbiAgY29uc3QgZW1wdHlGZWVkYmFjayA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ2RpdicpO1xuXG4gIGNvbnN0IGdyYWRlciA9IG5ldyBXZWJSR3JhZGVyKF93ZWJyX3ZhbHVlXzEwLmV2YWx1YXRvcik7XG4gIGNvbnN0IGZlZWRiYWNrID0gYXdhaXQgZ3JhZGVyLmdyYWRlRXhlcmNpc2UoKTtcbiAgaWYgKCFmZWVkYmFjaykgcmV0dXJuIGVtcHR5RmVlZGJhY2s7XG4gIHJldHVybiBmZWVkYmFjaztcbn1cbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC05IiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoie1xuICAvLyBXYWl0IGZvciBvdXRwdXQgdG8gYmUgd3JpdHRlbiB0byB0aGUgRE9NLCB0aGVuIHRyaWdnZXIgd2lkZ2V0IHJlbmRlcmluZ1xuICBhd2FpdCBfd2Vicl92YWx1ZV85O1xuICBpZiAod2luZG93LkhUTUxXaWRnZXRzKSB7XG4gICAgd2luZG93LkhUTUxXaWRnZXRzLnN0YXRpY1JlbmRlcigpO1xuICB9XG4gIGlmICh3aW5kb3cuUGFnZWRUYWJsZURvYykge1xuICAgIHdpbmRvdy5QYWdlZFRhYmxlRG9jLmluaXRBbGwoKTtcbiAgfVxufVxuIn0seyJjZWxsTmFtZSI6IndlYnItOSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzkgPSB7XG4gIGNvbnN0IHsgV2ViUkV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwid2Vici05LWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgLy8gRGVmYXVsdCBleGVyY2lzZSBjb25maWd1cmF0aW9uXG4gIGNvbnN0IG9wdGlvbnMgPSBPYmplY3QuYXNzaWduKFxuICAgIHtcbiAgICAgIGlkOiBcIndlYnItOS1jb250ZW50c1wiLFxuICAgICAgZW52aXI6IGBleGVyY2lzZS1lbnYtJHtibG9jay5hdHRyLmV4ZXJjaXNlfWAsXG4gICAgICBlcnJvcjogZmFsc2UsXG4gICAgICBjYXB0aW9uOiAnRXhlcmNpc2UnLFxuICAgIH0sXG4gICAgYmxvY2suYXR0clxuICApO1xuXG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG4gIHJldHVybiBlZGl0b3IuY29udGFpbmVyO1xufVxudmlld29mIF93ZWJyX3ZhbHVlXzkgPSB3ZWJST2pzLnByb2Nlc3MoX3dlYnJfZWRpdG9yXzksIHt9KTtcbl93ZWJyX2ZlZWRiYWNrXzkgPSB7XG4gIGNvbnN0IHsgV2ViUkdyYWRlciB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcbiAgY29uc3QgZW1wdHlGZWVkYmFjayA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ2RpdicpO1xuXG4gIGNvbnN0IGdyYWRlciA9IG5ldyBXZWJSR3JhZGVyKF93ZWJyX3ZhbHVlXzkuZXZhbHVhdG9yKTtcbiAgY29uc3QgZmVlZGJhY2sgPSBhd2FpdCBncmFkZXIuZ3JhZGVFeGVyY2lzZSgpO1xuICBpZiAoIWZlZWRiYWNrKSByZXR1cm4gZW1wdHlGZWVkYmFjaztcbiAgcmV0dXJuIGZlZWRiYWNrO1xufVxuIn0seyJjZWxsTmFtZSI6IndlYnItd2lkZ2V0LTgiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJ7XG4gIC8vIFdhaXQgZm9yIG91dHB1dCB0byBiZSB3cml0dGVuIHRvIHRoZSBET00sIHRoZW4gdHJpZ2dlciB3aWRnZXQgcmVuZGVyaW5nXG4gIGF3YWl0IF93ZWJyX3ZhbHVlXzg7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici04IiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldCIsInNvdXJjZSI6InZpZXdvZiBfd2Vicl9lZGl0b3JfOCA9IHtcbiAgY29uc3QgeyBXZWJSRXhlcmNpc2VFZGl0b3IsIGI2NERlY29kZSB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJ3ZWJyLTgtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICAvLyBEZWZhdWx0IGV4ZXJjaXNlIGNvbmZpZ3VyYXRpb25cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oXG4gICAge1xuICAgICAgaWQ6IFwid2Vici04LWNvbnRlbnRzXCIsXG4gICAgICBlbnZpcjogYGV4ZXJjaXNlLWVudi0ke2Jsb2NrLmF0dHIuZXhlcmNpc2V9YCxcbiAgICAgIGVycm9yOiBmYWxzZSxcbiAgICAgIGNhcHRpb246ICdFeGVyY2lzZScsXG4gICAgfSxcbiAgICBibG9jay5hdHRyXG4gICk7XG5cbiAgY29uc3QgZWRpdG9yID0gbmV3IFdlYlJFeGVyY2lzZUVkaXRvcih3ZWJST2pzLndlYlJQcm9taXNlLCBibG9jay5jb2RlLCBvcHRpb25zKTtcbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG52aWV3b2YgX3dlYnJfdmFsdWVfOCA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfOCwge30pO1xuX3dlYnJfZmVlZGJhY2tfOCA9IHtcbiAgY29uc3QgeyBXZWJSR3JhZGVyIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBlbXB0eUZlZWRiYWNrID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudCgnZGl2Jyk7XG5cbiAgY29uc3QgZ3JhZGVyID0gbmV3IFdlYlJHcmFkZXIoX3dlYnJfdmFsdWVfOC5ldmFsdWF0b3IpO1xuICBjb25zdCBmZWVkYmFjayA9IGF3YWl0IGdyYWRlci5ncmFkZUV4ZXJjaXNlKCk7XG4gIGlmICghZmVlZGJhY2spIHJldHVybiBlbXB0eUZlZWRiYWNrO1xuICByZXR1cm4gZmVlZGJhY2s7XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici13aWRnZXQtNyIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfNztcbiAgaWYgKHdpbmRvdy5IVE1MV2lkZ2V0cykge1xuICAgIHdpbmRvdy5IVE1MV2lkZ2V0cy5zdGF0aWNSZW5kZXIoKTtcbiAgfVxuICBpZiAod2luZG93LlBhZ2VkVGFibGVEb2MpIHtcbiAgICB3aW5kb3cuUGFnZWRUYWJsZURvYy5pbml0QWxsKCk7XG4gIH1cbn1cbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLTciLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0Iiwic291cmNlIjoidmlld29mIF93ZWJyX2VkaXRvcl83ID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItNy1jb250ZW50c1xcXCJdYCkudGV4dENvbnRlbnQ7XG4gIGNvbnN0IGJsb2NrID0gSlNPTi5wYXJzZShiNjREZWNvZGUoc2NyaXB0Q29udGVudCkpO1xuXG4gIC8vIERlZmF1bHQgZXhlcmNpc2UgY29uZmlndXJhdGlvblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbihcbiAgICB7XG4gICAgICBpZDogXCJ3ZWJyLTctY29udGVudHNcIixcbiAgICAgIGVudmlyOiBgZXhlcmNpc2UtZW52LSR7YmxvY2suYXR0ci5leGVyY2lzZX1gLFxuICAgICAgZXJyb3I6IGZhbHNlLFxuICAgICAgY2FwdGlvbjogJ0V4ZXJjaXNlJyxcbiAgICB9LFxuICAgIGJsb2NrLmF0dHJcbiAgKTtcblxuICBjb25zdCBlZGl0b3IgPSBuZXcgV2ViUkV4ZXJjaXNlRWRpdG9yKHdlYlJPanMud2ViUlByb21pc2UsIGJsb2NrLmNvZGUsIG9wdGlvbnMpO1xuICByZXR1cm4gZWRpdG9yLmNvbnRhaW5lcjtcbn1cbnZpZXdvZiBfd2Vicl92YWx1ZV83ID0gd2ViUk9qcy5wcm9jZXNzKF93ZWJyX2VkaXRvcl83LCB7fSk7XG5fd2Vicl9mZWVkYmFja183ID0ge1xuICBjb25zdCB7IFdlYlJHcmFkZXIgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG4gIGNvbnN0IGVtcHR5RmVlZGJhY2sgPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KCdkaXYnKTtcblxuICBjb25zdCBncmFkZXIgPSBuZXcgV2ViUkdyYWRlcihfd2Vicl92YWx1ZV83LmV2YWx1YXRvcik7XG4gIGNvbnN0IGZlZWRiYWNrID0gYXdhaXQgZ3JhZGVyLmdyYWRlRXhlcmNpc2UoKTtcbiAgaWYgKCFmZWVkYmFjaykgcmV0dXJuIGVtcHR5RmVlZGJhY2s7XG4gIHJldHVybiBmZWVkYmFjaztcbn1cbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC02IiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoie1xuICAvLyBXYWl0IGZvciBvdXRwdXQgdG8gYmUgd3JpdHRlbiB0byB0aGUgRE9NLCB0aGVuIHRyaWdnZXIgd2lkZ2V0IHJlbmRlcmluZ1xuICBhd2FpdCBfd2Vicl92YWx1ZV82O1xuICBpZiAod2luZG93LkhUTUxXaWRnZXRzKSB7XG4gICAgd2luZG93LkhUTUxXaWRnZXRzLnN0YXRpY1JlbmRlcigpO1xuICB9XG4gIGlmICh3aW5kb3cuUGFnZWRUYWJsZURvYykge1xuICAgIHdpbmRvdy5QYWdlZFRhYmxlRG9jLmluaXRBbGwoKTtcbiAgfVxufVxuIn0seyJjZWxsTmFtZSI6IndlYnItNiIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzYgPSB7XG4gIGNvbnN0IHsgV2ViUkV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwid2Vici02LWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgLy8gRGVmYXVsdCBleGVyY2lzZSBjb25maWd1cmF0aW9uXG4gIGNvbnN0IG9wdGlvbnMgPSBPYmplY3QuYXNzaWduKFxuICAgIHtcbiAgICAgIGlkOiBcIndlYnItNi1jb250ZW50c1wiLFxuICAgICAgZW52aXI6IGBleGVyY2lzZS1lbnYtJHtibG9jay5hdHRyLmV4ZXJjaXNlfWAsXG4gICAgICBlcnJvcjogZmFsc2UsXG4gICAgICBjYXB0aW9uOiAnRXhlcmNpc2UnLFxuICAgIH0sXG4gICAgYmxvY2suYXR0clxuICApO1xuXG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG4gIHJldHVybiBlZGl0b3IuY29udGFpbmVyO1xufVxudmlld29mIF93ZWJyX3ZhbHVlXzYgPSB3ZWJST2pzLnByb2Nlc3MoX3dlYnJfZWRpdG9yXzYsIHt9KTtcbl93ZWJyX2ZlZWRiYWNrXzYgPSB7XG4gIGNvbnN0IHsgV2ViUkdyYWRlciB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcbiAgY29uc3QgZW1wdHlGZWVkYmFjayA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ2RpdicpO1xuXG4gIGNvbnN0IGdyYWRlciA9IG5ldyBXZWJSR3JhZGVyKF93ZWJyX3ZhbHVlXzYuZXZhbHVhdG9yKTtcbiAgY29uc3QgZmVlZGJhY2sgPSBhd2FpdCBncmFkZXIuZ3JhZGVFeGVyY2lzZSgpO1xuICBpZiAoIWZlZWRiYWNrKSByZXR1cm4gZW1wdHlGZWVkYmFjaztcbiAgcmV0dXJuIGZlZWRiYWNrO1xufVxuIn0seyJjZWxsTmFtZSI6IndlYnItd2lkZ2V0LTUiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJ7XG4gIC8vIFdhaXQgZm9yIG91dHB1dCB0byBiZSB3cml0dGVuIHRvIHRoZSBET00sIHRoZW4gdHJpZ2dlciB3aWRnZXQgcmVuZGVyaW5nXG4gIGF3YWl0IF93ZWJyX3ZhbHVlXzU7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici01IiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldCIsInNvdXJjZSI6InZpZXdvZiBfd2Vicl9lZGl0b3JfNSA9IHtcbiAgY29uc3QgeyBXZWJSRXhlcmNpc2VFZGl0b3IsIGI2NERlY29kZSB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJ3ZWJyLTUtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICAvLyBEZWZhdWx0IGV4ZXJjaXNlIGNvbmZpZ3VyYXRpb25cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oXG4gICAge1xuICAgICAgaWQ6IFwid2Vici01LWNvbnRlbnRzXCIsXG4gICAgICBlbnZpcjogYGV4ZXJjaXNlLWVudi0ke2Jsb2NrLmF0dHIuZXhlcmNpc2V9YCxcbiAgICAgIGVycm9yOiBmYWxzZSxcbiAgICAgIGNhcHRpb246ICdFeGVyY2lzZScsXG4gICAgfSxcbiAgICBibG9jay5hdHRyXG4gICk7XG5cbiAgY29uc3QgZWRpdG9yID0gbmV3IFdlYlJFeGVyY2lzZUVkaXRvcih3ZWJST2pzLndlYlJQcm9taXNlLCBibG9jay5jb2RlLCBvcHRpb25zKTtcbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG52aWV3b2YgX3dlYnJfdmFsdWVfNSA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfNSwge30pO1xuX3dlYnJfZmVlZGJhY2tfNSA9IHtcbiAgY29uc3QgeyBXZWJSR3JhZGVyIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBlbXB0eUZlZWRiYWNrID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudCgnZGl2Jyk7XG5cbiAgY29uc3QgZ3JhZGVyID0gbmV3IFdlYlJHcmFkZXIoX3dlYnJfdmFsdWVfNS5ldmFsdWF0b3IpO1xuICBjb25zdCBmZWVkYmFjayA9IGF3YWl0IGdyYWRlci5ncmFkZUV4ZXJjaXNlKCk7XG4gIGlmICghZmVlZGJhY2spIHJldHVybiBlbXB0eUZlZWRiYWNrO1xuICByZXR1cm4gZmVlZGJhY2s7XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici13aWRnZXQtNCIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfNDtcbiAgaWYgKHdpbmRvdy5IVE1MV2lkZ2V0cykge1xuICAgIHdpbmRvdy5IVE1MV2lkZ2V0cy5zdGF0aWNSZW5kZXIoKTtcbiAgfVxuICBpZiAod2luZG93LlBhZ2VkVGFibGVEb2MpIHtcbiAgICB3aW5kb3cuUGFnZWRUYWJsZURvYy5pbml0QWxsKCk7XG4gIH1cbn1cbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLTQiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0Iiwic291cmNlIjoidmlld29mIF93ZWJyX2VkaXRvcl80ID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItNC1jb250ZW50c1xcXCJdYCkudGV4dENvbnRlbnQ7XG4gIGNvbnN0IGJsb2NrID0gSlNPTi5wYXJzZShiNjREZWNvZGUoc2NyaXB0Q29udGVudCkpO1xuXG4gIC8vIERlZmF1bHQgZXhlcmNpc2UgY29uZmlndXJhdGlvblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbihcbiAgICB7XG4gICAgICBpZDogXCJ3ZWJyLTQtY29udGVudHNcIixcbiAgICAgIGVudmlyOiBgZXhlcmNpc2UtZW52LSR7YmxvY2suYXR0ci5leGVyY2lzZX1gLFxuICAgICAgZXJyb3I6IGZhbHNlLFxuICAgICAgY2FwdGlvbjogJ0V4ZXJjaXNlJyxcbiAgICB9LFxuICAgIGJsb2NrLmF0dHJcbiAgKTtcblxuICBjb25zdCBlZGl0b3IgPSBuZXcgV2ViUkV4ZXJjaXNlRWRpdG9yKHdlYlJPanMud2ViUlByb21pc2UsIGJsb2NrLmNvZGUsIG9wdGlvbnMpO1xuICByZXR1cm4gZWRpdG9yLmNvbnRhaW5lcjtcbn1cbnZpZXdvZiBfd2Vicl92YWx1ZV80ID0gd2ViUk9qcy5wcm9jZXNzKF93ZWJyX2VkaXRvcl80LCB7fSk7XG5fd2Vicl9mZWVkYmFja180ID0ge1xuICBjb25zdCB7IFdlYlJHcmFkZXIgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG4gIGNvbnN0IGVtcHR5RmVlZGJhY2sgPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KCdkaXYnKTtcblxuICBjb25zdCBncmFkZXIgPSBuZXcgV2ViUkdyYWRlcihfd2Vicl92YWx1ZV80LmV2YWx1YXRvcik7XG4gIGNvbnN0IGZlZWRiYWNrID0gYXdhaXQgZ3JhZGVyLmdyYWRlRXhlcmNpc2UoKTtcbiAgaWYgKCFmZWVkYmFjaykgcmV0dXJuIGVtcHR5RmVlZGJhY2s7XG4gIHJldHVybiBmZWVkYmFjaztcbn1cbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0zIiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoie1xuICAvLyBXYWl0IGZvciBvdXRwdXQgdG8gYmUgd3JpdHRlbiB0byB0aGUgRE9NLCB0aGVuIHRyaWdnZXIgd2lkZ2V0IHJlbmRlcmluZ1xuICBhd2FpdCBfd2Vicl92YWx1ZV8zO1xuICBpZiAod2luZG93LkhUTUxXaWRnZXRzKSB7XG4gICAgd2luZG93LkhUTUxXaWRnZXRzLnN0YXRpY1JlbmRlcigpO1xuICB9XG4gIGlmICh3aW5kb3cuUGFnZWRUYWJsZURvYykge1xuICAgIHdpbmRvdy5QYWdlZFRhYmxlRG9jLmluaXRBbGwoKTtcbiAgfVxufVxuIn0seyJjZWxsTmFtZSI6IndlYnItMyIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzMgPSB7XG4gIGNvbnN0IHsgV2ViUkV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwid2Vici0zLWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgLy8gRGVmYXVsdCBleGVyY2lzZSBjb25maWd1cmF0aW9uXG4gIGNvbnN0IG9wdGlvbnMgPSBPYmplY3QuYXNzaWduKFxuICAgIHtcbiAgICAgIGlkOiBcIndlYnItMy1jb250ZW50c1wiLFxuICAgICAgZW52aXI6IGBleGVyY2lzZS1lbnYtJHtibG9jay5hdHRyLmV4ZXJjaXNlfWAsXG4gICAgICBlcnJvcjogZmFsc2UsXG4gICAgICBjYXB0aW9uOiAnRXhlcmNpc2UnLFxuICAgIH0sXG4gICAgYmxvY2suYXR0clxuICApO1xuXG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG4gIHJldHVybiBlZGl0b3IuY29udGFpbmVyO1xufVxudmlld29mIF93ZWJyX3ZhbHVlXzMgPSB3ZWJST2pzLnByb2Nlc3MoX3dlYnJfZWRpdG9yXzMsIHt9KTtcbl93ZWJyX2ZlZWRiYWNrXzMgPSB7XG4gIGNvbnN0IHsgV2ViUkdyYWRlciB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcbiAgY29uc3QgZW1wdHlGZWVkYmFjayA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ2RpdicpO1xuXG4gIGNvbnN0IGdyYWRlciA9IG5ldyBXZWJSR3JhZGVyKF93ZWJyX3ZhbHVlXzMuZXZhbHVhdG9yKTtcbiAgY29uc3QgZmVlZGJhY2sgPSBhd2FpdCBncmFkZXIuZ3JhZGVFeGVyY2lzZSgpO1xuICBpZiAoIWZlZWRiYWNrKSByZXR1cm4gZW1wdHlGZWVkYmFjaztcbiAgcmV0dXJuIGZlZWRiYWNrO1xufVxuIn0seyJjZWxsTmFtZSI6IndlYnItd2lkZ2V0LTIiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJ7XG4gIC8vIFdhaXQgZm9yIG91dHB1dCB0byBiZSB3cml0dGVuIHRvIHRoZSBET00sIHRoZW4gdHJpZ2dlciB3aWRnZXQgcmVuZGVyaW5nXG4gIGF3YWl0IF93ZWJyX3ZhbHVlXzI7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0yIiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldCIsInNvdXJjZSI6InZpZXdvZiBfd2Vicl9lZGl0b3JfMiA9IHtcbiAgY29uc3QgeyBXZWJSRXhlcmNpc2VFZGl0b3IsIGI2NERlY29kZSB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJ3ZWJyLTItY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICAvLyBEZWZhdWx0IGV4ZXJjaXNlIGNvbmZpZ3VyYXRpb25cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oXG4gICAge1xuICAgICAgaWQ6IFwid2Vici0yLWNvbnRlbnRzXCIsXG4gICAgICBlbnZpcjogYGV4ZXJjaXNlLWVudi0ke2Jsb2NrLmF0dHIuZXhlcmNpc2V9YCxcbiAgICAgIGVycm9yOiBmYWxzZSxcbiAgICAgIGNhcHRpb246ICdFeGVyY2lzZScsXG4gICAgfSxcbiAgICBibG9jay5hdHRyXG4gICk7XG5cbiAgY29uc3QgZWRpdG9yID0gbmV3IFdlYlJFeGVyY2lzZUVkaXRvcih3ZWJST2pzLndlYlJQcm9taXNlLCBibG9jay5jb2RlLCBvcHRpb25zKTtcbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG52aWV3b2YgX3dlYnJfdmFsdWVfMiA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfMiwge30pO1xuX3dlYnJfZmVlZGJhY2tfMiA9IHtcbiAgY29uc3QgeyBXZWJSR3JhZGVyIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBlbXB0eUZlZWRiYWNrID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudCgnZGl2Jyk7XG5cbiAgY29uc3QgZ3JhZGVyID0gbmV3IFdlYlJHcmFkZXIoX3dlYnJfdmFsdWVfMi5ldmFsdWF0b3IpO1xuICBjb25zdCBmZWVkYmFjayA9IGF3YWl0IGdyYWRlci5ncmFkZUV4ZXJjaXNlKCk7XG4gIGlmICghZmVlZGJhY2spIHJldHVybiBlbXB0eUZlZWRiYWNrO1xuICByZXR1cm4gZmVlZGJhY2s7XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici1wcmVsdWRlIiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoid2ViUk9qcyA9IHtcbiAgY29uc3QgeyBXZWJSLCBDaGFubmVsVHlwZSB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZS5XZWJSO1xuICBjb25zdCB7XG4gICAgV2ViUkV2YWx1YXRvcixcbiAgICBXZWJSRW52aXJvbm1lbnRNYW5hZ2VyLFxuICAgIHNldHVwUixcbiAgICBiNjREZWNvZGUsXG4gICAgY29sbGFwc2VQYXRoXG4gIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuXG4gIGNvbnN0IHN0YXR1c0NvbnRhaW5lciA9IGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKFwiZXhlcmNpc2UtbG9hZGluZy1zdGF0dXNcIik7XG4gIGNvbnN0IGluZGljYXRvckNvbnRhaW5lciA9IGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKFwiZXhlcmNpc2UtbG9hZGluZy1pbmRpY2F0b3JcIik7XG4gIGluZGljYXRvckNvbnRhaW5lci5jbGFzc0xpc3QucmVtb3ZlKFwiZC1ub25lXCIpO1xuXG4gIGxldCBzdGF0dXNUZXh0ID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudChcImRpdlwiKVxuICBzdGF0dXNUZXh0LmNsYXNzTGlzdCA9IFwiZXhlcmNpc2UtbG9hZGluZy1kZXRhaWxzXCI7XG4gIHN0YXR1c1RleHQgPSBzdGF0dXNDb250YWluZXIuYXBwZW5kQ2hpbGQoc3RhdHVzVGV4dCk7XG4gIHN0YXR1c1RleHQudGV4dENvbnRlbnQgPSBgSW5pdGlhbGlzZWA7XG5cbiAgLy8gSG9pc3QgaW5kaWNhdG9yIG91dCBmcm9tIGZpbmFsIHNsaWRlIHdoZW4gcnVubmluZyB1bmRlciByZXZlYWxcbiAgY29uc3QgcmV2ZWFsU3RhdHVzID0gZG9jdW1lbnQucXVlcnlTZWxlY3RvcihcIi5yZXZlYWwgLmV4ZXJjaXNlLWxvYWRpbmctaW5kaWNhdG9yXCIpO1xuICBpZiAocmV2ZWFsU3RhdHVzKSB7XG4gICAgcmV2ZWFsU3RhdHVzLnJlbW92ZSgpO1xuICAgIGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoXCIucmV2ZWFsID4gLnNsaWRlc1wiKS5hcHBlbmRDaGlsZChyZXZlYWxTdGF0dXMpO1xuICB9XG5cbiAgLy8gTWFrZSBhbnkgcmV2ZWFsIHNsaWRlcyB3aXRoIGxpdmUgY2VsbHMgc2Nyb2xsYWJsZVxuICBkb2N1bWVudC5xdWVyeVNlbGVjdG9yQWxsKFwiLnJldmVhbCAuZXhlcmNpc2UtY2VsbFwiKS5mb3JFYWNoKChlbCkgPT4ge1xuICAgIGVsLmNsb3Nlc3QoJ3NlY3Rpb24uc2xpZGUnKS5jbGFzc0xpc3QuYWRkKFwic2Nyb2xsYWJsZVwiKTtcbiAgfSlcblxuICAvLyB3ZWJSIHN1cHBsZW1lbnRhbCBkYXRhIGFuZCBvcHRpb25zXG4gIGNvbnN0IGRhdGFDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItZGF0YVxcXCJdYCkudGV4dENvbnRlbnQ7XG4gIGNvbnN0IGRhdGEgPSBKU09OLnBhcnNlKGI2NERlY29kZShkYXRhQ29udGVudCkpO1xuXG4gIC8vIEdyYWIgbGlzdCBvZiByZXNvdXJjZXMgdG8gYmUgZG93bmxvYWRlZFxuICBjb25zdCBmaWxlc0NvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwidmZzLWZpbGVcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBmaWxlcyA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKGZpbGVzQ29udGVudCkpO1xuXG4gIC8vIFVzZSBQb3N0TWVzc2FnZSBjaGFubmVsIGZvciBhc3luYyBjb21tdW5pY2F0aW9uXG4gIC8vIFdlIGRvIG5vdCBleHBlY3QgdG8gdGFrZSBuZXN0ZWQgcHJvbXB0IGlucHV0IGluIFF1YXJ0byBMaXZlIGNlbGxzXG4gIGRhdGEub3B0aW9ucy5jaGFubmVsVHlwZSA9IENoYW5uZWxUeXBlLlBvc3RNZXNzYWdlO1xuXG4gIC8vIEluaXRpYWxpc2Ugd2ViUiBhbmQgc2V0dXAgZm9yIFIgY29kZSBldmFsdWF0aW9uXG4gIGxldCB3ZWJSUHJvbWlzZSA9IChhc3luYyAod2ViUikgPT4ge1xuICAgIHN0YXR1c1RleHQudGV4dENvbnRlbnQgPSBgRG93bmxvYWRpbmcgd2ViUmA7XG4gICAgYXdhaXQgd2ViUi5pbml0KCk7XG5cbiAgICAvLyBJbnN0YWxsIHByb3ZpZGVkIGxpc3Qgb2YgcGFja2FnZXNcbiAgICAvLyBFbnN1cmUgd2ViUiBkZWZhdWx0IHJlcG8gaXMgaW5jbHVkZWRcbiAgICBkYXRhLnBhY2thZ2VzLnJlcG9zLnB1c2goXCJodHRwczovL3JlcG8uci13YXNtLm9yZ1wiKVxuICAgIGF3YWl0IGRhdGEucGFja2FnZXMucGtncy5tYXAoKHBrZykgPT4gKCkgPT4ge1xuICAgICAgc3RhdHVzVGV4dC50ZXh0Q29udGVudCA9IGBEb3dubG9hZGluZyBwYWNrYWdlOiAke3BrZ31gO1xuICAgICAgcmV0dXJuIHdlYlIuZXZhbFJWb2lkKGBcbiAgICAgICAgd2Vicjo6aW5zdGFsbChwa2csIHJlcG9zID0gcmVwb3MpXG4gICAgICAgIGxpYnJhcnkocGtnLCBjaGFyYWN0ZXIub25seSA9IFRSVUUpXG4gICAgICBgLCB7IGVudjoge1xuICAgICAgICBwa2c6IHBrZyxcbiAgICAgICAgcmVwb3M6IGRhdGEucGFja2FnZXMucmVwb3MsXG4gICAgICB9fSk7XG4gICAgfSkucmVkdWNlKChjdXIsIG5leHQpID0+IGN1ci50aGVuKG5leHQpLCBQcm9taXNlLnJlc29sdmUoKSk7XG5cbiAgICAvLyBEb3dubG9hZCBhbmQgaW5zdGFsbCByZXNvdXJjZXNcbiAgICBhd2FpdCBmaWxlcy5tYXAoKGZpbGUpID0+IGFzeW5jICgpID0+IHtcbiAgICAgIGNvbnN0IG5hbWUgPSBmaWxlLnN1YnN0cmluZyhmaWxlLmxhc3RJbmRleE9mKCcvJykgKyAxKTtcbiAgICAgIHN0YXR1c1RleHQudGV4dENvbnRlbnQgPSBgRG93bmxvYWRpbmcgcmVzb3VyY2U6ICR7bmFtZX1gO1xuICAgICAgY29uc3QgcmVzcG9uc2UgPSBhd2FpdCBmZXRjaChmaWxlKTtcbiAgICAgIGlmICghcmVzcG9uc2Uub2spIHtcbiAgICAgICAgdGhyb3cgbmV3IEVycm9yKGBDYW4ndCBkb3dubG9hZCBcXGAke2ZpbGV9XFxgLiBFcnJvciAke3Jlc3BvbnNlLnN0YXR1c306IFwiJHtyZXNwb25zZS5zdGF0dXNUZXh0fVwiLmApO1xuICAgICAgfVxuICAgICAgY29uc3QgZGF0YSA9IGF3YWl0IHJlc3BvbnNlLmFycmF5QnVmZmVyKCk7XG5cbiAgICAgIC8vIFN0b3JlIFVSTHMgaW4gdGhlIGN3ZCB3aXRob3V0IGFueSBzdWJkaXJlY3Rvcnkgc3RydWN0dXJlXG4gICAgICBpZiAoZmlsZS5pbmNsdWRlcyhcIjovL1wiKSkge1xuICAgICAgICBmaWxlID0gbmFtZTtcbiAgICAgIH1cblxuICAgICAgLy8gQ29sbGFwc2UgaGlnaGVyIGRpcmVjdG9yeSBzdHJ1Y3R1cmVcbiAgICAgIGZpbGUgPSBjb2xsYXBzZVBhdGgoZmlsZSk7XG5cbiAgICAgIC8vIENyZWF0ZSBkaXJlY3RvcnkgdHJlZSwgaWdub3JpbmcgXCJkaXJlY3RvcnkgZXhpc3RzXCIgVkZTIGVycm9yc1xuICAgICAgY29uc3QgcGFydHMgPSBmaWxlLnNwbGl0KCcvJykuc2xpY2UoMCwgLTEpO1xuICAgICAgbGV0IHBhdGggPSAnJztcbiAgICAgIHdoaWxlIChwYXJ0cy5sZW5ndGggPiAwKSB7XG4gICAgICAgIHBhdGggKz0gcGFydHMuc2hpZnQoKSArICcvJztcbiAgICAgICAgdHJ5IHtcbiAgICAgICAgICBhd2FpdCB3ZWJSLkZTLm1rZGlyKHBhdGgpO1xuICAgICAgICB9IGNhdGNoIChlKSB7XG4gICAgICAgICAgaWYgKCFlLm1lc3NhZ2UuaW5jbHVkZXMoXCJGUyBlcnJvclwiKSkge1xuICAgICAgICAgICAgdGhyb3cgZTtcbiAgICAgICAgICB9XG4gICAgICAgIH1cbiAgICAgIH1cblxuICAgICAgLy8gV3JpdGUgdGhpcyBmaWxlIHRvIHRoZSBWRlNcbiAgICAgIHJldHVybiBhd2FpdCB3ZWJSLkZTLndyaXRlRmlsZShmaWxlLCBuZXcgVWludDhBcnJheShkYXRhKSk7XG4gICAgfSkucmVkdWNlKChjdXIsIG5leHQpID0+IGN1ci50aGVuKG5leHQpLCBQcm9taXNlLnJlc29sdmUoKSk7XG5cbiAgICBzdGF0dXNUZXh0LnRleHRDb250ZW50ID0gYEluc3RhbGxpbmcgd2ViUiBzaGltc2A7XG4gICAgYXdhaXQgd2ViUi5ldmFsUlZvaWQoYHdlYnI6OnNoaW1faW5zdGFsbCgpYCk7XG5cbiAgICBzdGF0dXNUZXh0LnRleHRDb250ZW50ID0gYFdlYlIgZW52aXJvbm1lbnQgc2V0dXBgO1xuICAgIGF3YWl0IHNldHVwUih3ZWJSLCBkYXRhKTtcblxuICAgIHN0YXR1c1RleHQucmVtb3ZlKCk7XG4gICAgaWYgKHN0YXR1c0NvbnRhaW5lci5jaGlsZHJlbi5sZW5ndGggPT0gMCkge1xuICAgICAgc3RhdHVzQ29udGFpbmVyLnBhcmVudE5vZGUucmVtb3ZlKCk7XG4gICAgfVxuICAgIHJldHVybiB3ZWJSO1xuICB9KShuZXcgV2ViUihkYXRhLm9wdGlvbnMpKTtcblxuICAvLyBLZWVwIHRyYWNrIG9mIGluaXRpYWwgT0pTIGJsb2NrIHJlbmRlclxuICBjb25zdCByZW5kZXJlZE9qcyA9IHt9O1xuXG4gIGNvbnN0IHByb2Nlc3MgPSBhc3luYyAoY29udGV4dCwgaW5wdXRzKSA9PiB7XG4gICAgY29uc3Qgd2ViUiA9IGF3YWl0IHdlYlJQcm9taXNlO1xuICAgIGNvbnN0IGV2YWx1YXRvciA9IG5ldyBXZWJSRXZhbHVhdG9yKHdlYlIsIGNvbnRleHQpXG4gICAgYXdhaXQgZXZhbHVhdG9yLnByb2Nlc3MoaW5wdXRzKTtcbiAgICByZXR1cm4gZXZhbHVhdG9yLmNvbnRhaW5lcjtcbiAgfVxuXG4gIHJldHVybiB7XG4gICAgcHJvY2VzcyxcbiAgICB3ZWJSUHJvbWlzZSxcbiAgICByZW5kZXJlZE9qcyxcbiAgfTtcbn1cbiJ9XX0=
+</script>
+<div id="exercise-loading-indicator" class="exercise-loading-indicator d-none d-flex align-items-center gap-2">
+<div id="exercise-loading-status" class="d-flex gap-2">
+
+</div>
+<div class="spinner-grow spinner-grow-sm">
+
+</div>
+</div>
+<script type="vfs-file">
+WyJkYXRvcy9yYW5hcy5jc3YiXQ==
+</script>
 </section>
 
 </main> <!-- /main -->
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W119
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../..";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

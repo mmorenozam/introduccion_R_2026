@@ -76,6 +76,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-10d5b5b9bdfd596dfb1fd64658c28bd2.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-contrib/live-runtime/live-runtime.js" type="module"></script>
+<link href="site_libs/quarto-contrib/live-runtime/live-runtime.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -103,6 +105,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Buscar"
   }
 }</script>
+<script type="module" src="site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -363,25 +367,42 @@ Antes de empezar
 </div>
 </div>
 <div class="cell" data-setup="true" data-exercise="[&quot;ex_1_1&quot;,&quot;ex_2_1&quot;,&quot;ex_2_2&quot;,&quot;ex_2_3&quot;,&quot;ex_2_4&quot;,&quot;ex_3_1&quot;,&quot;ex_3_2&quot;,&quot;ex_3_3&quot;,&quot;ex_4_1&quot;,&quot;ex_4_2&quot;,&quot;ex_4_3&quot;,&quot;ex_4_4&quot;]">
-<pre class="{webr}"><code>#| setup: true
-#| exercise:
-#|   - ex_1_1
-#|   - ex_2_1
-#|   - ex_2_2
-#|   - ex_2_3
-#|   - ex_2_4
-#|   - ex_3_1
-#|   - ex_3_2
-#|   - ex_3_3
-#|   - ex_4_1
-#|   - ex_4_2
-#|   - ex_4_3
-#|   - ex_4_4
-ranas &lt;- read.csv("datos/ranas.csv")
-glucosa &lt;- c(108.7, 93.7, 52.7, 79.0, 74.7, 131.9, 99.5, 63.3, 98.6, 92.7)
-antes   &lt;- c(142, 128, 155, 136, 149, 131, 160, 138, 145, 152, 127, 140)
-despues &lt;- c(131, 125, 140, 130, 139, 129, 147, 131, 141, 139, 126, 128)
-germinacion &lt;- c(4.2, 5.1, 3.8, 6.9, 4.6, 12.4, 5.5, 4.9, 9.8, 5.3, 4.3, 15.2)</code></pre>
+<script type="exercise-setup-ex_1_1-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjpbImV4XzFfMSIsImV4XzJfMSIsImV4XzJfMiIsImV4XzJfMyIsImV4XzJfNCIsImV4XzNfMSIsImV4XzNfMiIsImV4XzNfMyIsImV4XzRfMSIsImV4XzRfMiIsImV4XzRfMyIsImV4XzRfNCJdLCJzZXR1cCI6dHJ1ZX0sImNvZGUiOiJyYW5hcyA8LSByZWFkLmNzdihcImRhdG9zL3JhbmFzLmNzdlwiKVxuZ2x1Y29zYSA8LSBjKDEwOC43LCA5My43LCA1Mi43LCA3OS4wLCA3NC43LCAxMzEuOSwgOTkuNSwgNjMuMywgOTguNiwgOTIuNylcbmFudGVzICAgPC0gYygxNDIsIDEyOCwgMTU1LCAxMzYsIDE0OSwgMTMxLCAxNjAsIDEzOCwgMTQ1LCAxNTIsIDEyNywgMTQwKVxuZGVzcHVlcyA8LSBjKDEzMSwgMTI1LCAxNDAsIDEzMCwgMTM5LCAxMjksIDE0NywgMTMxLCAxNDEsIDEzOSwgMTI2LCAxMjgpXG5nZXJtaW5hY2lvbiA8LSBjKDQuMiwgNS4xLCAzLjgsIDYuOSwgNC42LCAxMi40LCA1LjUsIDQuOSwgOS44LCA1LjMsIDQuMywgMTUuMikifQ==
+</script>
+<script type="exercise-setup-ex_2_1-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjpbImV4XzFfMSIsImV4XzJfMSIsImV4XzJfMiIsImV4XzJfMyIsImV4XzJfNCIsImV4XzNfMSIsImV4XzNfMiIsImV4XzNfMyIsImV4XzRfMSIsImV4XzRfMiIsImV4XzRfMyIsImV4XzRfNCJdLCJzZXR1cCI6dHJ1ZX0sImNvZGUiOiJyYW5hcyA8LSByZWFkLmNzdihcImRhdG9zL3JhbmFzLmNzdlwiKVxuZ2x1Y29zYSA8LSBjKDEwOC43LCA5My43LCA1Mi43LCA3OS4wLCA3NC43LCAxMzEuOSwgOTkuNSwgNjMuMywgOTguNiwgOTIuNylcbmFudGVzICAgPC0gYygxNDIsIDEyOCwgMTU1LCAxMzYsIDE0OSwgMTMxLCAxNjAsIDEzOCwgMTQ1LCAxNTIsIDEyNywgMTQwKVxuZGVzcHVlcyA8LSBjKDEzMSwgMTI1LCAxNDAsIDEzMCwgMTM5LCAxMjksIDE0NywgMTMxLCAxNDEsIDEzOSwgMTI2LCAxMjgpXG5nZXJtaW5hY2lvbiA8LSBjKDQuMiwgNS4xLCAzLjgsIDYuOSwgNC42LCAxMi40LCA1LjUsIDQuOSwgOS44LCA1LjMsIDQuMywgMTUuMikifQ==
+</script>
+<script type="exercise-setup-ex_2_2-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjpbImV4XzFfMSIsImV4XzJfMSIsImV4XzJfMiIsImV4XzJfMyIsImV4XzJfNCIsImV4XzNfMSIsImV4XzNfMiIsImV4XzNfMyIsImV4XzRfMSIsImV4XzRfMiIsImV4XzRfMyIsImV4XzRfNCJdLCJzZXR1cCI6dHJ1ZX0sImNvZGUiOiJyYW5hcyA8LSByZWFkLmNzdihcImRhdG9zL3JhbmFzLmNzdlwiKVxuZ2x1Y29zYSA8LSBjKDEwOC43LCA5My43LCA1Mi43LCA3OS4wLCA3NC43LCAxMzEuOSwgOTkuNSwgNjMuMywgOTguNiwgOTIuNylcbmFudGVzICAgPC0gYygxNDIsIDEyOCwgMTU1LCAxMzYsIDE0OSwgMTMxLCAxNjAsIDEzOCwgMTQ1LCAxNTIsIDEyNywgMTQwKVxuZGVzcHVlcyA8LSBjKDEzMSwgMTI1LCAxNDAsIDEzMCwgMTM5LCAxMjksIDE0NywgMTMxLCAxNDEsIDEzOSwgMTI2LCAxMjgpXG5nZXJtaW5hY2lvbiA8LSBjKDQuMiwgNS4xLCAzLjgsIDYuOSwgNC42LCAxMi40LCA1LjUsIDQuOSwgOS44LCA1LjMsIDQuMywgMTUuMikifQ==
+</script>
+<script type="exercise-setup-ex_2_3-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjpbImV4XzFfMSIsImV4XzJfMSIsImV4XzJfMiIsImV4XzJfMyIsImV4XzJfNCIsImV4XzNfMSIsImV4XzNfMiIsImV4XzNfMyIsImV4XzRfMSIsImV4XzRfMiIsImV4XzRfMyIsImV4XzRfNCJdLCJzZXR1cCI6dHJ1ZX0sImNvZGUiOiJyYW5hcyA8LSByZWFkLmNzdihcImRhdG9zL3JhbmFzLmNzdlwiKVxuZ2x1Y29zYSA8LSBjKDEwOC43LCA5My43LCA1Mi43LCA3OS4wLCA3NC43LCAxMzEuOSwgOTkuNSwgNjMuMywgOTguNiwgOTIuNylcbmFudGVzICAgPC0gYygxNDIsIDEyOCwgMTU1LCAxMzYsIDE0OSwgMTMxLCAxNjAsIDEzOCwgMTQ1LCAxNTIsIDEyNywgMTQwKVxuZGVzcHVlcyA8LSBjKDEzMSwgMTI1LCAxNDAsIDEzMCwgMTM5LCAxMjksIDE0NywgMTMxLCAxNDEsIDEzOSwgMTI2LCAxMjgpXG5nZXJtaW5hY2lvbiA8LSBjKDQuMiwgNS4xLCAzLjgsIDYuOSwgNC42LCAxMi40LCA1LjUsIDQuOSwgOS44LCA1LjMsIDQuMywgMTUuMikifQ==
+</script>
+<script type="exercise-setup-ex_2_4-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjpbImV4XzFfMSIsImV4XzJfMSIsImV4XzJfMiIsImV4XzJfMyIsImV4XzJfNCIsImV4XzNfMSIsImV4XzNfMiIsImV4XzNfMyIsImV4XzRfMSIsImV4XzRfMiIsImV4XzRfMyIsImV4XzRfNCJdLCJzZXR1cCI6dHJ1ZX0sImNvZGUiOiJyYW5hcyA8LSByZWFkLmNzdihcImRhdG9zL3JhbmFzLmNzdlwiKVxuZ2x1Y29zYSA8LSBjKDEwOC43LCA5My43LCA1Mi43LCA3OS4wLCA3NC43LCAxMzEuOSwgOTkuNSwgNjMuMywgOTguNiwgOTIuNylcbmFudGVzICAgPC0gYygxNDIsIDEyOCwgMTU1LCAxMzYsIDE0OSwgMTMxLCAxNjAsIDEzOCwgMTQ1LCAxNTIsIDEyNywgMTQwKVxuZGVzcHVlcyA8LSBjKDEzMSwgMTI1LCAxNDAsIDEzMCwgMTM5LCAxMjksIDE0NywgMTMxLCAxNDEsIDEzOSwgMTI2LCAxMjgpXG5nZXJtaW5hY2lvbiA8LSBjKDQuMiwgNS4xLCAzLjgsIDYuOSwgNC42LCAxMi40LCA1LjUsIDQuOSwgOS44LCA1LjMsIDQuMywgMTUuMikifQ==
+</script>
+<script type="exercise-setup-ex_3_1-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjpbImV4XzFfMSIsImV4XzJfMSIsImV4XzJfMiIsImV4XzJfMyIsImV4XzJfNCIsImV4XzNfMSIsImV4XzNfMiIsImV4XzNfMyIsImV4XzRfMSIsImV4XzRfMiIsImV4XzRfMyIsImV4XzRfNCJdLCJzZXR1cCI6dHJ1ZX0sImNvZGUiOiJyYW5hcyA8LSByZWFkLmNzdihcImRhdG9zL3JhbmFzLmNzdlwiKVxuZ2x1Y29zYSA8LSBjKDEwOC43LCA5My43LCA1Mi43LCA3OS4wLCA3NC43LCAxMzEuOSwgOTkuNSwgNjMuMywgOTguNiwgOTIuNylcbmFudGVzICAgPC0gYygxNDIsIDEyOCwgMTU1LCAxMzYsIDE0OSwgMTMxLCAxNjAsIDEzOCwgMTQ1LCAxNTIsIDEyNywgMTQwKVxuZGVzcHVlcyA8LSBjKDEzMSwgMTI1LCAxNDAsIDEzMCwgMTM5LCAxMjksIDE0NywgMTMxLCAxNDEsIDEzOSwgMTI2LCAxMjgpXG5nZXJtaW5hY2lvbiA8LSBjKDQuMiwgNS4xLCAzLjgsIDYuOSwgNC42LCAxMi40LCA1LjUsIDQuOSwgOS44LCA1LjMsIDQuMywgMTUuMikifQ==
+</script>
+<script type="exercise-setup-ex_3_2-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjpbImV4XzFfMSIsImV4XzJfMSIsImV4XzJfMiIsImV4XzJfMyIsImV4XzJfNCIsImV4XzNfMSIsImV4XzNfMiIsImV4XzNfMyIsImV4XzRfMSIsImV4XzRfMiIsImV4XzRfMyIsImV4XzRfNCJdLCJzZXR1cCI6dHJ1ZX0sImNvZGUiOiJyYW5hcyA8LSByZWFkLmNzdihcImRhdG9zL3JhbmFzLmNzdlwiKVxuZ2x1Y29zYSA8LSBjKDEwOC43LCA5My43LCA1Mi43LCA3OS4wLCA3NC43LCAxMzEuOSwgOTkuNSwgNjMuMywgOTguNiwgOTIuNylcbmFudGVzICAgPC0gYygxNDIsIDEyOCwgMTU1LCAxMzYsIDE0OSwgMTMxLCAxNjAsIDEzOCwgMTQ1LCAxNTIsIDEyNywgMTQwKVxuZGVzcHVlcyA8LSBjKDEzMSwgMTI1LCAxNDAsIDEzMCwgMTM5LCAxMjksIDE0NywgMTMxLCAxNDEsIDEzOSwgMTI2LCAxMjgpXG5nZXJtaW5hY2lvbiA8LSBjKDQuMiwgNS4xLCAzLjgsIDYuOSwgNC42LCAxMi40LCA1LjUsIDQuOSwgOS44LCA1LjMsIDQuMywgMTUuMikifQ==
+</script>
+<script type="exercise-setup-ex_3_3-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjpbImV4XzFfMSIsImV4XzJfMSIsImV4XzJfMiIsImV4XzJfMyIsImV4XzJfNCIsImV4XzNfMSIsImV4XzNfMiIsImV4XzNfMyIsImV4XzRfMSIsImV4XzRfMiIsImV4XzRfMyIsImV4XzRfNCJdLCJzZXR1cCI6dHJ1ZX0sImNvZGUiOiJyYW5hcyA8LSByZWFkLmNzdihcImRhdG9zL3JhbmFzLmNzdlwiKVxuZ2x1Y29zYSA8LSBjKDEwOC43LCA5My43LCA1Mi43LCA3OS4wLCA3NC43LCAxMzEuOSwgOTkuNSwgNjMuMywgOTguNiwgOTIuNylcbmFudGVzICAgPC0gYygxNDIsIDEyOCwgMTU1LCAxMzYsIDE0OSwgMTMxLCAxNjAsIDEzOCwgMTQ1LCAxNTIsIDEyNywgMTQwKVxuZGVzcHVlcyA8LSBjKDEzMSwgMTI1LCAxNDAsIDEzMCwgMTM5LCAxMjksIDE0NywgMTMxLCAxNDEsIDEzOSwgMTI2LCAxMjgpXG5nZXJtaW5hY2lvbiA8LSBjKDQuMiwgNS4xLCAzLjgsIDYuOSwgNC42LCAxMi40LCA1LjUsIDQuOSwgOS44LCA1LjMsIDQuMywgMTUuMikifQ==
+</script>
+<script type="exercise-setup-ex_4_1-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjpbImV4XzFfMSIsImV4XzJfMSIsImV4XzJfMiIsImV4XzJfMyIsImV4XzJfNCIsImV4XzNfMSIsImV4XzNfMiIsImV4XzNfMyIsImV4XzRfMSIsImV4XzRfMiIsImV4XzRfMyIsImV4XzRfNCJdLCJzZXR1cCI6dHJ1ZX0sImNvZGUiOiJyYW5hcyA8LSByZWFkLmNzdihcImRhdG9zL3JhbmFzLmNzdlwiKVxuZ2x1Y29zYSA8LSBjKDEwOC43LCA5My43LCA1Mi43LCA3OS4wLCA3NC43LCAxMzEuOSwgOTkuNSwgNjMuMywgOTguNiwgOTIuNylcbmFudGVzICAgPC0gYygxNDIsIDEyOCwgMTU1LCAxMzYsIDE0OSwgMTMxLCAxNjAsIDEzOCwgMTQ1LCAxNTIsIDEyNywgMTQwKVxuZGVzcHVlcyA8LSBjKDEzMSwgMTI1LCAxNDAsIDEzMCwgMTM5LCAxMjksIDE0NywgMTMxLCAxNDEsIDEzOSwgMTI2LCAxMjgpXG5nZXJtaW5hY2lvbiA8LSBjKDQuMiwgNS4xLCAzLjgsIDYuOSwgNC42LCAxMi40LCA1LjUsIDQuOSwgOS44LCA1LjMsIDQuMywgMTUuMikifQ==
+</script>
+<script type="exercise-setup-ex_4_2-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjpbImV4XzFfMSIsImV4XzJfMSIsImV4XzJfMiIsImV4XzJfMyIsImV4XzJfNCIsImV4XzNfMSIsImV4XzNfMiIsImV4XzNfMyIsImV4XzRfMSIsImV4XzRfMiIsImV4XzRfMyIsImV4XzRfNCJdLCJzZXR1cCI6dHJ1ZX0sImNvZGUiOiJyYW5hcyA8LSByZWFkLmNzdihcImRhdG9zL3JhbmFzLmNzdlwiKVxuZ2x1Y29zYSA8LSBjKDEwOC43LCA5My43LCA1Mi43LCA3OS4wLCA3NC43LCAxMzEuOSwgOTkuNSwgNjMuMywgOTguNiwgOTIuNylcbmFudGVzICAgPC0gYygxNDIsIDEyOCwgMTU1LCAxMzYsIDE0OSwgMTMxLCAxNjAsIDEzOCwgMTQ1LCAxNTIsIDEyNywgMTQwKVxuZGVzcHVlcyA8LSBjKDEzMSwgMTI1LCAxNDAsIDEzMCwgMTM5LCAxMjksIDE0NywgMTMxLCAxNDEsIDEzOSwgMTI2LCAxMjgpXG5nZXJtaW5hY2lvbiA8LSBjKDQuMiwgNS4xLCAzLjgsIDYuOSwgNC42LCAxMi40LCA1LjUsIDQuOSwgOS44LCA1LjMsIDQuMywgMTUuMikifQ==
+</script>
+<script type="exercise-setup-ex_4_3-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjpbImV4XzFfMSIsImV4XzJfMSIsImV4XzJfMiIsImV4XzJfMyIsImV4XzJfNCIsImV4XzNfMSIsImV4XzNfMiIsImV4XzNfMyIsImV4XzRfMSIsImV4XzRfMiIsImV4XzRfMyIsImV4XzRfNCJdLCJzZXR1cCI6dHJ1ZX0sImNvZGUiOiJyYW5hcyA8LSByZWFkLmNzdihcImRhdG9zL3JhbmFzLmNzdlwiKVxuZ2x1Y29zYSA8LSBjKDEwOC43LCA5My43LCA1Mi43LCA3OS4wLCA3NC43LCAxMzEuOSwgOTkuNSwgNjMuMywgOTguNiwgOTIuNylcbmFudGVzICAgPC0gYygxNDIsIDEyOCwgMTU1LCAxMzYsIDE0OSwgMTMxLCAxNjAsIDEzOCwgMTQ1LCAxNTIsIDEyNywgMTQwKVxuZGVzcHVlcyA8LSBjKDEzMSwgMTI1LCAxNDAsIDEzMCwgMTM5LCAxMjksIDE0NywgMTMxLCAxNDEsIDEzOSwgMTI2LCAxMjgpXG5nZXJtaW5hY2lvbiA8LSBjKDQuMiwgNS4xLCAzLjgsIDYuOSwgNC42LCAxMi40LCA1LjUsIDQuOSwgOS44LCA1LjMsIDQuMywgMTUuMikifQ==
+</script>
+<script type="exercise-setup-ex_4_4-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjpbImV4XzFfMSIsImV4XzJfMSIsImV4XzJfMiIsImV4XzJfMyIsImV4XzJfNCIsImV4XzNfMSIsImV4XzNfMiIsImV4XzNfMyIsImV4XzRfMSIsImV4XzRfMiIsImV4XzRfMyIsImV4XzRfNCJdLCJzZXR1cCI6dHJ1ZX0sImNvZGUiOiJyYW5hcyA8LSByZWFkLmNzdihcImRhdG9zL3JhbmFzLmNzdlwiKVxuZ2x1Y29zYSA8LSBjKDEwOC43LCA5My43LCA1Mi43LCA3OS4wLCA3NC43LCAxMzEuOSwgOTkuNSwgNjMuMywgOTguNiwgOTIuNylcbmFudGVzICAgPC0gYygxNDIsIDEyOCwgMTU1LCAxMzYsIDE0OSwgMTMxLCAxNjAsIDEzOCwgMTQ1LCAxNTIsIDEyNywgMTQwKVxuZGVzcHVlcyA8LSBjKDEzMSwgMTI1LCAxNDAsIDEzMCwgMTM5LCAxMjksIDE0NywgMTMxLCAxNDEsIDEzOSwgMTI2LCAxMjgpXG5nZXJtaW5hY2lvbiA8LSBjKDQuMiwgNS4xLCAzLjgsIDYuOSwgNC42LCAxMi40LCA1LjUsIDQuOSwgOS44LCA1LjMsIDQuMywgMTUuMikifQ==
+</script>
 </div>
 <div class="callout callout-style-simple callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -409,11 +430,11 @@ Ver el código que prepara los datos
 <div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Este código ya se ejecutó por ti en esta página. En RStudio, córrelo al inicio de tu script.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>ranas <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"datos/ranas.csv"</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>glucosa <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">108.7</span>, <span class="fl">93.7</span>, <span class="fl">52.7</span>, <span class="fl">79.0</span>, <span class="fl">74.7</span>, <span class="fl">131.9</span>, <span class="fl">99.5</span>, <span class="fl">63.3</span>, <span class="fl">98.6</span>, <span class="fl">92.7</span>)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>antes   <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">142</span>, <span class="dv">128</span>, <span class="dv">155</span>, <span class="dv">136</span>, <span class="dv">149</span>, <span class="dv">131</span>, <span class="dv">160</span>, <span class="dv">138</span>, <span class="dv">145</span>, <span class="dv">152</span>, <span class="dv">127</span>, <span class="dv">140</span>)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>despues <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">131</span>, <span class="dv">125</span>, <span class="dv">140</span>, <span class="dv">130</span>, <span class="dv">139</span>, <span class="dv">129</span>, <span class="dv">147</span>, <span class="dv">131</span>, <span class="dv">141</span>, <span class="dv">139</span>, <span class="dv">126</span>, <span class="dv">128</span>)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>germinacion <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">4.2</span>, <span class="fl">5.1</span>, <span class="fl">3.8</span>, <span class="fl">6.9</span>, <span class="fl">4.6</span>, <span class="fl">12.4</span>, <span class="fl">5.5</span>, <span class="fl">4.9</span>, <span class="fl">9.8</span>, <span class="fl">5.3</span>, <span class="fl">4.3</span>, <span class="fl">15.2</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>ranas <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"datos/ranas.csv"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>glucosa <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">108.7</span>, <span class="fl">93.7</span>, <span class="fl">52.7</span>, <span class="fl">79.0</span>, <span class="fl">74.7</span>, <span class="fl">131.9</span>, <span class="fl">99.5</span>, <span class="fl">63.3</span>, <span class="fl">98.6</span>, <span class="fl">92.7</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>antes   <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">142</span>, <span class="dv">128</span>, <span class="dv">155</span>, <span class="dv">136</span>, <span class="dv">149</span>, <span class="dv">131</span>, <span class="dv">160</span>, <span class="dv">138</span>, <span class="dv">145</span>, <span class="dv">152</span>, <span class="dv">127</span>, <span class="dv">140</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>despues <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">131</span>, <span class="dv">125</span>, <span class="dv">140</span>, <span class="dv">130</span>, <span class="dv">139</span>, <span class="dv">129</span>, <span class="dv">147</span>, <span class="dv">131</span>, <span class="dv">141</span>, <span class="dv">139</span>, <span class="dv">126</span>, <span class="dv">128</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>germinacion <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">4.2</span>, <span class="fl">5.1</span>, <span class="fl">3.8</span>, <span class="fl">6.9</span>, <span class="fl">4.6</span>, <span class="fl">12.4</span>, <span class="fl">5.5</span>, <span class="fl">4.9</span>, <span class="fl">9.8</span>, <span class="fl">5.3</span>, <span class="fl">4.3</span>, <span class="fl">15.2</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -427,43 +448,22 @@ Ver el código que prepara los datos
 <div class="tab-content">
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
 <div class="cell" data-exercise="ex_1_1">
-<pre class="{webr}"><code>#| exercise: ex_1_1
-n &lt;- length(glucosa)
-media &lt;- mean(glucosa)
-de &lt;- ____(glucosa)
-media
-de
+<div>
+<div id="webr-2" class="exercise-cell">
 
-error_estandar &lt;- de / sqrt(____)
-t_critico &lt;- qt(0.975, df = n - 1)
-media - t_critico * error_estandar
-media + ____ * error_estandar
-
-t.test(glucosa)$conf.int</code></pre>
+</div>
+<script type="webr-2-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiZXhfMV8xIn0sImNvZGUiOiJuIDwtIGxlbmd0aChnbHVjb3NhKVxubWVkaWEgPC0gbWVhbihnbHVjb3NhKVxuZGUgPC0gX19fXyhnbHVjb3NhKVxubWVkaWFcbmRlXG5cbmVycm9yX2VzdGFuZGFyIDwtIGRlIC8gc3FydChfX19fKVxudF9jcml0aWNvIDwtIHF0KDAuOTc1LCBkZiA9IG4gLSAxKVxubWVkaWEgLSB0X2NyaXRpY28gKiBlcnJvcl9lc3RhbmRhclxubWVkaWEgKyBfX19fICogZXJyb3JfZXN0YW5kYXJcblxudC50ZXN0KGdsdWNvc2EpJGNvbmYuaW50In0=
+</script>
+</div>
 </div>
 </div>
 <div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
-<div class="hint" data-exercise="ex_1_1">
+<div class="hint webr-ojs-exercise exercise-hint d-none" data-exercise="ex_1_1">
 <p>El error estándar de la media es <span class="math inline">\(s / \sqrt{n}\)</span>. El intervalo es <span class="math inline">\(\bar{x} \pm t_{0.975,\, n-1} \cdot s/\sqrt{n}\)</span>.</p>
 </div>
 </div>
 <div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
-<div class="proof solution" data-exercise="ex_1_1">
-<p><span class="proof-title"><em>Solución</em>. </span></p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">length</span>(glucosa)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>media <span class="ot">&lt;-</span> <span class="fu">mean</span>(glucosa)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>de <span class="ot">&lt;-</span> <span class="fu">sd</span>(glucosa)</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>media</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>de</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>error_estandar <span class="ot">&lt;-</span> de <span class="sc">/</span> <span class="fu">sqrt</span>(n)</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>t_critico <span class="ot">&lt;-</span> <span class="fu">qt</span>(<span class="fl">0.975</span>, <span class="at">df =</span> n <span class="sc">-</span> <span class="dv">1</span>)</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>media <span class="sc">-</span> t_critico <span class="sc">*</span> error_estandar</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>media <span class="sc">+</span> t_critico <span class="sc">*</span> error_estandar</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(glucosa)<span class="sc">$</span>conf.int</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>La media es 89.48 mg/dL y la desviación estándar 22.97 mg/dL. El intervalo de confianza del 95% va de <strong>73.05 a 105.91 mg/dL</strong>, igual con los dos métodos. Con solo 10 ratones y tanta variación, el intervalo es ancho.</p>
-</div>
 <div class="sol-pendiente">
 <p>La solución se publicará después de la sesión del domingo 22 de noviembre. Mientras tanto, usa la pestaña <strong>Pista</strong>.</p>
 </div>
@@ -482,28 +482,22 @@ t.test(glucosa)$conf.int</code></pre>
 <div class="tab-content">
 <div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
 <div class="cell" data-exercise="ex_2_1">
-<pre class="{webr}"><code>#| exercise: ex_2_1
-qqnorm(glucosa); qqline(glucosa)
-shapiro.test(____)
+<div>
+<div id="webr-3" class="exercise-cell">
 
-t.test(glucosa, mu = ____, alternative = "____")</code></pre>
+</div>
+<script type="webr-3-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiZXhfMl8xIn0sImNvZGUiOiJxcW5vcm0oZ2x1Y29zYSk7IHFxbGluZShnbHVjb3NhKVxuc2hhcGlyby50ZXN0KF9fX18pXG5cbnQudGVzdChnbHVjb3NhLCBtdSA9IF9fX18sIGFsdGVybmF0aXZlID0gXCJfX19fXCIpIn0=
+</script>
+</div>
 </div>
 </div>
 <div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
-<div class="hint" data-exercise="ex_2_1">
+<div class="hint webr-ojs-exercise exercise-hint d-none" data-exercise="ex_2_1">
 <p>La hipótesis alternativa es “la media es <strong>mayor</strong> que 100”: en <code>t.test()</code> eso es <code>alternative = "greater"</code>. Las otras opciones son <code>"less"</code> y <code>"two.sided"</code>.</p>
 </div>
 </div>
 <div id="tabset-2-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-3-tab">
-<div class="proof solution" data-exercise="ex_2_1">
-<p><span class="proof-title"><em>Solución</em>. </span></p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(glucosa); <span class="fu">qqline</span>(glucosa)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(glucosa)</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(glucosa, <span class="at">mu =</span> <span class="dv">100</span>, <span class="at">alternative =</span> <span class="st">"greater"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Los puntos siguen la línea del gráfico Q-Q y Shapiro-Wilk no rechaza la normalidad (<span class="math inline">\(W = 0.978\)</span>, <span class="math inline">\(p = 0.95\)</span>), así que la prueba t es adecuada.</p>
-<p>La prueba da <span class="math inline">\(t = -1.45\)</span>, <span class="math inline">\(gl = 9\)</span>, <span class="math inline">\(p = 0.91\)</span>. <strong>No hay evidencia</strong> de que la media supere los 100 mg/dL: de hecho, la media de la muestra (89.48) está por debajo. Con estos datos, esta línea no parece un buen modelo de hiperglucemia.</p>
-</div>
 <div class="sol-pendiente">
 <p>La solución se publicará después de la sesión del domingo 22 de noviembre. Mientras tanto, usa la pestaña <strong>Pista</strong>.</p>
 </div>
@@ -519,31 +513,22 @@ t.test(glucosa, mu = ____, alternative = "____")</code></pre>
 <div class="tab-content">
 <div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
 <div class="cell" data-exercise="ex_2_2">
-<pre class="{webr}"><code>#| exercise: ex_2_2
-boxplot(Resorb.days ~ Res, data = ranas)
+<div>
+<div id="webr-4" class="exercise-cell">
 
-shapiro.test(ranas$Resorb.days[ranas$Res == "Hi"])
-shapiro.test(ranas$Resorb.days[ranas$Res == "____"])
-
-var.test(Resorb.days ~ ____, data = ranas)</code></pre>
+</div>
+<script type="webr-4-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiZXhfMl8yIn0sImNvZGUiOiJib3hwbG90KFJlc29yYi5kYXlzIH4gUmVzLCBkYXRhID0gcmFuYXMpXG5cbnNoYXBpcm8udGVzdChyYW5hcyRSZXNvcmIuZGF5c1tyYW5hcyRSZXMgPT0gXCJIaVwiXSlcbnNoYXBpcm8udGVzdChyYW5hcyRSZXNvcmIuZGF5c1tyYW5hcyRSZXMgPT0gXCJfX19fXCJdKVxuXG52YXIudGVzdChSZXNvcmIuZGF5cyB+IF9fX18sIGRhdGEgPSByYW5hcykifQ==
+</script>
+</div>
 </div>
 </div>
 <div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
-<div class="hint" data-exercise="ex_2_2">
+<div class="hint webr-ojs-exercise exercise-hint d-none" data-exercise="ex_2_2">
 <p><code>ranas$Resorb.days[ranas$Res == "Hi"]</code> toma solo los valores del grupo <code>Hi</code>. En <code>var.test()</code> la hipótesis nula es que las dos varianzas son iguales.</p>
 </div>
 </div>
 <div id="tabset-3-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-3-tab">
-<div class="proof solution" data-exercise="ex_2_2">
-<p><span class="proof-title"><em>Solución</em>. </span></p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(Resorb.days <span class="sc">~</span> Res, <span class="at">data =</span> ranas)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(ranas<span class="sc">$</span>Resorb.days[ranas<span class="sc">$</span>Res <span class="sc">==</span> <span class="st">"Hi"</span>])</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(ranas<span class="sc">$</span>Resorb.days[ranas<span class="sc">$</span>Res <span class="sc">==</span> <span class="st">"Lo"</span>])</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="fu">var.test</span>(Resorb.days <span class="sc">~</span> Res, <span class="at">data =</span> ranas)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Los dos grupos parecen normales (Shapiro-Wilk: <span class="math inline">\(p = 0.42\)</span> para <code>Hi</code> y <span class="math inline">\(p = 0.52\)</span> para <code>Lo</code>). Pero las varianzas <strong>no</strong> son iguales: <span class="math inline">\(F = 0.40\)</span>, <span class="math inline">\(p = 0.006\)</span>. El grupo <code>Lo</code> varía más, como se ve en el diagrama de caja. Esto decide qué versión de la prueba t usar en el siguiente ejercicio.</p>
-</div>
 <div class="sol-pendiente">
 <p>La solución se publicará después de la sesión del domingo 22 de noviembre. Mientras tanto, usa la pestaña <strong>Pista</strong>.</p>
 </div>
@@ -559,26 +544,22 @@ var.test(Resorb.days ~ ____, data = ranas)</code></pre>
 <div class="tab-content">
 <div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
 <div class="cell" data-exercise="ex_2_3">
-<pre class="{webr}"><code>#| exercise: ex_2_3
-t.test(Resorb.days ~ Res, data = ____)
+<div>
+<div id="webr-5" class="exercise-cell">
 
-t.test(Resorb.days ~ Res, data = ranas, var.equal = ____)</code></pre>
+</div>
+<script type="webr-5-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiZXhfMl8zIn0sImNvZGUiOiJ0LnRlc3QoUmVzb3JiLmRheXMgfiBSZXMsIGRhdGEgPSBfX19fKVxuXG50LnRlc3QoUmVzb3JiLmRheXMgfiBSZXMsIGRhdGEgPSByYW5hcywgdmFyLmVxdWFsID0gX19fXykifQ==
+</script>
+</div>
 </div>
 </div>
 <div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
-<div class="hint" data-exercise="ex_2_3">
+<div class="hint webr-ojs-exercise exercise-hint d-none" data-exercise="ex_2_3">
 <p>Por defecto, <code>t.test()</code> ya hace la prueba de <strong>Welch</strong>. La prueba t de Student clásica necesita <code>var.equal = TRUE</code>.</p>
 </div>
 </div>
 <div id="tabset-4-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-3-tab">
-<div class="proof solution" data-exercise="ex_2_3">
-<p><span class="proof-title"><em>Solución</em>. </span></p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(Resorb.days <span class="sc">~</span> Res, <span class="at">data =</span> ranas)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(Resorb.days <span class="sc">~</span> Res, <span class="at">data =</span> ranas, <span class="at">var.equal =</span> <span class="cn">TRUE</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Prueba de Welch: <span class="math inline">\(t = -3.80\)</span>, <span class="math inline">\(gl = 64.3\)</span>, <span class="math inline">\(p = 0.0003\)</span>. Con recursos bajos, los renacuajos tardan en promedio 4.64 días en reabsorber la cola, frente a 4.16 días con recursos altos: una diferencia de 0.47 días (IC 95%: 0.22 a 0.72). R la muestra como <code>Hi</code> menos <code>Lo</code>, por eso aparece con signo negativo.</p>
-<p>Con <code>var.equal = TRUE</code> cambian los grados de libertad (76) y el valor p (<span class="math inline">\(p = 0.0003\)</span>), pero la conclusión es la misma. Como las varianzas difieren, la versión correcta aquí es la de Welch.</p>
-</div>
 <div class="sol-pendiente">
 <p>La solución se publicará después de la sesión del domingo 22 de noviembre. Mientras tanto, usa la pestaña <strong>Pista</strong>.</p>
 </div>
@@ -594,30 +575,22 @@ t.test(Resorb.days ~ Res, data = ranas, var.equal = ____)</code></pre>
 <div class="tab-content">
 <div id="tabset-5-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-5-1-tab">
 <div class="cell" data-exercise="ex_2_4">
-<pre class="{webr}"><code>#| exercise: ex_2_4
-diferencias &lt;- despues - ____
-mean(diferencias)
-shapiro.test(____)
+<div>
+<div id="webr-6" class="exercise-cell">
 
-t.test(despues, antes, paired = ____)</code></pre>
+</div>
+<script type="webr-6-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiZXhfMl80In0sImNvZGUiOiJkaWZlcmVuY2lhcyA8LSBkZXNwdWVzIC0gX19fX1xubWVhbihkaWZlcmVuY2lhcylcbnNoYXBpcm8udGVzdChfX19fKVxuXG50LnRlc3QoZGVzcHVlcywgYW50ZXMsIHBhaXJlZCA9IF9fX18pIn0=
+</script>
+</div>
 </div>
 </div>
 <div id="tabset-5-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-2-tab">
-<div class="hint" data-exercise="ex_2_4">
+<div class="hint webr-ojs-exercise exercise-hint d-none" data-exercise="ex_2_4">
 <p>En una prueba emparejada, el supuesto de normalidad se revisa sobre las <strong>diferencias</strong> dentro de cada ratón, no sobre cada grupo por separado.</p>
 </div>
 </div>
 <div id="tabset-5-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-3-tab">
-<div class="proof solution" data-exercise="ex_2_4">
-<p><span class="proof-title"><em>Solución</em>. </span></p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>diferencias <span class="ot">&lt;-</span> despues <span class="sc">-</span> antes</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(diferencias)</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(diferencias)</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(despues, antes, <span class="at">paired =</span> <span class="cn">TRUE</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Las diferencias son normales (Shapiro-Wilk: <span class="math inline">\(p = 0.35\)</span>). En promedio, la glucosa bajó 8.08 mg/dL después del tratamiento (IC 95%: 5.00 a 11.17 mg/dL; <span class="math inline">\(t = -5.77\)</span>, <span class="math inline">\(gl = 11\)</span>, <span class="math inline">\(p = 0.0001\)</span>).</p>
-<p>¿Por qué emparejar? Cada ratón es su propio control: la diferencia entre ratones (de 127 a 160 mg/dL antes del tratamiento) no se mezcla con el efecto del tratamiento.</p>
-</div>
 <div class="sol-pendiente">
 <p>La solución se publicará después de la sesión del domingo 22 de noviembre. Mientras tanto, usa la pestaña <strong>Pista</strong>.</p>
 </div>
@@ -636,29 +609,22 @@ t.test(despues, antes, paired = ____)</code></pre>
 <div class="tab-content">
 <div id="tabset-6-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-6-1-tab">
 <div class="cell" data-exercise="ex_3_1">
-<pre class="{webr}"><code>#| exercise: ex_3_1
-hist(germinacion)
-shapiro.test(____)
-median(germinacion)
+<div>
+<div id="webr-7" class="exercise-cell">
 
-wilcox.test(germinacion, mu = ____)</code></pre>
+</div>
+<script type="webr-7-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiZXhfM18xIn0sImNvZGUiOiJoaXN0KGdlcm1pbmFjaW9uKVxuc2hhcGlyby50ZXN0KF9fX18pXG5tZWRpYW4oZ2VybWluYWNpb24pXG5cbndpbGNveC50ZXN0KGdlcm1pbmFjaW9uLCBtdSA9IF9fX18pIn0=
+</script>
+</div>
 </div>
 </div>
 <div id="tabset-6-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-2-tab">
-<div class="hint" data-exercise="ex_3_1">
+<div class="hint webr-ojs-exercise exercise-hint d-none" data-exercise="ex_3_1">
 <p>Si Shapiro-Wilk rechaza la normalidad y la muestra es pequeña, la prueba de Wilcoxon de una muestra compara la <strong>mediana</strong> con un valor de referencia.</p>
 </div>
 </div>
 <div id="tabset-6-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-3-tab">
-<div class="proof solution" data-exercise="ex_3_1">
-<p><span class="proof-title"><em>Solución</em>. </span></p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(germinacion)</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(germinacion)</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">median</span>(germinacion)</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="fu">wilcox.test</span>(germinacion, <span class="at">mu =</span> <span class="fl">4.5</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Los datos no son normales: dos semillas tardaron mucho más que el resto (Shapiro-Wilk: <span class="math inline">\(p = 0.004\)</span>). La prueba de Wilcoxon da <span class="math inline">\(V = 67\)</span>, <span class="math inline">\(p = 0.027\)</span>: la mediana de germinación (5.2 días) es <strong>distinta</strong> de los 4.5 días que indica el proveedor; en estas semillas, es mayor.</p>
-</div>
 <div class="sol-pendiente">
 <p>La solución se publicará después de la sesión del domingo 22 de noviembre. Mientras tanto, usa la pestaña <strong>Pista</strong>.</p>
 </div>
@@ -674,34 +640,22 @@ wilcox.test(germinacion, mu = ____)</code></pre>
 <div class="tab-content">
 <div id="tabset-7-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-7-1-tab">
 <div class="cell" data-exercise="ex_3_2">
-<pre class="{webr}"><code>#| exercise: ex_3_2
-boxplot(Age.FromEmergence ~ Res, data = ranas)
+<div>
+<div id="webr-8" class="exercise-cell">
 
-shapiro.test(ranas$Age.FromEmergence[ranas$Res == "Hi"])
-shapiro.test(ranas$Age.FromEmergence[ranas$Res == "Lo"])
-
-tapply(ranas$Age.FromEmergence, ranas$Res, ____)
-wilcox.test(Age.FromEmergence ~ ____, data = ranas)</code></pre>
+</div>
+<script type="webr-8-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiZXhfM18yIn0sImNvZGUiOiJib3hwbG90KEFnZS5Gcm9tRW1lcmdlbmNlIH4gUmVzLCBkYXRhID0gcmFuYXMpXG5cbnNoYXBpcm8udGVzdChyYW5hcyRBZ2UuRnJvbUVtZXJnZW5jZVtyYW5hcyRSZXMgPT0gXCJIaVwiXSlcbnNoYXBpcm8udGVzdChyYW5hcyRBZ2UuRnJvbUVtZXJnZW5jZVtyYW5hcyRSZXMgPT0gXCJMb1wiXSlcblxudGFwcGx5KHJhbmFzJEFnZS5Gcm9tRW1lcmdlbmNlLCByYW5hcyRSZXMsIF9fX18pXG53aWxjb3gudGVzdChBZ2UuRnJvbUVtZXJnZW5jZSB+IF9fX18sIGRhdGEgPSByYW5hcykifQ==
+</script>
+</div>
 </div>
 </div>
 <div id="tabset-7-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-7-2-tab">
-<div class="hint" data-exercise="ex_3_2">
+<div class="hint webr-ojs-exercise exercise-hint d-none" data-exercise="ex_3_2">
 <p>Si alguno de los grupos no es normal, la prueba de Wilcoxon para dos muestras (también llamada de Mann-Whitney) es la alternativa a la prueba t. Como compara posiciones, resume cada grupo con la <strong>mediana</strong>.</p>
 </div>
 </div>
 <div id="tabset-7-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-7-3-tab">
-<div class="proof solution" data-exercise="ex_3_2">
-<p><span class="proof-title"><em>Solución</em>. </span></p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(Age.FromEmergence <span class="sc">~</span> Res, <span class="at">data =</span> ranas)</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(ranas<span class="sc">$</span>Age.FromEmergence[ranas<span class="sc">$</span>Res <span class="sc">==</span> <span class="st">"Hi"</span>])</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(ranas<span class="sc">$</span>Age.FromEmergence[ranas<span class="sc">$</span>Res <span class="sc">==</span> <span class="st">"Lo"</span>])</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="fu">tapply</span>(ranas<span class="sc">$</span>Age.FromEmergence, ranas<span class="sc">$</span>Res, median)</span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="fu">wilcox.test</span>(Age.FromEmergence <span class="sc">~</span> Res, <span class="at">data =</span> ranas)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Ninguno de los dos grupos es normal (Shapiro-Wilk: <span class="math inline">\(p = 0.013\)</span> y <span class="math inline">\(p = 0.003\)</span>). La prueba de Wilcoxon da <span class="math inline">\(W = 371\)</span>, <span class="math inline">\(p = 0.0001\)</span>: con recursos bajos, los renacuajos salen del agua más tarde (mediana de 33.7 días frente a 16.2).</p>
-<p>R avisa que no puede calcular el valor p exacto porque hay valores empatados, y usa una aproximación normal. Es un aviso, no un error.</p>
-</div>
 <div class="sol-pendiente">
 <p>La solución se publicará después de la sesión del domingo 22 de noviembre. Mientras tanto, usa la pestaña <strong>Pista</strong>.</p>
 </div>
@@ -717,41 +671,22 @@ wilcox.test(Age.FromEmergence ~ ____, data = ranas)</code></pre>
 <div class="tab-content">
 <div id="tabset-8-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-8-1-tab">
 <div class="cell" data-exercise="ex_3_3">
-<pre class="{webr}"><code>#| exercise: ex_3_3
-ranas$log_edad &lt;- ____(ranas$Age.FromEmergence)
+<div>
+<div id="webr-9" class="exercise-cell">
 
-shapiro.test(ranas$log_edad[ranas$Res == "Hi"])
-shapiro.test(ranas$log_edad[ranas$Res == "Lo"])
-
-prueba &lt;- t.test(log_edad ~ Res, data = ranas)
-prueba
-
-exp(prueba$estimate)
-exp(prueba$conf.int)</code></pre>
+</div>
+<script type="webr-9-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiZXhfM18zIn0sImNvZGUiOiJyYW5hcyRsb2dfZWRhZCA8LSBfX19fKHJhbmFzJEFnZS5Gcm9tRW1lcmdlbmNlKVxuXG5zaGFwaXJvLnRlc3QocmFuYXMkbG9nX2VkYWRbcmFuYXMkUmVzID09IFwiSGlcIl0pXG5zaGFwaXJvLnRlc3QocmFuYXMkbG9nX2VkYWRbcmFuYXMkUmVzID09IFwiTG9cIl0pXG5cbnBydWViYSA8LSB0LnRlc3QobG9nX2VkYWQgfiBSZXMsIGRhdGEgPSByYW5hcylcbnBydWViYVxuXG5leHAocHJ1ZWJhJGVzdGltYXRlKVxuZXhwKHBydWViYSRjb25mLmludCkifQ==
+</script>
+</div>
 </div>
 </div>
 <div id="tabset-8-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-8-2-tab">
-<div class="hint" data-exercise="ex_3_3">
+<div class="hint webr-ojs-exercise exercise-hint d-none" data-exercise="ex_3_3">
 <p><code>log()</code> es el logaritmo natural. En escala logarítmica, una <strong>diferencia</strong> de medias se convierte, con <code>exp()</code>, en un <strong>cociente</strong>: cuántas veces es mayor un grupo que el otro. <code>exp()</code> de la media de los logaritmos es la <strong>media geométrica</strong>.</p>
 </div>
 </div>
 <div id="tabset-8-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-8-3-tab">
-<div class="proof solution" data-exercise="ex_3_3">
-<p><span class="proof-title"><em>Solución</em>. </span></p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>ranas<span class="sc">$</span>log_edad <span class="ot">&lt;-</span> <span class="fu">log</span>(ranas<span class="sc">$</span>Age.FromEmergence)</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(ranas<span class="sc">$</span>log_edad[ranas<span class="sc">$</span>Res <span class="sc">==</span> <span class="st">"Hi"</span>])</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(ranas<span class="sc">$</span>log_edad[ranas<span class="sc">$</span>Res <span class="sc">==</span> <span class="st">"Lo"</span>])</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>prueba <span class="ot">&lt;-</span> <span class="fu">t.test</span>(log_edad <span class="sc">~</span> Res, <span class="at">data =</span> ranas)</span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>prueba</span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(prueba<span class="sc">$</span>estimate)</span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(prueba<span class="sc">$</span>conf.int)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>En escala logarítmica, los dos grupos ya son compatibles con la normalidad (Shapiro-Wilk: <span class="math inline">\(p = 0.52\)</span> para <code>Hi</code> y <span class="math inline">\(p = 0.055\)</span> para <code>Lo</code>). La prueba de Welch da <span class="math inline">\(t = -4.62\)</span>, <span class="math inline">\(gl = 69.5\)</span>, <span class="math inline">\(p &lt; 0.001\)</span>.</p>
-<p>De vuelta en días: las medias geométricas son 17.0 días (<code>Hi</code>) y 33.1 días (<code>Lo</code>). El intervalo de <code>exp(prueba$conf.int)</code> va de 0.39 a 0.69: con recursos altos, los renacuajos salen del agua en <strong>un 31% a 61% menos tiempo</strong>; en promedio, en la mitad (0.51 veces) del tiempo.</p>
-<p>La conclusión coincide con la del ejercicio 3.2, pero ahora tenemos además el <strong>tamaño</strong> del efecto y su intervalo de confianza.</p>
-</div>
 <div class="sol-pendiente">
 <p>La solución se publicará después de la sesión del domingo 22 de noviembre. Mientras tanto, usa la pestaña <strong>Pista</strong>.</p>
 </div>
@@ -770,23 +705,22 @@ exp(prueba$conf.int)</code></pre>
 <div class="tab-content">
 <div id="tabset-9-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-9-1-tab">
 <div class="cell" data-exercise="ex_4_1">
-<pre class="{webr}"><code>#| exercise: ex_4_1
-t.test(ranas$SVL.final)$conf.int
-t.test(ranas$SVL.final, conf.level = ____)$conf.int</code></pre>
+<div>
+<div id="webr-10" class="exercise-cell">
+
+</div>
+<script type="webr-10-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiZXhfNF8xIn0sImNvZGUiOiJ0LnRlc3QocmFuYXMkU1ZMLmZpbmFsKSRjb25mLmludFxudC50ZXN0KHJhbmFzJFNWTC5maW5hbCwgY29uZi5sZXZlbCA9IF9fX18pJGNvbmYuaW50In0=
+</script>
+</div>
 </div>
 </div>
 <div id="tabset-9-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-9-2-tab">
-<div class="hint" data-exercise="ex_4_1">
+<div class="hint webr-ojs-exercise exercise-hint d-none" data-exercise="ex_4_1">
 <p>El argumento <code>conf.level</code> de <code>t.test()</code> cambia el nivel de confianza; por defecto es 0.95.</p>
 </div>
 </div>
 <div id="tabset-9-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-9-3-tab">
-<div class="proof solution" data-exercise="ex_4_1">
-<p><span class="proof-title"><em>Solución</em>. </span></p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(ranas<span class="sc">$</span>SVL.final)<span class="sc">$</span>conf.int</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(ranas<span class="sc">$</span>SVL.final, <span class="at">conf.level =</span> <span class="fl">0.99</span>)<span class="sc">$</span>conf.int</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>El intervalo del 99% va de 18.95 a 19.81 mm y es <strong>más ancho</strong> que el del 95%. Para estar más seguros de capturar <span class="math inline">\(\mu\)</span>, necesitamos un intervalo más amplio: el valor crítico de <span class="math inline">\(t\)</span> pasa de 1.99 a 2.64.</p>
-</div>
 <div class="sol-pendiente">
 <p>La solución se publicará después de la sesión del domingo 22 de noviembre. Mientras tanto, usa la pestaña <strong>Pista</strong>.</p>
 </div>
@@ -802,23 +736,22 @@ t.test(ranas$SVL.final, conf.level = ____)$conf.int</code></pre>
 <div class="tab-content">
 <div id="tabset-10-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-10-1-tab">
 <div class="cell" data-exercise="ex_4_2">
-<pre class="{webr}"><code>#| exercise: ex_4_2
-mean(ranas$Mass.final)
-t.test(ranas$Mass.final, mu = ____, alternative = "____")</code></pre>
+<div>
+<div id="webr-11" class="exercise-cell">
+
+</div>
+<script type="webr-11-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiZXhfNF8yIn0sImNvZGUiOiJtZWFuKHJhbmFzJE1hc3MuZmluYWwpXG50LnRlc3QocmFuYXMkTWFzcy5maW5hbCwgbXUgPSBfX19fLCBhbHRlcm5hdGl2ZSA9IFwiX19fX1wiKSJ9
+</script>
+</div>
 </div>
 </div>
 <div id="tabset-10-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-10-2-tab">
-<div class="hint" data-exercise="ex_4_2">
+<div class="hint webr-ojs-exercise exercise-hint d-none" data-exercise="ex_4_2">
 <p>La hipótesis alternativa es “mayor que 0.40”: <code>alternative = "greater"</code>.</p>
 </div>
 </div>
 <div id="tabset-10-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-10-3-tab">
-<div class="proof solution" data-exercise="ex_4_2">
-<p><span class="proof-title"><em>Solución</em>. </span></p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(ranas<span class="sc">$</span>Mass.final)</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(ranas<span class="sc">$</span>Mass.final, <span class="at">mu =</span> <span class="fl">0.40</span>, <span class="at">alternative =</span> <span class="st">"greater"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>La media es 0.430 g y la prueba da <span class="math inline">\(t = 2.44\)</span>, <span class="math inline">\(gl = 77\)</span>, <span class="math inline">\(p = 0.008\)</span>: hay evidencia de que la masa media supera los 0.40 g. Con 78 tanques, la prueba t es robusta a desviaciones moderadas de la normalidad.</p>
-</div>
 <div class="sol-pendiente">
 <p>La solución se publicará después de la sesión del domingo 22 de noviembre. Mientras tanto, usa la pestaña <strong>Pista</strong>.</p>
 </div>
@@ -834,23 +767,22 @@ t.test(ranas$Mass.final, mu = ____, alternative = "____")</code></pre>
 <div class="tab-content">
 <div id="tabset-11-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-11-1-tab">
 <div class="cell" data-exercise="ex_4_3">
-<pre class="{webr}"><code>#| exercise: ex_4_3
-tapply(ranas$SVL.final, ranas$Res, mean)
-t.test(SVL.final ~ ____, data = ranas)</code></pre>
+<div>
+<div id="webr-12" class="exercise-cell">
+
+</div>
+<script type="webr-12-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiZXhfNF8zIn0sImNvZGUiOiJ0YXBwbHkocmFuYXMkU1ZMLmZpbmFsLCByYW5hcyRSZXMsIG1lYW4pXG50LnRlc3QoU1ZMLmZpbmFsIH4gX19fXywgZGF0YSA9IHJhbmFzKSJ9
+</script>
+</div>
 </div>
 </div>
 <div id="tabset-11-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-11-2-tab">
-<div class="hint" data-exercise="ex_4_3">
+<div class="hint webr-ojs-exercise exercise-hint d-none" data-exercise="ex_4_3">
 <p>Un intervalo de confianza de la diferencia que contiene el cero es compatible con “no hay diferencia”.</p>
 </div>
 </div>
 <div id="tabset-11-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-11-3-tab">
-<div class="proof solution" data-exercise="ex_4_3">
-<p><span class="proof-title"><em>Solución</em>. </span></p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tapply</span>(ranas<span class="sc">$</span>SVL.final, ranas<span class="sc">$</span>Res, mean)</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(SVL.final <span class="sc">~</span> Res, <span class="at">data =</span> ranas)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Las medias son 19.60 mm (<code>Hi</code>) y 19.17 mm (<code>Lo</code>). La prueba da <span class="math inline">\(t = 1.33\)</span>, <span class="math inline">\(gl = 72.9\)</span>, <span class="math inline">\(p = 0.19\)</span>, y el intervalo de la diferencia va de -0.21 a 1.07 mm: contiene el cero. <strong>No hay evidencia</strong> de una diferencia, lo que no es lo mismo que demostrar que no la hay: el intervalo deja abierta una diferencia de hasta 1 mm.</p>
-</div>
 <div class="sol-pendiente">
 <p>La solución se publicará después de la sesión del domingo 22 de noviembre. Mientras tanto, usa la pestaña <strong>Pista</strong>.</p>
 </div>
@@ -866,29 +798,22 @@ t.test(SVL.final ~ ____, data = ranas)</code></pre>
 <div class="tab-content">
 <div id="tabset-12-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-12-1-tab">
 <div class="cell" data-exercise="ex_4_4">
-<pre class="{webr}"><code>#| exercise: ex_4_4
-diferencias &lt;- ranas$SVL.final - ranas$SVL.initial
-shapiro.test(____)
-median(diferencias)
+<div>
+<div id="webr-13" class="exercise-cell">
 
-wilcox.test(ranas$SVL.final, ranas$SVL.initial, paired = ____)</code></pre>
+</div>
+<script type="webr-13-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiZXhfNF80In0sImNvZGUiOiJkaWZlcmVuY2lhcyA8LSByYW5hcyRTVkwuZmluYWwgLSByYW5hcyRTVkwuaW5pdGlhbFxuc2hhcGlyby50ZXN0KF9fX18pXG5tZWRpYW4oZGlmZXJlbmNpYXMpXG5cbndpbGNveC50ZXN0KHJhbmFzJFNWTC5maW5hbCwgcmFuYXMkU1ZMLmluaXRpYWwsIHBhaXJlZCA9IF9fX18pIn0=
+</script>
+</div>
 </div>
 </div>
 <div id="tabset-12-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-12-2-tab">
-<div class="hint" data-exercise="ex_4_4">
+<div class="hint webr-ojs-exercise exercise-hint d-none" data-exercise="ex_4_4">
 <p>Como en la prueba t emparejada, la normalidad se revisa sobre las <strong>diferencias</strong>. Si no son normales, <code>wilcox.test(..., paired = TRUE)</code> es la alternativa.</p>
 </div>
 </div>
 <div id="tabset-12-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-12-3-tab">
-<div class="proof solution" data-exercise="ex_4_4">
-<p><span class="proof-title"><em>Solución</em>. </span></p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>diferencias <span class="ot">&lt;-</span> ranas<span class="sc">$</span>SVL.final <span class="sc">-</span> ranas<span class="sc">$</span>SVL.initial</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(diferencias)</span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="fu">median</span>(diferencias)</span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="fu">wilcox.test</span>(ranas<span class="sc">$</span>SVL.final, ranas<span class="sc">$</span>SVL.initial, <span class="at">paired =</span> <span class="cn">TRUE</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Las diferencias no son normales (Shapiro-Wilk: <span class="math inline">\(p = 0.001\)</span>), así que usamos Wilcoxon emparejada: <span class="math inline">\(V = 3077\)</span>, <span class="math inline">\(p &lt; 0.001\)</span>. La mediana del crecimiento es 0.36 mm: los renacuajos sí crecieron.</p>
-</div>
 <div class="sol-pendiente">
 <p>La solución se publicará después de la sesión del domingo 22 de noviembre. Mientras tanto, usa la pestaña <strong>Pista</strong>.</p>
 </div>
@@ -902,9 +827,37 @@ wilcox.test(ranas$SVL.final, ranas$SVL.initial, paired = ____)</code></pre>
 <p>Escribe una pregunta de investigación sobre tus datos que compare dos grupos o una muestra con un valor de referencia. Plantea <span class="math inline">\(H_0\)</span> y <span class="math inline">\(H_1\)</span>, revisa los supuestos, elige entre la prueba t y la de Wilcoxon, y resume el resultado en una frase con el estadístico, los grados de libertad (si los hay) y el valor p.</p>
 
 
+<script type="webr-data">
+eyJvcHRpb25zIjp7ImJhc2VVcmwiOiJodHRwczovL3dlYnIuci13YXNtLm9yZy92MC40LjIvIn0sInBhY2thZ2VzIjp7InBrZ3MiOlsiZXZhbHVhdGUiLCJrbml0ciIsImh0bWx0b29scyJdLCJyZXBvcyI6W119LCJyZW5kZXJfZGYiOiJkZWZhdWx0In0=
+</script>
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W3siY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0xMyIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMTM7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0xMyIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzEzID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMTMtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICAvLyBEZWZhdWx0IGV4ZXJjaXNlIGNvbmZpZ3VyYXRpb25cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oXG4gICAge1xuICAgICAgaWQ6IFwid2Vici0xMy1jb250ZW50c1wiLFxuICAgICAgZW52aXI6IGBleGVyY2lzZS1lbnYtJHtibG9jay5hdHRyLmV4ZXJjaXNlfWAsXG4gICAgICBlcnJvcjogZmFsc2UsXG4gICAgICBjYXB0aW9uOiAnRXhlcmNpc2UnLFxuICAgIH0sXG4gICAgYmxvY2suYXR0clxuICApO1xuXG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG4gIHJldHVybiBlZGl0b3IuY29udGFpbmVyO1xufVxudmlld29mIF93ZWJyX3ZhbHVlXzEzID0gd2ViUk9qcy5wcm9jZXNzKF93ZWJyX2VkaXRvcl8xMywge30pO1xuX3dlYnJfZmVlZGJhY2tfMTMgPSB7XG4gIGNvbnN0IHsgV2ViUkdyYWRlciB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcbiAgY29uc3QgZW1wdHlGZWVkYmFjayA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ2RpdicpO1xuXG4gIGNvbnN0IGdyYWRlciA9IG5ldyBXZWJSR3JhZGVyKF93ZWJyX3ZhbHVlXzEzLmV2YWx1YXRvcik7XG4gIGNvbnN0IGZlZWRiYWNrID0gYXdhaXQgZ3JhZGVyLmdyYWRlRXhlcmNpc2UoKTtcbiAgaWYgKCFmZWVkYmFjaykgcmV0dXJuIGVtcHR5RmVlZGJhY2s7XG4gIHJldHVybiBmZWVkYmFjaztcbn1cbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0xMiIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMTI7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0xMiIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzEyID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMTItY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICAvLyBEZWZhdWx0IGV4ZXJjaXNlIGNvbmZpZ3VyYXRpb25cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oXG4gICAge1xuICAgICAgaWQ6IFwid2Vici0xMi1jb250ZW50c1wiLFxuICAgICAgZW52aXI6IGBleGVyY2lzZS1lbnYtJHtibG9jay5hdHRyLmV4ZXJjaXNlfWAsXG4gICAgICBlcnJvcjogZmFsc2UsXG4gICAgICBjYXB0aW9uOiAnRXhlcmNpc2UnLFxuICAgIH0sXG4gICAgYmxvY2suYXR0clxuICApO1xuXG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG4gIHJldHVybiBlZGl0b3IuY29udGFpbmVyO1xufVxudmlld29mIF93ZWJyX3ZhbHVlXzEyID0gd2ViUk9qcy5wcm9jZXNzKF93ZWJyX2VkaXRvcl8xMiwge30pO1xuX3dlYnJfZmVlZGJhY2tfMTIgPSB7XG4gIGNvbnN0IHsgV2ViUkdyYWRlciB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcbiAgY29uc3QgZW1wdHlGZWVkYmFjayA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ2RpdicpO1xuXG4gIGNvbnN0IGdyYWRlciA9IG5ldyBXZWJSR3JhZGVyKF93ZWJyX3ZhbHVlXzEyLmV2YWx1YXRvcik7XG4gIGNvbnN0IGZlZWRiYWNrID0gYXdhaXQgZ3JhZGVyLmdyYWRlRXhlcmNpc2UoKTtcbiAgaWYgKCFmZWVkYmFjaykgcmV0dXJuIGVtcHR5RmVlZGJhY2s7XG4gIHJldHVybiBmZWVkYmFjaztcbn1cbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0xMSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMTE7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0xMSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzExID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMTEtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICAvLyBEZWZhdWx0IGV4ZXJjaXNlIGNvbmZpZ3VyYXRpb25cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oXG4gICAge1xuICAgICAgaWQ6IFwid2Vici0xMS1jb250ZW50c1wiLFxuICAgICAgZW52aXI6IGBleGVyY2lzZS1lbnYtJHtibG9jay5hdHRyLmV4ZXJjaXNlfWAsXG4gICAgICBlcnJvcjogZmFsc2UsXG4gICAgICBjYXB0aW9uOiAnRXhlcmNpc2UnLFxuICAgIH0sXG4gICAgYmxvY2suYXR0clxuICApO1xuXG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG4gIHJldHVybiBlZGl0b3IuY29udGFpbmVyO1xufVxudmlld29mIF93ZWJyX3ZhbHVlXzExID0gd2ViUk9qcy5wcm9jZXNzKF93ZWJyX2VkaXRvcl8xMSwge30pO1xuX3dlYnJfZmVlZGJhY2tfMTEgPSB7XG4gIGNvbnN0IHsgV2ViUkdyYWRlciB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcbiAgY29uc3QgZW1wdHlGZWVkYmFjayA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ2RpdicpO1xuXG4gIGNvbnN0IGdyYWRlciA9IG5ldyBXZWJSR3JhZGVyKF93ZWJyX3ZhbHVlXzExLmV2YWx1YXRvcik7XG4gIGNvbnN0IGZlZWRiYWNrID0gYXdhaXQgZ3JhZGVyLmdyYWRlRXhlcmNpc2UoKTtcbiAgaWYgKCFmZWVkYmFjaykgcmV0dXJuIGVtcHR5RmVlZGJhY2s7XG4gIHJldHVybiBmZWVkYmFjaztcbn1cbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0xMCIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMTA7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0xMCIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzEwID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMTAtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICAvLyBEZWZhdWx0IGV4ZXJjaXNlIGNvbmZpZ3VyYXRpb25cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oXG4gICAge1xuICAgICAgaWQ6IFwid2Vici0xMC1jb250ZW50c1wiLFxuICAgICAgZW52aXI6IGBleGVyY2lzZS1lbnYtJHtibG9jay5hdHRyLmV4ZXJjaXNlfWAsXG4gICAgICBlcnJvcjogZmFsc2UsXG4gICAgICBjYXB0aW9uOiAnRXhlcmNpc2UnLFxuICAgIH0sXG4gICAgYmxvY2suYXR0clxuICApO1xuXG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG4gIHJldHVybiBlZGl0b3IuY29udGFpbmVyO1xufVxudmlld29mIF93ZWJyX3ZhbHVlXzEwID0gd2ViUk9qcy5wcm9jZXNzKF93ZWJyX2VkaXRvcl8xMCwge30pO1xuX3dlYnJfZmVlZGJhY2tfMTAgPSB7XG4gIGNvbnN0IHsgV2ViUkdyYWRlciB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcbiAgY29uc3QgZW1wdHlGZWVkYmFjayA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ2RpdicpO1xuXG4gIGNvbnN0IGdyYWRlciA9IG5ldyBXZWJSR3JhZGVyKF93ZWJyX3ZhbHVlXzEwLmV2YWx1YXRvcik7XG4gIGNvbnN0IGZlZWRiYWNrID0gYXdhaXQgZ3JhZGVyLmdyYWRlRXhlcmNpc2UoKTtcbiAgaWYgKCFmZWVkYmFjaykgcmV0dXJuIGVtcHR5RmVlZGJhY2s7XG4gIHJldHVybiBmZWVkYmFjaztcbn1cbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC05IiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoie1xuICAvLyBXYWl0IGZvciBvdXRwdXQgdG8gYmUgd3JpdHRlbiB0byB0aGUgRE9NLCB0aGVuIHRyaWdnZXIgd2lkZ2V0IHJlbmRlcmluZ1xuICBhd2FpdCBfd2Vicl92YWx1ZV85O1xuICBpZiAod2luZG93LkhUTUxXaWRnZXRzKSB7XG4gICAgd2luZG93LkhUTUxXaWRnZXRzLnN0YXRpY1JlbmRlcigpO1xuICB9XG4gIGlmICh3aW5kb3cuUGFnZWRUYWJsZURvYykge1xuICAgIHdpbmRvdy5QYWdlZFRhYmxlRG9jLmluaXRBbGwoKTtcbiAgfVxufVxuIn0seyJjZWxsTmFtZSI6IndlYnItOSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzkgPSB7XG4gIGNvbnN0IHsgV2ViUkV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwid2Vici05LWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgLy8gRGVmYXVsdCBleGVyY2lzZSBjb25maWd1cmF0aW9uXG4gIGNvbnN0IG9wdGlvbnMgPSBPYmplY3QuYXNzaWduKFxuICAgIHtcbiAgICAgIGlkOiBcIndlYnItOS1jb250ZW50c1wiLFxuICAgICAgZW52aXI6IGBleGVyY2lzZS1lbnYtJHtibG9jay5hdHRyLmV4ZXJjaXNlfWAsXG4gICAgICBlcnJvcjogZmFsc2UsXG4gICAgICBjYXB0aW9uOiAnRXhlcmNpc2UnLFxuICAgIH0sXG4gICAgYmxvY2suYXR0clxuICApO1xuXG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG4gIHJldHVybiBlZGl0b3IuY29udGFpbmVyO1xufVxudmlld29mIF93ZWJyX3ZhbHVlXzkgPSB3ZWJST2pzLnByb2Nlc3MoX3dlYnJfZWRpdG9yXzksIHt9KTtcbl93ZWJyX2ZlZWRiYWNrXzkgPSB7XG4gIGNvbnN0IHsgV2ViUkdyYWRlciB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcbiAgY29uc3QgZW1wdHlGZWVkYmFjayA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ2RpdicpO1xuXG4gIGNvbnN0IGdyYWRlciA9IG5ldyBXZWJSR3JhZGVyKF93ZWJyX3ZhbHVlXzkuZXZhbHVhdG9yKTtcbiAgY29uc3QgZmVlZGJhY2sgPSBhd2FpdCBncmFkZXIuZ3JhZGVFeGVyY2lzZSgpO1xuICBpZiAoIWZlZWRiYWNrKSByZXR1cm4gZW1wdHlGZWVkYmFjaztcbiAgcmV0dXJuIGZlZWRiYWNrO1xufVxuIn0seyJjZWxsTmFtZSI6IndlYnItd2lkZ2V0LTgiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJ7XG4gIC8vIFdhaXQgZm9yIG91dHB1dCB0byBiZSB3cml0dGVuIHRvIHRoZSBET00sIHRoZW4gdHJpZ2dlciB3aWRnZXQgcmVuZGVyaW5nXG4gIGF3YWl0IF93ZWJyX3ZhbHVlXzg7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici04IiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldCIsInNvdXJjZSI6InZpZXdvZiBfd2Vicl9lZGl0b3JfOCA9IHtcbiAgY29uc3QgeyBXZWJSRXhlcmNpc2VFZGl0b3IsIGI2NERlY29kZSB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJ3ZWJyLTgtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICAvLyBEZWZhdWx0IGV4ZXJjaXNlIGNvbmZpZ3VyYXRpb25cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oXG4gICAge1xuICAgICAgaWQ6IFwid2Vici04LWNvbnRlbnRzXCIsXG4gICAgICBlbnZpcjogYGV4ZXJjaXNlLWVudi0ke2Jsb2NrLmF0dHIuZXhlcmNpc2V9YCxcbiAgICAgIGVycm9yOiBmYWxzZSxcbiAgICAgIGNhcHRpb246ICdFeGVyY2lzZScsXG4gICAgfSxcbiAgICBibG9jay5hdHRyXG4gICk7XG5cbiAgY29uc3QgZWRpdG9yID0gbmV3IFdlYlJFeGVyY2lzZUVkaXRvcih3ZWJST2pzLndlYlJQcm9taXNlLCBibG9jay5jb2RlLCBvcHRpb25zKTtcbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG52aWV3b2YgX3dlYnJfdmFsdWVfOCA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfOCwge30pO1xuX3dlYnJfZmVlZGJhY2tfOCA9IHtcbiAgY29uc3QgeyBXZWJSR3JhZGVyIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBlbXB0eUZlZWRiYWNrID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudCgnZGl2Jyk7XG5cbiAgY29uc3QgZ3JhZGVyID0gbmV3IFdlYlJHcmFkZXIoX3dlYnJfdmFsdWVfOC5ldmFsdWF0b3IpO1xuICBjb25zdCBmZWVkYmFjayA9IGF3YWl0IGdyYWRlci5ncmFkZUV4ZXJjaXNlKCk7XG4gIGlmICghZmVlZGJhY2spIHJldHVybiBlbXB0eUZlZWRiYWNrO1xuICByZXR1cm4gZmVlZGJhY2s7XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici13aWRnZXQtNyIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfNztcbiAgaWYgKHdpbmRvdy5IVE1MV2lkZ2V0cykge1xuICAgIHdpbmRvdy5IVE1MV2lkZ2V0cy5zdGF0aWNSZW5kZXIoKTtcbiAgfVxuICBpZiAod2luZG93LlBhZ2VkVGFibGVEb2MpIHtcbiAgICB3aW5kb3cuUGFnZWRUYWJsZURvYy5pbml0QWxsKCk7XG4gIH1cbn1cbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLTciLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0Iiwic291cmNlIjoidmlld29mIF93ZWJyX2VkaXRvcl83ID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItNy1jb250ZW50c1xcXCJdYCkudGV4dENvbnRlbnQ7XG4gIGNvbnN0IGJsb2NrID0gSlNPTi5wYXJzZShiNjREZWNvZGUoc2NyaXB0Q29udGVudCkpO1xuXG4gIC8vIERlZmF1bHQgZXhlcmNpc2UgY29uZmlndXJhdGlvblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbihcbiAgICB7XG4gICAgICBpZDogXCJ3ZWJyLTctY29udGVudHNcIixcbiAgICAgIGVudmlyOiBgZXhlcmNpc2UtZW52LSR7YmxvY2suYXR0ci5leGVyY2lzZX1gLFxuICAgICAgZXJyb3I6IGZhbHNlLFxuICAgICAgY2FwdGlvbjogJ0V4ZXJjaXNlJyxcbiAgICB9LFxuICAgIGJsb2NrLmF0dHJcbiAgKTtcblxuICBjb25zdCBlZGl0b3IgPSBuZXcgV2ViUkV4ZXJjaXNlRWRpdG9yKHdlYlJPanMud2ViUlByb21pc2UsIGJsb2NrLmNvZGUsIG9wdGlvbnMpO1xuICByZXR1cm4gZWRpdG9yLmNvbnRhaW5lcjtcbn1cbnZpZXdvZiBfd2Vicl92YWx1ZV83ID0gd2ViUk9qcy5wcm9jZXNzKF93ZWJyX2VkaXRvcl83LCB7fSk7XG5fd2Vicl9mZWVkYmFja183ID0ge1xuICBjb25zdCB7IFdlYlJHcmFkZXIgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG4gIGNvbnN0IGVtcHR5RmVlZGJhY2sgPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KCdkaXYnKTtcblxuICBjb25zdCBncmFkZXIgPSBuZXcgV2ViUkdyYWRlcihfd2Vicl92YWx1ZV83LmV2YWx1YXRvcik7XG4gIGNvbnN0IGZlZWRiYWNrID0gYXdhaXQgZ3JhZGVyLmdyYWRlRXhlcmNpc2UoKTtcbiAgaWYgKCFmZWVkYmFjaykgcmV0dXJuIGVtcHR5RmVlZGJhY2s7XG4gIHJldHVybiBmZWVkYmFjaztcbn1cbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC02IiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoie1xuICAvLyBXYWl0IGZvciBvdXRwdXQgdG8gYmUgd3JpdHRlbiB0byB0aGUgRE9NLCB0aGVuIHRyaWdnZXIgd2lkZ2V0IHJlbmRlcmluZ1xuICBhd2FpdCBfd2Vicl92YWx1ZV82O1xuICBpZiAod2luZG93LkhUTUxXaWRnZXRzKSB7XG4gICAgd2luZG93LkhUTUxXaWRnZXRzLnN0YXRpY1JlbmRlcigpO1xuICB9XG4gIGlmICh3aW5kb3cuUGFnZWRUYWJsZURvYykge1xuICAgIHdpbmRvdy5QYWdlZFRhYmxlRG9jLmluaXRBbGwoKTtcbiAgfVxufVxuIn0seyJjZWxsTmFtZSI6IndlYnItNiIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzYgPSB7XG4gIGNvbnN0IHsgV2ViUkV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwid2Vici02LWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgLy8gRGVmYXVsdCBleGVyY2lzZSBjb25maWd1cmF0aW9uXG4gIGNvbnN0IG9wdGlvbnMgPSBPYmplY3QuYXNzaWduKFxuICAgIHtcbiAgICAgIGlkOiBcIndlYnItNi1jb250ZW50c1wiLFxuICAgICAgZW52aXI6IGBleGVyY2lzZS1lbnYtJHtibG9jay5hdHRyLmV4ZXJjaXNlfWAsXG4gICAgICBlcnJvcjogZmFsc2UsXG4gICAgICBjYXB0aW9uOiAnRXhlcmNpc2UnLFxuICAgIH0sXG4gICAgYmxvY2suYXR0clxuICApO1xuXG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG4gIHJldHVybiBlZGl0b3IuY29udGFpbmVyO1xufVxudmlld29mIF93ZWJyX3ZhbHVlXzYgPSB3ZWJST2pzLnByb2Nlc3MoX3dlYnJfZWRpdG9yXzYsIHt9KTtcbl93ZWJyX2ZlZWRiYWNrXzYgPSB7XG4gIGNvbnN0IHsgV2ViUkdyYWRlciB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcbiAgY29uc3QgZW1wdHlGZWVkYmFjayA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ2RpdicpO1xuXG4gIGNvbnN0IGdyYWRlciA9IG5ldyBXZWJSR3JhZGVyKF93ZWJyX3ZhbHVlXzYuZXZhbHVhdG9yKTtcbiAgY29uc3QgZmVlZGJhY2sgPSBhd2FpdCBncmFkZXIuZ3JhZGVFeGVyY2lzZSgpO1xuICBpZiAoIWZlZWRiYWNrKSByZXR1cm4gZW1wdHlGZWVkYmFjaztcbiAgcmV0dXJuIGZlZWRiYWNrO1xufVxuIn0seyJjZWxsTmFtZSI6IndlYnItd2lkZ2V0LTUiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJ7XG4gIC8vIFdhaXQgZm9yIG91dHB1dCB0byBiZSB3cml0dGVuIHRvIHRoZSBET00sIHRoZW4gdHJpZ2dlciB3aWRnZXQgcmVuZGVyaW5nXG4gIGF3YWl0IF93ZWJyX3ZhbHVlXzU7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici01IiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldCIsInNvdXJjZSI6InZpZXdvZiBfd2Vicl9lZGl0b3JfNSA9IHtcbiAgY29uc3QgeyBXZWJSRXhlcmNpc2VFZGl0b3IsIGI2NERlY29kZSB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJ3ZWJyLTUtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICAvLyBEZWZhdWx0IGV4ZXJjaXNlIGNvbmZpZ3VyYXRpb25cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oXG4gICAge1xuICAgICAgaWQ6IFwid2Vici01LWNvbnRlbnRzXCIsXG4gICAgICBlbnZpcjogYGV4ZXJjaXNlLWVudi0ke2Jsb2NrLmF0dHIuZXhlcmNpc2V9YCxcbiAgICAgIGVycm9yOiBmYWxzZSxcbiAgICAgIGNhcHRpb246ICdFeGVyY2lzZScsXG4gICAgfSxcbiAgICBibG9jay5hdHRyXG4gICk7XG5cbiAgY29uc3QgZWRpdG9yID0gbmV3IFdlYlJFeGVyY2lzZUVkaXRvcih3ZWJST2pzLndlYlJQcm9taXNlLCBibG9jay5jb2RlLCBvcHRpb25zKTtcbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG52aWV3b2YgX3dlYnJfdmFsdWVfNSA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfNSwge30pO1xuX3dlYnJfZmVlZGJhY2tfNSA9IHtcbiAgY29uc3QgeyBXZWJSR3JhZGVyIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBlbXB0eUZlZWRiYWNrID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudCgnZGl2Jyk7XG5cbiAgY29uc3QgZ3JhZGVyID0gbmV3IFdlYlJHcmFkZXIoX3dlYnJfdmFsdWVfNS5ldmFsdWF0b3IpO1xuICBjb25zdCBmZWVkYmFjayA9IGF3YWl0IGdyYWRlci5ncmFkZUV4ZXJjaXNlKCk7XG4gIGlmICghZmVlZGJhY2spIHJldHVybiBlbXB0eUZlZWRiYWNrO1xuICByZXR1cm4gZmVlZGJhY2s7XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici13aWRnZXQtNCIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfNDtcbiAgaWYgKHdpbmRvdy5IVE1MV2lkZ2V0cykge1xuICAgIHdpbmRvdy5IVE1MV2lkZ2V0cy5zdGF0aWNSZW5kZXIoKTtcbiAgfVxuICBpZiAod2luZG93LlBhZ2VkVGFibGVEb2MpIHtcbiAgICB3aW5kb3cuUGFnZWRUYWJsZURvYy5pbml0QWxsKCk7XG4gIH1cbn1cbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLTQiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0Iiwic291cmNlIjoidmlld29mIF93ZWJyX2VkaXRvcl80ID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItNC1jb250ZW50c1xcXCJdYCkudGV4dENvbnRlbnQ7XG4gIGNvbnN0IGJsb2NrID0gSlNPTi5wYXJzZShiNjREZWNvZGUoc2NyaXB0Q29udGVudCkpO1xuXG4gIC8vIERlZmF1bHQgZXhlcmNpc2UgY29uZmlndXJhdGlvblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbihcbiAgICB7XG4gICAgICBpZDogXCJ3ZWJyLTQtY29udGVudHNcIixcbiAgICAgIGVudmlyOiBgZXhlcmNpc2UtZW52LSR7YmxvY2suYXR0ci5leGVyY2lzZX1gLFxuICAgICAgZXJyb3I6IGZhbHNlLFxuICAgICAgY2FwdGlvbjogJ0V4ZXJjaXNlJyxcbiAgICB9LFxuICAgIGJsb2NrLmF0dHJcbiAgKTtcblxuICBjb25zdCBlZGl0b3IgPSBuZXcgV2ViUkV4ZXJjaXNlRWRpdG9yKHdlYlJPanMud2ViUlByb21pc2UsIGJsb2NrLmNvZGUsIG9wdGlvbnMpO1xuICByZXR1cm4gZWRpdG9yLmNvbnRhaW5lcjtcbn1cbnZpZXdvZiBfd2Vicl92YWx1ZV80ID0gd2ViUk9qcy5wcm9jZXNzKF93ZWJyX2VkaXRvcl80LCB7fSk7XG5fd2Vicl9mZWVkYmFja180ID0ge1xuICBjb25zdCB7IFdlYlJHcmFkZXIgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG4gIGNvbnN0IGVtcHR5RmVlZGJhY2sgPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KCdkaXYnKTtcblxuICBjb25zdCBncmFkZXIgPSBuZXcgV2ViUkdyYWRlcihfd2Vicl92YWx1ZV80LmV2YWx1YXRvcik7XG4gIGNvbnN0IGZlZWRiYWNrID0gYXdhaXQgZ3JhZGVyLmdyYWRlRXhlcmNpc2UoKTtcbiAgaWYgKCFmZWVkYmFjaykgcmV0dXJuIGVtcHR5RmVlZGJhY2s7XG4gIHJldHVybiBmZWVkYmFjaztcbn1cbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0zIiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoie1xuICAvLyBXYWl0IGZvciBvdXRwdXQgdG8gYmUgd3JpdHRlbiB0byB0aGUgRE9NLCB0aGVuIHRyaWdnZXIgd2lkZ2V0IHJlbmRlcmluZ1xuICBhd2FpdCBfd2Vicl92YWx1ZV8zO1xuICBpZiAod2luZG93LkhUTUxXaWRnZXRzKSB7XG4gICAgd2luZG93LkhUTUxXaWRnZXRzLnN0YXRpY1JlbmRlcigpO1xuICB9XG4gIGlmICh3aW5kb3cuUGFnZWRUYWJsZURvYykge1xuICAgIHdpbmRvdy5QYWdlZFRhYmxlRG9jLmluaXRBbGwoKTtcbiAgfVxufVxuIn0seyJjZWxsTmFtZSI6IndlYnItMyIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzMgPSB7XG4gIGNvbnN0IHsgV2ViUkV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwid2Vici0zLWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgLy8gRGVmYXVsdCBleGVyY2lzZSBjb25maWd1cmF0aW9uXG4gIGNvbnN0IG9wdGlvbnMgPSBPYmplY3QuYXNzaWduKFxuICAgIHtcbiAgICAgIGlkOiBcIndlYnItMy1jb250ZW50c1wiLFxuICAgICAgZW52aXI6IGBleGVyY2lzZS1lbnYtJHtibG9jay5hdHRyLmV4ZXJjaXNlfWAsXG4gICAgICBlcnJvcjogZmFsc2UsXG4gICAgICBjYXB0aW9uOiAnRXhlcmNpc2UnLFxuICAgIH0sXG4gICAgYmxvY2suYXR0clxuICApO1xuXG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG4gIHJldHVybiBlZGl0b3IuY29udGFpbmVyO1xufVxudmlld29mIF93ZWJyX3ZhbHVlXzMgPSB3ZWJST2pzLnByb2Nlc3MoX3dlYnJfZWRpdG9yXzMsIHt9KTtcbl93ZWJyX2ZlZWRiYWNrXzMgPSB7XG4gIGNvbnN0IHsgV2ViUkdyYWRlciB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcbiAgY29uc3QgZW1wdHlGZWVkYmFjayA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ2RpdicpO1xuXG4gIGNvbnN0IGdyYWRlciA9IG5ldyBXZWJSR3JhZGVyKF93ZWJyX3ZhbHVlXzMuZXZhbHVhdG9yKTtcbiAgY29uc3QgZmVlZGJhY2sgPSBhd2FpdCBncmFkZXIuZ3JhZGVFeGVyY2lzZSgpO1xuICBpZiAoIWZlZWRiYWNrKSByZXR1cm4gZW1wdHlGZWVkYmFjaztcbiAgcmV0dXJuIGZlZWRiYWNrO1xufVxuIn0seyJjZWxsTmFtZSI6IndlYnItd2lkZ2V0LTIiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJ7XG4gIC8vIFdhaXQgZm9yIG91dHB1dCB0byBiZSB3cml0dGVuIHRvIHRoZSBET00sIHRoZW4gdHJpZ2dlciB3aWRnZXQgcmVuZGVyaW5nXG4gIGF3YWl0IF93ZWJyX3ZhbHVlXzI7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0yIiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldCIsInNvdXJjZSI6InZpZXdvZiBfd2Vicl9lZGl0b3JfMiA9IHtcbiAgY29uc3QgeyBXZWJSRXhlcmNpc2VFZGl0b3IsIGI2NERlY29kZSB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJ3ZWJyLTItY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICAvLyBEZWZhdWx0IGV4ZXJjaXNlIGNvbmZpZ3VyYXRpb25cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oXG4gICAge1xuICAgICAgaWQ6IFwid2Vici0yLWNvbnRlbnRzXCIsXG4gICAgICBlbnZpcjogYGV4ZXJjaXNlLWVudi0ke2Jsb2NrLmF0dHIuZXhlcmNpc2V9YCxcbiAgICAgIGVycm9yOiBmYWxzZSxcbiAgICAgIGNhcHRpb246ICdFeGVyY2lzZScsXG4gICAgfSxcbiAgICBibG9jay5hdHRyXG4gICk7XG5cbiAgY29uc3QgZWRpdG9yID0gbmV3IFdlYlJFeGVyY2lzZUVkaXRvcih3ZWJST2pzLndlYlJQcm9taXNlLCBibG9jay5jb2RlLCBvcHRpb25zKTtcbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG52aWV3b2YgX3dlYnJfdmFsdWVfMiA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfMiwge30pO1xuX3dlYnJfZmVlZGJhY2tfMiA9IHtcbiAgY29uc3QgeyBXZWJSR3JhZGVyIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBlbXB0eUZlZWRiYWNrID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudCgnZGl2Jyk7XG5cbiAgY29uc3QgZ3JhZGVyID0gbmV3IFdlYlJHcmFkZXIoX3dlYnJfdmFsdWVfMi5ldmFsdWF0b3IpO1xuICBjb25zdCBmZWVkYmFjayA9IGF3YWl0IGdyYWRlci5ncmFkZUV4ZXJjaXNlKCk7XG4gIGlmICghZmVlZGJhY2spIHJldHVybiBlbXB0eUZlZWRiYWNrO1xuICByZXR1cm4gZmVlZGJhY2s7XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici1wcmVsdWRlIiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoid2ViUk9qcyA9IHtcbiAgY29uc3QgeyBXZWJSLCBDaGFubmVsVHlwZSB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZS5XZWJSO1xuICBjb25zdCB7XG4gICAgV2ViUkV2YWx1YXRvcixcbiAgICBXZWJSRW52aXJvbm1lbnRNYW5hZ2VyLFxuICAgIHNldHVwUixcbiAgICBiNjREZWNvZGUsXG4gICAgY29sbGFwc2VQYXRoXG4gIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuXG4gIGNvbnN0IHN0YXR1c0NvbnRhaW5lciA9IGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKFwiZXhlcmNpc2UtbG9hZGluZy1zdGF0dXNcIik7XG4gIGNvbnN0IGluZGljYXRvckNvbnRhaW5lciA9IGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKFwiZXhlcmNpc2UtbG9hZGluZy1pbmRpY2F0b3JcIik7XG4gIGluZGljYXRvckNvbnRhaW5lci5jbGFzc0xpc3QucmVtb3ZlKFwiZC1ub25lXCIpO1xuXG4gIGxldCBzdGF0dXNUZXh0ID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudChcImRpdlwiKVxuICBzdGF0dXNUZXh0LmNsYXNzTGlzdCA9IFwiZXhlcmNpc2UtbG9hZGluZy1kZXRhaWxzXCI7XG4gIHN0YXR1c1RleHQgPSBzdGF0dXNDb250YWluZXIuYXBwZW5kQ2hpbGQoc3RhdHVzVGV4dCk7XG4gIHN0YXR1c1RleHQudGV4dENvbnRlbnQgPSBgSW5pdGlhbGlzZWA7XG5cbiAgLy8gSG9pc3QgaW5kaWNhdG9yIG91dCBmcm9tIGZpbmFsIHNsaWRlIHdoZW4gcnVubmluZyB1bmRlciByZXZlYWxcbiAgY29uc3QgcmV2ZWFsU3RhdHVzID0gZG9jdW1lbnQucXVlcnlTZWxlY3RvcihcIi5yZXZlYWwgLmV4ZXJjaXNlLWxvYWRpbmctaW5kaWNhdG9yXCIpO1xuICBpZiAocmV2ZWFsU3RhdHVzKSB7XG4gICAgcmV2ZWFsU3RhdHVzLnJlbW92ZSgpO1xuICAgIGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoXCIucmV2ZWFsID4gLnNsaWRlc1wiKS5hcHBlbmRDaGlsZChyZXZlYWxTdGF0dXMpO1xuICB9XG5cbiAgLy8gTWFrZSBhbnkgcmV2ZWFsIHNsaWRlcyB3aXRoIGxpdmUgY2VsbHMgc2Nyb2xsYWJsZVxuICBkb2N1bWVudC5xdWVyeVNlbGVjdG9yQWxsKFwiLnJldmVhbCAuZXhlcmNpc2UtY2VsbFwiKS5mb3JFYWNoKChlbCkgPT4ge1xuICAgIGVsLmNsb3Nlc3QoJ3NlY3Rpb24uc2xpZGUnKS5jbGFzc0xpc3QuYWRkKFwic2Nyb2xsYWJsZVwiKTtcbiAgfSlcblxuICAvLyB3ZWJSIHN1cHBsZW1lbnRhbCBkYXRhIGFuZCBvcHRpb25zXG4gIGNvbnN0IGRhdGFDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItZGF0YVxcXCJdYCkudGV4dENvbnRlbnQ7XG4gIGNvbnN0IGRhdGEgPSBKU09OLnBhcnNlKGI2NERlY29kZShkYXRhQ29udGVudCkpO1xuXG4gIC8vIEdyYWIgbGlzdCBvZiByZXNvdXJjZXMgdG8gYmUgZG93bmxvYWRlZFxuICBjb25zdCBmaWxlc0NvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwidmZzLWZpbGVcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBmaWxlcyA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKGZpbGVzQ29udGVudCkpO1xuXG4gIC8vIFVzZSBQb3N0TWVzc2FnZSBjaGFubmVsIGZvciBhc3luYyBjb21tdW5pY2F0aW9uXG4gIC8vIFdlIGRvIG5vdCBleHBlY3QgdG8gdGFrZSBuZXN0ZWQgcHJvbXB0IGlucHV0IGluIFF1YXJ0byBMaXZlIGNlbGxzXG4gIGRhdGEub3B0aW9ucy5jaGFubmVsVHlwZSA9IENoYW5uZWxUeXBlLlBvc3RNZXNzYWdlO1xuXG4gIC8vIEluaXRpYWxpc2Ugd2ViUiBhbmQgc2V0dXAgZm9yIFIgY29kZSBldmFsdWF0aW9uXG4gIGxldCB3ZWJSUHJvbWlzZSA9IChhc3luYyAod2ViUikgPT4ge1xuICAgIHN0YXR1c1RleHQudGV4dENvbnRlbnQgPSBgRG93bmxvYWRpbmcgd2ViUmA7XG4gICAgYXdhaXQgd2ViUi5pbml0KCk7XG5cbiAgICAvLyBJbnN0YWxsIHByb3ZpZGVkIGxpc3Qgb2YgcGFja2FnZXNcbiAgICAvLyBFbnN1cmUgd2ViUiBkZWZhdWx0IHJlcG8gaXMgaW5jbHVkZWRcbiAgICBkYXRhLnBhY2thZ2VzLnJlcG9zLnB1c2goXCJodHRwczovL3JlcG8uci13YXNtLm9yZ1wiKVxuICAgIGF3YWl0IGRhdGEucGFja2FnZXMucGtncy5tYXAoKHBrZykgPT4gKCkgPT4ge1xuICAgICAgc3RhdHVzVGV4dC50ZXh0Q29udGVudCA9IGBEb3dubG9hZGluZyBwYWNrYWdlOiAke3BrZ31gO1xuICAgICAgcmV0dXJuIHdlYlIuZXZhbFJWb2lkKGBcbiAgICAgICAgd2Vicjo6aW5zdGFsbChwa2csIHJlcG9zID0gcmVwb3MpXG4gICAgICAgIGxpYnJhcnkocGtnLCBjaGFyYWN0ZXIub25seSA9IFRSVUUpXG4gICAgICBgLCB7IGVudjoge1xuICAgICAgICBwa2c6IHBrZyxcbiAgICAgICAgcmVwb3M6IGRhdGEucGFja2FnZXMucmVwb3MsXG4gICAgICB9fSk7XG4gICAgfSkucmVkdWNlKChjdXIsIG5leHQpID0+IGN1ci50aGVuKG5leHQpLCBQcm9taXNlLnJlc29sdmUoKSk7XG5cbiAgICAvLyBEb3dubG9hZCBhbmQgaW5zdGFsbCByZXNvdXJjZXNcbiAgICBhd2FpdCBmaWxlcy5tYXAoKGZpbGUpID0+IGFzeW5jICgpID0+IHtcbiAgICAgIGNvbnN0IG5hbWUgPSBmaWxlLnN1YnN0cmluZyhmaWxlLmxhc3RJbmRleE9mKCcvJykgKyAxKTtcbiAgICAgIHN0YXR1c1RleHQudGV4dENvbnRlbnQgPSBgRG93bmxvYWRpbmcgcmVzb3VyY2U6ICR7bmFtZX1gO1xuICAgICAgY29uc3QgcmVzcG9uc2UgPSBhd2FpdCBmZXRjaChmaWxlKTtcbiAgICAgIGlmICghcmVzcG9uc2Uub2spIHtcbiAgICAgICAgdGhyb3cgbmV3IEVycm9yKGBDYW4ndCBkb3dubG9hZCBcXGAke2ZpbGV9XFxgLiBFcnJvciAke3Jlc3BvbnNlLnN0YXR1c306IFwiJHtyZXNwb25zZS5zdGF0dXNUZXh0fVwiLmApO1xuICAgICAgfVxuICAgICAgY29uc3QgZGF0YSA9IGF3YWl0IHJlc3BvbnNlLmFycmF5QnVmZmVyKCk7XG5cbiAgICAgIC8vIFN0b3JlIFVSTHMgaW4gdGhlIGN3ZCB3aXRob3V0IGFueSBzdWJkaXJlY3Rvcnkgc3RydWN0dXJlXG4gICAgICBpZiAoZmlsZS5pbmNsdWRlcyhcIjovL1wiKSkge1xuICAgICAgICBmaWxlID0gbmFtZTtcbiAgICAgIH1cblxuICAgICAgLy8gQ29sbGFwc2UgaGlnaGVyIGRpcmVjdG9yeSBzdHJ1Y3R1cmVcbiAgICAgIGZpbGUgPSBjb2xsYXBzZVBhdGgoZmlsZSk7XG5cbiAgICAgIC8vIENyZWF0ZSBkaXJlY3RvcnkgdHJlZSwgaWdub3JpbmcgXCJkaXJlY3RvcnkgZXhpc3RzXCIgVkZTIGVycm9yc1xuICAgICAgY29uc3QgcGFydHMgPSBmaWxlLnNwbGl0KCcvJykuc2xpY2UoMCwgLTEpO1xuICAgICAgbGV0IHBhdGggPSAnJztcbiAgICAgIHdoaWxlIChwYXJ0cy5sZW5ndGggPiAwKSB7XG4gICAgICAgIHBhdGggKz0gcGFydHMuc2hpZnQoKSArICcvJztcbiAgICAgICAgdHJ5IHtcbiAgICAgICAgICBhd2FpdCB3ZWJSLkZTLm1rZGlyKHBhdGgpO1xuICAgICAgICB9IGNhdGNoIChlKSB7XG4gICAgICAgICAgaWYgKCFlLm1lc3NhZ2UuaW5jbHVkZXMoXCJGUyBlcnJvclwiKSkge1xuICAgICAgICAgICAgdGhyb3cgZTtcbiAgICAgICAgICB9XG4gICAgICAgIH1cbiAgICAgIH1cblxuICAgICAgLy8gV3JpdGUgdGhpcyBmaWxlIHRvIHRoZSBWRlNcbiAgICAgIHJldHVybiBhd2FpdCB3ZWJSLkZTLndyaXRlRmlsZShmaWxlLCBuZXcgVWludDhBcnJheShkYXRhKSk7XG4gICAgfSkucmVkdWNlKChjdXIsIG5leHQpID0+IGN1ci50aGVuKG5leHQpLCBQcm9taXNlLnJlc29sdmUoKSk7XG5cbiAgICBzdGF0dXNUZXh0LnRleHRDb250ZW50ID0gYEluc3RhbGxpbmcgd2ViUiBzaGltc2A7XG4gICAgYXdhaXQgd2ViUi5ldmFsUlZvaWQoYHdlYnI6OnNoaW1faW5zdGFsbCgpYCk7XG5cbiAgICBzdGF0dXNUZXh0LnRleHRDb250ZW50ID0gYFdlYlIgZW52aXJvbm1lbnQgc2V0dXBgO1xuICAgIGF3YWl0IHNldHVwUih3ZWJSLCBkYXRhKTtcblxuICAgIHN0YXR1c1RleHQucmVtb3ZlKCk7XG4gICAgaWYgKHN0YXR1c0NvbnRhaW5lci5jaGlsZHJlbi5sZW5ndGggPT0gMCkge1xuICAgICAgc3RhdHVzQ29udGFpbmVyLnBhcmVudE5vZGUucmVtb3ZlKCk7XG4gICAgfVxuICAgIHJldHVybiB3ZWJSO1xuICB9KShuZXcgV2ViUihkYXRhLm9wdGlvbnMpKTtcblxuICAvLyBLZWVwIHRyYWNrIG9mIGluaXRpYWwgT0pTIGJsb2NrIHJlbmRlclxuICBjb25zdCByZW5kZXJlZE9qcyA9IHt9O1xuXG4gIGNvbnN0IHByb2Nlc3MgPSBhc3luYyAoY29udGV4dCwgaW5wdXRzKSA9PiB7XG4gICAgY29uc3Qgd2ViUiA9IGF3YWl0IHdlYlJQcm9taXNlO1xuICAgIGNvbnN0IGV2YWx1YXRvciA9IG5ldyBXZWJSRXZhbHVhdG9yKHdlYlIsIGNvbnRleHQpXG4gICAgYXdhaXQgZXZhbHVhdG9yLnByb2Nlc3MoaW5wdXRzKTtcbiAgICByZXR1cm4gZXZhbHVhdG9yLmNvbnRhaW5lcjtcbiAgfVxuXG4gIHJldHVybiB7XG4gICAgcHJvY2VzcyxcbiAgICB3ZWJSUHJvbWlzZSxcbiAgICByZW5kZXJlZE9qcyxcbiAgfTtcbn1cbiJ9XX0=
+</script>
+<div id="exercise-loading-indicator" class="exercise-loading-indicator d-none d-flex align-items-center gap-2">
+<div id="exercise-loading-status" class="d-flex gap-2">
+
+</div>
+<div class="spinner-grow spinner-grow-sm">
+
+</div>
+</div>
+<script type="vfs-file">
+WyJkYXRvcy9yYW5hcy5jc3YiXQ==
+</script>
 </section>
 
 </main> <!-- /main -->
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W119
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../..";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
