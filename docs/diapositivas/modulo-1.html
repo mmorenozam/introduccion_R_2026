@@ -901,6 +901,226 @@ s = \sqrt{\frac{\sum_{i=1}^{n}(x_i - \bar{x})^2}{n - 1}}
 </div>
 </div>
 </section>
+<section id="otras-formas-de-calcular-estadísticos-descriptivos" class="slide level2">
+<h2>Otras formas de calcular estadísticos descriptivos</h2>
+<p>La forma más sencilla de calcular los estadísticos descriptivos de una tabla de datos es usando la función base <code>summary</code></p>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a></a><span class="fu">summary</span>(ranas)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     Block        Tank.Unique           Pred          Hatch           Res    
+ Min.   :1.000   Min.   : 1.00   Length   :78   Length   :78   Length   :78  
+ 1st Qu.:2.000   1st Qu.:20.25   N.unique : 3   N.unique : 2   N.unique : 2  
+ Median :4.000   Median :40.50   N.blank  : 0   N.blank  : 0   N.blank  : 0  
+ Mean   :4.128   Mean   :44.24   Min.nchar: 1   Min.nchar: 1   Min.nchar: 2  
+ 3rd Qu.:6.000   3rd Qu.:67.50   Max.nchar: 2   Max.nchar: 1   Max.nchar: 2  
+ Max.   :8.000   Max.   :96.00                                               
+    Age.DPO       Age.FromEmergence  SVL.initial     Tail.initial  
+ Min.   : 38.11   Min.   :  4.111   Min.   :16.32   Min.   :4.411  
+ 1st Qu.: 47.74   1st Qu.: 13.738   1st Qu.:18.03   1st Qu.:5.330  
+ Median : 57.44   Median : 23.439   Median :18.94   Median :5.680  
+ Mean   : 64.69   Mean   : 30.687   Mean   :19.00   Mean   :5.867  
+ 3rd Qu.: 71.68   3rd Qu.: 37.682   3rd Qu.:19.68   3rd Qu.:6.163  
+ Max.   :140.90   Max.   :106.902   Max.   :22.30   Max.   :8.600  
+   SVL.final       Mass.final      Resorb.days   
+ Min.   :16.68   Min.   :0.2693   Min.   :3.375  
+ 1st Qu.:18.29   1st Qu.:0.3592   1st Qu.:4.024  
+ Median :19.23   Median :0.4043   Median :4.255  
+ Mean   :19.38   Mean   :0.4301   Mean   :4.400  
+ 3rd Qu.:20.02   3rd Qu.:0.4618   3rd Qu.:4.789  
+ Max.   :23.30   Max.   :0.7500   Max.   :6.500  </code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="estadísticos-descriptivos-1" class="slide level2 smaller" data-visibility="uncounted">
+<h2>Estadísticos descriptivos</h2>
+<ul>
+<li class="fragment"><p>Usar la función <code>summary</code> resulta útil para hacer chequeos sobre la marcha.</p></li>
+<li class="fragment"><p>Para obtener una tabla de estadísticos descriptivos más útil en términos de presentación de resultados, usaremos básicamente dos funciones del paquete <code>{tidycomm}</code></p>
+<ul>
+<li class="fragment"><p><code>describe</code>: para generar tablas de estadísticos descriptivos de variables cuantitativas</p></li>
+<li class="fragment"><p><code>describe_cat</code>: para tablas de estadísticos descriptivos de variables categóricas</p></li>
+</ul></li>
+</ul>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a></a><span class="fu">library</span>(tidycomm)</span>
+<span id="cb83-2"><a></a><span class="fu">describe</span>(ranas)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 9 × 15
+  Variable            N Missing      M     SD    Min    Q25    Mdn    Q75    Max
+* &lt;chr&gt;           &lt;int&gt;   &lt;int&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+1 Block              78       0  4.13   2.30   1      2      4      6       8   
+2 Tank.Unique        78       0 44.2   28.0    1     20.2   40.5   67.5    96   
+3 Age.DPO            78       0 64.7   23.8   38.1   47.7   57.4   71.7   141.  
+4 Age.FromEmerge…    78       0 30.7   23.8    4.11  13.7   23.4   37.7   107.  
+5 SVL.initial        78       0 19.0    1.34  16.3   18.0   18.9   19.7    22.3 
+6 Tail.initial       78       0  5.87   0.845  4.41   5.33   5.68   6.16    8.6 
+7 SVL.final          78       0 19.4    1.44  16.7   18.3   19.2   20.0    23.3 
+8 Mass.final         78       0  0.430  0.109  0.269  0.359  0.404  0.462   0.75
+9 Resorb.days        78       0  4.40   0.595  3.38   4.02   4.26   4.79    6.5 
+# ℹ 5 more variables: Range &lt;dbl&gt;, CI_95_LL &lt;dbl&gt;, CI_95_UL &lt;dbl&gt;,
+#   Skewness &lt;dbl&gt;, Kurtosis &lt;dbl&gt;</code></pre>
+</div>
+</div>
+</div>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a></a><span class="fu">describe_cat</span>(ranas)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 6
+  Variable     N Missing Unique Mode  Mode_N
+* &lt;chr&gt;    &lt;int&gt;   &lt;int&gt;  &lt;dbl&gt; &lt;chr&gt;  &lt;int&gt;
+1 Pred        78       0      3 C         32
+2 Hatch       78       0      2 L         39
+3 Res         78       0      2 Hi        39</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="tablas-de-frecuencia" class="slide level2">
+<h2>Tablas de frecuencia</h2>
+<ul>
+<li class="fragment"><p>Existen dos formas de crear tablas de frecuencia:</p>
+<ul>
+<li class="fragment"><p>A partir de variables categóricas</p></li>
+<li class="fragment"><p>Categorizando una variable continua</p></li>
+</ul></li>
+<li class="fragment"><p>Usualmente se presentan:</p>
+<ul>
+<li class="fragment"><p>Frecuencia absoluta: número de observaciones por categoría</p></li>
+<li class="fragment"><p>Frecuencia acumulada: suma de frecuencias absolutas</p></li>
+<li class="fragment"><p>Frecuencia relativa: frecuencia absoluta/total de observaciones</p></li>
+<li class="fragment"><p>Frecuencia relativa acumulada: suma de frecuencias relativas</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="tablas-de-frecuencia-1" class="slide level2" data-visibility="uncounted" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">Tablas de frecuencia</h2>
+<ul>
+<li class="fragment">A partir de una variable categórica</li>
+</ul>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb87" data-code-line-numbers="1|2"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb87-1" class="hljs-ln-code"><a></a><span class="fu">library</span>(fdth)                     <span class="co"># ftdh es una librería que nos permite calcular tablas de frecuencia</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</section>
+<section id="tablas-de-frecuencia-2" class="slide level2" data-visibility="uncounted" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">Tablas de frecuencia</h2>
+<ul>
+<li>A partir de una variable categórica</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb88" data-code-line-numbers="3"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb88-1" class="hljs-ln-code"><a></a><span class="fu">library</span>(fdth)                   <span class="co"># fdth es una librería que nos permite calcular tablas de </span></span>
+<span id="cb88-2" class="hljs-ln-code"><a></a><span class="fu">head</span>(ranas)                  <span class="co"># le damos un vistazo a las variables (columnas)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Block Tank.Unique Pred Hatch Res  Age.DPO Age.FromEmergence SVL.initial
+1     1           1   NL     L  Hi 47.19149          13.19149    19.42553
+2     1           2    C     E  Hi 45.38095          11.38095    18.40476
+3     1           3    C     L  Hi 53.82222          19.82222    18.92667
+4     1           4    L     L  Lo 56.92308          22.92308    18.82692
+5     1           5   NL     E  Hi 64.75000          30.75000    19.71500
+6     1           6    L     E  Hi 44.00000          10.00000    21.47500
+  Tail.initial SVL.final Mass.final Resorb.days
+1     4.834043  19.65957  0.4178723    3.489362
+2     5.369048  19.00952  0.3821429    3.785714
+3     4.802222  19.12000  0.4117778    3.511111
+4     4.634615  19.11538  0.3823077    3.653846
+5     5.435000  20.11000  0.4865000    4.225000
+6     7.837500  21.97500  0.7375000    5.000000</code></pre>
+</div>
+</div>
+</section>
+<section id="tablas-de-frecuencia-3" class="slide level2" data-visibility="uncounted" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">Tablas de frecuencia</h2>
+<ul>
+<li>A partir de una variable categórica</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb90" data-code-line-numbers="3"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb90-1" class="hljs-ln-code"><a></a><span class="fu">library</span>(fdth)                   <span class="co"># fdth es una librería que nos permite calcular tablas de frecuencia</span></span>
+<span id="cb90-2" class="hljs-ln-code"><a></a>tabla_frec1 <span class="ot">&lt;-</span> <span class="fu">fdt_cat</span>(ranas<span class="sc">$</span>Pred) <span class="co"># fdt_cat es la función de ftdh que calcula la tabla de frecuencia</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="tablas-de-frecuencia-4" class="slide level2" data-visibility="uncounted" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">Tablas de frecuencia</h2>
+<ul>
+<li>A partir de una variable categórica</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb91" data-code-line-numbers="4"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb91-1" class="hljs-ln-code"><a></a><span class="fu">library</span>(fdth)                   <span class="co"># fdth es una librería que nos permite calcular tablas de frecuencia</span></span>
+<span id="cb91-2" class="hljs-ln-code"><a></a>tabla_frec1 <span class="ot">&lt;-</span> <span class="fu">fdt_cat</span>(ranas<span class="sc">$</span>Pred) <span class="co"># fdt_cat es la función de ftdh que calcula la tabla de frecuencia</span></span>
+<span id="cb91-3" class="hljs-ln-code"><a></a>tabla_frec1</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> Category  f   rf rf(%) cf  cf(%)
+        C 32 0.41 41.03 32  41.03
+        L 32 0.41 41.03 64  82.05
+       NL 14 0.18 17.95 78 100.00</code></pre>
+</div>
+</div>
+<div class="fragment">
+<ul>
+<li><p>f: frecuencia absoluta</p></li>
+<li><p>rf: frecuencia relativa, rf(%): frecuencia relativa en %</p></li>
+<li><p>cf: frecuencia acumulada, cf(%): frecuencia acumulada en %</p></li>
+</ul>
+</div>
+</section>
+<section id="tablas-de-frecuencia-5" class="slide level2" data-visibility="uncounted" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">Tablas de frecuencia</h2>
+<ul>
+<li class="fragment">Categorizando una variable continua</li>
+</ul>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb93"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb93-1" class="hljs-ln-code"><a></a>tabla_frec2 <span class="ot">&lt;-</span> <span class="fu">fdt</span>(ranas<span class="sc">$</span>SVL.initial, <span class="at">na.rm =</span> T)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</section>
+<section id="tablas-de-frecuencia-6" class="slide level2" data-visibility="uncounted" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">Tablas de frecuencia</h2>
+<ul>
+<li>Categorizando una variable continua</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb94" data-code-line-numbers="2"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb94-1" class="hljs-ln-code"><a></a>tabla_frec2 <span class="ot">&lt;-</span> <span class="fu">fdt</span>(ranas<span class="sc">$</span>SVL.initial, <span class="at">na.rm =</span> T)</span>
+<span id="cb94-2" class="hljs-ln-code"><a></a>tabla_frec2</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    Class limits  f   rf rf(%) cf  cf(%)
+ [16.157,16.953)  3 0.04  3.85  3   3.85
+ [16.953,17.749)  6 0.08  7.69  9  11.54
+ [17.749,18.544) 25 0.32 32.05 34  43.59
+  [18.544,19.34) 18 0.23 23.08 52  66.67
+  [19.34,20.136) 14 0.18 17.95 66  84.62
+ [20.136,20.932)  2 0.03  2.56 68  87.18
+ [20.932,21.727)  6 0.08  7.69 74  94.87
+ [21.727,22.523)  4 0.05  5.13 78 100.00</code></pre>
+</div>
+</div>
+<ul>
+<li class="fragment">La librería <code>{fdth}</code> categoriza una variable continua en base a tres distintos algoritmos. El “default” es el algoritmo “Sturges” (ver <code>?fdth</code> para más información).</li>
+</ul>
+</section>
+<section id="cómo-exporto-mis-tablas" class="slide level2">
+<h2>¿Cómo exporto mis tablas?</h2>
+<div class="fragment">
+<ul>
+<li>Existen varias opciones para exportar tablas a otros formatos (.pdf, .docx, .html)</li>
+</ul>
+</div>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb96" data-code-line-numbers="1|2|3|4|5|6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a></a><span class="fu">library</span>(flextable)</span>
+<span id="cb96-2"><a></a>ft1 <span class="ot">&lt;-</span> <span class="fu">flextable</span>(tabla_frec1)</span>
+<span id="cb96-3"><a></a>ft1 <span class="ot">&lt;-</span> <span class="fu">autofit</span>(ft1)</span>
+<span id="cb96-4"><a></a>ft2 <span class="ot">&lt;-</span> <span class="fu">flextable</span>(tabla_frec2[[<span class="dv">1</span>]]) <span class="co"># tabla_frec2 es una lista</span></span>
+<span id="cb96-5"><a></a>ft2 <span class="ot">&lt;-</span> <span class="fu">autofit</span>(ft2)</span>
+<span id="cb96-6"><a></a><span class="fu">save_as_docx</span>(<span class="st">"Tabla_1"</span> <span class="ot">=</span> ft1, <span class="st">"Tabla_2"</span> <span class="ot">=</span> ft2, </span>
+<span id="cb96-7"><a></a>             <span class="at">path =</span> <span class="st">"resultados/tablas.docx"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</section>
 <section id="section-3" class="slide level2">
 <h2></h2>
 <div class="columns">
