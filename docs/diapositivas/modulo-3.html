@@ -266,7 +266,7 @@
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a><span class="fu">boxplot</span>(Mass.final <span class="sc">~</span> Pred, <span class="at">data =</span> ranas, <span class="at">xlab =</span> <span class="st">"Depredador"</span>, <span class="at">ylab =</span> <span class="st">"Masa final (g)"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="modulo-3_files/figure-html/unnamed-chunk-2-1.png" width="672" class="r-stretch"><div class="callout callout-tip callout-style-simple">
+<img data-src="modulo-3_files/figure-revealjs/unnamed-chunk-2-1.png" width="960" class="r-stretch"><div class="callout callout-tip callout-style-simple">
 <div class="callout-body">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -379,7 +379,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <span id="cb6-2"><a></a><span class="fu">plot</span>(modelo, <span class="at">which =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="modulo-3_files/figure-html/unnamed-chunk-4-1.png" width="1056" class="r-stretch"><p>Residuos frente a ajustados: ¿la dispersión es parecida en cada columna? Q-Q: ¿los puntos siguen la línea?</p>
+<img data-src="modulo-3_files/figure-revealjs/unnamed-chunk-4-1.png" width="1056" class="r-stretch"><p>Residuos frente a ajustados: ¿la dispersión es parecida en cada columna? Q-Q: ¿los puntos siguen la línea?</p>
 </section>
 <section id="pruebas-formales" class="slide level2 smaller">
 <h2>Pruebas formales</h2>
@@ -463,7 +463,7 @@ NL-L -0.10534804 -0.17297232 -0.03772377 0.0010842</code></pre>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a><span class="fu">plot</span>(<span class="fu">TukeyHSD</span>(modelo))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="modulo-3_files/figure-html/unnamed-chunk-7-1.png" width="672" class="r-stretch"><p>Un intervalo que <strong>no contiene el cero</strong> indica una diferencia entre ese par de grupos.</p>
+<img data-src="modulo-3_files/figure-revealjs/unnamed-chunk-7-1.png" width="960" class="r-stretch"><p>Un intervalo que <strong>no contiene el cero</strong> indica una diferencia entre ese par de grupos.</p>
 </section></section>
 <section>
 <section id="cuando-los-supuestos-fallan" class="title-slide slide level1 center">
@@ -477,7 +477,7 @@ NL-L -0.10534804 -0.17297232 -0.03772377 0.0010842</code></pre>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a><span class="fu">boxplot</span>(count <span class="sc">~</span> spray, <span class="at">data =</span> InsectSprays, <span class="at">xlab =</span> <span class="st">"Insecticida"</span>, <span class="at">ylab =</span> <span class="st">"Insectos"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="modulo-3_files/figure-html/unnamed-chunk-8-1.png" width="672" class="r-stretch"><div class="cell">
+<img data-src="modulo-3_files/figure-revealjs/unnamed-chunk-8-1.png" width="960" class="r-stretch"><div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a>modelo_insectos <span class="ot">&lt;-</span> <span class="fu">aov</span>(count <span class="sc">~</span> spray, <span class="at">data =</span> InsectSprays)</span>
 <span id="cb15-2"><a></a><span class="fu">shapiro.test</span>(<span class="fu">residuals</span>(modelo_insectos))<span class="sc">$</span>p.value</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -523,7 +523,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </details>
 
 </div>
-<img data-src="modulo-3_files/figure-html/unnamed-chunk-11-1.png" width="1056" class="r-stretch"><ul>
+<img data-src="modulo-3_files/figure-revealjs/unnamed-chunk-11-1.png" width="1056" class="r-stretch"><ul>
 <li class="fragment">Después de transformar, <strong>siempre</strong> hay que volver a revisar los diagnósticos.</li>
 <li class="fragment">Tukey sobre el modelo transformado compara las medias en la escala transformada.</li>
 </ul>
@@ -985,6 +985,82 @@ P value adjustment method: holm </code></pre>
     menu_div = document.querySelector(".progress");
     document.querySelector(".slides").appendChild(menu_div);
     </script>
+
+    
+
+    <script>
+
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+
+      // slide changes (different for each slide format).
+
+      (function () {
+
+        // dispatch for htmlwidgets
+
+        function fireSlideEnter() {
+
+          const event = window.document.createEvent("Event");
+
+          event.initEvent("slideenter", true, true);
+
+          window.document.dispatchEvent(event);
+
+        }
+
+    
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+
+          fireSlideEnter();
+
+    
+
+          // dispatch for shiny
+
+          if (window.jQuery) {
+
+            if (previousSlide) {
+
+              window.jQuery(previousSlide).trigger("hidden");
+
+            }
+
+            if (currentSlide) {
+
+              window.jQuery(currentSlide).trigger("shown");
+
+            }
+
+          }
+
+        }
+
+    
+
+        // hookup for slidy
+
+        if (window.w3c_slidy) {
+
+          window.w3c_slidy.add_observer(function (slide_num) {
+
+            // slide_num starts at position 1
+
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+
+          });
+
+        }
+
+    
+
+      })();
+
+    </script>
+
+    
 
     <script id="quarto-html-after-body" type="application/javascript">
       window.document.addEventListener("DOMContentLoaded", function (event) {

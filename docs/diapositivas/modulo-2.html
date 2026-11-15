@@ -371,7 +371,7 @@ attr(,"conf.level")
 </details>
 
 </div>
-<img data-src="modulo-2_files/figure-html/unnamed-chunk-3-1.png" width="1056" class="r-stretch"><p>Los intervalos en naranja no contienen a <span class="math inline">\(\mu\)</span>: son 3 de 50.</p>
+<img data-src="modulo-2_files/figure-revealjs/unnamed-chunk-3-1.png" width="1056" class="r-stretch"><p>Los intervalos en naranja no contienen a <span class="math inline">\(\mu\)</span>: son 3 de 50.</p>
 </section>
 <section id="section-1" class="slide level2">
 <h2></h2>
@@ -502,7 +502,7 @@ attr(,"conf.level")
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="modulo-2_files/figure-html/unnamed-chunk-4-1.png" width="960"></p>
+<p><img data-src="modulo-2_files/figure-revealjs/unnamed-chunk-4-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -765,7 +765,7 @@ alternative hypothesis: true location shift is not equal to 0</code></pre>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="modulo-2_files/figure-html/unnamed-chunk-15-1.png" width="1056"></p>
+<p><img data-src="modulo-2_files/figure-revealjs/unnamed-chunk-15-1.png" width="1056"></p>
 </figure>
 </div>
 </div>
@@ -1260,6 +1260,82 @@ attr(,"conf.level")
     menu_div = document.querySelector(".progress");
     document.querySelector(".slides").appendChild(menu_div);
     </script>
+
+    
+
+    <script>
+
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+
+      // slide changes (different for each slide format).
+
+      (function () {
+
+        // dispatch for htmlwidgets
+
+        function fireSlideEnter() {
+
+          const event = window.document.createEvent("Event");
+
+          event.initEvent("slideenter", true, true);
+
+          window.document.dispatchEvent(event);
+
+        }
+
+    
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+
+          fireSlideEnter();
+
+    
+
+          // dispatch for shiny
+
+          if (window.jQuery) {
+
+            if (previousSlide) {
+
+              window.jQuery(previousSlide).trigger("hidden");
+
+            }
+
+            if (currentSlide) {
+
+              window.jQuery(currentSlide).trigger("shown");
+
+            }
+
+          }
+
+        }
+
+    
+
+        // hookup for slidy
+
+        if (window.w3c_slidy) {
+
+          window.w3c_slidy.add_observer(function (slide_num) {
+
+            // slide_num starts at position 1
+
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+
+          });
+
+        }
+
+    
+
+      })();
+
+    </script>
+
+    
 
     <script id="quarto-html-after-body" type="application/javascript">
       window.document.addEventListener("DOMContentLoaded", function (event) {

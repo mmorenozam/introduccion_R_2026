@@ -314,6 +314,176 @@ experimento$tanques
 
 Muchos resultados de R, como los de `t.test()` o `aov()`, son listas.
 
+# Operaciones básicas en R
+
+## Operaciones aritméticas {.smaller}
+
+::: incremental
+-   Podemos llevar a cabo las cinco operaciones básicas sobre la totalidad de elementos numéricos de un objeto sin mayor inconveniente. Ejemplo:
+:::
+
+. . .
+
+```{r echo=T, eval=T, error=T}
+a <- c(10, 20, -50, -10, 0)
+a / 100
+a * 10
+a + 30
+a - 30
+a ^ 2
+```
+
+## Operaciones lógicas {.smaller}
+
+::: incremental
+-   De manera similar, los operadores lógicos también actúan sobre cada elemento de un objeto
+:::
+
+. . .
+
+```{r echo=T, eval=T, error=T}
+a <- c(10, 20, -50, -10, 0)
+a > 0
+a >= 0
+a == 0
+a != 0
+a < 0
+a <= 0
+```
+
+## Concatenación de vectores {.smaller}
+
+::: incremental
+-   Podemos también concatenar uno o más objetos a un vector preexistente. Esto es útil, por ejemplo, al crear nuestras propias funciones. Veamos un ejemplo sencillo:
+:::
+
+. . .
+
+```{r echo=T, eval=T, error=T}
+b <- c(a, 2)
+b
+extra <- c(3, 5)       # no lo llamamos c: ese nombre ya lo usa la función c()
+d <- c(a, b, extra)
+d
+```
+
+## Creación de factores {.smaller}
+
+::: incremental
+-   Es muy importante el especificar cuando una variable es un factor.
+
+-   Como mencioné anteriormente, R reconocerá de manera automática como carácter cualquier valor que no sea numérico.
+
+-   En caso de usar como factor una variable que R reconoce únicamente como carácter, R realizará todo análisis que le pidamos utilizando el orden alfabético de la variable como el orden de los niveles del factor. Esto puede ser problemático si:
+
+    -   Queremos que los niveles del factor tengan un orden específico.
+
+    -   Las pruebas estadísticas que realicemos requieren especificar un nivel como referencia.
+:::
+
+## Creación de factores {visibility="uncounted" .smaller}
+
+**Factor ordenado alfabéticamente**
+
+```{r echo=T, eval=T, error=T}
+#| include: true
+variable_factor_1 <- c("A", "A", "B", "C", "C", "C")
+variable_factor_1 <- factor(variable_factor_1)
+str(variable_factor_1)
+```
+
+. . .
+
+**Factor con orden distinto al alfabético**
+
+. . .
+
+```{r echo=T, eval=T, error=T}
+#| include: true
+variable_factor_2 <- c("Tr.A", "Tr.A", "Tr.B", "Control", "Control", "Control")
+variable_factor_2 <- factor(variable_factor_2, levels = c("Tr.A", "Tr.B", "Control"))
+str(variable_factor_2)
+```
+
+. . .
+
+Si tuviésemos muchos niveles del factor, y solo estamos interesados en que uno de ellos sea la referencia:
+
+```{r echo=T, eval=T, error=T}
+#| include: true
+variable_factor_2 <- c("Tr.A", "Tr.A", "Tr.B", "Control", "Control", "Control")
+variable_factor_2 <- relevel(factor(variable_factor_2), ref = "Tr.A")
+str(variable_factor_2)
+```
+
+## Transformación de valores {.smaller}
+
+::: incremental
+-   Las transformaciones más comunes de valores son a valores numéricos, caracteres y fechas.
+
+-   Para esto usaremos las funciones `as.numeric()`, `as.character()` y `as.Date()`, respectivamente.
+:::
+
+. . .
+
+**Ejemplo** `as.numeric`. A veces, al importar datos, R toma valores numéricos como caracteres (una causa común es marcar los valores perdidos con texto en el archivo de origen).
+
+. . .
+
+```{r echo=T, eval=T, error=T}
+#| include: true
+#| code-line-numbers: "1|2"
+trans_num <- c(1, 2, "NA", 3, 4)
+str(trans_num)
+```
+
+. . .
+
+```{r echo=T, eval=T, error=T}
+#| include: true
+#| code-line-numbers: "1|2"
+trans_num <- as.numeric(trans_num)
+str(trans_num)
+```
+
+. . .
+
+**Ejemplo** `as.character`.
+
+```{r echo=T, eval=T, error=T}
+#| include: true
+#| code-line-numbers: "1|2|3"
+str(variable_factor_2)
+variable_factor_2 <- as.character(variable_factor_2)
+str(variable_factor_2)
+```
+
+## Transformación de valores {.smaller visibility="uncounted"}
+
+**Fechas**
+
+::: incremental
+-   La transformación de caracteres a fechas depende enormemente de los distintos formatos que existen para denotar una y de las unidades que se usan.
+
+-   Por tanto, no existe una solución única. Aquí abarcaremos el caso más sencillo en que el formato es YYYY-MM-DD.
+
+-   La función base `as.Date()` abarca una gran diversidad de capacidades para transformar fechas. Sin embargo, su uso puede resultar un poco confuso. En caso de que necesites una solución más específica, recomiendo el paquete `{lubridate}` del conjunto de paquetes `{tidyverse}`.
+:::
+
+. . .
+
+**Ejemplo** `as.Date`
+
+```{r echo=T, eval=T, error=T}
+#| include: true
+#| code-line-numbers: "1|2|3|4"
+fechas <- c("1985-10-14", "2021-12-25", "2023-01-01", "1999-05-06", "1900-01-02")
+str(fechas)
+fechas <- as.Date(fechas)
+str(fechas)
+```
+
+
 ## {}
 
 ::: columns
@@ -524,44 +694,44 @@ prop.table(table(ranas$Pred))
 table(ranas$Pred, ranas$Res)
 ```
 
-## Otras formas de calcular estadísticos descriptivos
+## Otras formas de calcular estadísticos descriptivos {.smaller}
 
 ::: incremental
-La forma más sencilla de calcular los estadísticos descriptivos de una tabla de datos es usando la función base `summary`
+-   La forma más sencilla de calcular los estadísticos descriptivos de una tabla de datos es la función base `summary()`.
 :::
 
 . . .
 
-```{r echo=T, eval=T, error=T}
+```{r}
 summary(ranas)
 ```
 
 ## Estadísticos descriptivos {.smaller visibility="uncounted"}
 
 ::: incremental
--   Usar la función `summary` resulta útil para hacer chequeos sobre la marcha.
+-   `summary()` resulta útil para hacer chequeos sobre la marcha.
 
--   Para obtener una tabla de estadísticos descriptivos más útil en términos de presentación de resultados, usaremos básicamente dos funciones del paquete `{tidycomm}`
+-   Para obtener una tabla de estadísticos descriptivos lista para presentar resultados, usaremos dos funciones del paquete `{tidycomm}`:
 
-    -   `describe`: para generar tablas de estadísticos descriptivos de variables cuantitativas
+    -   `describe()`: tablas de estadísticos descriptivos de variables cuantitativas
 
-    -   `describe_cat`: para tablas de estadísticos descriptivos de variables categóricas
+    -   `describe_cat()`: tablas de estadísticos descriptivos de variables categóricas
 :::
 
 . . .
 
-```{r echo=T, eval=T, error=T}
+```{r}
 library(tidycomm)
 describe(ranas)
 ```
 
 . . .
 
-```{r echo=T, eval=T, error=T}
+```{r}
 describe_cat(ranas)
 ```
 
-## Tablas de frecuencia
+## Tablas de frecuencia {.smaller}
 
 ::: incremental
 -   Existen dos formas de crear tablas de frecuencia:
@@ -576,7 +746,7 @@ describe_cat(ranas)
 
     -   Frecuencia acumulada: suma de frecuencias absolutas
 
-    -   Frecuencia relativa: frecuencia absoluta/total de observaciones
+    -   Frecuencia relativa: frecuencia absoluta / total de observaciones
 
     -   Frecuencia relativa acumulada: suma de frecuencias relativas
 :::
@@ -589,39 +759,29 @@ describe_cat(ranas)
 
 . . .
 
-```{r echo=T, eval=T}
-#| code-line-numbers: "1|2"
-library(fdth)                     # ftdh es una librería que nos permite calcular tablas de frecuencia
+```{r}
+#| code-line-numbers: "1"
+library(fdth)                     # {fdth} calcula tablas de frecuencia
 ```
 
 ## Tablas de frecuencia {visibility="uncounted" auto-animate="true"}
 
 -   A partir de una variable categórica
 
-```{r echo=T, eval=T}
+```{r}
+#| code-line-numbers: "2"
+library(fdth)                     # {fdth} calcula tablas de frecuencia
+tabla_frec1 <- fdt_cat(ranas$Pred)  # fdt_cat() hace la tabla de una variable categórica
+```
+
+## Tablas de frecuencia {visibility="uncounted" auto-animate="true"}
+
+-   A partir de una variable categórica
+
+```{r}
 #| code-line-numbers: "3"
-library(fdth)                   # fdth es una librería que nos permite calcular tablas de 
-head(ranas)                  # le damos un vistazo a las variables (columnas)
-```
-
-## Tablas de frecuencia {visibility="uncounted" auto-animate="true"}
-
--   A partir de una variable categórica
-
-```{r echo=T, eval=T}
-#| code-line-numbers: "3"
-library(fdth)                   # fdth es una librería que nos permite calcular tablas de frecuencia
-tabla_frec1 <- fdt_cat(ranas$Pred) # fdt_cat es la función de ftdh que calcula la tabla de frecuencia
-```
-
-## Tablas de frecuencia {visibility="uncounted" auto-animate="true"}
-
--   A partir de una variable categórica
-
-```{r echo=T, eval=T}
-#| code-line-numbers: "4"
-library(fdth)                   # fdth es una librería que nos permite calcular tablas de frecuencia
-tabla_frec1 <- fdt_cat(ranas$Pred) # fdt_cat es la función de ftdh que calcula la tabla de frecuencia
+library(fdth)                     # {fdth} calcula tablas de frecuencia
+tabla_frec1 <- fdt_cat(ranas$Pred)  # fdt_cat() hace la tabla de una variable categórica
 tabla_frec1
 ```
 
@@ -636,46 +796,47 @@ tabla_frec1
 ## Tablas de frecuencia {visibility="uncounted" auto-animate="true"}
 
 ::: incremental
--   Categorizando una variable continua
+-   Categorizando una variable continua: la longitud inicial (`SVL.initial`)
 :::
 
 . . .
 
-```{r echo=T, eval=T, error=T}
+```{r}
 #| code-line-numbers: "1"
-tabla_frec2 <- fdt(ranas$SVL.initial, na.rm = T)
+tabla_frec2 <- fdt(ranas$SVL.initial, na.rm = TRUE)
 ```
 
 ## Tablas de frecuencia {visibility="uncounted" auto-animate="true"}
 
--   Categorizando una variable continua
+-   Categorizando una variable continua: la longitud inicial (`SVL.initial`)
 
-```{r echo=T, eval=T, error=T}
+```{r}
 #| code-line-numbers: "2"
-tabla_frec2 <- fdt(ranas$SVL.initial, na.rm = T)
+tabla_frec2 <- fdt(ranas$SVL.initial, na.rm = TRUE)
 tabla_frec2
 ```
 
 ::: incremental
--   La librería `{fdth}` categoriza una variable continua en base a tres distintos algoritmos. El "default" es el algoritmo "Sturges" (ver `?fdth` para más información).
+-   `{fdth}` divide la variable continua en clases con uno de tres algoritmos. El predeterminado es el de Sturges (ver `?fdt`).
 :::
 
-## ¿Cómo exporto mis tablas?
+## ¿Cómo exporto mis tablas? {.smaller}
 
 . . .
 
--   Existen varias opciones para exportar tablas a otros formatos (.pdf, .docx, .html)
+-   Existen varias opciones para exportar tablas a otros formatos (.pdf, .docx, .html). Por ejemplo, con `{flextable}`:
 
 . . .
 
-```{r echo=T, eval=F, error=T}
-#| code-line-numbers: "1|2|3|4|5|6"
+```{r}
+#| eval: false
+#| code-line-numbers: "1|2|3|4|5|6-7"
 library(flextable)
 ft1 <- flextable(tabla_frec1)
 ft1 <- autofit(ft1)
-ft2 <- flextable(tabla_frec2[[1]]) # tabla_frec2 es una lista
+ft2 <- flextable(tabla_frec2[[1]])   # tabla_frec2 es una lista: la tabla es su primer elemento
 ft2 <- autofit(ft2)
-save_as_docx("Tabla_1" = ft1, "Tabla_2" = ft2, 
+save_as_docx("Tabla 1" = ft1, "Tabla 2" = ft2,
              path = "resultados/tablas.docx")
 ```
 

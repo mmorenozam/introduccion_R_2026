@@ -1,40 +1,5 @@
 [
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Introducción a R",
-    "section": "",
-    "text": "Anuncios\n\n\n\n\nBienvenidos. La primera clase es el domingo 15 de noviembre, a las 9H00. Antes, revisa los requisitos e instala R y RStudio siguiendo la guía de Recursos.\nEste curso brinda herramientas estadísticas de aplicación inmediata mediante el uso del lenguaje R. Está pensado para una audiencia diversa: no hace falta un conocimiento profundo de teoría estadística ni experiencia previa en programación.\nDesde la primera hora de clase vas a usar R para analizar datos, y avanzarás paso a paso desde la estadística descriptiva y las pruebas de hipótesis básicas hasta el análisis de varianza (ANOVA). Al terminar, podrás obtener un certificado de aprobación."
-  },
-  {
-    "objectID": "index.html#cuatro-módulos-un-mismo-camino",
-    "href": "index.html#cuatro-módulos-un-mismo-camino",
-    "title": "Introducción a R",
-    "section": "Cuatro módulos, un mismo camino",
-    "text": "Cuatro módulos, un mismo camino\n\n\n\nDomingo 15 de noviembre\n\n1. Generalidades e introducción a R\nR y RStudio, proyectos, objetos, paquetes, importación de datos y estadísticos descriptivos.\nIr al módulo\n\n\n\n\n\nDomingo 22 de noviembre\n\n2. Estadística inferencial\nMuestras y poblaciones, intervalos de confianza, pruebas t y pruebas de Wilcoxon.\nIr al módulo\n\n\n\n\n\nDomingo 29 de noviembre\n\n3. Análisis de varianza\nANOVA de una vía, supuestos y diagnósticos, comparaciones múltiples y Kruskal-Wallis.\nIr al módulo\n\n\n\n\n\nDomingo 6 de diciembre\n\n4. ANOVA de múltiples vías y exportación\nANOVA aditivo y no aditivo de dos vías; exportar resultados a csv, Excel y Word.\nIr al módulo\n\n\n\n\nVer el programa completo →"
-  },
-  {
-    "objectID": "index.html#cómo-aprendemos",
-    "href": "index.html#cómo-aprendemos",
-    "title": "Introducción a R",
-    "section": "Cómo aprendemos",
-    "text": "Cómo aprendemos\n\nPrimero la pregunta, luego el código. Cada prueba estadística empieza con la pregunta que responde y con un gráfico de los datos.\nPracticar desde el primer día. Exposiciones cortas seguidas de trabajo práctico en R, en clase y en casa.\nTus propios datos. Te animamos a aplicar cada método a tus datos, a la par de los ejemplos del curso.\nBuenas prácticas desde el inicio. Proyectos de R, scripts ordenados y análisis reproducibles.\nMateriales abiertos. Diapositivas, ejercicios y datos están disponibles en este sitio."
-  },
-  {
-    "objectID": "index.html#explora",
-    "href": "index.html#explora",
-    "title": "Introducción a R",
-    "section": "Explora",
-    "text": "Explora\n\n\n\nEjercicios\nEjercicios interactivos de R que corren en tu navegador, sin instalar nada. Cada uno tiene pistas, y las soluciones se publican al terminar cada módulo.\nEmpezar con el Módulo 1\n\n\n\n\nAutoevaluación\nPreguntas cortas de opción múltiple, anónimas, con explicaciones. Te muestran qué ideas necesitan un repaso.\nAutoevaluación del Módulo 1\n\n\n\n\nEvaluación y certificado\n40% ejercicios en clase, 60% examen virtual. Con 7 de 10 puntos obtienes el certificado de aprobación.\nCómo se evalúa"
-  },
-  {
-    "objectID": "diapositivas/modulo-4.html",
-    "href": "diapositivas/modulo-4.html",
-    "title": "ANOVA aditivo de dos vías",
-    "section": "",
-    "text": "Módulo 4: ANOVA de múltiples vías y exportación de resultados\n\nMauricio Moreno, PhD\nDomingo 6 de diciembre de 2026"
-  },
-  {
     "objectID": "diapositivas/modulo-4.html#section",
     "href": "diapositivas/modulo-4.html#section",
     "title": "Introducción a R",
@@ -180,13 +145,6 @@
     "title": "Introducción a R",
     "section": "",
     "text": "¡Gracias!\n\n\n\n\n\n\n\nCréditos de fotos\n\n\nPortada por Becomes Co en Unsplash\nFoto final por Wolfgang Hasselmann en Unsplash\nResto de fotos: varias fuentes"
-  },
-  {
-    "objectID": "diapositivas/modulo-2.html",
-    "href": "diapositivas/modulo-2.html",
-    "title": "Muestras y poblaciones",
-    "section": "",
-    "text": "Módulo 2: Introducción a la estadística inferencial con R\n\nMauricio Moreno, PhD\nDomingo 22 de noviembre de 2026"
   },
   {
     "objectID": "diapositivas/modulo-2.html#section",
@@ -700,6 +658,34 @@
     "text": "¿Y después?\nEste curso es el primero de dos. El segundo, Visualización de datos en R, cubre {tidyverse}, {ggplot2} y reportes con Quarto. Lo ideal es tomar los dos en orden, aunque el segundo incluye un módulo introductorio para quienes no hayan tomado este."
   },
   {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Introducción a R",
+    "section": "",
+    "text": "Anuncios\n\n\n\n\nBienvenidos. La primera clase es el domingo 15 de noviembre, a las 9H00. Antes, revisa los requisitos e instala R y RStudio siguiendo la guía de Recursos.\nEste curso brinda herramientas estadísticas de aplicación inmediata mediante el uso del lenguaje R. Está pensado para una audiencia diversa: no hace falta un conocimiento profundo de teoría estadística ni experiencia previa en programación.\nDesde la primera hora de clase vas a usar R para analizar datos, y avanzarás paso a paso desde la estadística descriptiva y las pruebas de hipótesis básicas hasta el análisis de varianza (ANOVA). Al terminar, podrás obtener un certificado de aprobación."
+  },
+  {
+    "objectID": "index.html#cuatro-módulos-un-mismo-camino",
+    "href": "index.html#cuatro-módulos-un-mismo-camino",
+    "title": "Introducción a R",
+    "section": "Cuatro módulos, un mismo camino",
+    "text": "Cuatro módulos, un mismo camino\n\n\n\nDomingo 15 de noviembre\n\n1. Generalidades e introducción a R\nR y RStudio, proyectos, objetos, paquetes, importación de datos y estadísticos descriptivos.\nIr al módulo\n\n\n\n\n\nDomingo 22 de noviembre\n\n2. Estadística inferencial\nMuestras y poblaciones, intervalos de confianza, pruebas t y pruebas de Wilcoxon.\nIr al módulo\n\n\n\n\n\nDomingo 29 de noviembre\n\n3. Análisis de varianza\nANOVA de una vía, supuestos y diagnósticos, comparaciones múltiples y Kruskal-Wallis.\nIr al módulo\n\n\n\n\n\nDomingo 6 de diciembre\n\n4. ANOVA de múltiples vías y exportación\nANOVA aditivo y no aditivo de dos vías; exportar resultados a csv, Excel y Word.\nIr al módulo\n\n\n\n\nVer el programa completo →"
+  },
+  {
+    "objectID": "index.html#cómo-aprendemos",
+    "href": "index.html#cómo-aprendemos",
+    "title": "Introducción a R",
+    "section": "Cómo aprendemos",
+    "text": "Cómo aprendemos\n\nPrimero la pregunta, luego el código. Cada prueba estadística empieza con la pregunta que responde y con un gráfico de los datos.\nPracticar desde el primer día. Exposiciones cortas seguidas de trabajo práctico en R, en clase y en casa.\nTus propios datos. Te animamos a aplicar cada método a tus datos, a la par de los ejemplos del curso.\nBuenas prácticas desde el inicio. Proyectos de R, scripts ordenados y análisis reproducibles.\nMateriales abiertos. Diapositivas, ejercicios y datos están disponibles en este sitio."
+  },
+  {
+    "objectID": "index.html#explora",
+    "href": "index.html#explora",
+    "title": "Introducción a R",
+    "section": "Explora",
+    "text": "Explora\n\n\n\nEjercicios\nEjercicios interactivos de R que corren en tu navegador, sin instalar nada. Cada uno tiene pistas, y las soluciones se publican al terminar cada módulo.\nEmpezar con el Módulo 1\n\n\n\n\nAutoevaluación\nPreguntas cortas de opción múltiple, anónimas, con explicaciones. Te muestran qué ideas necesitan un repaso.\nAutoevaluación del Módulo 1\n\n\n\n\nEvaluación y certificado\n40% ejercicios en clase, 60% examen virtual. Con 7 de 10 puntos obtienes el certificado de aprobación.\nCómo se evalúa"
+  },
+  {
     "objectID": "modulo-1.html",
     "href": "modulo-1.html",
     "title": "Módulo 1: Generalidades e introducción a R",
@@ -942,14 +928,14 @@
     "href": "recursos.html",
     "title": "Recursos",
     "section": "",
-    "text": "Instala los programas en este orden, antes de la primera clase:\n\nR, desde CRAN: elige tu sistema operativo y descarga la versión más reciente.\nRStudio Desktop, desde Posit (versión gratuita).\nAbre RStudio y, en la consola, instala los paquetes que usaremos:\n\ninstall.packages(c(\"readxl\", \"writexl\", \"flextable\"))\n\n\n\n\n\n\n¿No puedes instalar R todavía?\n\n\n\nLos ejercicios de este sitio corren en tu navegador, así que puedes empezar a practicar mientras resuelves la instalación. Si tienes problemas, escribe al correo del curso antes del primer domingo."
+    "text": "Instala los programas en este orden, antes de la primera clase:\n\nR, desde CRAN: elige tu sistema operativo y descarga la versión más reciente.\nRStudio Desktop, desde Posit (versión gratuita).\nAbre RStudio y, en la consola, instala los paquetes que usaremos:\n\ninstall.packages(c(\"readxl\", \"writexl\", \"flextable\", \"tidycomm\", \"fdth\"))\n\n\n\n\n\n\n¿No puedes instalar R todavía?\n\n\n\nLos ejercicios de este sitio corren en tu navegador, así que puedes empezar a practicar mientras resuelves la instalación. Si tienes problemas, escribe al correo del curso antes del primer domingo."
   },
   {
     "objectID": "recursos.html#instalacion",
     "href": "recursos.html#instalacion",
     "title": "Recursos",
     "section": "",
-    "text": "Instala los programas en este orden, antes de la primera clase:\n\nR, desde CRAN: elige tu sistema operativo y descarga la versión más reciente.\nRStudio Desktop, desde Posit (versión gratuita).\nAbre RStudio y, en la consola, instala los paquetes que usaremos:\n\ninstall.packages(c(\"readxl\", \"writexl\", \"flextable\"))\n\n\n\n\n\n\n¿No puedes instalar R todavía?\n\n\n\nLos ejercicios de este sitio corren en tu navegador, así que puedes empezar a practicar mientras resuelves la instalación. Si tienes problemas, escribe al correo del curso antes del primer domingo."
+    "text": "Instala los programas en este orden, antes de la primera clase:\n\nR, desde CRAN: elige tu sistema operativo y descarga la versión más reciente.\nRStudio Desktop, desde Posit (versión gratuita).\nAbre RStudio y, en la consola, instala los paquetes que usaremos:\n\ninstall.packages(c(\"readxl\", \"writexl\", \"flextable\", \"tidycomm\", \"fdth\"))\n\n\n\n\n\n\n¿No puedes instalar R todavía?\n\n\n\nLos ejercicios de este sitio corren en tu navegador, así que puedes empezar a practicar mientras resuelves la instalación. Si tienes problemas, escribe al correo del curso antes del primer domingo."
   },
   {
     "objectID": "recursos.html#libros-gratuitos-en-español",
@@ -978,13 +964,6 @@
     "title": "Recursos",
     "section": "Cursos anteriores",
     "text": "Cursos anteriores\n\nBioestadística en R (2025): taller de 40 horas con R, {tidyverse}, {ggplot2}, inferencia, diseño de experimentos, modelos lineales y Quarto."
-  },
-  {
-    "objectID": "diapositivas/modulo-1.html",
-    "href": "diapositivas/modulo-1.html",
-    "title": "R y RStudio",
-    "section": "",
-    "text": "Módulo 1: Generalidades e introducción a R\n\nMauricio Moreno, PhD\nDomingo 15 de noviembre de 2026"
   },
   {
     "objectID": "diapositivas/modulo-1.html#section",
@@ -1113,6 +1092,55 @@
     "text": "Listas\nUna lista guarda objetos de cualquier tipo, incluso otras tablas.\n\nexperimento &lt;- list(nombre = \"ranas\", tanques = 78, tabla = tanques)\nexperimento$tanques\n\n[1] 78\n\n\n\nMuchos resultados de R, como los de t.test() o aov(), son listas."
   },
   {
+    "objectID": "diapositivas/modulo-1.html#operaciones-aritméticas",
+    "href": "diapositivas/modulo-1.html#operaciones-aritméticas",
+    "title": "Introducción a R",
+    "section": "Operaciones aritméticas",
+    "text": "Operaciones aritméticas\n\nPodemos llevar a cabo las cinco operaciones básicas sobre la totalidad de elementos numéricos de un objeto sin mayor inconveniente. Ejemplo:\n\n\n\na &lt;- c(10, 20, -50, -10, 0)\na / 100\n\n[1]  0.1  0.2 -0.5 -0.1  0.0\n\na * 10\n\n[1]  100  200 -500 -100    0\n\na + 30\n\n[1]  40  50 -20  20  30\n\na - 30\n\n[1] -20 -10 -80 -40 -30\n\na ^ 2\n\n[1]  100  400 2500  100    0"
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#operaciones-lógicas",
+    "href": "diapositivas/modulo-1.html#operaciones-lógicas",
+    "title": "Introducción a R",
+    "section": "Operaciones lógicas",
+    "text": "Operaciones lógicas\n\nDe manera similar, los operadores lógicos también actúan sobre cada elemento de un objeto\n\n\n\na &lt;- c(10, 20, -50, -10, 0)\na &gt; 0\n\n[1]  TRUE  TRUE FALSE FALSE FALSE\n\na &gt;= 0\n\n[1]  TRUE  TRUE FALSE FALSE  TRUE\n\na == 0\n\n[1] FALSE FALSE FALSE FALSE  TRUE\n\na != 0\n\n[1]  TRUE  TRUE  TRUE  TRUE FALSE\n\na &lt; 0\n\n[1] FALSE FALSE  TRUE  TRUE FALSE\n\na &lt;= 0\n\n[1] FALSE FALSE  TRUE  TRUE  TRUE"
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#concatenación-de-vectores",
+    "href": "diapositivas/modulo-1.html#concatenación-de-vectores",
+    "title": "Introducción a R",
+    "section": "Concatenación de vectores",
+    "text": "Concatenación de vectores\n\nPodemos también concatenar uno o más objetos a un vector preexistente. Esto es útil, por ejemplo, al crear nuestras propias funciones. Veamos un ejemplo sencillo:\n\n\n\nb &lt;- c(a, 2)\nb\n\n[1]  10  20 -50 -10   0   2\n\nextra &lt;- c(3, 5)       # no lo llamamos c: ese nombre ya lo usa la función c()\nd &lt;- c(a, b, extra)\nd\n\n [1]  10  20 -50 -10   0  10  20 -50 -10   0   2   3   5"
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#creación-de-factores",
+    "href": "diapositivas/modulo-1.html#creación-de-factores",
+    "title": "Introducción a R",
+    "section": "Creación de factores",
+    "text": "Creación de factores\n\nEs muy importante el especificar cuando una variable es un factor.\nComo mencioné anteriormente, R reconocerá de manera automática como carácter cualquier valor que no sea numérico.\nEn caso de usar como factor una variable que R reconoce únicamente como carácter, R realizará todo análisis que le pidamos utilizando el orden alfabético de la variable como el orden de los niveles del factor. Esto puede ser problemático si:\n\nQueremos que los niveles del factor tengan un orden específico.\nLas pruebas estadísticas que realicemos requieren especificar un nivel como referencia."
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#creación-de-factores-1",
+    "href": "diapositivas/modulo-1.html#creación-de-factores-1",
+    "title": "Introducción a R",
+    "section": "Creación de factores",
+    "text": "Creación de factores\nFactor ordenado alfabéticamente\n\nvariable_factor_1 &lt;- c(\"A\", \"A\", \"B\", \"C\", \"C\", \"C\")\nvariable_factor_1 &lt;- factor(variable_factor_1)\nstr(variable_factor_1)\n\n Factor w/ 3 levels \"A\",\"B\",\"C\": 1 1 2 3 3 3\n\n\n\nFactor con orden distinto al alfabético\n\n\n\nvariable_factor_2 &lt;- c(\"Tr.A\", \"Tr.A\", \"Tr.B\", \"Control\", \"Control\", \"Control\")\nvariable_factor_2 &lt;- factor(variable_factor_2, levels = c(\"Tr.A\", \"Tr.B\", \"Control\"))\nstr(variable_factor_2)\n\n Factor w/ 3 levels \"Tr.A\",\"Tr.B\",..: 1 1 2 3 3 3\n\n\n\n\nSi tuviésemos muchos niveles del factor, y solo estamos interesados en que uno de ellos sea la referencia:\n\nvariable_factor_2 &lt;- c(\"Tr.A\", \"Tr.A\", \"Tr.B\", \"Control\", \"Control\", \"Control\")\nvariable_factor_2 &lt;- relevel(factor(variable_factor_2), ref = \"Tr.A\")\nstr(variable_factor_2)\n\n Factor w/ 3 levels \"Tr.A\",\"Control\",..: 1 1 3 2 2 2"
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#transformación-de-valores",
+    "href": "diapositivas/modulo-1.html#transformación-de-valores",
+    "title": "Introducción a R",
+    "section": "Transformación de valores",
+    "text": "Transformación de valores\n\nLas transformaciones más comunes de valores son a valores numéricos, caracteres y fechas.\nPara esto usaremos las funciones as.numeric(), as.character() y as.Date(), respectivamente.\n\n\nEjemplo as.numeric. A veces, al importar datos, R toma valores numéricos como caracteres (una causa común es marcar los valores perdidos con texto en el archivo de origen).\n\n\n\ntrans_num &lt;- c(1, 2, \"NA\", 3, 4)\nstr(trans_num)\n\n chr [1:5] \"1\" \"2\" \"NA\" \"3\" \"4\"\n\n\n\n\n\ntrans_num &lt;- as.numeric(trans_num)\nstr(trans_num)\n\n num [1:5] 1 2 NA 3 4\n\n\n\n\nEjemplo as.character.\n\nstr(variable_factor_2)\n\n Factor w/ 3 levels \"Tr.A\",\"Control\",..: 1 1 3 2 2 2\n\nvariable_factor_2 &lt;- as.character(variable_factor_2)\nstr(variable_factor_2)\n\n chr [1:6] \"Tr.A\" \"Tr.A\" \"Tr.B\" \"Control\" \"Control\" \"Control\""
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#transformación-de-valores-1",
+    "href": "diapositivas/modulo-1.html#transformación-de-valores-1",
+    "title": "Introducción a R",
+    "section": "Transformación de valores",
+    "text": "Transformación de valores\nFechas\n\nLa transformación de caracteres a fechas depende enormemente de los distintos formatos que existen para denotar una y de las unidades que se usan.\nPor tanto, no existe una solución única. Aquí abarcaremos el caso más sencillo en que el formato es YYYY-MM-DD.\nLa función base as.Date() abarca una gran diversidad de capacidades para transformar fechas. Sin embargo, su uso puede resultar un poco confuso. En caso de que necesites una solución más específica, recomiendo el paquete {lubridate} del conjunto de paquetes {tidyverse}.\n\n\nEjemplo as.Date\n\nfechas &lt;- c(\"1985-10-14\", \"2021-12-25\", \"2023-01-01\", \"1999-05-06\", \"1900-01-02\")\nstr(fechas)\n\n chr [1:5] \"1985-10-14\" \"2021-12-25\" \"2023-01-01\" \"1999-05-06\" \"1900-01-02\"\n\nfechas &lt;- as.Date(fechas)\nstr(fechas)\n\n Date[1:5], format: \"1985-10-14\" \"2021-12-25\" \"2023-01-01\" \"1999-05-06\" \"1900-01-02\""
+  },
+  {
     "objectID": "diapositivas/modulo-1.html#section-1",
     "href": "diapositivas/modulo-1.html#section-1",
     "title": "Introducción a R",
@@ -1197,6 +1225,69 @@
     "text": "Variables categóricas\n\ntable(ranas$Pred)\n\n\n C  L NL \n32 32 14 \n\nprop.table(table(ranas$Pred))\n\n\n        C         L        NL \n0.4102564 0.4102564 0.1794872 \n\ntable(ranas$Pred, ranas$Res)\n\n    \n     Hi Lo\n  C  16 16\n  L  16 16\n  NL  7  7"
   },
   {
+    "objectID": "diapositivas/modulo-1.html#otras-formas-de-calcular-estadísticos-descriptivos",
+    "href": "diapositivas/modulo-1.html#otras-formas-de-calcular-estadísticos-descriptivos",
+    "title": "Introducción a R",
+    "section": "Otras formas de calcular estadísticos descriptivos",
+    "text": "Otras formas de calcular estadísticos descriptivos\n\nLa forma más sencilla de calcular los estadísticos descriptivos de una tabla de datos es la función base summary().\n\n\n\nsummary(ranas)\n\n     Block        Tank.Unique           Pred          Hatch           Res    \n Min.   :1.000   Min.   : 1.00   Length   :78   Length   :78   Length   :78  \n 1st Qu.:2.000   1st Qu.:20.25   N.unique : 3   N.unique : 2   N.unique : 2  \n Median :4.000   Median :40.50   N.blank  : 0   N.blank  : 0   N.blank  : 0  \n Mean   :4.128   Mean   :44.24   Min.nchar: 1   Min.nchar: 1   Min.nchar: 2  \n 3rd Qu.:6.000   3rd Qu.:67.50   Max.nchar: 2   Max.nchar: 1   Max.nchar: 2  \n Max.   :8.000   Max.   :96.00                                               \n    Age.DPO       Age.FromEmergence  SVL.initial     Tail.initial  \n Min.   : 38.11   Min.   :  4.111   Min.   :16.32   Min.   :4.411  \n 1st Qu.: 47.74   1st Qu.: 13.738   1st Qu.:18.03   1st Qu.:5.330  \n Median : 57.44   Median : 23.439   Median :18.94   Median :5.680  \n Mean   : 64.69   Mean   : 30.687   Mean   :19.00   Mean   :5.867  \n 3rd Qu.: 71.68   3rd Qu.: 37.682   3rd Qu.:19.68   3rd Qu.:6.163  \n Max.   :140.90   Max.   :106.902   Max.   :22.30   Max.   :8.600  \n   SVL.final       Mass.final      Resorb.days   \n Min.   :16.68   Min.   :0.2693   Min.   :3.375  \n 1st Qu.:18.29   1st Qu.:0.3592   1st Qu.:4.024  \n Median :19.23   Median :0.4043   Median :4.255  \n Mean   :19.38   Mean   :0.4301   Mean   :4.400  \n 3rd Qu.:20.02   3rd Qu.:0.4618   3rd Qu.:4.789  \n Max.   :23.30   Max.   :0.7500   Max.   :6.500"
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#estadísticos-descriptivos-1",
+    "href": "diapositivas/modulo-1.html#estadísticos-descriptivos-1",
+    "title": "Introducción a R",
+    "section": "Estadísticos descriptivos",
+    "text": "Estadísticos descriptivos\n\nsummary() resulta útil para hacer chequeos sobre la marcha.\nPara obtener una tabla de estadísticos descriptivos lista para presentar resultados, usaremos dos funciones del paquete {tidycomm}:\n\ndescribe(): tablas de estadísticos descriptivos de variables cuantitativas\ndescribe_cat(): tablas de estadísticos descriptivos de variables categóricas\n\n\n\n\nlibrary(tidycomm)\ndescribe(ranas)\n\n# A tibble: 9 × 15\n  Variable            N Missing      M     SD    Min    Q25    Mdn    Q75    Max\n* &lt;chr&gt;           &lt;int&gt;   &lt;int&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;\n1 Block              78       0  4.13   2.30   1      2      4      6       8   \n2 Tank.Unique        78       0 44.2   28.0    1     20.2   40.5   67.5    96   \n3 Age.DPO            78       0 64.7   23.8   38.1   47.7   57.4   71.7   141.  \n4 Age.FromEmerge…    78       0 30.7   23.8    4.11  13.7   23.4   37.7   107.  \n5 SVL.initial        78       0 19.0    1.34  16.3   18.0   18.9   19.7    22.3 \n6 Tail.initial       78       0  5.87   0.845  4.41   5.33   5.68   6.16    8.6 \n7 SVL.final          78       0 19.4    1.44  16.7   18.3   19.2   20.0    23.3 \n8 Mass.final         78       0  0.430  0.109  0.269  0.359  0.404  0.462   0.75\n9 Resorb.days        78       0  4.40   0.595  3.38   4.02   4.26   4.79    6.5 \n# ℹ 5 more variables: Range &lt;dbl&gt;, CI_95_LL &lt;dbl&gt;, CI_95_UL &lt;dbl&gt;,\n#   Skewness &lt;dbl&gt;, Kurtosis &lt;dbl&gt;\n\n\n\n\n\ndescribe_cat(ranas)\n\n# A tibble: 3 × 6\n  Variable     N Missing Unique Mode  Mode_N\n* &lt;chr&gt;    &lt;int&gt;   &lt;int&gt;  &lt;dbl&gt; &lt;chr&gt;  &lt;int&gt;\n1 Pred        78       0      3 C         32\n2 Hatch       78       0      2 L         39\n3 Res         78       0      2 Hi        39"
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#tablas-de-frecuencia",
+    "href": "diapositivas/modulo-1.html#tablas-de-frecuencia",
+    "title": "Introducción a R",
+    "section": "Tablas de frecuencia",
+    "text": "Tablas de frecuencia\n\nExisten dos formas de crear tablas de frecuencia:\n\nA partir de variables categóricas\nCategorizando una variable continua\n\nUsualmente se presentan:\n\nFrecuencia absoluta: número de observaciones por categoría\nFrecuencia acumulada: suma de frecuencias absolutas\nFrecuencia relativa: frecuencia absoluta / total de observaciones\nFrecuencia relativa acumulada: suma de frecuencias relativas"
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#tablas-de-frecuencia-1",
+    "href": "diapositivas/modulo-1.html#tablas-de-frecuencia-1",
+    "title": "Introducción a R",
+    "section": "Tablas de frecuencia",
+    "text": "Tablas de frecuencia\n\nA partir de una variable categórica\n\n\n\nlibrary(fdth)                     # {fdth} calcula tablas de frecuencia"
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#tablas-de-frecuencia-2",
+    "href": "diapositivas/modulo-1.html#tablas-de-frecuencia-2",
+    "title": "Introducción a R",
+    "section": "Tablas de frecuencia",
+    "text": "Tablas de frecuencia\n\nA partir de una variable categórica\n\n\nlibrary(fdth)                     # {fdth} calcula tablas de frecuencia\ntabla_frec1 &lt;- fdt_cat(ranas$Pred)  # fdt_cat() hace la tabla de una variable categórica"
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#tablas-de-frecuencia-3",
+    "href": "diapositivas/modulo-1.html#tablas-de-frecuencia-3",
+    "title": "Introducción a R",
+    "section": "Tablas de frecuencia",
+    "text": "Tablas de frecuencia\n\nA partir de una variable categórica\n\n\nlibrary(fdth)                     # {fdth} calcula tablas de frecuencia\ntabla_frec1 &lt;- fdt_cat(ranas$Pred)  # fdt_cat() hace la tabla de una variable categórica\ntabla_frec1\n\n Category  f   rf rf(%) cf  cf(%)\n        C 32 0.41 41.03 32  41.03\n        L 32 0.41 41.03 64  82.05\n       NL 14 0.18 17.95 78 100.00\n\n\n\n\nf: frecuencia absoluta\nrf: frecuencia relativa, rf(%): frecuencia relativa en %\ncf: frecuencia acumulada, cf(%): frecuencia acumulada en %"
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#tablas-de-frecuencia-4",
+    "href": "diapositivas/modulo-1.html#tablas-de-frecuencia-4",
+    "title": "Introducción a R",
+    "section": "Tablas de frecuencia",
+    "text": "Tablas de frecuencia\n\nCategorizando una variable continua: la longitud inicial (SVL.initial)\n\n\n\ntabla_frec2 &lt;- fdt(ranas$SVL.initial, na.rm = TRUE)"
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#tablas-de-frecuencia-5",
+    "href": "diapositivas/modulo-1.html#tablas-de-frecuencia-5",
+    "title": "Introducción a R",
+    "section": "Tablas de frecuencia",
+    "text": "Tablas de frecuencia\n\nCategorizando una variable continua: la longitud inicial (SVL.initial)\n\n\ntabla_frec2 &lt;- fdt(ranas$SVL.initial, na.rm = TRUE)\ntabla_frec2\n\n    Class limits  f   rf rf(%) cf  cf(%)\n [16.157,16.953)  3 0.04  3.85  3   3.85\n [16.953,17.749)  6 0.08  7.69  9  11.54\n [17.749,18.544) 25 0.32 32.05 34  43.59\n  [18.544,19.34) 18 0.23 23.08 52  66.67\n  [19.34,20.136) 14 0.18 17.95 66  84.62\n [20.136,20.932)  2 0.03  2.56 68  87.18\n [20.932,21.727)  6 0.08  7.69 74  94.87\n [21.727,22.523)  4 0.05  5.13 78 100.00\n\n\n\n{fdth} divide la variable continua en clases con uno de tres algoritmos. El predeterminado es el de Sturges (ver ?fdt)."
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#cómo-exporto-mis-tablas",
+    "href": "diapositivas/modulo-1.html#cómo-exporto-mis-tablas",
+    "title": "Introducción a R",
+    "section": "¿Cómo exporto mis tablas?",
+    "text": "¿Cómo exporto mis tablas?\n\n\nExisten varias opciones para exportar tablas a otros formatos (.pdf, .docx, .html). Por ejemplo, con {flextable}:\n\n\n\n\nlibrary(flextable)\nft1 &lt;- flextable(tabla_frec1)\nft1 &lt;- autofit(ft1)\nft2 &lt;- flextable(tabla_frec2[[1]])   # tabla_frec2 es una lista: la tabla es su primer elemento\nft2 &lt;- autofit(ft2)\nsave_as_docx(\"Tabla 1\" = ft1, \"Tabla 2\" = ft2,\n             path = \"resultados/tablas.docx\")"
+  },
+  {
     "objectID": "diapositivas/modulo-1.html#section-3",
     "href": "diapositivas/modulo-1.html#section-3",
     "title": "Introducción a R",
@@ -1216,13 +1307,6 @@
     "title": "Introducción a R",
     "section": "",
     "text": "Fin del módulo 1\n\n\n\n\n\n\n\nCréditos de fotos\n\n\nPortada por Becomes Co en Unsplash\nFoto final por Wolfgang Hasselmann en Unsplash\nResto de fotos: varias fuentes"
-  },
-  {
-    "objectID": "diapositivas/modulo-3.html",
-    "href": "diapositivas/modulo-3.html",
-    "title": "ANOVA de una vía",
-    "section": "",
-    "text": "Módulo 3: Introducción al análisis de varianza\n\nMauricio Moreno, PhD\nDomingo 29 de noviembre de 2026"
   },
   {
     "objectID": "diapositivas/modulo-3.html#section",
@@ -1377,75 +1461,5 @@
     "title": "Introducción a R",
     "section": "",
     "text": "Fin del módulo 3\n\n\n\n\n\n\n\nCréditos de fotos\n\n\nPortada por Pat Whelen en Unsplash\nFoto final por Chris Leipelt en Unsplash\nResto de fotos: varias fuentes"
-  },
-  {
-    "objectID": "diapositivas/modulo-1.html#otras-formas-de-calcular-estadísticos-descriptivos",
-    "href": "diapositivas/modulo-1.html#otras-formas-de-calcular-estadísticos-descriptivos",
-    "title": "Introducción a R",
-    "section": "Otras formas de calcular estadísticos descriptivos",
-    "text": "Otras formas de calcular estadísticos descriptivos\nLa forma más sencilla de calcular los estadísticos descriptivos de una tabla de datos es usando la función base summary\n\n\nsummary(ranas)\n\n     Block        Tank.Unique           Pred          Hatch           Res    \n Min.   :1.000   Min.   : 1.00   Length   :78   Length   :78   Length   :78  \n 1st Qu.:2.000   1st Qu.:20.25   N.unique : 3   N.unique : 2   N.unique : 2  \n Median :4.000   Median :40.50   N.blank  : 0   N.blank  : 0   N.blank  : 0  \n Mean   :4.128   Mean   :44.24   Min.nchar: 1   Min.nchar: 1   Min.nchar: 2  \n 3rd Qu.:6.000   3rd Qu.:67.50   Max.nchar: 2   Max.nchar: 1   Max.nchar: 2  \n Max.   :8.000   Max.   :96.00                                               \n    Age.DPO       Age.FromEmergence  SVL.initial     Tail.initial  \n Min.   : 38.11   Min.   :  4.111   Min.   :16.32   Min.   :4.411  \n 1st Qu.: 47.74   1st Qu.: 13.738   1st Qu.:18.03   1st Qu.:5.330  \n Median : 57.44   Median : 23.439   Median :18.94   Median :5.680  \n Mean   : 64.69   Mean   : 30.687   Mean   :19.00   Mean   :5.867  \n 3rd Qu.: 71.68   3rd Qu.: 37.682   3rd Qu.:19.68   3rd Qu.:6.163  \n Max.   :140.90   Max.   :106.902   Max.   :22.30   Max.   :8.600  \n   SVL.final       Mass.final      Resorb.days   \n Min.   :16.68   Min.   :0.2693   Min.   :3.375  \n 1st Qu.:18.29   1st Qu.:0.3592   1st Qu.:4.024  \n Median :19.23   Median :0.4043   Median :4.255  \n Mean   :19.38   Mean   :0.4301   Mean   :4.400  \n 3rd Qu.:20.02   3rd Qu.:0.4618   3rd Qu.:4.789  \n Max.   :23.30   Max.   :0.7500   Max.   :6.500"
-  },
-  {
-    "objectID": "diapositivas/modulo-1.html#estadísticos-descriptivos-1",
-    "href": "diapositivas/modulo-1.html#estadísticos-descriptivos-1",
-    "title": "Introducción a R",
-    "section": "Estadísticos descriptivos",
-    "text": "Estadísticos descriptivos\n\nUsar la función summary resulta útil para hacer chequeos sobre la marcha.\nPara obtener una tabla de estadísticos descriptivos más útil en términos de presentación de resultados, usaremos básicamente dos funciones del paquete {tidycomm}\n\ndescribe: para generar tablas de estadísticos descriptivos de variables cuantitativas\ndescribe_cat: para tablas de estadísticos descriptivos de variables categóricas\n\n\n\n\nlibrary(tidycomm)\ndescribe(ranas)\n\n# A tibble: 9 × 15\n  Variable            N Missing      M     SD    Min    Q25    Mdn    Q75    Max\n* &lt;chr&gt;           &lt;int&gt;   &lt;int&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;\n1 Block              78       0  4.13   2.30   1      2      4      6       8   \n2 Tank.Unique        78       0 44.2   28.0    1     20.2   40.5   67.5    96   \n3 Age.DPO            78       0 64.7   23.8   38.1   47.7   57.4   71.7   141.  \n4 Age.FromEmerge…    78       0 30.7   23.8    4.11  13.7   23.4   37.7   107.  \n5 SVL.initial        78       0 19.0    1.34  16.3   18.0   18.9   19.7    22.3 \n6 Tail.initial       78       0  5.87   0.845  4.41   5.33   5.68   6.16    8.6 \n7 SVL.final          78       0 19.4    1.44  16.7   18.3   19.2   20.0    23.3 \n8 Mass.final         78       0  0.430  0.109  0.269  0.359  0.404  0.462   0.75\n9 Resorb.days        78       0  4.40   0.595  3.38   4.02   4.26   4.79    6.5 \n# ℹ 5 more variables: Range &lt;dbl&gt;, CI_95_LL &lt;dbl&gt;, CI_95_UL &lt;dbl&gt;,\n#   Skewness &lt;dbl&gt;, Kurtosis &lt;dbl&gt;\n\n\n\n\n\ndescribe_cat(ranas)\n\n# A tibble: 3 × 6\n  Variable     N Missing Unique Mode  Mode_N\n* &lt;chr&gt;    &lt;int&gt;   &lt;int&gt;  &lt;dbl&gt; &lt;chr&gt;  &lt;int&gt;\n1 Pred        78       0      3 C         32\n2 Hatch       78       0      2 L         39\n3 Res         78       0      2 Hi        39"
-  },
-  {
-    "objectID": "diapositivas/modulo-1.html#tablas-de-frecuencia",
-    "href": "diapositivas/modulo-1.html#tablas-de-frecuencia",
-    "title": "Introducción a R",
-    "section": "Tablas de frecuencia",
-    "text": "Tablas de frecuencia\n\nExisten dos formas de crear tablas de frecuencia:\n\nA partir de variables categóricas\nCategorizando una variable continua\n\nUsualmente se presentan:\n\nFrecuencia absoluta: número de observaciones por categoría\nFrecuencia acumulada: suma de frecuencias absolutas\nFrecuencia relativa: frecuencia absoluta/total de observaciones\nFrecuencia relativa acumulada: suma de frecuencias relativas"
-  },
-  {
-    "objectID": "diapositivas/modulo-1.html#tablas-de-frecuencia-1",
-    "href": "diapositivas/modulo-1.html#tablas-de-frecuencia-1",
-    "title": "Introducción a R",
-    "section": "Tablas de frecuencia",
-    "text": "Tablas de frecuencia\n\nA partir de una variable categórica\n\n\n\nlibrary(fdth)                     # ftdh es una librería que nos permite calcular tablas de frecuencia"
-  },
-  {
-    "objectID": "diapositivas/modulo-1.html#tablas-de-frecuencia-2",
-    "href": "diapositivas/modulo-1.html#tablas-de-frecuencia-2",
-    "title": "Introducción a R",
-    "section": "Tablas de frecuencia",
-    "text": "Tablas de frecuencia\n\nA partir de una variable categórica\n\n\nlibrary(fdth)                   # fdth es una librería que nos permite calcular tablas de \nhead(ranas)                  # le damos un vistazo a las variables (columnas)\n\n  Block Tank.Unique Pred Hatch Res  Age.DPO Age.FromEmergence SVL.initial\n1     1           1   NL     L  Hi 47.19149          13.19149    19.42553\n2     1           2    C     E  Hi 45.38095          11.38095    18.40476\n3     1           3    C     L  Hi 53.82222          19.82222    18.92667\n4     1           4    L     L  Lo 56.92308          22.92308    18.82692\n5     1           5   NL     E  Hi 64.75000          30.75000    19.71500\n6     1           6    L     E  Hi 44.00000          10.00000    21.47500\n  Tail.initial SVL.final Mass.final Resorb.days\n1     4.834043  19.65957  0.4178723    3.489362\n2     5.369048  19.00952  0.3821429    3.785714\n3     4.802222  19.12000  0.4117778    3.511111\n4     4.634615  19.11538  0.3823077    3.653846\n5     5.435000  20.11000  0.4865000    4.225000\n6     7.837500  21.97500  0.7375000    5.000000"
-  },
-  {
-    "objectID": "diapositivas/modulo-1.html#tablas-de-frecuencia-3",
-    "href": "diapositivas/modulo-1.html#tablas-de-frecuencia-3",
-    "title": "Introducción a R",
-    "section": "Tablas de frecuencia",
-    "text": "Tablas de frecuencia\n\nA partir de una variable categórica\n\n\nlibrary(fdth)                   # fdth es una librería que nos permite calcular tablas de frecuencia\ntabla_frec1 &lt;- fdt_cat(ranas$Pred) # fdt_cat es la función de ftdh que calcula la tabla de frecuencia"
-  },
-  {
-    "objectID": "diapositivas/modulo-1.html#tablas-de-frecuencia-4",
-    "href": "diapositivas/modulo-1.html#tablas-de-frecuencia-4",
-    "title": "Introducción a R",
-    "section": "Tablas de frecuencia",
-    "text": "Tablas de frecuencia\n\nA partir de una variable categórica\n\n\nlibrary(fdth)                   # fdth es una librería que nos permite calcular tablas de frecuencia\ntabla_frec1 &lt;- fdt_cat(ranas$Pred) # fdt_cat es la función de ftdh que calcula la tabla de frecuencia\ntabla_frec1\n\n Category  f   rf rf(%) cf  cf(%)\n        C 32 0.41 41.03 32  41.03\n        L 32 0.41 41.03 64  82.05\n       NL 14 0.18 17.95 78 100.00\n\n\n\n\nf: frecuencia absoluta\nrf: frecuencia relativa, rf(%): frecuencia relativa en %\ncf: frecuencia acumulada, cf(%): frecuencia acumulada en %"
-  },
-  {
-    "objectID": "diapositivas/modulo-1.html#tablas-de-frecuencia-5",
-    "href": "diapositivas/modulo-1.html#tablas-de-frecuencia-5",
-    "title": "Introducción a R",
-    "section": "Tablas de frecuencia",
-    "text": "Tablas de frecuencia\n\nCategorizando una variable continua\n\n\n\ntabla_frec2 &lt;- fdt(ranas$SVL.initial, na.rm = T)"
-  },
-  {
-    "objectID": "diapositivas/modulo-1.html#tablas-de-frecuencia-6",
-    "href": "diapositivas/modulo-1.html#tablas-de-frecuencia-6",
-    "title": "Introducción a R",
-    "section": "Tablas de frecuencia",
-    "text": "Tablas de frecuencia\n\nCategorizando una variable continua\n\n\ntabla_frec2 &lt;- fdt(ranas$SVL.initial, na.rm = T)\ntabla_frec2\n\n    Class limits  f   rf rf(%) cf  cf(%)\n [16.157,16.953)  3 0.04  3.85  3   3.85\n [16.953,17.749)  6 0.08  7.69  9  11.54\n [17.749,18.544) 25 0.32 32.05 34  43.59\n  [18.544,19.34) 18 0.23 23.08 52  66.67\n  [19.34,20.136) 14 0.18 17.95 66  84.62\n [20.136,20.932)  2 0.03  2.56 68  87.18\n [20.932,21.727)  6 0.08  7.69 74  94.87\n [21.727,22.523)  4 0.05  5.13 78 100.00\n\n\n\nLa librería {fdth} categoriza una variable continua en base a tres distintos algoritmos. El “default” es el algoritmo “Sturges” (ver ?fdth para más información)."
-  },
-  {
-    "objectID": "diapositivas/modulo-1.html#cómo-exporto-mis-tablas",
-    "href": "diapositivas/modulo-1.html#cómo-exporto-mis-tablas",
-    "title": "Introducción a R",
-    "section": "¿Cómo exporto mis tablas?",
-    "text": "¿Cómo exporto mis tablas?\n\n\nExisten varias opciones para exportar tablas a otros formatos (.pdf, .docx, .html)\n\n\n\n\nlibrary(flextable)\nft1 &lt;- flextable(tabla_frec1)\nft1 &lt;- autofit(ft1)\nft2 &lt;- flextable(tabla_frec2[[1]]) # tabla_frec2 es una lista\nft2 &lt;- autofit(ft2)\nsave_as_docx(\"Tabla_1\" = ft1, \"Tabla_2\" = ft2, \n             path = \"resultados/tablas.docx\")"
   }
 ]
