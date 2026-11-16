@@ -39,3 +39,7 @@ Los [ejercicios](ejercicios-1.qmd) de este sitio corren en tu navegador, así qu
 ## Cursos anteriores
 
 - [Bioestadística en R](https://mmorenozam.github.io/biohack_progR/){target="_blank"} (2025): taller de 40 horas con R, `{tidyverse}`, `{ggplot2}`, inferencia, diseño de experimentos, modelos lineales y Quarto.
+
+## Clases grabadas
+
+[Módulo 1 (15.11.2026)](https://1drv.ms/v/c/93e2169fba83ef57/IQBmtOyCQIg_QLUOmF-Luz2sARzl8FXHB0KzyuKEIEiq3a0?e=r6lYSq){target="_blank"}

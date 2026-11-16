@@ -16,7 +16,7 @@ webr:
     - datos/ranas.csv
 # Soluciones de este módulo: cambia a true después de la sesión y vuelve a renderizar.
 live:
-  show-solutions: false
+  show-solutions: true
 filters:
   - soluciones.lua
 engine: knitr
@@ -532,23 +532,7 @@ round(mean(masas), digits = ____)
 Un gramo tiene 1000 miligramos. `sort()` ordena de menor a mayor; `round(x, digits = 2)` redondea a dos decimales.
 :::
 
-## Solución
 
-::: {.solution exercise="ex_4_1"}
-```r
-masas <- c(0.42, 0.38, 0.41, 0.38, 0.49)
-
-masas * 1000
-sort(masas)
-round(mean(masas), digits = 2)
-```
-
-En miligramos: 420, 380, 410, 380 y 490. Ordenadas: 0.38, 0.38, 0.41, 0.42 y 0.49 g. La media redondeada es 0.42 g.
-:::
-
-::: {.sol-pendiente}
-La solución se publicará después de la sesión del domingo 15 de noviembre. Mientras tanto, usa la pestaña **Pista**.
-:::
 
 :::
 
@@ -577,25 +561,7 @@ mean(letal_altos$SVL.final)
 Dentro de `[ , ]`, una condición lógica antes de la coma elige las **filas** donde es `TRUE`. Para exigir dos condiciones a la vez, únelas con `&`.
 :::
 
-## Solución
 
-::: {.solution exercise="ex_4_2"}
-```r
-letal <- ranas[ranas$Pred == "L", ]
-nrow(letal)
-mean(letal$SVL.final)
-
-letal_altos <- ranas[ranas$Pred == "L" & ranas$Res == "Hi", ]
-nrow(letal_altos)
-mean(letal_altos$SVL.final)
-```
-
-Hay 32 tanques con depredador letal, con una longitud final media de 20.44 mm. De ellos, 16 tienen recursos altos, con una media de 20.53 mm.
-:::
-
-::: {.sol-pendiente}
-La solución se publicará después de la sesión del domingo 15 de noviembre. Mientras tanto, usa la pestaña **Pista**.
-:::
 
 :::
 
@@ -624,25 +590,7 @@ sum(ranas$crecimiento ____ 0)
 Asignar a `tabla$nombre_nuevo` crea una columna. `which.max()` devuelve la **posición** del valor más alto. Para contar los tanques que se encogieron, cuenta los crecimientos menores que cero.
 :::
 
-## Solución
 
-::: {.solution exercise="ex_4_3"}
-```r
-ranas$crecimiento <- ranas$SVL.final - ranas$SVL.initial
-
-mean(ranas$crecimiento)
-fila <- which.max(ranas$crecimiento)
-ranas[fila, c("Pred", "Res", "Hatch", "crecimiento")]
-
-sum(ranas$crecimiento < 0)
-```
-
-En promedio, los renacuajos crecieron 0.38 mm. El que más creció (1.18 mm, fila 75) tenía depredador letal, recursos bajos y eclosión temprana. Dos tanques tienen un crecimiento negativo.
-:::
-
-::: {.sol-pendiente}
-La solución se publicará después de la sesión del domingo 15 de noviembre. Mientras tanto, usa la pestaña **Pista**.
-:::
 
 :::
 
@@ -669,23 +617,7 @@ sum(is.na(masas))
 Si falta un valor, R no puede saber la media y devuelve `NA`. El argumento `na.rm` ("remove NA") le pide ignorar los valores faltantes.
 :::
 
-## Solución
 
-::: {.solution exercise="ex_4_4"}
-```r
-masas <- c(0.42, 0.38, NA, 0.41, 0.49)
-
-mean(masas)
-mean(masas, na.rm = TRUE)
-sum(is.na(masas))
-```
-
-`mean(masas)` devuelve `NA`. Sin el valor faltante, la media es 0.425 g. `is.na()` encuentra los faltantes: hay uno. `sd()`, `median()`, `sum()` y muchas otras funciones también tienen `na.rm`.
-:::
-
-::: {.sol-pendiente}
-La solución se publicará después de la sesión del domingo 15 de noviembre. Mientras tanto, usa la pestaña **Pista**.
-:::
 
 :::
 
@@ -709,20 +641,7 @@ aggregate(Mass.final ~ Res, data = ranas, FUN = ____)
 Usa la misma fórmula dos veces, cambiando la función en `FUN`.
 :::
 
-## Solución
 
-::: {.solution exercise="ex_4_5"}
-```r
-aggregate(Mass.final ~ Res, data = ranas, FUN = mean)
-aggregate(Mass.final ~ Res, data = ranas, FUN = sd)
-```
-
-Con recursos altos: media 0.444 g (desviación estándar 0.100 g). Con recursos bajos: media 0.416 g (0.117 g).
-:::
-
-::: {.sol-pendiente}
-La solución se publicará después de la sesión del domingo 15 de noviembre. Mientras tanto, usa la pestaña **Pista**.
-:::
 
 :::
 
