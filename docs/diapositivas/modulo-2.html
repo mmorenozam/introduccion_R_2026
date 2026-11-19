@@ -221,8 +221,9 @@
 <li>Muestras, poblaciones, parámetros y estadísticos</li>
 <li>Intervalos de confianza</li>
 <li>Pruebas de hipótesis y el valor p</li>
+<li>Supuestos y transformaciones de variables</li>
 <li>Pruebas t: una muestra, dos muestras independientes, muestras emparejadas</li>
-<li>Pruebas de Wilcoxon y transformaciones</li>
+<li>Pruebas de Wilcoxon</li>
 </ol>
 <div class="fragment">
 <div class="callout callout-note callout-style-simple">
@@ -239,31 +240,29 @@
 </section>
 <section id="los-datos-de-hoy" class="slide level2 smaller">
 <h2>Los datos de hoy</h2>
-<p>Usamos la tabla <code>ranas</code> del <a href="modulo-1.html">Módulo 1</a>, con los tratamientos como <strong>factores</strong>.</p>
+<ul>
+<li><code>glucosa</code>: glucosa (mg/dL) de 10 ratones de una línea que podría servir como modelo de hiperglucemia (datos ilustrativos).</li>
+<li><code>genderweight</code>, del paquete <code>{datarium}</code>: contiene el peso por sexo (M: hombres, F: mujeres) de 40 participantes.</li>
+<li><code>mice2</code>, del paquete <code>{datarium}</code>: contiene el peso de 10 ratones antes y después de un tratamiento.</li>
+<li><code>crime</code>, del paquete <code>{UsingR}</code>: tasas de crimen (reportes por cada 100 000 habitantes) en los estados de EE. UU. en 1983 y en 1993.</li>
+<li><code>felicidad</code>: medida de felicidad de un grupo de estudiantes antes y después de tomar una clase de estadística.</li>
+</ul>
 <div class="cell">
 <details class="code-fold">
 <summary>Mostrar el código</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a>ranas <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"datos/ranas.csv"</span>)</span>
-<span id="cb1-2"><a></a>ranas<span class="sc">$</span>Pred  <span class="ot">&lt;-</span> <span class="fu">factor</span>(ranas<span class="sc">$</span>Pred)</span>
-<span id="cb1-3"><a></a>ranas<span class="sc">$</span>Res   <span class="ot">&lt;-</span> <span class="fu">factor</span>(ranas<span class="sc">$</span>Res)</span>
-<span id="cb1-4"><a></a>ranas<span class="sc">$</span>Hatch <span class="ot">&lt;-</span> <span class="fu">factor</span>(ranas<span class="sc">$</span>Hatch)</span>
-<span id="cb1-5"><a></a><span class="fu">str</span>(ranas)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a>glucosa <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">108.7</span>, <span class="fl">93.7</span>, <span class="fl">52.7</span>, <span class="fl">79.0</span>, <span class="fl">74.7</span>, <span class="fl">131.9</span>, <span class="fl">99.5</span>, <span class="fl">63.3</span>, <span class="fl">98.6</span>, <span class="fl">92.7</span>)</span>
+<span id="cb1-2"><a></a></span>
+<span id="cb1-3"><a></a><span class="co"># install.packages("UsingR")   # solo la primera vez</span></span>
+<span id="cb1-4"><a></a><span class="co"># install.packages("datarium") # solo la primera vez</span></span>
+<span id="cb1-5"><a></a><span class="fu">library</span>(UsingR)</span>
+<span id="cb1-6"><a></a><span class="fu">library</span>(datarium)</span>
+<span id="cb1-7"><a></a><span class="fu">data</span>(crime)</span>
+<span id="cb1-8"><a></a><span class="fu">data</span>(genderweight)</span>
+<span id="cb1-9"><a></a><span class="fu">data</span>(mice2)</span>
+<span id="cb1-10"><a></a></span>
+<span id="cb1-11"><a></a>felicidad <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">before =</span> <span class="fu">c</span>(<span class="dv">30</span>,<span class="dv">43</span>,<span class="dv">21</span>,<span class="dv">24</span>,<span class="dv">23</span>,<span class="dv">40</span>,<span class="dv">29</span>,<span class="dv">56</span>,<span class="dv">38</span>,<span class="dv">16</span>),</span>
+<span id="cb1-12"><a></a>                        <span class="at">after =</span> <span class="fu">c</span>(<span class="dv">6</span>,<span class="dv">29</span>,<span class="dv">11</span>,<span class="dv">31</span>,<span class="dv">17</span>,<span class="dv">2</span>,<span class="dv">31</span>,<span class="dv">21</span>,<span class="dv">8</span>,<span class="dv">21</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-stdout">
-<pre><code>'data.frame':   78 obs. of  12 variables:
- $ Block            : int  1 1 1 1 1 1 1 1 1 1 ...
- $ Tank.Unique      : int  1 2 3 4 5 6 7 8 9 10 ...
- $ Pred             : Factor w/ 3 levels "C","L","NL": 3 1 1 2 3 2 3 1 2 1 ...
- $ Hatch            : Factor w/ 2 levels "E","L": 2 1 2 2 1 1 2 1 2 2 ...
- $ Res              : Factor w/ 2 levels "Hi","Lo": 1 1 1 2 1 1 2 2 1 2 ...
- $ Age.DPO          : num  47.2 45.4 53.8 56.9 64.8 ...
- $ Age.FromEmergence: num  13.2 11.4 19.8 22.9 30.8 ...
- $ SVL.initial      : num  19.4 18.4 18.9 18.8 19.7 ...
- $ Tail.initial     : num  4.83 5.37 4.8 4.63 5.43 ...
- $ SVL.final        : num  19.7 19 19.1 19.1 20.1 ...
- $ Mass.final       : num  0.418 0.382 0.412 0.382 0.486 ...
- $ Resorb.days      : num  3.49 3.79 3.51 3.65 4.22 ...</code></pre>
-</div>
 </div>
 </section>
 <section>
@@ -283,8 +282,8 @@
 </div>
 </div><div class="column" style="width:45%;">
 <ul>
-<li class="fragment"><strong>Población:</strong> todos los individuos sobre los que queremos concluir (todos los renacuajos de la especie).</li>
-<li class="fragment"><strong>Muestra:</strong> los que realmente medimos (78 tanques).</li>
+<li class="fragment"><strong>Población:</strong> todos los individuos sobre los que queremos concluir (por ejemplo, todos los ratones de una línea).</li>
+<li class="fragment"><strong>Muestra:</strong> los que realmente medimos (por ejemplo, los 10 ratones de <code>glucosa</code>).</li>
 <li class="fragment">En un <strong>muestreo aleatorio simple</strong>, cada individuo tiene la misma probabilidad de ser elegido.</li>
 </ul>
 </div></div>
@@ -324,6 +323,31 @@
 </ul>
 </div>
 </section>
+<section id="explorar-los-datos-glucosa" class="slide level2 smaller">
+<h2>Explorar los datos: <code>glucosa</code></h2>
+<p>Antes de cualquier prueba, miramos los datos: 10 ratones, glucosa en mg/dL.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Mostrar el código</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb2-2"><a></a><span class="fu">stripchart</span>(glucosa, <span class="at">method =</span> <span class="st">"stack"</span>, <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">col =</span> <span class="st">"#0072B2"</span>,</span>
+<span id="cb2-3"><a></a>           <span class="at">xlab =</span> <span class="st">"Glucosa (mg/dL)"</span>, <span class="at">main =</span> <span class="st">"Cada punto es un ratón"</span>)</span>
+<span id="cb2-4"><a></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="fu">mean</span>(glucosa), <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb2-5"><a></a><span class="fu">boxplot</span>(glucosa, <span class="at">horizontal =</span> <span class="cn">TRUE</span>, <span class="at">xlab =</span> <span class="st">"Glucosa (mg/dL)"</span>, <span class="at">main =</span> <span class="st">"Diagrama de caja"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="modulo-2_files/figure-revealjs/unnamed-chunk-2-1.png" width="1056" class="r-stretch"><div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a><span class="fu">summary</span>(glucosa)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  52.70   75.78   93.20   89.48   99.28  131.90 </code></pre>
+</div>
+</div>
+<ul>
+<li class="fragment">¿Dónde está el centro? ¿Hay valores muy alejados? Con solo 10 datos, cada ratón pesa mucho en la media.</li>
+</ul>
+</section>
 <section id="intervalos-de-confianza" class="slide level2 smaller">
 <h2>Intervalos de confianza</h2>
 <p>Un intervalo de confianza del 95% para la media:</p>
@@ -332,9 +356,9 @@
 \]</span></p>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a><span class="fu">t.test</span>(ranas<span class="sc">$</span>SVL.final)<span class="sc">$</span>conf.int</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a><span class="fu">t.test</span>(glucosa)<span class="sc">$</span>conf.int</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 19.05763 19.70493
+<pre><code>[1]  73.0509 105.9091
 attr(,"conf.level")
 [1] 0.95</code></pre>
 </div>
@@ -362,16 +386,16 @@ attr(,"conf.level")
 <div class="cell">
 <details class="code-fold">
 <summary>Mostrar el código</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a><span class="fu">set.seed</span>(<span class="dv">2026</span>)</span>
-<span id="cb5-2"><a></a>ic <span class="ot">&lt;-</span> <span class="fu">t</span>(<span class="fu">replicate</span>(<span class="dv">50</span>, <span class="fu">t.test</span>(<span class="fu">rnorm</span>(<span class="dv">10</span>, <span class="at">mean =</span> <span class="dv">90</span>, <span class="at">sd =</span> <span class="dv">20</span>))<span class="sc">$</span>conf.int))</span>
-<span id="cb5-3"><a></a>fuera <span class="ot">&lt;-</span> ic[, <span class="dv">1</span>] <span class="sc">&gt;</span> <span class="dv">90</span> <span class="sc">|</span> ic[, <span class="dv">2</span>] <span class="sc">&lt;</span> <span class="dv">90</span></span>
-<span id="cb5-4"><a></a><span class="fu">plot</span>(<span class="cn">NULL</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">50</span>), <span class="at">ylim =</span> <span class="fu">range</span>(ic), <span class="at">xlab =</span> <span class="st">"Muestra"</span>, <span class="at">ylab =</span> <span class="st">"IC 95%"</span>)</span>
-<span id="cb5-5"><a></a><span class="fu">segments</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>, ic[, <span class="dv">1</span>], <span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>, ic[, <span class="dv">2</span>], <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="fu">ifelse</span>(fuera, <span class="st">"#D55E00"</span>, <span class="st">"#0072B2"</span>))</span>
-<span id="cb5-6"><a></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">90</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a><span class="fu">set.seed</span>(<span class="dv">2026</span>)</span>
+<span id="cb7-2"><a></a>ic <span class="ot">&lt;-</span> <span class="fu">t</span>(<span class="fu">replicate</span>(<span class="dv">50</span>, <span class="fu">t.test</span>(<span class="fu">rnorm</span>(<span class="dv">10</span>, <span class="at">mean =</span> <span class="dv">90</span>, <span class="at">sd =</span> <span class="dv">20</span>))<span class="sc">$</span>conf.int))</span>
+<span id="cb7-3"><a></a>fuera <span class="ot">&lt;-</span> ic[, <span class="dv">1</span>] <span class="sc">&gt;</span> <span class="dv">90</span> <span class="sc">|</span> ic[, <span class="dv">2</span>] <span class="sc">&lt;</span> <span class="dv">90</span></span>
+<span id="cb7-4"><a></a><span class="fu">plot</span>(<span class="cn">NULL</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">50</span>), <span class="at">ylim =</span> <span class="fu">range</span>(ic), <span class="at">xlab =</span> <span class="st">"Muestra"</span>, <span class="at">ylab =</span> <span class="st">"IC 95%"</span>)</span>
+<span id="cb7-5"><a></a><span class="fu">segments</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>, ic[, <span class="dv">1</span>], <span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>, ic[, <span class="dv">2</span>], <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="fu">ifelse</span>(fuera, <span class="st">"#D55E00"</span>, <span class="st">"#0072B2"</span>))</span>
+<span id="cb7-6"><a></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">90</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 
 </div>
-<img data-src="modulo-2_files/figure-revealjs/unnamed-chunk-3-1.png" width="1056" class="r-stretch"><p>Los intervalos en naranja no contienen a <span class="math inline">\(\mu\)</span>: son 3 de 50.</p>
+<img data-src="modulo-2_files/figure-revealjs/unnamed-chunk-5-1.png" width="1056" class="r-stretch"><p>Los intervalos en naranja no contienen a <span class="math inline">\(\mu\)</span>: son 3 de 50.</p>
 </section>
 <section id="section-1" class="slide level2">
 <h2></h2>
@@ -397,6 +421,20 @@ attr(,"conf.level")
 <h1>Pruebas de hipótesis</h1>
 
 </section>
+<section id="hipótesis-de-investigación-vs.-hipótesis-estadísticas" class="slide level2 smaller">
+<h2>Hipótesis de investigación vs.&nbsp;hipótesis estadísticas</h2>
+<ul>
+<li class="fragment"><p>Una <strong>hipótesis de investigación</strong> expresa, de forma general, una idea científica sobre un tema de interés. Ejemplos: <em>fumar causa cáncer</em>, <em>esta vacuna previene la enfermedad</em>.</p>
+<ul>
+<li class="fragment">No dice todavía <strong>cómo</strong> la vamos a poner a prueba ni <strong>en qué medida</strong> esperamos un efecto.</li>
+</ul></li>
+<li class="fragment"><p>Una <strong>hipótesis estadística</strong>, en cambio, es una afirmación matemáticamente precisa sobre un parámetro de la población (por ejemplo, <span class="math inline">\(\mu_1 = \mu_2\)</span>), que podemos contrastar con los datos.</p>
+<ul>
+<li class="fragment"><p>Una prueba estadística no “prueba” ni “demuestra” nada: indica si los datos son compatibles o no con <span class="math inline">\(H_0\)</span>.</p></li>
+<li class="fragment"><p>Sus conclusiones valen solo para la <strong>población de la que se tomó la muestra</strong>. Por eso es clave definir bien esa población: el ratón es el modelo animal más usado y uno de los primeros pasos de muchas investigaciones, pero lo que encontramos en ratones <strong>no</strong> se puede trasladar directamente a seres humanos.</p></li>
+</ul></li>
+</ul>
+</section>
 <section id="de-la-pregunta-a-las-hipótesis" class="slide level2 smaller">
 <h2>De la pregunta a las hipótesis</h2>
 <ul>
@@ -405,6 +443,35 @@ attr(,"conf.level")
 <li class="fragment"><strong>Hipótesis alternativa</strong>, <span class="math inline">\(H_1\)</span>: sí hay diferencia, <span class="math inline">\(\mu_{Hi} \neq \mu_{Lo}\)</span>.</li>
 <li class="fragment">La prueba estadística mide <strong>qué tan compatibles</strong> son los datos con <span class="math inline">\(H_0\)</span>.</li>
 </ul>
+</section>
+<section id="tamaño-de-efecto" class="slide level2 smaller">
+<h2>Tamaño de efecto</h2>
+<ul>
+<li>Las hipótesis que vimos se pueden reordenar en términos de la <strong>diferencia</strong> entre las medias:</li>
+</ul>
+<p><span class="math display">\[
+\begin{aligned}
+H_0 &amp;: \mu_{Hi} - \mu_{Lo} = 0 \\
+H_1 &amp;: \mu_{Hi} - \mu_{Lo} \neq 0
+\end{aligned}
+\]</span></p>
+<ul>
+<li class="fragment">Esa diferencia es el <strong>tamaño de efecto</strong>: <em>cuánto</em> cambia la respuesta entre los tratamientos. Es lo que queremos estimar, con su intervalo de confianza.</li>
+<li class="fragment">Que el efecto sea <strong>significativo</strong> es otra cosa: depende de su tamaño <strong>y</strong> de su incertidumbre (tamaño de muestra, variabilidad). Un efecto pequeño puede ser significativo con muchos datos, y uno grande puede no serlo con pocos.</li>
+<li class="fragment">En general lo llamamos <span class="math inline">\(\theta\)</span>. No siempre nos interesa compararlo con cero, sino con otro valor de referencia, <span class="math inline">\(\theta_0\)</span>:</li>
+</ul>
+<div class="fragment">
+<p><span class="math display">\[
+\begin{aligned}
+H_0 &amp;: \theta = \theta_0 \\
+H_1 &amp;: \theta \neq \theta_0
+\end{aligned}
+\qquad \text{con } \theta = \mu_{Hi} - \mu_{Lo}
+\]</span></p>
+</div>
+<div class="fragment">
+<p>En la prueba t de una muestra, <span class="math inline">\(\theta = \mu - \mu_0\)</span>: por ejemplo, ¿cuánto se aleja la glucosa media de 80 mg/dL?</p>
+</div>
 </section>
 <section id="tipos-de-errores" class="slide level2 smaller">
 <h2>Tipos de errores</h2>
@@ -429,7 +496,7 @@ attr(,"conf.level")
 </tr>
 <tr class="even">
 <td style="text-align: left;"><strong>No rechazamos</strong> <span class="math inline">\(H_0\)</span></td>
-<td style="text-align: center;">Correcto</td>
+<td style="text-align: center;">Correcto (<span class="math inline">\(1 - \alpha\)</span>)</td>
 <td style="text-align: center;">Error tipo II (<span class="math inline">\(\beta\)</span>)</td>
 </tr>
 </tbody>
@@ -437,7 +504,9 @@ attr(,"conf.level")
 <div class="fragment">
 <ul>
 <li class="fragment"><span class="math inline">\(\alpha\)</span>, el <strong>nivel de significancia</strong>, lo fijamos nosotros: por lo general 0.05.</li>
-<li class="fragment">La <strong>potencia</strong> crece con el tamaño de la muestra y con el tamaño del efecto.</li>
+<li class="fragment">La <strong>potencia</strong> de una prueba estadística es la probabilidad de rechazar la hipótesis nula cuando esta es de hecho falsa.</li>
+<li class="fragment">La potencia <strong>crece</strong> con el tamaño de la muestra, con el tamaño del efecto y con <span class="math inline">\(\alpha\)</span>, y <strong>disminuye</strong> con la variabilidad de los datos. Mientras más cercana a 1, mejor; por lo general se busca al menos 0.8.</li>
+<li class="fragment">Al final del Módulo 3 veremos cómo calcular el tamaño de muestra a partir de la potencia deseada.</li>
 </ul>
 </div>
 </section>
@@ -483,43 +552,117 @@ attr(,"conf.level")
 </div></div>
 </section></section>
 <section>
-<section id="pruebas-t" class="title-slide slide level1 center">
-<h1>Pruebas t</h1>
+<section id="pruebas-estadísticas-paramétricas" class="title-slide slide level1 center">
+<h1>Pruebas estadísticas paramétricas</h1>
 
+</section>
+<section id="pruebas-t" class="slide level2 smaller">
+<h2>Pruebas t</h2>
+<ul>
+<li class="fragment"><p>Las pruebas t comparan una media aritmética con un valor de referencia, o dos medias aritméticas entre sí.</p></li>
+<li class="fragment"><p>La <span class="math inline">\(H_0\)</span> en estas pruebas es que la diferencia (<span class="math inline">\(\theta\)</span>) es igual al valor de referencia, casi siempre cero.</p></li>
+<li class="fragment"><p>Se rechaza la <span class="math inline">\(H_0\)</span> cuando el valor p resultante es menor que <span class="math inline">\(\alpha\)</span> (por lo general, 0.05).</p></li>
+<li class="fragment"><p>Existen tres tipos de pruebas t</p>
+<ul>
+<li class="fragment"><p>Pruebas t de una muestra</p></li>
+<li class="fragment"><p>Pruebas t de muestras independientes</p></li>
+<li class="fragment"><p>Pruebas t de muestras emparejadas</p></li>
+</ul></li>
+<li class="fragment"><p>Estas pruebas fueron desarrolladas bajo la suposición de la <strong>normalidad</strong> y de <strong>homogeneidad de las varianzas</strong>.</p></li>
+<li class="fragment"><p>Según el teorema del límite central, con muestras grandes la <strong>media muestral</strong> tiene una distribución aproximadamente normal, aunque los datos no lo sean. Por eso la prueba t es bastante robusta con muchos datos.</p></li>
+<li class="fragment"><p>Cuando el número de observaciones es pequeño, conviene revisar la normalidad para decidir entre una prueba t y una de sus alternativas.</p></li>
+</ul>
+</section>
+<section id="explorar-los-datos-crime" class="slide level2 smaller">
+<h2>Explorar los datos: <code>crime</code></h2>
+<p>Tasas de crimen (reportes por cada 100 000 habitantes) en los mismos estados de EE. UU., en 1983 y en 1993.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Mostrar el código</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb8-2"><a></a><span class="fu">boxplot</span>(crime<span class="sc">$</span>y1983, crime<span class="sc">$</span>y1993, <span class="at">names =</span> <span class="fu">c</span>(<span class="st">"1983"</span>, <span class="st">"1993"</span>), <span class="at">ylab =</span> <span class="st">"Tasa de crimen"</span>,</span>
+<span id="cb8-3"><a></a>        <span class="at">main =</span> <span class="st">"Cada año por separado"</span>)</span>
+<span id="cb8-4"><a></a><span class="fu">plot</span>(crime<span class="sc">$</span>y1983, crime<span class="sc">$</span>y1993, <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">col =</span> <span class="st">"#0072B2"</span>,</span>
+<span id="cb8-5"><a></a>     <span class="at">xlab =</span> <span class="st">"Tasa en 1983"</span>, <span class="at">ylab =</span> <span class="st">"Tasa en 1993"</span>, <span class="at">main =</span> <span class="st">"Cada punto es un estado"</span>)</span>
+<span id="cb8-6"><a></a><span class="fu">abline</span>(<span class="at">a =</span> <span class="dv">0</span>, <span class="at">b =</span> <span class="dv">1</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="modulo-2_files/figure-revealjs/unnamed-chunk-6-1.png" width="1056" class="r-stretch"><ul>
+<li class="fragment">Los mismos estados se miden dos veces: los datos están <strong>emparejados</strong>. Los puntos sobre la línea punteada son estados donde la tasa subió.</li>
+<li class="fragment">Hay unos pocos valores muy altos: una cola larga a la derecha. Lo vemos en detalle a continuación.</li>
+</ul>
 </section>
 <section id="supuestos" class="slide level2 smaller">
 <h2>Supuestos</h2>
 <ol type="1">
 <li class="fragment">Observaciones <strong>independientes</strong>.</li>
 <li class="fragment">Datos (o diferencias) con distribución <strong>normal</strong>, o una muestra grande.</li>
-<li class="fragment">Para dos muestras independientes: <strong>varianzas homogéneas</strong> (solo para la prueba de Student).</li>
+<li class="fragment">Para dos muestras: <strong>varianzas homogéneas</strong> (solo para la prueba de Student).</li>
 </ol>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb6-2"><a></a><span class="fu">hist</span>(ranas<span class="sc">$</span>Mass.final, <span class="at">main =</span> <span class="st">""</span>, <span class="at">xlab =</span> <span class="st">"Masa final (g)"</span>)</span>
-<span id="cb6-3"><a></a><span class="fu">qqnorm</span>(ranas<span class="sc">$</span>Mass.final, <span class="at">main =</span> <span class="st">""</span>); <span class="fu">qqline</span>(ranas<span class="sc">$</span>Mass.final)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold">
+<summary>Mostrar el código</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb9-2"><a></a><span class="fu">hist</span>(crime<span class="sc">$</span>y1983, <span class="at">main =</span> <span class="st">""</span>, <span class="at">xlab =</span> <span class="st">"Tasa de crimen en 1983"</span>)</span>
+<span id="cb9-3"><a></a><span class="fu">qqnorm</span>(crime<span class="sc">$</span>y1983, <span class="at">main =</span> <span class="st">""</span>); <span class="fu">qqline</span>(crime<span class="sc">$</span>y1983)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="modulo-2_files/figure-revealjs/unnamed-chunk-4-1.png" width="960"></p>
+<p><img data-src="modulo-2_files/figure-revealjs/unnamed-chunk-7-1.png" width="960"></p>
 </figure>
 </div>
 </div>
 </div>
 </div>
 </section>
-<section id="normalidad-shapiro-wilk" class="slide level2 smaller">
-<h2>Normalidad: Shapiro-Wilk</h2>
-<p><span class="math inline">\(H_0\)</span>: los datos vienen de una distribución normal.</p>
+<section id="supuestos-en-la-práctica" class="slide level2 smaller">
+<h2>Supuestos en la práctica</h2>
+<p><span class="math inline">\(H_0\)</span> de Shapiro-Wilk: los datos vienen de una distribución normal. <span class="math inline">\(H_0\)</span> de <code>var.test()</code>: las dos varianzas son iguales.</p>
+<div class="columns">
+<div class="column fragment" style="width:50%;">
+<p>Normalidad 1983</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a><span class="fu">shapiro.test</span>(ranas<span class="sc">$</span>Mass.final)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a><span class="fu">shapiro.test</span>(crime<span class="sc">$</span>y1983)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Shapiro-Wilk normality test
 
-data:  ranas$Mass.final
-W = 0.84713, p-value = 1.717e-07</code></pre>
+data:  crime$y1983
+W = 0.77333, p-value = 1.827e-07</code></pre>
+</div>
+</div>
+</div><div class="column fragment" style="width:50%;">
+<p>Normalidad 1993</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a><span class="fu">shapiro.test</span>(crime<span class="sc">$</span>y1993)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Shapiro-Wilk normality test
+
+data:  crime$y1993
+W = 0.77348, p-value = 1.841e-07</code></pre>
+</div>
+</div>
+</div></div>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a><span class="fu">var.test</span>(crime<span class="sc">$</span>y1983, crime<span class="sc">$</span>y1993)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    F test to compare two variances
+
+data:  crime$y1983 and crime$y1993
+F = 0.49163, num df = 50, denom df = 50, p-value = 0.01342
+alternative hypothesis: true ratio of variances is not equal to 1
+95 percent confidence interval:
+ 0.2806163 0.8613069
+sample estimates:
+ratio of variances 
+         0.4916266 </code></pre>
+</div>
 </div>
 </div>
 <div class="fragment">
@@ -529,68 +672,232 @@ W = 0.84713, p-value = 1.717e-07</code></pre>
 <i class="callout-icon"></i>
 </div>
 <div class="callout-content">
-<p>Con muestras grandes, Shapiro-Wilk detecta desviaciones mínimas y sin importancia. Mira siempre <strong>también el gráfico Q-Q</strong>.</p>
+<p>Con muestras grandes, Shapiro-Wilk detecta desviaciones mínimas y sin importancia. Mira siempre <strong>también el gráfico Q-Q</strong>. Y la homogeneidad de las varianzas solo importa al comparar <strong>grupos independientes</strong>: si los datos están emparejados (como los mismos estados en dos años), no es un supuesto.</p>
 </div>
 </div>
 </div>
 </div>
 </section>
-<section id="prueba-t-de-una-muestra" class="slide level2 smaller">
+<section id="transformación-de-variables" class="slide level2 smaller">
+<h2>Transformación de variables</h2>
+<ul>
+<li class="fragment">Antes de pasar a pruebas no paramétricas, podemos <strong>transformar</strong> la variable para volver a las pruebas paramétricas.</li>
+<li class="fragment">El objetivo es poder <strong>revertir la transformación</strong> y concluir en las unidades originales.</li>
+<li class="fragment">La misma transformación <strong>debe</strong> aplicarse a todos los grupos que se comparan: no tiene sentido comparar grupos transformados de formas distintas.</li>
+<li class="fragment">Con muy pocas observaciones, casi ninguna transformación funciona: mejor usar directamente una prueba no paramétrica.</li>
+</ul>
+<div class="fragment">
+<table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Transformación</th>
+<th style="text-align: left;">En R</th>
+<th style="text-align: left;">Cuándo suele funcionar</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Logaritmo</td>
+<td style="text-align: left;"><code>log(y)</code></td>
+<td style="text-align: left;">tiempos, masas, tasas, concentraciones (valores positivos)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Logaritmo con ceros</td>
+<td style="text-align: left;"><code>log(y + 1)</code></td>
+<td style="text-align: left;">como la anterior, si hay ceros</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Raíz cuadrada</td>
+<td style="text-align: left;"><code>sqrt(y)</code></td>
+<td style="text-align: left;">conteos</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cuadrado</td>
+<td style="text-align: left;"><code>y^2</code></td>
+<td style="text-align: left;">colas largas a la izquierda</td>
+</tr>
+</tbody>
+</table>
+<p>Un método más general es la <a href="https://www.r-bloggers.com/2022/10/box-cox-transformation-in-r/" target="_blank">transformación de Box-Cox</a> (<code>MASS::boxcox()</code>), que busca la potencia que mejor normaliza los datos.</p>
+</div>
+</section>
+<section id="transformación-de-variables-1" class="slide level2 smaller" data-visibility="uncounted">
+<h2>Transformación de variables</h2>
+<div class="columns">
+<div class="column fragment" style="width:50%;">
+<p>Raíz cuadrada</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a></a><span class="fu">shapiro.test</span>(<span class="fu">sqrt</span>(crime<span class="sc">$</span>y1983))<span class="sc">$</span>p.value</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.01359365</code></pre>
+</div>
+</div>
+<p>Elevar al cuadrado</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a></a><span class="fu">shapiro.test</span>(crime<span class="sc">$</span>y1983<span class="sc">^</span><span class="dv">2</span>)<span class="sc">$</span>p.value</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2.954087e-13</code></pre>
+</div>
+</div>
+</div><div class="column fragment" style="width:50%;">
+<p>Logaritmo</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a><span class="fu">shapiro.test</span>(<span class="fu">log</span>(crime<span class="sc">$</span>y1983))<span class="sc">$</span>p.value</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.571298</code></pre>
+</div>
+</div>
+<p>Chequeemos con el otro año</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a></a><span class="fu">shapiro.test</span>(<span class="fu">log</span>(crime<span class="sc">$</span>y1993))<span class="sc">$</span>p.value</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.1006053</code></pre>
+</div>
+</div>
+</div></div>
+<div class="fragment">
+<p>Homogeneidad de las varianzas con la transformación logarítmica:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a></a><span class="fu">var.test</span>(<span class="fu">log</span>(crime<span class="sc">$</span>y1983), <span class="fu">log</span>(crime<span class="sc">$</span>y1993))<span class="sc">$</span>p.value</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.541224</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="prueba-t-de-una-muestra" class="slide level2">
 <h2>Prueba t de una muestra</h2>
-<p>¿Es la masa media al salir del agua distinta de 0.40 g?</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a><span class="fu">t.test</span>(ranas<span class="sc">$</span>Mass.final, <span class="at">mu =</span> <span class="fl">0.40</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-    One Sample t-test
-
-data:  ranas$Mass.final
-t = 2.4427, df = 77, p-value = 0.01687
-alternative hypothesis: true mean is not equal to 0.4
-95 percent confidence interval:
- 0.4055686 0.4546950
-sample estimates:
-mean of x 
-0.4301318 </code></pre>
-</div>
-</div>
+<ul>
+<li class="fragment"><p>Es usada para comparar la media aritmética de una muestra con un valor conocido (un estándar por ejemplo).</p></li>
+<li class="fragment"><p>Por lo general el valor al que se va a comparar proviene de referencias bibliográficas, pre-experimentos o suposiciones fundamentadas.</p></li>
+<li class="fragment"><p>En este caso, el supuesto que debe cumplirse es el de la normalidad de los datos.</p></li>
+<li class="fragment"><p>Usaremos la tabla de datos de los ratones: <code>glucosa</code></p></li>
+</ul>
 </section>
-<section id="prueba-t-de-muestras-independientes" class="slide level2 smaller">
-<h2>Prueba t de muestras independientes</h2>
-<p>¿Difiere la longitud final entre renacuajos de eclosión temprana (<code>E</code>) y tardía (<code>L</code>)?</p>
+<section id="prueba-t-de-una-muestra-1" class="slide level2 smaller" data-visibility="uncounted">
+<h2>Prueba t de una muestra</h2>
+<p>Supongamos que tenemos un grupo de 10 ratones que podrían ser parte de un linaje para usar como modelo de hiperglucemia, y medimos su glucosa en sangre (<code>glucosa</code>).</p>
+<p>¿Es la glucosa media de esta línea de ratones distinta de 80 mg/dL, el límite inferior en ratones sanos?</p>
+<div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a><span class="fu">var.test</span>(SVL.final <span class="sc">~</span> Hatch, <span class="at">data =</span> ranas)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a></a><span class="fu">shapiro.test</span>(glucosa)<span class="sc">$</span>p.value</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>
-    F test to compare two variances
-
-data:  SVL.final by Hatch
-F = 1.51, num df = 38, denom df = 38, p-value = 0.2085
-alternative hypothesis: true ratio of variances is not equal to 1
-95 percent confidence interval:
- 0.7918426 2.8796646
-sample estimates:
-ratio of variances 
-          1.510047 </code></pre>
+<pre><code>[1] 0.9534476</code></pre>
+</div>
 </div>
 </div>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a><span class="fu">t.test</span>(SVL.final <span class="sc">~</span> Hatch, <span class="at">data =</span> ranas)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a></a>ratest <span class="ot">&lt;-</span> <span class="fu">t.test</span>(glucosa, <span class="at">mu =</span> <span class="dv">80</span>)</span>
+<span id="cb28-2"><a></a>ratest</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
-    Welch Two Sample t-test
+    One Sample t-test
 
-data:  SVL.final by Hatch
-t = 0.6054, df = 72.986, p-value = 0.5468
-alternative hypothesis: true difference in means between group E and group L is not equal to 0
+data:  glucosa
+t = 1.3053, df = 9, p-value = 0.2242
+alternative hypothesis: true mean is not equal to 80
 95 percent confidence interval:
- -0.4529452  0.8481748
+  73.0509 105.9091
 sample estimates:
-mean in group E mean in group L 
-       19.48009        19.28247 </code></pre>
+mean of x 
+    89.48 </code></pre>
 </div>
 </div>
+</div>
+</section>
+<section id="prueba-t-de-muestras-independientes" class="slide level2">
+<h2>Prueba t de muestras independientes</h2>
+<ul>
+<li class="fragment"><p>Es usada para comparar las medias aritméticas de dos grupos independientes.</p></li>
+<li class="fragment"><p>Por ejemplo, si deseas comparar las medias aritméticas de individuos agrupados por sexo.</p></li>
+<li class="fragment"><p>Para ilustrar esta prueba, vamos a hacer uso de la tabla de datos de <code>genderweight</code> del paquete <code>{datarium}</code>.</p></li>
+<li class="fragment"><p>Veamos si existe una diferencia significativa en la media del peso entre hombres y mujeres</p></li>
+</ul>
+</section>
+<section id="explorar-los-datos-genderweight" class="slide level2 smaller" data-visibility="uncounted">
+<h2>Explorar los datos: <code>genderweight</code></h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Mostrar el código</summary>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a></a><span class="fu">boxplot</span>(weight <span class="sc">~</span> group, <span class="at">data =</span> genderweight, <span class="at">names =</span> <span class="fu">c</span>(<span class="st">"Mujeres (F)"</span>, <span class="st">"Hombres (M)"</span>),</span>
+<span id="cb30-2"><a></a>        <span class="at">xlab =</span> <span class="cn">NULL</span>, <span class="at">ylab =</span> <span class="st">"Peso (kg)"</span>, <span class="at">col =</span> <span class="st">"white"</span>)</span>
+<span id="cb30-3"><a></a><span class="fu">stripchart</span>(weight <span class="sc">~</span> group, <span class="at">data =</span> genderweight, <span class="at">vertical =</span> <span class="cn">TRUE</span>, <span class="at">method =</span> <span class="st">"jitter"</span>,</span>
+<span id="cb30-4"><a></a>           <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">col =</span> <span class="fu">adjustcolor</span>(<span class="st">"#0072B2"</span>, <span class="fl">0.6</span>), <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="modulo-2_files/figure-revealjs/unnamed-chunk-18-1.png" width="768" class="r-stretch"><div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a></a><span class="fu">tapply</span>(genderweight<span class="sc">$</span>weight, genderweight<span class="sc">$</span>group, summary)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$F
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  59.31   62.30   62.94   63.50   64.63   68.83 
+
+$M
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  77.01   83.17   86.27   85.83   87.77   95.06 </code></pre>
+</div>
+</div>
+<ul>
+<li class="fragment">Dos grupos <strong>independientes</strong>: cada persona pertenece a uno solo. ¿Difieren los centros? ¿Y la dispersión?</li>
+</ul>
+</section>
+<section id="prueba-t-de-muestras-independientes-1" class="slide level2 smaller" data-visibility="uncounted">
+<h2>Prueba t de muestras independientes</h2>
+<p>¿Difieren la media del peso entre hombres y mujeres?</p>
+<div class="columns">
+<div class="column fragment" style="width:50%;">
+<p>Chequeamos normalidad: Group M</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a></a><span class="fu">shapiro.test</span>(<span class="fu">subset</span>(genderweight, group <span class="sc">==</span> <span class="st">"M"</span>)<span class="sc">$</span>weight)     </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Shapiro-Wilk normality test
+
+data:  subset(genderweight, group == "M")$weight
+W = 0.98634, p-value = 0.9886</code></pre>
+</div>
+</div>
+</div><div class="column fragment" style="width:50%;">
+<p>Chequeamos normalidad: Group F</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a></a><span class="fu">shapiro.test</span>(<span class="fu">subset</span>(genderweight, group <span class="sc">==</span> <span class="st">"F"</span>)<span class="sc">$</span>weight)     </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Shapiro-Wilk normality test
+
+data:  subset(genderweight, group == "F")$weight
+W = 0.93847, p-value = 0.2243</code></pre>
+</div>
+</div>
+</div></div>
+<div class="fragment">
+<p>Chequeamos la homogeneidad de las varianzas</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a></a><span class="fu">var.test</span>(genderweight<span class="sc">$</span>weight <span class="sc">~</span> genderweight<span class="sc">$</span>group)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    F test to compare two variances
+
+data:  genderweight$weight by genderweight$group
+F = 0.21692, num df = 19, denom df = 19, p-value = 0.001648
+alternative hypothesis: true ratio of variances is not equal to 1
+95 percent confidence interval:
+ 0.08585766 0.54802553
+sample estimates:
+ratio of variances 
+         0.2169152 </code></pre>
+</div>
+</div>
+<ul>
+<li class="fragment"><strong>¡La homogeneidad de las varianzas no se cumple!</strong> 😱</li>
+</ul>
 </div>
 </section>
 <section id="student-o-welch" class="slide level2 smaller">
@@ -602,46 +909,147 @@ mean in group E mean in group L
 </ul>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a><span class="fu">t.test</span>(SVL.final <span class="sc">~</span> Hatch, <span class="at">data =</span> ranas, <span class="at">var.equal =</span> <span class="cn">TRUE</span>)<span class="sc">$</span>p.value</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a></a>gendertest <span class="ot">&lt;-</span> <span class="fu">t.test</span>(genderweight<span class="sc">$</span>weight <span class="sc">~</span> genderweight<span class="sc">$</span>group)</span>
+<span id="cb39-2"><a></a>gendertest</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.546719</code></pre>
+<pre><code>
+    Welch Two Sample t-test
+
+data:  genderweight$weight by genderweight$group
+t = -20.791, df = 26.872, p-value &lt; 2.2e-16
+alternative hypothesis: true difference in means between group F and group M is not equal to 0
+95 percent confidence interval:
+ -24.53135 -20.12353
+sample estimates:
+mean in group F mean in group M 
+       63.49867        85.82612 </code></pre>
 </div>
 </div>
 </div>
 </section>
 <section id="prueba-t-de-muestras-emparejadas" class="slide level2 smaller">
 <h2>Prueba t de muestras emparejadas</h2>
-<p>Datos <code>sleep</code>, incluidos en R: horas extra de sueño de <strong>los mismos</strong> 10 pacientes con dos medicamentos.</p>
+<ul>
+<li class="fragment"><p>Es usada para comparar las medias de dos grupos que guardan una relación.</p></li>
+<li class="fragment"><p>Esto ocurre generalmente cuando las medidas se han realizado en las mismas unidades experimentales. Ejemplos: individuos al inicio y al final de un tratamiento, muestras en una misma locación geográfica.</p></li>
+<li class="fragment"><p>Para esta prueba, vamos a usar la tabla de datos <code>mice2</code> del paquete <code>{datarium}</code></p></li>
+<li class="fragment"><p>Veamos si existe una diferencia en el peso de los ratones antes y después de haber sido sometidos a una determinada dieta.</p></li>
+</ul>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a></a><span class="fu">data</span>(mice2)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</section>
+<section id="explorar-los-datos-mice2" class="slide level2 smaller" data-visibility="uncounted">
+<h2>Explorar los datos: <code>mice2</code></h2>
 <div class="cell">
 <details class="code-fold">
 <summary>Mostrar el código</summary>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a>droga_1 <span class="ot">&lt;-</span> sleep<span class="sc">$</span>extra[sleep<span class="sc">$</span>group <span class="sc">==</span> <span class="dv">1</span>]</span>
-<span id="cb17-2"><a></a>droga_2 <span class="ot">&lt;-</span> sleep<span class="sc">$</span>extra[sleep<span class="sc">$</span>group <span class="sc">==</span> <span class="dv">2</span>]</span>
-<span id="cb17-3"><a></a><span class="fu">shapiro.test</span>(droga_2 <span class="sc">-</span> droga_1)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb42-2"><a></a><span class="fu">matplot</span>(<span class="fu">rbind</span>(mice2<span class="sc">$</span>before, mice2<span class="sc">$</span>after), <span class="at">type =</span> <span class="st">"b"</span>, <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">lty =</span> <span class="dv">1</span>, <span class="at">col =</span> <span class="st">"#0072B2"</span>,</span>
+<span id="cb42-3"><a></a>        <span class="at">xaxt =</span> <span class="st">"n"</span>, <span class="at">xlab =</span> <span class="cn">NULL</span>, <span class="at">ylab =</span> <span class="st">"Peso (g)"</span>, <span class="at">main =</span> <span class="st">"Cada línea es un ratón"</span>)</span>
+<span id="cb42-4"><a></a><span class="fu">axis</span>(<span class="dv">1</span>, <span class="at">at =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Antes"</span>, <span class="st">"Después"</span>))</span>
+<span id="cb42-5"><a></a><span class="fu">hist</span>(mice2<span class="sc">$</span>after <span class="sc">-</span> mice2<span class="sc">$</span>before, <span class="at">main =</span> <span class="st">"Diferencias (después - antes)"</span>, <span class="at">xlab =</span> <span class="st">"Cambio de peso (g)"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
+
+</div>
+<img data-src="modulo-2_files/figure-revealjs/unnamed-chunk-25-1.png" width="1056" class="r-stretch"><ul>
+<li class="fragment">Cada ratón se mide dos veces. Lo que interesa es <strong>cuánto cambia cada uno</strong>: por eso la prueba trabaja con las diferencias.</li>
+</ul>
+</section>
+<section id="prueba-t-de-muestras-emparejadas-1" class="slide level2 smaller" data-visibility="uncounted">
+<h2>Prueba t de muestras emparejadas</h2>
+<ul>
+<li class="fragment">En una prueba emparejada, cada ratón es su propio control: la prueba trabaja con las <strong>diferencias</strong> dentro de cada ratón.</li>
+<li class="fragment">Por eso, el supuesto de normalidad se revisa sobre las <strong>diferencias</strong>, no sobre cada grupo por separado.</li>
+<li class="fragment">La homogeneidad de las varianzas <strong>no</strong> es un supuesto de esta prueba.</li>
+</ul>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a></a>diferencias <span class="ot">&lt;-</span> mice2<span class="sc">$</span>after <span class="sc">-</span> mice2<span class="sc">$</span>before</span>
+<span id="cb43-2"><a></a><span class="fu">shapiro.test</span>(diferencias)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Shapiro-Wilk normality test
 
-data:  droga_2 - droga_1
-W = 0.82987, p-value = 0.03334</code></pre>
+data:  diferencias
+W = 0.96751, p-value = 0.8669</code></pre>
 </div>
 </div>
-<div class="fragment">
+</div>
+</section>
+<section id="prueba-t-de-muestras-emparejadas-2" class="slide level2 smaller" data-visibility="uncounted">
+<h2>Prueba t de muestras emparejadas</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a></a><span class="fu">t.test</span>(droga_2, droga_1, <span class="at">paired =</span> <span class="cn">TRUE</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a></a>micetest <span class="ot">&lt;-</span> <span class="fu">t.test</span>(mice2<span class="sc">$</span>after, mice2<span class="sc">$</span>before, <span class="at">paired =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb45-2"><a></a>micetest</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Paired t-test
 
-data:  droga_2 and droga_1
-t = 4.0621, df = 9, p-value = 0.002833
+data:  mice2$after and mice2$before
+t = 25.546, df = 9, p-value = 1.039e-09
 alternative hypothesis: true mean difference is not equal to 0
 95 percent confidence interval:
- 0.7001142 2.4598858
+ 181.8158 217.1442
 sample estimates:
 mean difference 
-           1.58 </code></pre>
+         199.48 </code></pre>
+</div>
+</div>
+</section>
+<section id="muestras-emparejadas-con-transformación" class="slide level2 smaller">
+<h2>Muestras emparejadas con transformación</h2>
+<p>¿Cambió la tasa de crimen entre 1983 y 1993? Cada estado se mide dos veces: las muestras están <strong>emparejadas</strong>. Revisamos la normalidad de las diferencias, en las unidades originales y en logaritmo:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a></a><span class="fu">shapiro.test</span>(crime<span class="sc">$</span>y1993 <span class="sc">-</span> crime<span class="sc">$</span>y1983)<span class="sc">$</span>p.value</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 5.883638e-05</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a></a><span class="fu">shapiro.test</span>(<span class="fu">log</span>(crime<span class="sc">$</span>y1993) <span class="sc">-</span> <span class="fu">log</span>(crime<span class="sc">$</span>y1983))<span class="sc">$</span>p.value</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.2782788</code></pre>
+</div>
+</div>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a></a>prueba_crimen <span class="ot">&lt;-</span> <span class="fu">t.test</span>(<span class="fu">log</span>(crime<span class="sc">$</span>y1993), <span class="fu">log</span>(crime<span class="sc">$</span>y1983), <span class="at">paired =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb51-2"><a></a>prueba_crimen</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Paired t-test
+
+data:  log(crime$y1993) and log(crime$y1983)
+t = 10.027, df = 50, p-value = 1.469e-13
+alternative hypothesis: true mean difference is not equal to 0
+95 percent confidence interval:
+ 0.2417349 0.3628437
+sample estimates:
+mean difference 
+      0.3022893 </code></pre>
+</div>
+</div>
+</div>
+<div class="fragment">
+<p>De vuelta en las unidades originales, con <code>exp()</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a></a><span class="fu">cat</span>(<span class="st">"media de 1983 = "</span>, <span class="fu">exp</span>(<span class="fu">mean</span>(<span class="fu">log</span>(crime<span class="sc">$</span>y1983))), <span class="st">"</span><span class="sc">\n</span><span class="st">media de 1993 = "</span>,  <span class="fu">exp</span>(<span class="fu">mean</span>(<span class="fu">log</span>(crime<span class="sc">$</span>y1993))), <span class="st">"</span><span class="sc">\n</span><span class="st">cociente 1993/1983 = "</span>, <span class="fu">exp</span>(prueba_crimen<span class="sc">$</span>estimate), <span class="st">"</span><span class="sc">\n</span><span class="st">IC 95% del cociente"</span>, <span class="fu">exp</span>(prueba_crimen<span class="sc">$</span>conf.int))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>media de 1983 =  362.8298 
+media de 1993 =  490.8915 
+cociente 1993/1983 =  1.352953 
+IC 95% del cociente 1.273457 1.437411</code></pre>
+</div>
+</div>
+<div class="callout callout-tip callout-style-simple">
+<div class="callout-body">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-content">
+<p>En escala logarítmica, la diferencia de medias se convierte en un <strong>cociente</strong> de medias geométricas: cuántas veces cambió la tasa de crimen de un año a otro.</p>
+</div>
 </div>
 </div>
 </div>
@@ -658,7 +1066,7 @@ mean difference
                     <div id="Timer2"></div>
                     <script>
                         document.addEventListener("DOMContentLoaded", function () {
-                            initializeTimer("Timer2", 1500, "interaction");
+                            initializeTimer("Timer2", 1200, "interaction");
                         });
                     </script>
                 
@@ -666,152 +1074,83 @@ mean difference
 
 <img data-src="images/marcha.png" class="image-left r-stretch"></section></section>
 <section>
-<section id="pruebas-de-wilcoxon-y-transformaciones" class="title-slide slide level1 center">
-<h1>Pruebas de Wilcoxon y transformaciones</h1>
+<section id="pruebas-estadísticas-no-paramétricas" class="title-slide slide level1 center">
+<h1>Pruebas estadísticas no paramétricas</h1>
 
 </section>
-<section id="y-si-los-datos-no-son-normales" class="slide level2 smaller">
-<h2>¿Y si los datos no son normales?</h2>
+<section id="pruebas-de-wilcoxon-para-datos-no-normales" class="slide level2">
+<h2>Pruebas de Wilcoxon para datos no normales</h2>
 <ul>
 <li class="fragment">Las pruebas de <strong>Wilcoxon</strong> comparan <strong>rangos</strong> (posiciones) en lugar de medias.</li>
 <li class="fragment">No suponen normalidad, pero sí observaciones independientes.</li>
 <li class="fragment">Una muestra: ¿la mediana es distinta de un valor de referencia?</li>
 <li class="fragment">Dos muestras (también llamada de Mann-Whitney): ¿un grupo tiende a tener valores más altos que el otro?</li>
 </ul>
-<div class="fragment">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a></a><span class="fu">shapiro.test</span>(ranas<span class="sc">$</span>Age.FromEmergence)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-    Shapiro-Wilk normality test
-
-data:  ranas$Age.FromEmergence
-W = 0.82366, p-value = 3.143e-08</code></pre>
-</div>
-</div>
-</div>
 </section>
-<section id="wilcoxon-para-una-y-dos-muestras" class="slide level2 smaller">
-<h2>Wilcoxon para una y dos muestras</h2>
-<p>¿La mediana de la edad al salir del agua es distinta de 20 días?</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a><span class="fu">wilcox.test</span>(ranas<span class="sc">$</span>Age.FromEmergence, <span class="at">mu =</span> <span class="dv">20</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-    Wilcoxon signed rank test with continuity correction
-
-data:  ranas$Age.FromEmergence
-V = 2106, p-value = 0.004891
-alternative hypothesis: true location is not equal to 20</code></pre>
-</div>
-</div>
-<div class="fragment">
-<p>¿Difiere entre eclosión temprana y tardía?</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a></a><span class="fu">wilcox.test</span>(Age.FromEmergence <span class="sc">~</span> Hatch, <span class="at">data =</span> ranas)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-    Wilcoxon rank sum exact test
-
-data:  Age.FromEmergence by Hatch
-W = 633, p-value = 0.2047
-alternative hypothesis: true location shift is not equal to 0</code></pre>
-</div>
-</div>
-</div>
-</section>
-<section id="otra-opción-transformar" class="slide level2 smaller">
-<h2>Otra opción: transformar</h2>
-<p>Si los datos tienen una cola larga a la derecha, una <strong>transformación</strong> puede acercarlos a la normalidad y permitir la prueba t.</p>
-<table class="caption-top">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">Transformación</th>
-<th style="text-align: left;">En R</th>
-<th style="text-align: left;">Cuándo</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Logaritmo</td>
-<td style="text-align: left;"><code>log(y)</code></td>
-<td style="text-align: left;">tiempos, masas, concentraciones (valores positivos)</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Logaritmo con ceros</td>
-<td style="text-align: left;"><code>log(y + 1)</code></td>
-<td style="text-align: left;">como la anterior, si hay ceros</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Raíz cuadrada</td>
-<td style="text-align: left;"><code>sqrt(y)</code></td>
-<td style="text-align: left;">conteos</td>
-</tr>
-</tbody>
-</table>
-<div class="fragment">
+<section id="explorar-los-datos-felicidad" class="slide level2 smaller">
+<h2>Explorar los datos: <code>felicidad</code></h2>
 <div class="cell">
 <details class="code-fold">
 <summary>Mostrar el código</summary>
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb27-2"><a></a><span class="fu">hist</span>(ranas<span class="sc">$</span>Age.FromEmergence, <span class="at">main =</span> <span class="st">"En días"</span>, <span class="at">xlab =</span> <span class="st">"Edad al salir del agua"</span>)</span>
-<span id="cb27-3"><a></a><span class="fu">hist</span>(<span class="fu">log</span>(ranas<span class="sc">$</span>Age.FromEmergence), <span class="at">main =</span> <span class="st">"En logaritmo"</span>, <span class="at">xlab =</span> <span class="st">"log(edad)"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb55-2"><a></a><span class="fu">matplot</span>(<span class="fu">rbind</span>(felicidad<span class="sc">$</span>before, felicidad<span class="sc">$</span>after), <span class="at">type =</span> <span class="st">"b"</span>, <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">lty =</span> <span class="dv">1</span>, <span class="at">col =</span> <span class="st">"#D55E00"</span>,</span>
+<span id="cb55-3"><a></a>        <span class="at">xaxt =</span> <span class="st">"n"</span>, <span class="at">xlab =</span> <span class="cn">NULL</span>, <span class="at">ylab =</span> <span class="st">"Felicidad"</span>, <span class="at">main =</span> <span class="st">"Cada línea es un estudiante"</span>)</span>
+<span id="cb55-4"><a></a><span class="fu">axis</span>(<span class="dv">1</span>, <span class="at">at =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Antes"</span>, <span class="st">"Después"</span>))</span>
+<span id="cb55-5"><a></a><span class="fu">stripchart</span>(felicidad<span class="sc">$</span>after <span class="sc">-</span> felicidad<span class="sc">$</span>before, <span class="at">method =</span> <span class="st">"stack"</span>, <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">col =</span> <span class="st">"#D55E00"</span>,</span>
+<span id="cb55-6"><a></a>           <span class="at">xlab =</span> <span class="st">"Cambio de felicidad (después - antes)"</span>, <span class="at">main =</span> <span class="st">"Diferencias"</span>)</span>
+<span id="cb55-7"><a></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="modulo-2_files/figure-revealjs/unnamed-chunk-15-1.png" width="1056"></p>
-</figure>
+
 </div>
-</div>
-</div>
-</div>
+<img data-src="modulo-2_files/figure-revealjs/unnamed-chunk-31-1.png" width="1056" class="r-stretch"><ul>
+<li class="fragment">Solo 10 estudiantes, y las diferencias no se ven simétricas: con tan pocos datos, no podemos confiar en la normalidad. Por eso usaremos Wilcoxon.</li>
+</ul>
 </section>
-<section id="prueba-t-sobre-el-logaritmo" class="slide level2 smaller">
-<h2>Prueba t sobre el logaritmo</h2>
+<section id="wilcoxon-para-una-muestra" class="slide level2 smaller">
+<h2>Wilcoxon para una muestra</h2>
+<p>¿Existe una diferencia en el nivel de felicidad de los estudiantes antes y después de tomar una clase de estadística?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a></a><span class="fu">shapiro.test</span>(<span class="fu">log</span>(ranas<span class="sc">$</span>Age.FromEmergence[ranas<span class="sc">$</span>Hatch <span class="sc">==</span> <span class="st">"E"</span>]))<span class="sc">$</span>p.value</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a></a>felicidad<span class="sc">$</span>change <span class="ot">&lt;-</span> felicidad<span class="sc">$</span>after <span class="sc">-</span> felicidad<span class="sc">$</span>before</span>
+<span id="cb56-2"><a></a></span>
+<span id="cb56-3"><a></a>muestra_wilcox <span class="ot">&lt;-</span> <span class="fu">wilcox.test</span>(felicidad<span class="sc">$</span>change, <span class="at">mu =</span> <span class="dv">0</span>)</span>
+<span id="cb56-4"><a></a>muestra_wilcox</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.2168169</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a></a><span class="fu">shapiro.test</span>(<span class="fu">log</span>(ranas<span class="sc">$</span>Age.FromEmergence[ranas<span class="sc">$</span>Hatch <span class="sc">==</span> <span class="st">"L"</span>]))<span class="sc">$</span>p.value</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.3431191</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a></a>prueba_log <span class="ot">&lt;-</span> <span class="fu">t.test</span>(<span class="fu">log</span>(Age.FromEmergence) <span class="sc">~</span> Hatch, <span class="at">data =</span> ranas)</span>
-<span id="cb32-2"><a></a>prueba_log<span class="sc">$</span>p.value</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.283308</code></pre>
+<pre><code>
+    Wilcoxon signed rank exact test
+
+data:  felicidad$change
+V = 7, p-value = 0.03711
+alternative hypothesis: true location is not equal to 0</code></pre>
 </div>
 </div>
-<div class="fragment">
-<p>Para interpretar, volvemos a la escala original con <code>exp()</code>:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a></a><span class="fu">exp</span>(prueba_log<span class="sc">$</span>estimate)   <span class="co"># medias geométricas, en días</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>mean in group E mean in group L 
-       21.76614        25.90847 </code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a></a><span class="fu">exp</span>(prueba_log<span class="sc">$</span>conf.int)   <span class="co"># cociente E / L, con su IC 95%</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.6093341 1.1583076
-attr(,"conf.level")
-[1] 0.95</code></pre>
-</div>
-</div>
-<div class="callout callout-tip callout-style-simple">
+<div class="callout callout-note callout-style-simple">
 <div class="callout-body">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-content">
-<p>En escala logarítmica, una <strong>diferencia</strong> de medias se convierte en un <strong>cociente</strong>: cuántas veces más (o menos) tarda un grupo que el otro.</p>
+<p>Probar que la mediana de los cambios es 0 es lo mismo que una prueba de Wilcoxon <strong>emparejada</strong>: <code>wilcox.test(felicidad$after, felicidad$before, paired = TRUE)</code> da el mismo resultado. Es la alternativa no paramétrica a la prueba t emparejada.</p>
 </div>
+</div>
+</div>
+</section>
+<section id="prueba-de-wilcoxon-para-dos-muestras" class="slide level2">
+<h2>Prueba de Wilcoxon para dos muestras</h2>
+<ul>
+<li class="fragment"><p>Regresando al ejemplo de la tabla de datos <code>genderweight</code>, supongamos que estos no están normalmente distribuidos.</p></li>
+<li class="fragment"><p>Usaremos la prueba de Wilcoxon para muestras independientes para ver si existe diferencia entre los pesos de hombres y mujeres.</p></li>
+</ul>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a></a>dos_wilcox <span class="ot">&lt;-</span> <span class="fu">wilcox.test</span>(genderweight<span class="sc">$</span>weight <span class="sc">~</span> genderweight<span class="sc">$</span>group)</span>
+<span id="cb58-2"><a></a>dos_wilcox</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Wilcoxon rank sum exact test
+
+data:  genderweight$weight by genderweight$group
+W = 0, p-value = 1.451e-11
+alternative hypothesis: true location shift is not equal to 0</code></pre>
 </div>
 </div>
 </div>
@@ -849,6 +1188,52 @@ attr(,"conf.level")
 </tr>
 </tbody>
 </table>
+</section>
+<section id="report" class="slide level2 smaller">
+<h2><code>{report}</code></h2>
+<ul>
+<li class="fragment"><p>El redactar resultados estadísticos puede resultar en una tarea compleja.</p></li>
+<li class="fragment"><p>Afortunadamente contamos con la ayuda de <code>{report}</code>, parte del multiverso <code>{easystats}</code> que nos puede dar guías para ello.</p></li>
+</ul>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a></a><span class="fu">install.packages</span>(<span class="st">"easystats"</span>)</span>
+<span id="cb60-2"><a></a><span class="fu">library</span>(report)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a></a><span class="fu">report</span>(dos_wilcox)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Effect sizes were labelled following Funder's (2019) recommendations.
+
+The Wilcoxon rank sum exact test testing the difference in ranks between
+genderweight$weight and genderweight$group suggests that the effect is
+negative, statistically significant, and very large (W = 0.00, p &lt; .001; r
+(rank biserial) = -1.00, 95% CI [-1.00, -1.00])</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a></a><span class="fu">report</span>(gendertest)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Effect sizes were labelled following Cohen's (1988) recommendations.
+
+The Welch Two Sample t-test testing the difference of genderweight$weight by
+genderweight$group (mean in group F = 63.50, mean in group M = 85.83) suggests
+that the effect is negative, statistically significant, and large (difference =
+-22.33, 95% CI [-24.53, -20.12], t(26.87) = -20.79, p &lt; .001; Cohen's d =
+-6.57, 95% CI [-8.42, -4.71])</code></pre>
+</div>
+</div>
+<div class="callout callout-warning callout-style-simple">
+<div class="callout-body">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-content">
+<p><code>report()</code> redacta en las unidades de la prueba. Si la prueba se hizo sobre datos transformados (como <code>prueba_crimen</code>), las cifras quedan en logaritmos: vuelve a las unidades originales con <code>exp()</code> antes de redactar.</p>
+</div>
+</div>
+</div>
+</div>
 </section>
 <section id="section-3" class="slide level2">
 <h2></h2>

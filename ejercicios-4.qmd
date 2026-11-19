@@ -523,23 +523,7 @@ summary(aditivo)
 `*` incluye la interacción y `+` no. Si la interacción no aporta, el modelo más simple (aditivo) es más fácil de interpretar.
 :::
 
-## Solución
 
-::: {.solution exercise="ex_4_1"}
-```r
-con_interaccion <- aov(SVL.final ~ Pred * Res, data = ranas)
-summary(con_interaccion)
-
-aditivo <- aov(SVL.final ~ Pred + Res, data = ranas)
-summary(aditivo)
-```
-
-La interacción no es significativa ($F = 0.37$, $p = 0.69$). En el modelo aditivo, el depredador tiene un efecto claro ($F = 26.51$, $p < 0.001$) y los recursos no llegan a ser significativos ($F = 2.95$, $p = 0.09$).
-:::
-
-::: {.sol-pendiente}
-La solución se publicará después de la sesión del domingo 6 de diciembre. Mientras tanto, usa la pestaña **Pista**.
-:::
 
 :::
 
@@ -567,24 +551,7 @@ summary(aov(Mass.final ~ Pred * Res, data = ranas))
 `x.factor` va en el eje horizontal y `trace.factor` define las líneas.
 :::
 
-## Solución
 
-::: {.solution exercise="ex_4_2"}
-```r
-interaction.plot(x.factor = ranas$Pred, trace.factor = ranas$Res,
-                 response = ranas$Mass.final,
-                 xlab = "Depredador", ylab = "Masa final (g)",
-                 trace.label = "Recursos")
-
-summary(aov(Mass.final ~ Pred * Res, data = ranas))
-```
-
-Las líneas son casi paralelas y la interacción no es significativa ($F = 0.15$, $p = 0.86$): el efecto de los recursos sobre la masa es parecido con cualquier depredador.
-:::
-
-::: {.sol-pendiente}
-La solución se publicará después de la sesión del domingo 6 de diciembre. Mientras tanto, usa la pestaña **Pista**.
-:::
 
 :::
 
@@ -608,20 +575,7 @@ TukeyHSD(aditivo_masa, which = "____")
 `which = "Pred"` limita las comparaciones al factor depredador.
 :::
 
-## Solución
 
-::: {.solution exercise="ex_4_3"}
-```r
-aditivo_masa <- aov(Mass.final ~ Pred + Res, data = ranas)
-TukeyHSD(aditivo_masa, which = "Pred")
-```
-
-`L` pesa 0.14 g más que el control ($p < 0.001$) y 0.11 g más que `NL` ($p = 0.001$); el control y `NL` no difieren ($p = 0.43$). Recuerda que, en el ejercicio 4.3 del [Módulo 3](ejercicios-3.qmd), los diagnósticos de la masa sugerían usar `log()`: hazlo y comprueba que las conclusiones no cambian.
-:::
-
-::: {.sol-pendiente}
-La solución se publicará después de la sesión del domingo 6 de diciembre. Mientras tanto, usa la pestaña **Pista**.
-:::
 
 :::
 
@@ -648,23 +602,7 @@ read.csv("____")
 Con `row.names = FALSE`, `write.csv()` no guarda la columna con los números de fila.
 :::
 
-## Solución
 
-::: {.solution exercise="ex_4_4"}
-```r
-medias <- aggregate(SVL.final ~ Pred + Res, data = ranas, FUN = mean)
-medias
-
-write.csv(medias, "medias.csv", row.names = FALSE)
-read.csv("medias.csv")
-```
-
-La tabla tiene seis filas, una por combinación; por ejemplo, `L` con recursos altos tiene una media de 20.53 mm y el control con recursos bajos, 18.17 mm. Al leerla, ya no aparece la columna `X`.
-:::
-
-::: {.sol-pendiente}
-La solución se publicará después de la sesión del domingo 6 de diciembre. Mientras tanto, usa la pestaña **Pista**.
-:::
 
 :::
 

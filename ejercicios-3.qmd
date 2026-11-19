@@ -419,23 +419,7 @@ kruskal.test(Resorb.days ~ Pred, data = ranas)
 Si el ANOVA no es significativo, no hace falta hacer comparaciones múltiples.
 :::
 
-## Solución
 
-::: {.solution exercise="ex_4_1"}
-```r
-modelo_cola <- aov(Resorb.days ~ Pred, data = ranas)
-summary(modelo_cola)
-shapiro.test(residuals(modelo_cola))
-
-kruskal.test(Resorb.days ~ Pred, data = ranas)
-```
-
-El ANOVA da $F = 1.11$, $gl = 2$ y 75, $p = 0.34$. Los residuos no son normales ($p = 0.004$), pero Kruskal-Wallis llega a lo mismo ($p = 0.49$): **no hay evidencia** de que el depredador cambie el tiempo de reabsorción. En el [Módulo 4](ejercicios-4.qmd) veremos que lo que sí lo cambia son los recursos.
-:::
-
-::: {.sol-pendiente}
-La solución se publicará después de la sesión del domingo 29 de noviembre. Mientras tanto, usa la pestaña **Pista**.
-:::
 
 :::
 
@@ -462,23 +446,7 @@ prueba$statistic^____
 Con dos grupos, el ANOVA de una vía y la prueba t de Student son la misma prueba: $F = t^2$.
 :::
 
-## Solución
 
-::: {.solution exercise="ex_4_2"}
-```r
-summary(aov(SVL.final ~ Res, data = ranas))
-
-prueba <- t.test(SVL.final ~ Res, data = ranas, var.equal = TRUE)
-prueba
-prueba$statistic^2
-```
-
-$t = 1.33$ y $t^2 = 1.77$, el mismo valor de $F$ del ANOVA; los dos valores p son 0.19. El ANOVA **generaliza** la prueba t de Student a más de dos grupos.
-:::
-
-::: {.sol-pendiente}
-La solución se publicará después de la sesión del domingo 29 de noviembre. Mientras tanto, usa la pestaña **Pista**.
-:::
 
 :::
 
@@ -514,34 +482,7 @@ kruskal.test(Mass.final ~ Pred, data = ranas)
 En escala logarítmica, `exp()` de una diferencia de Tukey es un **cociente** entre medias geométricas.
 :::
 
-## Solución
 
-::: {.solution exercise="ex_4_3"}
-```r
-modelo_masa <- aov(Mass.final ~ Pred, data = ranas)
-shapiro.test(residuals(modelo_masa))
-bartlett.test(Mass.final ~ Pred, data = ranas)
-
-modelo_log <- aov(log(Mass.final) ~ Pred, data = ranas)
-shapiro.test(residuals(modelo_log))
-bartlett.test(log(Mass.final) ~ Pred, data = ranas)
-summary(modelo_log)
-
-tukey <- TukeyHSD(modelo_log)
-tukey
-exp(tukey$Pred[, "diff"])
-
-kruskal.test(Mass.final ~ Pred, data = ranas)
-```
-
-En gramos fallan los dos supuestos (Shapiro-Wilk: $p = 0.004$; Bartlett: $p < 0.001$). Con el logaritmo, los residuos ya son normales ($p = 0.33$), aunque las varianzas siguen siendo algo distintas (Bartlett: $p = 0.001$). El ANOVA del logaritmo da $F = 23.29$, $p < 0.001$.
-
-Tukey: `L` difiere del control ($p < 0.001$) y del no letal ($p = 0.001$); el control y el no letal no difieren ($p = 0.29$). Con depredador letal, los renacuajos pesan **1.36 veces** lo del control (un 36% más). Kruskal-Wallis confirma la conclusión ($p < 0.001$), lo que da tranquilidad dado que las varianzas no son del todo iguales.
-:::
-
-::: {.sol-pendiente}
-La solución se publicará después de la sesión del domingo 29 de noviembre. Mientras tanto, usa la pestaña **Pista**.
-:::
 
 :::
 

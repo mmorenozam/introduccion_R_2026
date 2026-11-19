@@ -158,21 +158,21 @@
     "href": "diapositivas/modulo-2.html#hoy",
     "title": "Introducción a R",
     "section": "Hoy",
-    "text": "Hoy\n\nMuestras, poblaciones, parámetros y estadísticos\nIntervalos de confianza\nPruebas de hipótesis y el valor p\nPruebas t: una muestra, dos muestras independientes, muestras emparejadas\nPruebas de Wilcoxon y transformaciones\n\n\n\n\n\n\n\n\nEl domingo pasado aprendimos a describir una muestra. Hoy usamos la muestra para sacar conclusiones sobre la población de la que viene."
+    "text": "Hoy\n\nMuestras, poblaciones, parámetros y estadísticos\nIntervalos de confianza\nPruebas de hipótesis y el valor p\nSupuestos y transformaciones de variables\nPruebas t: una muestra, dos muestras independientes, muestras emparejadas\nPruebas de Wilcoxon\n\n\n\n\n\n\n\n\nEl domingo pasado aprendimos a describir una muestra. Hoy usamos la muestra para sacar conclusiones sobre la población de la que viene."
   },
   {
     "objectID": "diapositivas/modulo-2.html#los-datos-de-hoy",
     "href": "diapositivas/modulo-2.html#los-datos-de-hoy",
     "title": "Introducción a R",
     "section": "Los datos de hoy",
-    "text": "Los datos de hoy\nUsamos la tabla ranas del Módulo 1, con los tratamientos como factores.\n\n\nMostrar el código\nranas &lt;- read.csv(\"datos/ranas.csv\")\nranas$Pred  &lt;- factor(ranas$Pred)\nranas$Res   &lt;- factor(ranas$Res)\nranas$Hatch &lt;- factor(ranas$Hatch)\nstr(ranas)\n\n\n'data.frame':   78 obs. of  12 variables:\n $ Block            : int  1 1 1 1 1 1 1 1 1 1 ...\n $ Tank.Unique      : int  1 2 3 4 5 6 7 8 9 10 ...\n $ Pred             : Factor w/ 3 levels \"C\",\"L\",\"NL\": 3 1 1 2 3 2 3 1 2 1 ...\n $ Hatch            : Factor w/ 2 levels \"E\",\"L\": 2 1 2 2 1 1 2 1 2 2 ...\n $ Res              : Factor w/ 2 levels \"Hi\",\"Lo\": 1 1 1 2 1 1 2 2 1 2 ...\n $ Age.DPO          : num  47.2 45.4 53.8 56.9 64.8 ...\n $ Age.FromEmergence: num  13.2 11.4 19.8 22.9 30.8 ...\n $ SVL.initial      : num  19.4 18.4 18.9 18.8 19.7 ...\n $ Tail.initial     : num  4.83 5.37 4.8 4.63 5.43 ...\n $ SVL.final        : num  19.7 19 19.1 19.1 20.1 ...\n $ Mass.final       : num  0.418 0.382 0.412 0.382 0.486 ...\n $ Resorb.days      : num  3.49 3.79 3.51 3.65 4.22 ..."
+    "text": "Los datos de hoy\n\nglucosa: glucosa (mg/dL) de 10 ratones de una línea que podría servir como modelo de hiperglucemia (datos ilustrativos).\ngenderweight, del paquete {datarium}: contiene el peso por sexo (M: hombres, F: mujeres) de 40 participantes.\nmice2, del paquete {datarium}: contiene el peso de 10 ratones antes y después de un tratamiento.\ncrime, del paquete {UsingR}: tasas de crimen (reportes por cada 100 000 habitantes) en los estados de EE. UU. en 1983 y en 1993.\nfelicidad: medida de felicidad de un grupo de estudiantes antes y después de tomar una clase de estadística.\n\n\n\nMostrar el código\nglucosa &lt;- c(108.7, 93.7, 52.7, 79.0, 74.7, 131.9, 99.5, 63.3, 98.6, 92.7)\n\n# install.packages(\"UsingR\")   # solo la primera vez\n# install.packages(\"datarium\") # solo la primera vez\nlibrary(UsingR)\nlibrary(datarium)\ndata(crime)\ndata(genderweight)\ndata(mice2)\n\nfelicidad &lt;- data.frame(before = c(30,43,21,24,23,40,29,56,38,16),\n                        after = c(6,29,11,31,17,2,31,21,8,21))"
   },
   {
     "objectID": "diapositivas/modulo-2.html#población-y-muestra",
     "href": "diapositivas/modulo-2.html#población-y-muestra",
     "title": "Introducción a R",
     "section": "Población y muestra",
-    "text": "Población y muestra\n\n\n\n\n\nTomado de Learning Statistics with R\n\n\n\n\nPoblación: todos los individuos sobre los que queremos concluir (todos los renacuajos de la especie).\nMuestra: los que realmente medimos (78 tanques).\nEn un muestreo aleatorio simple, cada individuo tiene la misma probabilidad de ser elegido."
+    "text": "Población y muestra\n\n\n\n\n\nTomado de Learning Statistics with R\n\n\n\n\nPoblación: todos los individuos sobre los que queremos concluir (por ejemplo, todos los ratones de una línea).\nMuestra: los que realmente medimos (por ejemplo, los 10 ratones de glucosa).\nEn un muestreo aleatorio simple, cada individuo tiene la misma probabilidad de ser elegido."
   },
   {
     "objectID": "diapositivas/modulo-2.html#parámetros-y-estadísticos",
@@ -182,11 +182,18 @@
     "text": "Parámetros y estadísticos\n\n\n\n\nPoblación (parámetro)\nMuestra (estadístico)\n\n\n\n\nMedia\n\\(\\mu\\)\n\\(\\bar{x}\\)\n\n\nDesviación estándar\n\\(\\sigma\\)\n\\(s\\)\n\n\nVarianza\n\\(\\sigma^2\\)\n\\(s^2\\)\n\n\n\n\n\nLos parámetros casi nunca los conocemos: los estimamos con los estadísticos.\nOtra muestra daría otra \\(\\bar{x}\\). ¿Cuánto puede cambiar? Eso nos lo dice el error estándar, \\(s / \\sqrt{n}\\)."
   },
   {
+    "objectID": "diapositivas/modulo-2.html#explorar-los-datos-glucosa",
+    "href": "diapositivas/modulo-2.html#explorar-los-datos-glucosa",
+    "title": "Introducción a R",
+    "section": "Explorar los datos: glucosa",
+    "text": "Explorar los datos: glucosa\nAntes de cualquier prueba, miramos los datos: 10 ratones, glucosa en mg/dL.\n\n\nMostrar el código\npar(mfrow = c(1, 2))\nstripchart(glucosa, method = \"stack\", pch = 19, col = \"#0072B2\",\n           xlab = \"Glucosa (mg/dL)\", main = \"Cada punto es un ratón\")\nabline(v = mean(glucosa), lty = 2)\nboxplot(glucosa, horizontal = TRUE, xlab = \"Glucosa (mg/dL)\", main = \"Diagrama de caja\")\n\n\n\n\nsummary(glucosa)\n\n   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. \n  52.70   75.78   93.20   89.48   99.28  131.90 \n\n\n\n¿Dónde está el centro? ¿Hay valores muy alejados? Con solo 10 datos, cada ratón pesa mucho en la media."
+  },
+  {
     "objectID": "diapositivas/modulo-2.html#intervalos-de-confianza",
     "href": "diapositivas/modulo-2.html#intervalos-de-confianza",
     "title": "Introducción a R",
     "section": "Intervalos de confianza",
-    "text": "Intervalos de confianza\nUn intervalo de confianza del 95% para la media:\n\\[\n\\bar{x} \\pm t_{0.975,\\ n-1} \\cdot \\frac{s}{\\sqrt{n}}\n\\]\n\n\nt.test(ranas$SVL.final)$conf.int\n\n[1] 19.05763 19.70493\nattr(,\"conf.level\")\n[1] 0.95\n\n\n\n\n\n\n\n\n\n\n¿Qué significa “95% de confianza”?\n\n\nSi repitiéramos el estudio muchas veces, el 95% de los intervalos calculados así contendría la media verdadera \\(\\mu\\)."
+    "text": "Intervalos de confianza\nUn intervalo de confianza del 95% para la media:\n\\[\n\\bar{x} \\pm t_{0.975,\\ n-1} \\cdot \\frac{s}{\\sqrt{n}}\n\\]\n\n\nt.test(glucosa)$conf.int\n\n[1]  73.0509 105.9091\nattr(,\"conf.level\")\n[1] 0.95\n\n\n\n\n\n\n\n\n\n\n¿Qué significa “95% de confianza”?\n\n\nSi repitiéramos el estudio muchas veces, el 95% de los intervalos calculados así contendría la media verdadera \\(\\mu\\)."
   },
   {
     "objectID": "diapositivas/modulo-2.html#intervalos-de-confianza-1",
@@ -203,6 +210,13 @@
     "text": "Ejercicios, Parte 1"
   },
   {
+    "objectID": "diapositivas/modulo-2.html#hipótesis-de-investigación-vs.-hipótesis-estadísticas",
+    "href": "diapositivas/modulo-2.html#hipótesis-de-investigación-vs.-hipótesis-estadísticas",
+    "title": "Introducción a R",
+    "section": "Hipótesis de investigación vs. hipótesis estadísticas",
+    "text": "Hipótesis de investigación vs. hipótesis estadísticas\n\nUna hipótesis de investigación expresa, de forma general, una idea científica sobre un tema de interés. Ejemplos: fumar causa cáncer, esta vacuna previene la enfermedad.\n\nNo dice todavía cómo la vamos a poner a prueba ni en qué medida esperamos un efecto.\n\nUna hipótesis estadística, en cambio, es una afirmación matemáticamente precisa sobre un parámetro de la población (por ejemplo, \\(\\mu_1 = \\mu_2\\)), que podemos contrastar con los datos.\n\nUna prueba estadística no “prueba” ni “demuestra” nada: indica si los datos son compatibles o no con \\(H_0\\).\nSus conclusiones valen solo para la población de la que se tomó la muestra. Por eso es clave definir bien esa población: el ratón es el modelo animal más usado y uno de los primeros pasos de muchas investigaciones, pero lo que encontramos en ratones no se puede trasladar directamente a seres humanos."
+  },
+  {
     "objectID": "diapositivas/modulo-2.html#de-la-pregunta-a-las-hipótesis",
     "href": "diapositivas/modulo-2.html#de-la-pregunta-a-las-hipótesis",
     "title": "Introducción a R",
@@ -210,11 +224,18 @@
     "text": "De la pregunta a las hipótesis\n\nPregunta de investigación: ¿la escasez de alimento cambia el tiempo que tardan los renacuajos en reabsorber la cola?\nHipótesis nula, \\(H_0\\): no hay diferencia, \\(\\mu_{Hi} = \\mu_{Lo}\\).\nHipótesis alternativa, \\(H_1\\): sí hay diferencia, \\(\\mu_{Hi} \\neq \\mu_{Lo}\\).\nLa prueba estadística mide qué tan compatibles son los datos con \\(H_0\\)."
   },
   {
+    "objectID": "diapositivas/modulo-2.html#tamaño-de-efecto",
+    "href": "diapositivas/modulo-2.html#tamaño-de-efecto",
+    "title": "Introducción a R",
+    "section": "Tamaño de efecto",
+    "text": "Tamaño de efecto\n\nLas hipótesis que vimos se pueden reordenar en términos de la diferencia entre las medias:\n\n\\[\n\\begin{aligned}\nH_0 &: \\mu_{Hi} - \\mu_{Lo} = 0 \\\\\nH_1 &: \\mu_{Hi} - \\mu_{Lo} \\neq 0\n\\end{aligned}\n\\]\n\nEsa diferencia es el tamaño de efecto: cuánto cambia la respuesta entre los tratamientos. Es lo que queremos estimar, con su intervalo de confianza.\nQue el efecto sea significativo es otra cosa: depende de su tamaño y de su incertidumbre (tamaño de muestra, variabilidad). Un efecto pequeño puede ser significativo con muchos datos, y uno grande puede no serlo con pocos.\nEn general lo llamamos \\(\\theta\\). No siempre nos interesa compararlo con cero, sino con otro valor de referencia, \\(\\theta_0\\):\n\n\n\\[\n\\begin{aligned}\nH_0 &: \\theta = \\theta_0 \\\\\nH_1 &: \\theta \\neq \\theta_0\n\\end{aligned}\n\\qquad \\text{con } \\theta = \\mu_{Hi} - \\mu_{Lo}\n\\]\n\n\nEn la prueba t de una muestra, \\(\\theta = \\mu - \\mu_0\\): por ejemplo, ¿cuánto se aleja la glucosa media de 80 mg/dL?"
+  },
+  {
     "objectID": "diapositivas/modulo-2.html#tipos-de-errores",
     "href": "diapositivas/modulo-2.html#tipos-de-errores",
     "title": "Introducción a R",
     "section": "Tipos de errores",
-    "text": "Tipos de errores\n\n\n\n\n\n\n\n\n\n\\(H_0\\) es verdadera\n\\(H_0\\) es falsa\n\n\n\n\nRechazamos \\(H_0\\)\nError tipo I (\\(\\alpha\\))\nCorrecto (potencia, \\(1 - \\beta\\))\n\n\nNo rechazamos \\(H_0\\)\nCorrecto\nError tipo II (\\(\\beta\\))\n\n\n\n\n\n\\(\\alpha\\), el nivel de significancia, lo fijamos nosotros: por lo general 0.05.\nLa potencia crece con el tamaño de la muestra y con el tamaño del efecto."
+    "text": "Tipos de errores\n\n\n\n\n\n\n\n\n\n\\(H_0\\) es verdadera\n\\(H_0\\) es falsa\n\n\n\n\nRechazamos \\(H_0\\)\nError tipo I (\\(\\alpha\\))\nCorrecto (potencia, \\(1 - \\beta\\))\n\n\nNo rechazamos \\(H_0\\)\nCorrecto (\\(1 - \\alpha\\))\nError tipo II (\\(\\beta\\))\n\n\n\n\n\n\\(\\alpha\\), el nivel de significancia, lo fijamos nosotros: por lo general 0.05.\nLa potencia de una prueba estadística es la probabilidad de rechazar la hipótesis nula cuando esta es de hecho falsa.\nLa potencia crece con el tamaño de la muestra, con el tamaño del efecto y con \\(\\alpha\\), y disminuye con la variabilidad de los datos. Mientras más cercana a 1, mejor; por lo general se busca al menos 0.8.\nAl final del Módulo 3 veremos cómo calcular el tamaño de muestra a partir de la potencia deseada."
   },
   {
     "objectID": "diapositivas/modulo-2.html#pruebas-de-dos-colas-y-de-una-cola",
@@ -231,46 +252,123 @@
     "text": "El valor p\n\n\n\n\n\n\n\n\n\nEs la probabilidad de obtener datos tan extremos como los nuestros, o más, si \\(H_0\\) fuera verdadera.\nSi \\(p &lt; \\alpha\\), rechazamos \\(H_0\\).\nNo es la probabilidad de que \\(H_0\\) sea verdadera.\nNo dice si el efecto es grande o importante: para eso, mira la diferencia y su intervalo."
   },
   {
+    "objectID": "diapositivas/modulo-2.html#pruebas-t",
+    "href": "diapositivas/modulo-2.html#pruebas-t",
+    "title": "Introducción a R",
+    "section": "Pruebas t",
+    "text": "Pruebas t\n\nLas pruebas t comparan una media aritmética con un valor de referencia, o dos medias aritméticas entre sí.\nLa \\(H_0\\) en estas pruebas es que la diferencia (\\(\\theta\\)) es igual al valor de referencia, casi siempre cero.\nSe rechaza la \\(H_0\\) cuando el valor p resultante es menor que \\(\\alpha\\) (por lo general, 0.05).\nExisten tres tipos de pruebas t\n\nPruebas t de una muestra\nPruebas t de muestras independientes\nPruebas t de muestras emparejadas\n\nEstas pruebas fueron desarrolladas bajo la suposición de la normalidad y de homogeneidad de las varianzas.\nSegún el teorema del límite central, con muestras grandes la media muestral tiene una distribución aproximadamente normal, aunque los datos no lo sean. Por eso la prueba t es bastante robusta con muchos datos.\nCuando el número de observaciones es pequeño, conviene revisar la normalidad para decidir entre una prueba t y una de sus alternativas."
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#explorar-los-datos-crime",
+    "href": "diapositivas/modulo-2.html#explorar-los-datos-crime",
+    "title": "Introducción a R",
+    "section": "Explorar los datos: crime",
+    "text": "Explorar los datos: crime\nTasas de crimen (reportes por cada 100 000 habitantes) en los mismos estados de EE. UU., en 1983 y en 1993.\n\n\nMostrar el código\npar(mfrow = c(1, 2))\nboxplot(crime$y1983, crime$y1993, names = c(\"1983\", \"1993\"), ylab = \"Tasa de crimen\",\n        main = \"Cada año por separado\")\nplot(crime$y1983, crime$y1993, pch = 19, col = \"#0072B2\",\n     xlab = \"Tasa en 1983\", ylab = \"Tasa en 1993\", main = \"Cada punto es un estado\")\nabline(a = 0, b = 1, lty = 2)\n\n\n\n\nLos mismos estados se miden dos veces: los datos están emparejados. Los puntos sobre la línea punteada son estados donde la tasa subió.\nHay unos pocos valores muy altos: una cola larga a la derecha. Lo vemos en detalle a continuación."
+  },
+  {
     "objectID": "diapositivas/modulo-2.html#supuestos",
     "href": "diapositivas/modulo-2.html#supuestos",
     "title": "Introducción a R",
     "section": "Supuestos",
-    "text": "Supuestos\n\nObservaciones independientes.\nDatos (o diferencias) con distribución normal, o una muestra grande.\nPara dos muestras independientes: varianzas homogéneas (solo para la prueba de Student).\n\n\n\npar(mfrow = c(1, 2))\nhist(ranas$Mass.final, main = \"\", xlab = \"Masa final (g)\")\nqqnorm(ranas$Mass.final, main = \"\"); qqline(ranas$Mass.final)"
+    "text": "Supuestos\n\nObservaciones independientes.\nDatos (o diferencias) con distribución normal, o una muestra grande.\nPara dos muestras: varianzas homogéneas (solo para la prueba de Student).\n\n\n\n\nMostrar el código\npar(mfrow = c(1, 2))\nhist(crime$y1983, main = \"\", xlab = \"Tasa de crimen en 1983\")\nqqnorm(crime$y1983, main = \"\"); qqline(crime$y1983)"
   },
   {
-    "objectID": "diapositivas/modulo-2.html#normalidad-shapiro-wilk",
-    "href": "diapositivas/modulo-2.html#normalidad-shapiro-wilk",
+    "objectID": "diapositivas/modulo-2.html#supuestos-en-la-práctica",
+    "href": "diapositivas/modulo-2.html#supuestos-en-la-práctica",
     "title": "Introducción a R",
-    "section": "Normalidad: Shapiro-Wilk",
-    "text": "Normalidad: Shapiro-Wilk\n\\(H_0\\): los datos vienen de una distribución normal.\n\nshapiro.test(ranas$Mass.final)\n\n\n    Shapiro-Wilk normality test\n\ndata:  ranas$Mass.final\nW = 0.84713, p-value = 1.717e-07\n\n\n\n\n\n\n\n\n\nCon muestras grandes, Shapiro-Wilk detecta desviaciones mínimas y sin importancia. Mira siempre también el gráfico Q-Q."
+    "section": "Supuestos en la práctica",
+    "text": "Supuestos en la práctica\n\\(H_0\\) de Shapiro-Wilk: los datos vienen de una distribución normal. \\(H_0\\) de var.test(): las dos varianzas son iguales.\n\n\nNormalidad 1983\n\nshapiro.test(crime$y1983)\n\n\n    Shapiro-Wilk normality test\n\ndata:  crime$y1983\nW = 0.77333, p-value = 1.827e-07\n\n\n\nNormalidad 1993\n\nshapiro.test(crime$y1993)\n\n\n    Shapiro-Wilk normality test\n\ndata:  crime$y1993\nW = 0.77348, p-value = 1.841e-07\n\n\n\n\n\nvar.test(crime$y1983, crime$y1993)\n\n\n    F test to compare two variances\n\ndata:  crime$y1983 and crime$y1993\nF = 0.49163, num df = 50, denom df = 50, p-value = 0.01342\nalternative hypothesis: true ratio of variances is not equal to 1\n95 percent confidence interval:\n 0.2806163 0.8613069\nsample estimates:\nratio of variances \n         0.4916266 \n\n\n\n\n\n\n\n\n\n\nCon muestras grandes, Shapiro-Wilk detecta desviaciones mínimas y sin importancia. Mira siempre también el gráfico Q-Q. Y la homogeneidad de las varianzas solo importa al comparar grupos independientes: si los datos están emparejados (como los mismos estados en dos años), no es un supuesto."
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#transformación-de-variables",
+    "href": "diapositivas/modulo-2.html#transformación-de-variables",
+    "title": "Introducción a R",
+    "section": "Transformación de variables",
+    "text": "Transformación de variables\n\nAntes de pasar a pruebas no paramétricas, podemos transformar la variable para volver a las pruebas paramétricas.\nEl objetivo es poder revertir la transformación y concluir en las unidades originales.\nLa misma transformación debe aplicarse a todos los grupos que se comparan: no tiene sentido comparar grupos transformados de formas distintas.\nCon muy pocas observaciones, casi ninguna transformación funciona: mejor usar directamente una prueba no paramétrica.\n\n\n\n\n\n\n\n\n\n\nTransformación\nEn R\nCuándo suele funcionar\n\n\n\n\nLogaritmo\nlog(y)\ntiempos, masas, tasas, concentraciones (valores positivos)\n\n\nLogaritmo con ceros\nlog(y + 1)\ncomo la anterior, si hay ceros\n\n\nRaíz cuadrada\nsqrt(y)\nconteos\n\n\nCuadrado\ny^2\ncolas largas a la izquierda\n\n\n\nUn método más general es la transformación de Box-Cox (MASS::boxcox()), que busca la potencia que mejor normaliza los datos."
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#transformación-de-variables-1",
+    "href": "diapositivas/modulo-2.html#transformación-de-variables-1",
+    "title": "Introducción a R",
+    "section": "Transformación de variables",
+    "text": "Transformación de variables\n\n\nRaíz cuadrada\n\nshapiro.test(sqrt(crime$y1983))$p.value\n\n[1] 0.01359365\n\n\nElevar al cuadrado\n\nshapiro.test(crime$y1983^2)$p.value\n\n[1] 2.954087e-13\n\n\n\nLogaritmo\n\nshapiro.test(log(crime$y1983))$p.value\n\n[1] 0.571298\n\n\nChequeemos con el otro año\n\nshapiro.test(log(crime$y1993))$p.value\n\n[1] 0.1006053\n\n\n\n\nHomogeneidad de las varianzas con la transformación logarítmica:\n\nvar.test(log(crime$y1983), log(crime$y1993))$p.value\n\n[1] 0.541224"
   },
   {
     "objectID": "diapositivas/modulo-2.html#prueba-t-de-una-muestra",
     "href": "diapositivas/modulo-2.html#prueba-t-de-una-muestra",
     "title": "Introducción a R",
     "section": "Prueba t de una muestra",
-    "text": "Prueba t de una muestra\n¿Es la masa media al salir del agua distinta de 0.40 g?\n\nt.test(ranas$Mass.final, mu = 0.40)\n\n\n    One Sample t-test\n\ndata:  ranas$Mass.final\nt = 2.4427, df = 77, p-value = 0.01687\nalternative hypothesis: true mean is not equal to 0.4\n95 percent confidence interval:\n 0.4055686 0.4546950\nsample estimates:\nmean of x \n0.4301318"
+    "text": "Prueba t de una muestra\n\nEs usada para comparar la media aritmética de una muestra con un valor conocido (un estándar por ejemplo).\nPor lo general el valor al que se va a comparar proviene de referencias bibliográficas, pre-experimentos o suposiciones fundamentadas.\nEn este caso, el supuesto que debe cumplirse es el de la normalidad de los datos.\nUsaremos la tabla de datos de los ratones: glucosa"
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#prueba-t-de-una-muestra-1",
+    "href": "diapositivas/modulo-2.html#prueba-t-de-una-muestra-1",
+    "title": "Introducción a R",
+    "section": "Prueba t de una muestra",
+    "text": "Prueba t de una muestra\nSupongamos que tenemos un grupo de 10 ratones que podrían ser parte de un linaje para usar como modelo de hiperglucemia, y medimos su glucosa en sangre (glucosa).\n¿Es la glucosa media de esta línea de ratones distinta de 80 mg/dL, el límite inferior en ratones sanos?\n\n\nshapiro.test(glucosa)$p.value\n\n[1] 0.9534476\n\n\n\n\n\nratest &lt;- t.test(glucosa, mu = 80)\nratest\n\n\n    One Sample t-test\n\ndata:  glucosa\nt = 1.3053, df = 9, p-value = 0.2242\nalternative hypothesis: true mean is not equal to 80\n95 percent confidence interval:\n  73.0509 105.9091\nsample estimates:\nmean of x \n    89.48"
   },
   {
     "objectID": "diapositivas/modulo-2.html#prueba-t-de-muestras-independientes",
     "href": "diapositivas/modulo-2.html#prueba-t-de-muestras-independientes",
     "title": "Introducción a R",
     "section": "Prueba t de muestras independientes",
-    "text": "Prueba t de muestras independientes\n¿Difiere la longitud final entre renacuajos de eclosión temprana (E) y tardía (L)?\n\nvar.test(SVL.final ~ Hatch, data = ranas)\n\n\n    F test to compare two variances\n\ndata:  SVL.final by Hatch\nF = 1.51, num df = 38, denom df = 38, p-value = 0.2085\nalternative hypothesis: true ratio of variances is not equal to 1\n95 percent confidence interval:\n 0.7918426 2.8796646\nsample estimates:\nratio of variances \n          1.510047 \n\n\n\n\nt.test(SVL.final ~ Hatch, data = ranas)\n\n\n    Welch Two Sample t-test\n\ndata:  SVL.final by Hatch\nt = 0.6054, df = 72.986, p-value = 0.5468\nalternative hypothesis: true difference in means between group E and group L is not equal to 0\n95 percent confidence interval:\n -0.4529452  0.8481748\nsample estimates:\nmean in group E mean in group L \n       19.48009        19.28247"
+    "text": "Prueba t de muestras independientes\n\nEs usada para comparar las medias aritméticas de dos grupos independientes.\nPor ejemplo, si deseas comparar las medias aritméticas de individuos agrupados por sexo.\nPara ilustrar esta prueba, vamos a hacer uso de la tabla de datos de genderweight del paquete {datarium}.\nVeamos si existe una diferencia significativa en la media del peso entre hombres y mujeres"
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#explorar-los-datos-genderweight",
+    "href": "diapositivas/modulo-2.html#explorar-los-datos-genderweight",
+    "title": "Introducción a R",
+    "section": "Explorar los datos: genderweight",
+    "text": "Explorar los datos: genderweight\n\n\nMostrar el código\nboxplot(weight ~ group, data = genderweight, names = c(\"Mujeres (F)\", \"Hombres (M)\"),\n        xlab = NULL, ylab = \"Peso (kg)\", col = \"white\")\nstripchart(weight ~ group, data = genderweight, vertical = TRUE, method = \"jitter\",\n           pch = 19, col = adjustcolor(\"#0072B2\", 0.6), add = TRUE)\n\n\n\n\ntapply(genderweight$weight, genderweight$group, summary)\n\n$F\n   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. \n  59.31   62.30   62.94   63.50   64.63   68.83 \n\n$M\n   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. \n  77.01   83.17   86.27   85.83   87.77   95.06 \n\n\n\nDos grupos independientes: cada persona pertenece a uno solo. ¿Difieren los centros? ¿Y la dispersión?"
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#prueba-t-de-muestras-independientes-1",
+    "href": "diapositivas/modulo-2.html#prueba-t-de-muestras-independientes-1",
+    "title": "Introducción a R",
+    "section": "Prueba t de muestras independientes",
+    "text": "Prueba t de muestras independientes\n¿Difieren la media del peso entre hombres y mujeres?\n\n\nChequeamos normalidad: Group M\n\nshapiro.test(subset(genderweight, group == \"M\")$weight)     \n\n\n    Shapiro-Wilk normality test\n\ndata:  subset(genderweight, group == \"M\")$weight\nW = 0.98634, p-value = 0.9886\n\n\n\nChequeamos normalidad: Group F\n\nshapiro.test(subset(genderweight, group == \"F\")$weight)     \n\n\n    Shapiro-Wilk normality test\n\ndata:  subset(genderweight, group == \"F\")$weight\nW = 0.93847, p-value = 0.2243\n\n\n\n\nChequeamos la homogeneidad de las varianzas\n\nvar.test(genderweight$weight ~ genderweight$group)\n\n\n    F test to compare two variances\n\ndata:  genderweight$weight by genderweight$group\nF = 0.21692, num df = 19, denom df = 19, p-value = 0.001648\nalternative hypothesis: true ratio of variances is not equal to 1\n95 percent confidence interval:\n 0.08585766 0.54802553\nsample estimates:\nratio of variances \n         0.2169152 \n\n\n\n¡La homogeneidad de las varianzas no se cumple! 😱"
   },
   {
     "objectID": "diapositivas/modulo-2.html#student-o-welch",
     "href": "diapositivas/modulo-2.html#student-o-welch",
     "title": "Introducción a R",
     "section": "Student o Welch",
-    "text": "Student o Welch\n\nPor defecto, t.test() hace la prueba de Welch, que no supone varianzas iguales. Por eso sus grados de libertad tienen decimales.\nLa prueba de Student clásica necesita var.equal = TRUE.\nSi las varianzas son parecidas, las dos dan casi lo mismo. Si no lo son, Welch es la segura.\n\n\n\nt.test(SVL.final ~ Hatch, data = ranas, var.equal = TRUE)$p.value\n\n[1] 0.546719"
+    "text": "Student o Welch\n\nPor defecto, t.test() hace la prueba de Welch, que no supone varianzas iguales. Por eso sus grados de libertad tienen decimales.\nLa prueba de Student clásica necesita var.equal = TRUE.\nSi las varianzas son parecidas, las dos dan casi lo mismo. Si no lo son, Welch es la segura.\n\n\n\ngendertest &lt;- t.test(genderweight$weight ~ genderweight$group)\ngendertest\n\n\n    Welch Two Sample t-test\n\ndata:  genderweight$weight by genderweight$group\nt = -20.791, df = 26.872, p-value &lt; 2.2e-16\nalternative hypothesis: true difference in means between group F and group M is not equal to 0\n95 percent confidence interval:\n -24.53135 -20.12353\nsample estimates:\nmean in group F mean in group M \n       63.49867        85.82612"
   },
   {
     "objectID": "diapositivas/modulo-2.html#prueba-t-de-muestras-emparejadas",
     "href": "diapositivas/modulo-2.html#prueba-t-de-muestras-emparejadas",
     "title": "Introducción a R",
     "section": "Prueba t de muestras emparejadas",
-    "text": "Prueba t de muestras emparejadas\nDatos sleep, incluidos en R: horas extra de sueño de los mismos 10 pacientes con dos medicamentos.\n\n\nMostrar el código\ndroga_1 &lt;- sleep$extra[sleep$group == 1]\ndroga_2 &lt;- sleep$extra[sleep$group == 2]\nshapiro.test(droga_2 - droga_1)\n\n\n\n    Shapiro-Wilk normality test\n\ndata:  droga_2 - droga_1\nW = 0.82987, p-value = 0.03334\n\n\n\n\nt.test(droga_2, droga_1, paired = TRUE)\n\n\n    Paired t-test\n\ndata:  droga_2 and droga_1\nt = 4.0621, df = 9, p-value = 0.002833\nalternative hypothesis: true mean difference is not equal to 0\n95 percent confidence interval:\n 0.7001142 2.4598858\nsample estimates:\nmean difference \n           1.58"
+    "text": "Prueba t de muestras emparejadas\n\nEs usada para comparar las medias de dos grupos que guardan una relación.\nEsto ocurre generalmente cuando las medidas se han realizado en las mismas unidades experimentales. Ejemplos: individuos al inicio y al final de un tratamiento, muestras en una misma locación geográfica.\nPara esta prueba, vamos a usar la tabla de datos mice2 del paquete {datarium}\nVeamos si existe una diferencia en el peso de los ratones antes y después de haber sido sometidos a una determinada dieta.\n\n\n\ndata(mice2)"
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#explorar-los-datos-mice2",
+    "href": "diapositivas/modulo-2.html#explorar-los-datos-mice2",
+    "title": "Introducción a R",
+    "section": "Explorar los datos: mice2",
+    "text": "Explorar los datos: mice2\n\n\nMostrar el código\npar(mfrow = c(1, 2))\nmatplot(rbind(mice2$before, mice2$after), type = \"b\", pch = 19, lty = 1, col = \"#0072B2\",\n        xaxt = \"n\", xlab = NULL, ylab = \"Peso (g)\", main = \"Cada línea es un ratón\")\naxis(1, at = 1:2, labels = c(\"Antes\", \"Después\"))\nhist(mice2$after - mice2$before, main = \"Diferencias (después - antes)\", xlab = \"Cambio de peso (g)\")\n\n\n\n\nCada ratón se mide dos veces. Lo que interesa es cuánto cambia cada uno: por eso la prueba trabaja con las diferencias."
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#prueba-t-de-muestras-emparejadas-1",
+    "href": "diapositivas/modulo-2.html#prueba-t-de-muestras-emparejadas-1",
+    "title": "Introducción a R",
+    "section": "Prueba t de muestras emparejadas",
+    "text": "Prueba t de muestras emparejadas\n\nEn una prueba emparejada, cada ratón es su propio control: la prueba trabaja con las diferencias dentro de cada ratón.\nPor eso, el supuesto de normalidad se revisa sobre las diferencias, no sobre cada grupo por separado.\nLa homogeneidad de las varianzas no es un supuesto de esta prueba.\n\n\n\ndiferencias &lt;- mice2$after - mice2$before\nshapiro.test(diferencias)\n\n\n    Shapiro-Wilk normality test\n\ndata:  diferencias\nW = 0.96751, p-value = 0.8669"
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#prueba-t-de-muestras-emparejadas-2",
+    "href": "diapositivas/modulo-2.html#prueba-t-de-muestras-emparejadas-2",
+    "title": "Introducción a R",
+    "section": "Prueba t de muestras emparejadas",
+    "text": "Prueba t de muestras emparejadas\n\nmicetest &lt;- t.test(mice2$after, mice2$before, paired = TRUE)\nmicetest\n\n\n    Paired t-test\n\ndata:  mice2$after and mice2$before\nt = 25.546, df = 9, p-value = 1.039e-09\nalternative hypothesis: true mean difference is not equal to 0\n95 percent confidence interval:\n 181.8158 217.1442\nsample estimates:\nmean difference \n         199.48"
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#muestras-emparejadas-con-transformación",
+    "href": "diapositivas/modulo-2.html#muestras-emparejadas-con-transformación",
+    "title": "Introducción a R",
+    "section": "Muestras emparejadas con transformación",
+    "text": "Muestras emparejadas con transformación\n¿Cambió la tasa de crimen entre 1983 y 1993? Cada estado se mide dos veces: las muestras están emparejadas. Revisamos la normalidad de las diferencias, en las unidades originales y en logaritmo:\n\nshapiro.test(crime$y1993 - crime$y1983)$p.value\n\n[1] 5.883638e-05\n\nshapiro.test(log(crime$y1993) - log(crime$y1983))$p.value\n\n[1] 0.2782788\n\n\n\n\nprueba_crimen &lt;- t.test(log(crime$y1993), log(crime$y1983), paired = TRUE)\nprueba_crimen\n\n\n    Paired t-test\n\ndata:  log(crime$y1993) and log(crime$y1983)\nt = 10.027, df = 50, p-value = 1.469e-13\nalternative hypothesis: true mean difference is not equal to 0\n95 percent confidence interval:\n 0.2417349 0.3628437\nsample estimates:\nmean difference \n      0.3022893 \n\n\n\n\nDe vuelta en las unidades originales, con exp():\n\ncat(\"media de 1983 = \", exp(mean(log(crime$y1983))), \"\\nmedia de 1993 = \",  exp(mean(log(crime$y1993))), \"\\ncociente 1993/1983 = \", exp(prueba_crimen$estimate), \"\\nIC 95% del cociente\", exp(prueba_crimen$conf.int))\n\nmedia de 1983 =  362.8298 \nmedia de 1993 =  490.8915 \ncociente 1993/1983 =  1.352953 \nIC 95% del cociente 1.273457 1.437411\n\n\n\n\n\n\n\n\nEn escala logarítmica, la diferencia de medias se convierte en un cociente de medias geométricas: cuántas veces cambió la tasa de crimen de un año a otro."
   },
   {
     "objectID": "diapositivas/modulo-2.html#section-2",
@@ -280,32 +378,32 @@
     "text": "Ejercicios, Parte 2"
   },
   {
-    "objectID": "diapositivas/modulo-2.html#y-si-los-datos-no-son-normales",
-    "href": "diapositivas/modulo-2.html#y-si-los-datos-no-son-normales",
+    "objectID": "diapositivas/modulo-2.html#pruebas-de-wilcoxon-para-datos-no-normales",
+    "href": "diapositivas/modulo-2.html#pruebas-de-wilcoxon-para-datos-no-normales",
     "title": "Introducción a R",
-    "section": "¿Y si los datos no son normales?",
-    "text": "¿Y si los datos no son normales?\n\nLas pruebas de Wilcoxon comparan rangos (posiciones) en lugar de medias.\nNo suponen normalidad, pero sí observaciones independientes.\nUna muestra: ¿la mediana es distinta de un valor de referencia?\nDos muestras (también llamada de Mann-Whitney): ¿un grupo tiende a tener valores más altos que el otro?\n\n\n\nshapiro.test(ranas$Age.FromEmergence)\n\n\n    Shapiro-Wilk normality test\n\ndata:  ranas$Age.FromEmergence\nW = 0.82366, p-value = 3.143e-08"
+    "section": "Pruebas de Wilcoxon para datos no normales",
+    "text": "Pruebas de Wilcoxon para datos no normales\n\nLas pruebas de Wilcoxon comparan rangos (posiciones) en lugar de medias.\nNo suponen normalidad, pero sí observaciones independientes.\nUna muestra: ¿la mediana es distinta de un valor de referencia?\nDos muestras (también llamada de Mann-Whitney): ¿un grupo tiende a tener valores más altos que el otro?"
   },
   {
-    "objectID": "diapositivas/modulo-2.html#wilcoxon-para-una-y-dos-muestras",
-    "href": "diapositivas/modulo-2.html#wilcoxon-para-una-y-dos-muestras",
+    "objectID": "diapositivas/modulo-2.html#explorar-los-datos-felicidad",
+    "href": "diapositivas/modulo-2.html#explorar-los-datos-felicidad",
     "title": "Introducción a R",
-    "section": "Wilcoxon para una y dos muestras",
-    "text": "Wilcoxon para una y dos muestras\n¿La mediana de la edad al salir del agua es distinta de 20 días?\n\nwilcox.test(ranas$Age.FromEmergence, mu = 20)\n\n\n    Wilcoxon signed rank test with continuity correction\n\ndata:  ranas$Age.FromEmergence\nV = 2106, p-value = 0.004891\nalternative hypothesis: true location is not equal to 20\n\n\n\n¿Difiere entre eclosión temprana y tardía?\n\nwilcox.test(Age.FromEmergence ~ Hatch, data = ranas)\n\n\n    Wilcoxon rank sum exact test\n\ndata:  Age.FromEmergence by Hatch\nW = 633, p-value = 0.2047\nalternative hypothesis: true location shift is not equal to 0"
+    "section": "Explorar los datos: felicidad",
+    "text": "Explorar los datos: felicidad\n\n\nMostrar el código\npar(mfrow = c(1, 2))\nmatplot(rbind(felicidad$before, felicidad$after), type = \"b\", pch = 19, lty = 1, col = \"#D55E00\",\n        xaxt = \"n\", xlab = NULL, ylab = \"Felicidad\", main = \"Cada línea es un estudiante\")\naxis(1, at = 1:2, labels = c(\"Antes\", \"Después\"))\nstripchart(felicidad$after - felicidad$before, method = \"stack\", pch = 19, col = \"#D55E00\",\n           xlab = \"Cambio de felicidad (después - antes)\", main = \"Diferencias\")\nabline(v = 0, lty = 2)\n\n\n\n\nSolo 10 estudiantes, y las diferencias no se ven simétricas: con tan pocos datos, no podemos confiar en la normalidad. Por eso usaremos Wilcoxon."
   },
   {
-    "objectID": "diapositivas/modulo-2.html#otra-opción-transformar",
-    "href": "diapositivas/modulo-2.html#otra-opción-transformar",
+    "objectID": "diapositivas/modulo-2.html#wilcoxon-para-una-muestra",
+    "href": "diapositivas/modulo-2.html#wilcoxon-para-una-muestra",
     "title": "Introducción a R",
-    "section": "Otra opción: transformar",
-    "text": "Otra opción: transformar\nSi los datos tienen una cola larga a la derecha, una transformación puede acercarlos a la normalidad y permitir la prueba t.\n\n\n\n\n\n\n\n\nTransformación\nEn R\nCuándo\n\n\n\n\nLogaritmo\nlog(y)\ntiempos, masas, concentraciones (valores positivos)\n\n\nLogaritmo con ceros\nlog(y + 1)\ncomo la anterior, si hay ceros\n\n\nRaíz cuadrada\nsqrt(y)\nconteos\n\n\n\n\n\n\nMostrar el código\npar(mfrow = c(1, 2))\nhist(ranas$Age.FromEmergence, main = \"En días\", xlab = \"Edad al salir del agua\")\nhist(log(ranas$Age.FromEmergence), main = \"En logaritmo\", xlab = \"log(edad)\")"
+    "section": "Wilcoxon para una muestra",
+    "text": "Wilcoxon para una muestra\n¿Existe una diferencia en el nivel de felicidad de los estudiantes antes y después de tomar una clase de estadística?\n\nfelicidad$change &lt;- felicidad$after - felicidad$before\n\nmuestra_wilcox &lt;- wilcox.test(felicidad$change, mu = 0)\nmuestra_wilcox\n\n\n    Wilcoxon signed rank exact test\n\ndata:  felicidad$change\nV = 7, p-value = 0.03711\nalternative hypothesis: true location is not equal to 0\n\n\n\n\n\n\n\n\nProbar que la mediana de los cambios es 0 es lo mismo que una prueba de Wilcoxon emparejada: wilcox.test(felicidad$after, felicidad$before, paired = TRUE) da el mismo resultado. Es la alternativa no paramétrica a la prueba t emparejada."
   },
   {
-    "objectID": "diapositivas/modulo-2.html#prueba-t-sobre-el-logaritmo",
-    "href": "diapositivas/modulo-2.html#prueba-t-sobre-el-logaritmo",
+    "objectID": "diapositivas/modulo-2.html#prueba-de-wilcoxon-para-dos-muestras",
+    "href": "diapositivas/modulo-2.html#prueba-de-wilcoxon-para-dos-muestras",
     "title": "Introducción a R",
-    "section": "Prueba t sobre el logaritmo",
-    "text": "Prueba t sobre el logaritmo\n\nshapiro.test(log(ranas$Age.FromEmergence[ranas$Hatch == \"E\"]))$p.value\n\n[1] 0.2168169\n\nshapiro.test(log(ranas$Age.FromEmergence[ranas$Hatch == \"L\"]))$p.value\n\n[1] 0.3431191\n\nprueba_log &lt;- t.test(log(Age.FromEmergence) ~ Hatch, data = ranas)\nprueba_log$p.value\n\n[1] 0.283308\n\n\n\nPara interpretar, volvemos a la escala original con exp():\n\nexp(prueba_log$estimate)   # medias geométricas, en días\n\nmean in group E mean in group L \n       21.76614        25.90847 \n\nexp(prueba_log$conf.int)   # cociente E / L, con su IC 95%\n\n[1] 0.6093341 1.1583076\nattr(,\"conf.level\")\n[1] 0.95\n\n\n\n\n\n\n\n\nEn escala logarítmica, una diferencia de medias se convierte en un cociente: cuántas veces más (o menos) tarda un grupo que el otro."
+    "section": "Prueba de Wilcoxon para dos muestras",
+    "text": "Prueba de Wilcoxon para dos muestras\n\nRegresando al ejemplo de la tabla de datos genderweight, supongamos que estos no están normalmente distribuidos.\nUsaremos la prueba de Wilcoxon para muestras independientes para ver si existe diferencia entre los pesos de hombres y mujeres.\n\n\n\ndos_wilcox &lt;- wilcox.test(genderweight$weight ~ genderweight$group)\ndos_wilcox\n\n\n    Wilcoxon rank sum exact test\n\ndata:  genderweight$weight by genderweight$group\nW = 0, p-value = 1.451e-11\nalternative hypothesis: true location shift is not equal to 0"
   },
   {
     "objectID": "diapositivas/modulo-2.html#qué-prueba-uso",
@@ -313,6 +411,13 @@
     "title": "Introducción a R",
     "section": "¿Qué prueba uso?",
     "text": "¿Qué prueba uso?\n\n\n\nPregunta\nDatos normales\nDatos no normales\n\n\n\n\n¿Media (o mediana) igual a un valor?\nt.test(x, mu = )\ntransformar, o wilcox.test(x, mu = )\n\n\n¿Difieren dos grupos independientes?\nt.test(y ~ grupo)\ntransformar, o wilcox.test(y ~ grupo)\n\n\n¿Cambian los mismos individuos?\nt.test(x2, x1, paired = TRUE)\nwilcox.test(x2, x1, paired = TRUE)\n\n\n¿Difieren tres o más grupos?\nANOVA (Módulo 3)\nKruskal-Wallis (Módulo 3)"
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#report",
+    "href": "diapositivas/modulo-2.html#report",
+    "title": "Introducción a R",
+    "section": "{report}",
+    "text": "{report}\n\nEl redactar resultados estadísticos puede resultar en una tarea compleja.\nAfortunadamente contamos con la ayuda de {report}, parte del multiverso {easystats} que nos puede dar guías para ello.\n\n\n\ninstall.packages(\"easystats\")\nlibrary(report)\n\n\nreport(dos_wilcox)\n\nEffect sizes were labelled following Funder's (2019) recommendations.\n\nThe Wilcoxon rank sum exact test testing the difference in ranks between\ngenderweight$weight and genderweight$group suggests that the effect is\nnegative, statistically significant, and very large (W = 0.00, p &lt; .001; r\n(rank biserial) = -1.00, 95% CI [-1.00, -1.00])\n\n\n\nreport(gendertest)\n\nEffect sizes were labelled following Cohen's (1988) recommendations.\n\nThe Welch Two Sample t-test testing the difference of genderweight$weight by\ngenderweight$group (mean in group F = 63.50, mean in group M = 85.83) suggests\nthat the effect is negative, statistically significant, and large (difference =\n-22.33, 95% CI [-24.53, -20.12], t(26.87) = -20.79, p &lt; .001; Cohen's d =\n-6.57, 95% CI [-8.42, -4.71])\n\n\n\n\n\n\n\n\nreport() redacta en las unidades de la prueba. Si la prueba se hizo sobre datos transformados (como prueba_crimen), las cifras quedan en logaritmos: vuelve a las unidades originales con exp() antes de redactar."
   },
   {
     "objectID": "diapositivas/modulo-2.html#section-3",
@@ -466,7 +571,7 @@
     "href": "ejercicios-4.html#parte-4",
     "title": "Ejercicios Módulo 4",
     "section": "Parte 4: Más práctica",
-    "text": "Parte 4: Más práctica\n\nEjercicio 4.1: ¿Hace falta la interacción?\nAjusta SVL.final ~ Pred * Res. Si la interacción no es significativa, ajusta el modelo aditivo e interpreta los efectos principales.\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\n* incluye la interacción y + no. Si la interacción no aporta, el modelo más simple (aditivo) es más fácil de interpretar.\n\n\n\n\nLa solución se publicará después de la sesión del domingo 6 de diciembre. Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 4.2: Gráfico de interacción para la masa\nDibuja el gráfico de interacción de Mass.final (depredador en el eje x, una línea por nivel de recursos) y compruébalo con el modelo con interacción.\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nx.factor va en el eje horizontal y trace.factor define las líneas.\n\n\n\n\nLa solución se publicará después de la sesión del domingo 6 de diciembre. Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 4.3: Tukey en el modelo aditivo de la masa\nAjusta Mass.final ~ Pred + Res y compara los depredadores con Tukey. ¿Qué pares difieren y por cuántos gramos?\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nwhich = \"Pred\" limita las comparaciones al factor depredador.\n\n\n\n\nLa solución se publicará después de la sesión del domingo 6 de diciembre. Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 4.4: Exportar la tabla de medias\nCalcula la longitud final media para cada combinación de depredador y recursos, guárdala en medias.csv sin los nombres de las filas y vuelve a leerla.\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nCon row.names = FALSE, write.csv() no guarda la columna con los números de fila.\n\n\n\n\nLa solución se publicará después de la sesión del domingo 6 de diciembre. Mientras tanto, usa la pestaña Pista."
+    "text": "Parte 4: Más práctica\n\nEjercicio 4.1: ¿Hace falta la interacción?\nAjusta SVL.final ~ Pred * Res. Si la interacción no es significativa, ajusta el modelo aditivo e interpreta los efectos principales.\n\nEjercicioPista\n\n\n\n\n\n\n\n\n\n\n\n\n\n* incluye la interacción y + no. Si la interacción no aporta, el modelo más simple (aditivo) es más fácil de interpretar.\n\n\n\n\n\n\nEjercicio 4.2: Gráfico de interacción para la masa\nDibuja el gráfico de interacción de Mass.final (depredador en el eje x, una línea por nivel de recursos) y compruébalo con el modelo con interacción.\n\nEjercicioPista\n\n\n\n\n\n\n\n\n\n\n\n\n\nx.factor va en el eje horizontal y trace.factor define las líneas.\n\n\n\n\n\n\nEjercicio 4.3: Tukey en el modelo aditivo de la masa\nAjusta Mass.final ~ Pred + Res y compara los depredadores con Tukey. ¿Qué pares difieren y por cuántos gramos?\n\nEjercicioPista\n\n\n\n\n\n\n\n\n\n\n\n\n\nwhich = \"Pred\" limita las comparaciones al factor depredador.\n\n\n\n\n\n\nEjercicio 4.4: Exportar la tabla de medias\nCalcula la longitud final media para cada combinación de depredador y recursos, guárdala en medias.csv sin los nombres de las filas y vuelve a leerla.\n\nEjercicioPista\n\n\n\n\n\n\n\n\n\n\n\n\n\nCon row.names = FALSE, write.csv() no guarda la columna con los números de fila."
   },
   {
     "objectID": "ejercicios-4.html#con-tus-propios-datos",
@@ -487,7 +592,7 @@
     "href": "ejercicios-2.html#parte-1",
     "title": "Ejercicios Módulo 2",
     "section": "Parte 1: Estadísticos e intervalos de confianza",
-    "text": "Parte 1: Estadísticos e intervalos de confianza\n\nEjercicio 1.1: Intervalo de confianza para la media\nCalcula la media y la desviación estándar de glucosa, y su intervalo de confianza del 95%: primero “a mano” con la distribución t de Student, y luego con t.test().\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nEl error estándar de la media es \\(s / \\sqrt{n}\\). El intervalo es \\(\\bar{x} \\pm t_{0.975,\\, n-1} \\cdot s/\\sqrt{n}\\).\n\n\n\n\nLa solución se publicará después de la sesión del domingo 22 de noviembre. Mientras tanto, usa la pestaña Pista."
+    "text": "Parte 1: Estadísticos e intervalos de confianza\n\nEjercicio 1.1: Intervalo de confianza para la media\nCalcula la media y la desviación estándar de glucosa, y su intervalo de confianza del 95%: primero “a mano” con la distribución t de Student, y luego con t.test().\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nEl error estándar de la media es \\(s / \\sqrt{n}\\). El intervalo es \\(\\bar{x} \\pm t_{0.975,\\, n-1} \\cdot s/\\sqrt{n}\\).\n\n\n\n\nLa solución se publicará después de la sesión del domingo 22 de noviembre. Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 1.2: Parámetro y estadístico\nImagina que los 78 tanques de ranas son toda la población. Calcula su media \\(\\mu\\) de SVL.final. Luego toma muestras de 10 tanques al azar y calcula su media \\(\\bar{x}\\). ¿Sale siempre lo mismo? Repite 1000 veces y mira cómo se reparten las medias.\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nsample(x, size = 10) elige 10 valores al azar, sin repetir. replicate(1000, ...) repite la expresión 1000 veces y guarda los resultados. Cada vez que corras el código, las muestras cambian.\n\n\n\n\nLa solución se publicará después de la sesión del domingo 22 de noviembre. Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 1.3: El tamaño de la muestra y el ancho del intervalo\nCalcula el error estándar y el intervalo de confianza del 95% de SVL.final, primero con los 78 tanques y luego solo con los 20 primeros. ¿Cuál intervalo es más ancho, y por qué?\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nx[1:20] toma los 20 primeros valores. diff() de un intervalo resta el límite inferior del superior: es su ancho. El error estándar es \\(s/\\sqrt{n}\\).\n\n\n\n\nLa solución se publicará después de la sesión del domingo 22 de noviembre. Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 1.4: ¿Qué significa 95% de confianza?\nSimula 1000 estudios: en cada uno, toma 10 valores de una población normal con \\(\\mu = 90\\) y \\(\\sigma = 20\\) y calcula su intervalo del 95%. ¿Qué proporción de los intervalos contiene a \\(\\mu\\)? Repite con intervalos del 80%.\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\ncontiene_mu() simula un estudio y devuelve TRUE si el intervalo contiene a 90. La media de un vector de TRUE y FALSE es la proporción de TRUE.\n\n\n\n\nLa solución se publicará después de la sesión del domingo 22 de noviembre. Mientras tanto, usa la pestaña Pista."
   },
   {
     "objectID": "ejercicios-2.html#parte-2",
@@ -508,7 +613,7 @@
     "href": "ejercicios-2.html#parte-4",
     "title": "Ejercicios Módulo 2",
     "section": "Parte 4: Más práctica",
-    "text": "Parte 4: Más práctica\n\nEjercicio 4.1: Cambiar el nivel de confianza\nCalcula el intervalo de confianza del 99% para la media de SVL.final y compáralo con el del 95%. ¿Cuál es más ancho, y por qué?\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nEl argumento conf.level de t.test() cambia el nivel de confianza; por defecto es 0.95.\n\n\n\n\nLa solución se publicará después de la sesión del domingo 22 de noviembre. Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 4.2: Una cola, con los datos de las ranas\n¿Hay evidencia de que la masa media al salir del agua (Mass.final) es mayor que 0.40 g?\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nLa hipótesis alternativa es “mayor que 0.40”: alternative = \"greater\".\n\n\n\n\nLa solución se publicará después de la sesión del domingo 22 de noviembre. Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 4.3: Una diferencia que no aparece\n¿Difiere la longitud final (SVL.final) entre recursos altos y bajos? Haz la prueba de Welch e interpreta tanto el valor p como el intervalo de confianza.\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nUn intervalo de confianza de la diferencia que contiene el cero es compatible con “no hay diferencia”.\n\n\n\n\nLa solución se publicará después de la sesión del domingo 22 de noviembre. Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 4.4: Wilcoxon para muestras emparejadas\n¿Crecieron los renacuajos entre la medición inicial (SVL.initial) y la final (SVL.final)? Revisa la normalidad de las diferencias y elige entre la prueba t emparejada y la de Wilcoxon emparejada.\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nComo en la prueba t emparejada, la normalidad se revisa sobre las diferencias. Si no son normales, wilcox.test(..., paired = TRUE) es la alternativa.\n\n\n\n\nLa solución se publicará después de la sesión del domingo 22 de noviembre. Mientras tanto, usa la pestaña Pista."
+    "text": "Parte 4: Más práctica\n\nEjercicio 4.1: Cambiar el nivel de confianza\nCalcula el intervalo de confianza del 99% para la media de SVL.final y compáralo con el del 95%. ¿Cuál es más ancho, y por qué?\n\nEjercicioPista\n\n\n\n\n\n\n\n\n\n\n\n\n\nEl argumento conf.level de t.test() cambia el nivel de confianza; por defecto es 0.95.\n\n\n\n\n\n\nEjercicio 4.2: Una cola, con los datos de las ranas\n¿Hay evidencia de que la masa media al salir del agua (Mass.final) es mayor que 0.40 g?\n\nEjercicioPista\n\n\n\n\n\n\n\n\n\n\n\n\n\nLa hipótesis alternativa es “mayor que 0.40”: alternative = \"greater\".\n\n\n\n\n\n\nEjercicio 4.3: Una diferencia que no aparece\n¿Difiere la longitud final (SVL.final) entre recursos altos y bajos? Haz la prueba de Welch e interpreta tanto el valor p como el intervalo de confianza.\n\nEjercicioPista\n\n\n\n\n\n\n\n\n\n\n\n\n\nUn intervalo de confianza de la diferencia que contiene el cero es compatible con “no hay diferencia”.\n\n\n\n\n\n\nEjercicio 4.4: Wilcoxon para muestras emparejadas\n¿Crecieron los renacuajos entre la medición inicial (SVL.initial) y la final (SVL.final)? Revisa la normalidad de las diferencias y elige entre la prueba t emparejada y la de Wilcoxon emparejada.\n\nEjercicioPista\n\n\n\n\n\n\n\n\n\n\n\n\n\nComo en la prueba t emparejada, la normalidad se revisa sobre las diferencias. Si no son normales, wilcox.test(..., paired = TRUE) es la alternativa."
   },
   {
     "objectID": "ejercicios-2.html#con-tus-propios-datos",
@@ -844,7 +949,7 @@
     "href": "ejercicios-3.html#parte-4",
     "title": "Ejercicios Módulo 3",
     "section": "Parte 4: Más práctica",
-    "text": "Parte 4: Más práctica\n\nEjercicio 4.1: Un ANOVA sin diferencias\n¿Dependen los días para reabsorber la cola (Resorb.days) del depredador? Ajusta el ANOVA, revisa la normalidad de los residuos y confirma con Kruskal-Wallis.\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nSi el ANOVA no es significativo, no hace falta hacer comparaciones múltiples.\n\n\n\n\nLa solución se publicará después de la sesión del domingo 29 de noviembre. Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 4.2: ANOVA con dos grupos\nCompara SVL.final entre Hi y Lo con un ANOVA y con la prueba t de Student (var.equal = TRUE). Compara el estadístico \\(F\\) con \\(t^2\\) y los dos valores p.\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nCon dos grupos, el ANOVA de una vía y la prueba t de Student son la misma prueba: \\(F = t^2\\).\n\n\n\n\nLa solución se publicará después de la sesión del domingo 29 de noviembre. Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 4.3: El camino completo, con la masa\nRecorre el camino del ANOVA con la masa final (Mass.final) según Pred: diagnósticos, transformación con log() si hace falta, ANOVA, Tukey y una confirmación con Kruskal-Wallis. ¿Cuántas veces más pesan los renacuajos con depredador letal que en el control?\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nEn escala logarítmica, exp() de una diferencia de Tukey es un cociente entre medias geométricas.\n\n\n\n\nLa solución se publicará después de la sesión del domingo 29 de noviembre. Mientras tanto, usa la pestaña Pista."
+    "text": "Parte 4: Más práctica\n\nEjercicio 4.1: Un ANOVA sin diferencias\n¿Dependen los días para reabsorber la cola (Resorb.days) del depredador? Ajusta el ANOVA, revisa la normalidad de los residuos y confirma con Kruskal-Wallis.\n\nEjercicioPista\n\n\n\n\n\n\n\n\n\n\n\n\n\nSi el ANOVA no es significativo, no hace falta hacer comparaciones múltiples.\n\n\n\n\n\n\nEjercicio 4.2: ANOVA con dos grupos\nCompara SVL.final entre Hi y Lo con un ANOVA y con la prueba t de Student (var.equal = TRUE). Compara el estadístico \\(F\\) con \\(t^2\\) y los dos valores p.\n\nEjercicioPista\n\n\n\n\n\n\n\n\n\n\n\n\n\nCon dos grupos, el ANOVA de una vía y la prueba t de Student son la misma prueba: \\(F = t^2\\).\n\n\n\n\n\n\nEjercicio 4.3: El camino completo, con la masa\nRecorre el camino del ANOVA con la masa final (Mass.final) según Pred: diagnósticos, transformación con log() si hace falta, ANOVA, Tukey y una confirmación con Kruskal-Wallis. ¿Cuántas veces más pesan los renacuajos con depredador letal que en el control?\n\nEjercicioPista\n\n\n\n\n\n\n\n\n\n\n\n\n\nEn escala logarítmica, exp() de una diferencia de Tukey es un cociente entre medias geométricas."
   },
   {
     "objectID": "ejercicios-3.html#con-tus-propios-datos",
@@ -928,14 +1033,14 @@
     "href": "recursos.html",
     "title": "Recursos",
     "section": "",
-    "text": "Instala los programas en este orden, antes de la primera clase:\n\nR, desde CRAN: elige tu sistema operativo y descarga la versión más reciente.\nRStudio Desktop, desde Posit (versión gratuita).\nAbre RStudio y, en la consola, instala los paquetes que usaremos:\n\ninstall.packages(c(\"readxl\", \"writexl\", \"flextable\", \"tidycomm\", \"fdth\"))\n\n\n\n\n\n\n¿No puedes instalar R todavía?\n\n\n\nLos ejercicios de este sitio corren en tu navegador, así que puedes empezar a practicar mientras resuelves la instalación. Si tienes problemas, escribe al correo del curso antes del primer domingo."
+    "text": "Instala los programas en este orden, antes de la primera clase:\n\nR, desde CRAN: elige tu sistema operativo y descarga la versión más reciente.\nRStudio Desktop, desde Posit (versión gratuita).\nAbre RStudio y, en la consola, instala los paquetes que usaremos:\n\ninstall.packages(c(\"readxl\", \"writexl\", \"flextable\", \"tidycomm\", \"fdth\", \"UsingR\", \"datarium\", \"easystats\"))\n\n\n\n\n\n\n¿No puedes instalar R todavía?\n\n\n\nLos ejercicios de este sitio corren en tu navegador, así que puedes empezar a practicar mientras resuelves la instalación. Si tienes problemas, escribe al correo del curso antes del primer domingo."
   },
   {
     "objectID": "recursos.html#instalacion",
     "href": "recursos.html#instalacion",
     "title": "Recursos",
     "section": "",
-    "text": "Instala los programas en este orden, antes de la primera clase:\n\nR, desde CRAN: elige tu sistema operativo y descarga la versión más reciente.\nRStudio Desktop, desde Posit (versión gratuita).\nAbre RStudio y, en la consola, instala los paquetes que usaremos:\n\ninstall.packages(c(\"readxl\", \"writexl\", \"flextable\", \"tidycomm\", \"fdth\"))\n\n\n\n\n\n\n¿No puedes instalar R todavía?\n\n\n\nLos ejercicios de este sitio corren en tu navegador, así que puedes empezar a practicar mientras resuelves la instalación. Si tienes problemas, escribe al correo del curso antes del primer domingo."
+    "text": "Instala los programas en este orden, antes de la primera clase:\n\nR, desde CRAN: elige tu sistema operativo y descarga la versión más reciente.\nRStudio Desktop, desde Posit (versión gratuita).\nAbre RStudio y, en la consola, instala los paquetes que usaremos:\n\ninstall.packages(c(\"readxl\", \"writexl\", \"flextable\", \"tidycomm\", \"fdth\", \"UsingR\", \"datarium\", \"easystats\"))\n\n\n\n\n\n\n¿No puedes instalar R todavía?\n\n\n\nLos ejercicios de este sitio corren en tu navegador, así que puedes empezar a practicar mientras resuelves la instalación. Si tienes problemas, escribe al correo del curso antes del primer domingo."
   },
   {
     "objectID": "recursos.html#libros-gratuitos-en-español",

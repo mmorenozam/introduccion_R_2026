@@ -12,7 +12,7 @@ Instala los programas **en este orden**, antes de la primera clase:
 3. Abre RStudio y, en la consola, instala los paquetes que usaremos:
 
 ```r
-install.packages(c("readxl", "writexl", "flextable", "tidycomm", "fdth"))
+install.packages(c("readxl", "writexl", "flextable", "tidycomm", "fdth", "UsingR", "datarium", "easystats"))
 ```
 
 ::: {.callout-tip}
