@@ -50,9 +50,13 @@ Estos ejercicios siguen el [Módulo 2](modulo-2.qmd). El código corre **en tu n
 #|   - ex_2_2
 #|   - ex_2_3
 #|   - ex_2_4
+#|   - ex_2_5
+#|   - ex_2_6
 #|   - ex_3_1
 #|   - ex_3_2
 #|   - ex_3_3
+#|   - ex_3_4
+#|   - ex_3_5
 #|   - ex_4_1
 #|   - ex_4_2
 #|   - ex_4_3
@@ -481,6 +485,106 @@ La solución se publicará después de la sesión del domingo 22 de noviembre. M
 
 :::
 
+### Ejercicio 2.5: Una pregunta con dirección
+
+**En el ejercicio 2.3 preguntamos si los días para reabsorber la cola *difieren* entre recursos altos y bajos. Ahora la pregunta tiene dirección: ¿los renacuajos con recursos **altos** (`Hi`) reabsorben la cola **más rápido**? Plantea la prueba de una cola, y extrae del resultado el tamaño de efecto y su intervalo.**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_2_5
+prueba <- t.test(Resorb.days ~ Res, data = ranas, alternative = "____")
+prueba
+
+prueba$estimate
+diff(rev(prueba$estimate))     # media de Hi menos media de Lo
+prueba$____
+```
+
+## Pista
+
+::: {.hint exercise="ex_2_5"}
+R resta en el orden de los niveles del factor: `Hi` menos `Lo`. "Más rápido" significa menos días, es decir, $\mu_{Hi} - \mu_{Lo} < 0$: `alternative = "less"`. El intervalo está en `prueba$conf.int`.
+:::
+
+## Solución
+
+::: {.solution exercise="ex_2_5"}
+```r
+prueba <- t.test(Resorb.days ~ Res, data = ranas, alternative = "less")
+prueba
+
+prueba$estimate
+diff(rev(prueba$estimate))     # media de Hi menos media de Lo
+prueba$conf.int
+```
+
+$H_0: \mu_{Hi} - \mu_{Lo} \geq 0$ frente a $H_1: \mu_{Hi} - \mu_{Lo} < 0$. La prueba de Welch da $t = -3.80$, $gl = 64.3$, $p = 0.0002$: la mitad del valor p de dos colas del ejercicio 2.3, porque toda la región de rechazo está en un solo lado.
+
+El tamaño de efecto es $-0.47$ días: con recursos altos, la cola se reabsorbe casi medio día antes. El intervalo de una cola va de $-\infty$ a $-0.26$ días: con un 95% de confianza, la diferencia es de **al menos** 0.26 días a favor de `Hi`.
+
+Una prueba de una cola solo es válida si la dirección se decide **antes** de ver los datos, por la pregunta de investigación.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión del domingo 22 de noviembre. Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+### Ejercicio 2.6: Emparejadas con transformación
+
+**¿Crecieron los renacuajos entre la medición inicial (`SVL.initial`) y la final (`SVL.final`)? Las diferencias en milímetros no son normales; prueba con el logaritmo, haz la prueba t emparejada y vuelve a las unidades originales con `exp()`.**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_2_6
+shapiro.test(ranas$SVL.final - ranas$SVL.initial)$p.value
+shapiro.test(log(ranas$SVL.final) - log(ranas$____))$p.value
+
+prueba_log <- t.test(log(ranas$SVL.final), log(ranas$SVL.initial), paired = ____)
+prueba_log
+
+exp(prueba_log$estimate)
+exp(prueba_log$____)
+```
+
+## Pista
+
+::: {.hint exercise="ex_2_6"}
+En escala logarítmica, la diferencia entre dos mediciones del mismo tanque se convierte, con `exp()`, en un **cociente**: cuántas veces más grande es la medida final que la inicial.
+:::
+
+## Solución
+
+::: {.solution exercise="ex_2_6"}
+```r
+shapiro.test(ranas$SVL.final - ranas$SVL.initial)$p.value
+shapiro.test(log(ranas$SVL.final) - log(ranas$SVL.initial))$p.value
+
+prueba_log <- t.test(log(ranas$SVL.final), log(ranas$SVL.initial), paired = TRUE)
+prueba_log
+
+exp(prueba_log$estimate)
+exp(prueba_log$conf.int)
+```
+
+En milímetros, las diferencias no son normales ($p = 0.001$); en logaritmo, sí ($p = 0.15$). La prueba emparejada da $t = 18.60$, $gl = 77$, $p < 0.001$.
+
+De vuelta en las unidades originales: la longitud final es **1.020 veces** la inicial (IC 95%: 1.017 a 1.022), es decir, los renacuajos crecieron alrededor de un **2%**. En el ejercicio 4.4 resolverás la misma pregunta con Wilcoxon: dos caminos válidos para datos no normales.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión del domingo 22 de noviembre. Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
 ## Parte 3: Wilcoxon y transformaciones {#parte-3}
 
 ### Ejercicio 3.1: Wilcoxon para una muestra
@@ -624,6 +728,111 @@ En escala logarítmica, los dos grupos ya son compatibles con la normalidad (Sha
 De vuelta en días: las medias geométricas son 17.0 días (`Hi`) y 33.1 días (`Lo`). El intervalo de `exp(prueba$conf.int)` va de 0.39 a 0.69: con recursos altos, los renacuajos salen del agua en **un 31% a 61% menos tiempo**; en promedio, en la mitad (0.51 veces) del tiempo.
 
 La conclusión coincide con la del ejercicio 3.2, pero ahora tenemos además el **tamaño** del efecto y su intervalo de confianza.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión del domingo 22 de noviembre. Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+### Ejercicio 3.4: Cuando Wilcoxon y la prueba t no coinciden
+
+**¿Difiere la masa final (`Mass.final`) entre recursos altos y bajos? Revisa la normalidad de cada grupo, haz la prueba de Wilcoxon y, para comparar, también la de Welch. ¿Llegan a la misma conclusión? ¿Por qué?**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_3_4
+boxplot(Mass.final ~ Res, data = ranas)
+
+shapiro.test(ranas$Mass.final[ranas$Res == "Hi"])$p.value
+shapiro.test(ranas$Mass.final[ranas$Res == "____"])$p.value
+
+tapply(ranas$Mass.final, ranas$Res, median)
+tapply(ranas$Mass.final, ranas$Res, ____)
+
+wilcox.test(Mass.final ~ Res, data = ranas)
+t.test(Mass.final ~ ____, data = ranas)
+```
+
+## Pista
+
+::: {.hint exercise="ex_3_4"}
+La prueba t compara **medias**; la de Wilcoxon compara **rangos**, es decir, si los valores de un grupo tienden a ser más altos que los del otro. Mira en el diagrama de caja si hay valores muy alejados en alguno de los grupos.
+:::
+
+## Solución
+
+::: {.solution exercise="ex_3_4"}
+```r
+boxplot(Mass.final ~ Res, data = ranas)
+
+shapiro.test(ranas$Mass.final[ranas$Res == "Hi"])$p.value
+shapiro.test(ranas$Mass.final[ranas$Res == "Lo"])$p.value
+
+tapply(ranas$Mass.final, ranas$Res, median)
+tapply(ranas$Mass.final, ranas$Res, mean)
+
+wilcox.test(Mass.final ~ Res, data = ranas)
+t.test(Mass.final ~ Res, data = ranas)
+```
+
+Ninguno de los dos grupos es normal (Shapiro-Wilk: $p < 0.001$ en ambos). Las conclusiones **no coinciden**:
+
+-   Wilcoxon: $W = 973$, $p = 0.034$. Los tanques con recursos altos tienden a tener renacuajos más pesados (medianas de 0.417 frente a 0.385 g).
+-   Welch: $p = 0.26$. Las medias (0.444 frente a 0.416 g) no difieren de forma clara.
+
+¿Por qué? En el grupo `Lo` hay unos pocos tanques muy pesados (hasta 0.75 g) que suben su media y su varianza. La prueba t, sensible a esos valores, pierde potencia; Wilcoxon, que trabaja con rangos, no se deja llevar por ellos y detecta que la **mayoría** de los tanques `Lo` son más livianos. Como los datos no son normales y hay valores extremos, aquí la prueba adecuada es Wilcoxon. Y la prueba se elige **antes** de ver el valor p.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión del domingo 22 de noviembre. Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+### Ejercicio 3.5: Wilcoxon para muestras emparejadas
+
+**Repite la pregunta del ejercicio 2.4 (¿bajó la glucosa con el tratamiento?) con la prueba de Wilcoxon emparejada, y compara con la prueba t emparejada. ¿Cuándo preferirías una u otra?**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_3_5
+diferencias <- despues - antes
+diferencias
+median(diferencias)
+
+wilcox.test(despues, antes, paired = ____)
+t.test(despues, antes, paired = TRUE)$p.value
+```
+
+## Pista
+
+::: {.hint exercise="ex_3_5"}
+Es la misma sintaxis que la prueba t emparejada, cambiando la función. R avisa que hay empates (dos diferencias de -13) y que usa una aproximación normal: es un aviso, no un error.
+:::
+
+## Solución
+
+::: {.solution exercise="ex_3_5"}
+```r
+diferencias <- despues - antes
+diferencias
+median(diferencias)
+
+wilcox.test(despues, antes, paired = TRUE)
+t.test(despues, antes, paired = TRUE)$p.value
+```
+
+Los 12 ratones bajaron su glucosa (todas las diferencias son negativas; mediana de $-8.5$ mg/dL). Wilcoxon da $V = 0$, $p = 0.003$; la prueba t, $p = 0.0001$. Las dos concluyen lo mismo: el tratamiento baja la glucosa.
+
+$V = 0$ significa que **ninguna** diferencia fue positiva. Como en el ejercicio 2.4 las diferencias eran normales, la prueba t es la más adecuada aquí (y es más potente: su valor p es menor). Wilcoxon sería la elección si las diferencias no fueran normales y la muestra fuera pequeña.
 :::
 
 ::: {.sol-pendiente}

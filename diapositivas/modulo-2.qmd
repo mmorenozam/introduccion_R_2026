@@ -684,7 +684,7 @@ En escala logarítmica, la diferencia de medias se convierte en un **cociente** 
 [Ejercicios, Parte 2](../ejercicios-2.html#parte-2){target="_blank"}
 :::
 
-::: {.timer #Timer2 seconds=1200 starton=interaction}
+::: {.timer #Timer2 seconds=1500 starton=interaction}
 :::
 :::
 :::
@@ -810,7 +810,7 @@ report(gendertest)
 [Ejercicios, Parte 3](../ejercicios-2.html#parte-3){target="_blank"}
 :::
 
-::: {.timer #Timer3 seconds=900 starton=interaction}
+::: {.timer #Timer3 seconds=1200 starton=interaction}
 :::
 :::
 :::
