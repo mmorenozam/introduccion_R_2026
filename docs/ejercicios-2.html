@@ -469,8 +469,20 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiZXhfMV8xIn0sImNvZGUi
 </div>
 </div>
 <div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
-<div class="sol-pendiente">
-<p>La solución se publicará después de la sesión del domingo 22 de noviembre. Mientras tanto, usa la pestaña <strong>Pista</strong>.</p>
+<div class="webr-ojs-exercise exercise-solution d-none" data-exercise="ex_1_1">
+<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">length</span>(glucosa)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>media <span class="ot">&lt;-</span> <span class="fu">mean</span>(glucosa)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>de <span class="ot">&lt;-</span> <span class="fu">sd</span>(glucosa)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>media</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>de</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>error_estandar <span class="ot">&lt;-</span> de <span class="sc">/</span> <span class="fu">sqrt</span>(n)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>t_critico <span class="ot">&lt;-</span> <span class="fu">qt</span>(<span class="fl">0.975</span>, <span class="at">df =</span> n <span class="sc">-</span> <span class="dv">1</span>)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>media <span class="sc">-</span> t_critico <span class="sc">*</span> error_estandar</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>media <span class="sc">+</span> t_critico <span class="sc">*</span> error_estandar</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(glucosa)<span class="sc">$</span>conf.int</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>La media es 89.48 mg/dL y la desviación estándar 22.97 mg/dL. El intervalo de confianza del 95% va de <strong>73.05 a 105.91 mg/dL</strong>, igual con los dos métodos. Con solo 10 ratones y tanta variación, el intervalo es ancho.</p>
 </div>
 </div>
 </div>
@@ -500,8 +512,19 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiZXhfMV8yIn0sImNvZGUi
 </div>
 </div>
 <div id="tabset-2-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-3-tab">
-<div class="sol-pendiente">
-<p>La solución se publicará después de la sesión del domingo 22 de noviembre. Mientras tanto, usa la pestaña <strong>Pista</strong>.</p>
+<div class="webr-ojs-exercise exercise-solution d-none" data-exercise="ex_1_2">
+<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="fu">mean</span>(ranas<span class="sc">$</span>SVL.final)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>mu</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(<span class="fu">sample</span>(ranas<span class="sc">$</span>SVL.final, <span class="at">size =</span> <span class="dv">10</span>))</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(<span class="fu">sample</span>(ranas<span class="sc">$</span>SVL.final, <span class="at">size =</span> <span class="dv">10</span>))</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>medias <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="dv">1000</span>, <span class="fu">mean</span>(<span class="fu">sample</span>(ranas<span class="sc">$</span>SVL.final, <span class="at">size =</span> <span class="dv">10</span>)))</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(medias)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(medias)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(medias, <span class="at">main =</span> <span class="st">"1000 medias de muestras de 10 tanques"</span>, <span class="at">xlab =</span> <span class="st">"Media de SVL.final (mm)"</span>)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> mu, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>El <strong>parámetro</strong> <span class="math inline">\(\mu\)</span> es 19.38 mm y no cambia. Cada <strong>estadístico</strong> <span class="math inline">\(\bar{x}\)</span> es distinto, porque depende de qué tanques caen en la muestra. Las 1000 medias se reparten alrededor de <span class="math inline">\(\mu\)</span> (su promedio es casi 19.38 mm), con una desviación estándar de unos 0.43 mm: eso es el <strong>error estándar</strong> de la media, cercano a <span class="math inline">\(s/\sqrt{10} = 0.45\)</span> mm. Tus números exactos serán un poco distintos, porque las muestras son al azar.</p>
 </div>
 </div>
 </div>
@@ -531,8 +554,21 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiZXhfMV8zIn0sImNvZGUi
 </div>
 </div>
 <div id="tabset-3-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-3-tab">
-<div class="sol-pendiente">
-<p>La solución se publicará después de la sesión del domingo 22 de noviembre. Mientras tanto, usa la pestaña <strong>Pista</strong>.</p>
+<div class="webr-ojs-exercise exercise-solution d-none" data-exercise="ex_1_3">
+<div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>todos <span class="ot">&lt;-</span> ranas<span class="sc">$</span>SVL.final</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>primeros <span class="ot">&lt;-</span> ranas<span class="sc">$</span>SVL.final[<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>]</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(todos) <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="fu">length</span>(todos))</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(primeros) <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="fu">length</span>(primeros))</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>ic_todos <span class="ot">&lt;-</span> <span class="fu">t.test</span>(todos)<span class="sc">$</span>conf.int</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>ic_primeros <span class="ot">&lt;-</span> <span class="fu">t.test</span>(primeros)<span class="sc">$</span>conf.int</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>ic_todos</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>ic_primeros</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="fu">diff</span>(ic_todos)</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="fu">diff</span>(ic_primeros)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Con los 78 tanques, el error estándar es 0.16 mm y el intervalo va de 19.06 a 19.71 mm (ancho 0.65 mm). Con 20 tanques, el error estándar es 0.23 mm y el intervalo va de 18.95 a 19.92 mm (ancho 0.97 mm). El intervalo con menos datos es <strong>más ancho</strong> aunque estos 20 tanques varían menos (<span class="math inline">\(s\)</span> = 1.04 frente a 1.44 mm): <span class="math inline">\(\sqrt{n}\)</span> en el denominador y un valor crítico de <span class="math inline">\(t\)</span> mayor (2.09 frente a 1.99) pesan más.</p>
 </div>
 </div>
 </div>
@@ -562,8 +598,16 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiZXhfMV80In0sImNvZGUi
 </div>
 </div>
 <div id="tabset-4-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-3-tab">
-<div class="sol-pendiente">
-<p>La solución se publicará después de la sesión del domingo 22 de noviembre. Mientras tanto, usa la pestaña <strong>Pista</strong>.</p>
+<div class="webr-ojs-exercise exercise-solution d-none" data-exercise="ex_1_4">
+<div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>contiene_mu <span class="ot">&lt;-</span> <span class="cf">function</span>(nivel) {</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">10</span>, <span class="at">mean =</span> <span class="dv">90</span>, <span class="at">sd =</span> <span class="dv">20</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  ic <span class="ot">&lt;-</span> <span class="fu">t.test</span>(x, <span class="at">conf.level =</span> nivel)<span class="sc">$</span>conf.int</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  ic[<span class="dv">1</span>] <span class="sc">&lt;</span> <span class="dv">90</span> <span class="sc">&amp;</span> ic[<span class="dv">2</span>] <span class="sc">&gt;</span> <span class="dv">90</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(<span class="fu">replicate</span>(<span class="dv">1000</span>, <span class="fu">contiene_mu</span>(<span class="fl">0.95</span>)))</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(<span class="fu">replicate</span>(<span class="dv">1000</span>, <span class="fu">contiene_mu</span>(<span class="fl">0.80</span>)))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Alrededor del 95% de los intervalos del 95% contienen a <span class="math inline">\(\mu\)</span>, y alrededor del 80% de los del 80% (tus números variarán un poco, por ejemplo 0.947 o 0.806). Eso es lo que significa el nivel de confianza: una propiedad del <strong>método</strong>, sobre muchos estudios. En un estudio concreto, el intervalo contiene a <span class="math inline">\(\mu\)</span> o no; no lo sabemos. Es la misma idea del gráfico de los 50 intervalos de las diapositivas.</p>
 </div>
 </div>
 </div>
@@ -596,8 +640,13 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiZXhfMl8xIn0sImNvZGUi
 </div>
 </div>
 <div id="tabset-5-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-3-tab">
-<div class="sol-pendiente">
-<p>La solución se publicará después de la sesión del domingo 22 de noviembre. Mientras tanto, usa la pestaña <strong>Pista</strong>.</p>
+<div class="webr-ojs-exercise exercise-solution d-none" data-exercise="ex_2_1">
+<div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(glucosa); <span class="fu">qqline</span>(glucosa)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(glucosa)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(glucosa, <span class="at">mu =</span> <span class="dv">100</span>, <span class="at">alternative =</span> <span class="st">"greater"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Los puntos siguen la línea del gráfico Q-Q y Shapiro-Wilk no rechaza la normalidad (<span class="math inline">\(W = 0.978\)</span>, <span class="math inline">\(p = 0.95\)</span>), así que la prueba t es adecuada.</p>
+<p>La prueba da <span class="math inline">\(t = -1.45\)</span>, <span class="math inline">\(gl = 9\)</span>, <span class="math inline">\(p = 0.91\)</span>. <strong>No hay evidencia</strong> de que la media supere los 100 mg/dL: de hecho, la media de la muestra (89.48) está por debajo. Con estos datos, esta línea no parece un buen modelo de hiperglucemia.</p>
 </div>
 </div>
 </div>
@@ -627,8 +676,14 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiZXhfMl8yIn0sImNvZGUi
 </div>
 </div>
 <div id="tabset-6-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-3-tab">
-<div class="sol-pendiente">
-<p>La solución se publicará después de la sesión del domingo 22 de noviembre. Mientras tanto, usa la pestaña <strong>Pista</strong>.</p>
+<div class="webr-ojs-exercise exercise-solution d-none" data-exercise="ex_2_2">
+<div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(Resorb.days <span class="sc">~</span> Res, <span class="at">data =</span> ranas)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(ranas<span class="sc">$</span>Resorb.days[ranas<span class="sc">$</span>Res <span class="sc">==</span> <span class="st">"Hi"</span>])</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(ranas<span class="sc">$</span>Resorb.days[ranas<span class="sc">$</span>Res <span class="sc">==</span> <span class="st">"Lo"</span>])</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="fu">var.test</span>(Resorb.days <span class="sc">~</span> Res, <span class="at">data =</span> ranas)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Los dos grupos parecen normales (Shapiro-Wilk: <span class="math inline">\(p = 0.42\)</span> para <code>Hi</code> y <span class="math inline">\(p = 0.52\)</span> para <code>Lo</code>). Pero las varianzas <strong>no</strong> son iguales: <span class="math inline">\(F = 0.40\)</span>, <span class="math inline">\(p = 0.006\)</span>. El grupo <code>Lo</code> varía más, como se ve en el diagrama de caja. Esto decide qué versión de la prueba t usar en el siguiente ejercicio.</p>
 </div>
 </div>
 </div>
@@ -658,8 +713,12 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiZXhfMl8zIn0sImNvZGUi
 </div>
 </div>
 <div id="tabset-7-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-7-3-tab">
-<div class="sol-pendiente">
-<p>La solución se publicará después de la sesión del domingo 22 de noviembre. Mientras tanto, usa la pestaña <strong>Pista</strong>.</p>
+<div class="webr-ojs-exercise exercise-solution d-none" data-exercise="ex_2_3">
+<div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(Resorb.days <span class="sc">~</span> Res, <span class="at">data =</span> ranas)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(Resorb.days <span class="sc">~</span> Res, <span class="at">data =</span> ranas, <span class="at">var.equal =</span> <span class="cn">TRUE</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Prueba de Welch: <span class="math inline">\(t = -3.80\)</span>, <span class="math inline">\(gl = 64.3\)</span>, <span class="math inline">\(p = 0.0003\)</span>. Con recursos bajos, los renacuajos tardan en promedio 4.64 días en reabsorber la cola, frente a 4.16 días con recursos altos: una diferencia de 0.47 días (IC 95%: 0.22 a 0.72). R la muestra como <code>Hi</code> menos <code>Lo</code>, por eso aparece con signo negativo.</p>
+<p>Con <code>var.equal = TRUE</code> cambian los grados de libertad (76) y el valor p (<span class="math inline">\(p = 0.0003\)</span>), pero la conclusión es la misma. Como las varianzas difieren, la versión correcta aquí es la de Welch.</p>
 </div>
 </div>
 </div>
@@ -689,8 +748,14 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiZXhfMl80In0sImNvZGUi
 </div>
 </div>
 <div id="tabset-8-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-8-3-tab">
-<div class="sol-pendiente">
-<p>La solución se publicará después de la sesión del domingo 22 de noviembre. Mientras tanto, usa la pestaña <strong>Pista</strong>.</p>
+<div class="webr-ojs-exercise exercise-solution d-none" data-exercise="ex_2_4">
+<div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>diferencias <span class="ot">&lt;-</span> despues <span class="sc">-</span> antes</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(diferencias)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(diferencias)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(despues, antes, <span class="at">paired =</span> <span class="cn">TRUE</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Las diferencias son normales (Shapiro-Wilk: <span class="math inline">\(p = 0.35\)</span>). En promedio, la glucosa bajó 8.08 mg/dL después del tratamiento (IC 95%: 5.00 a 11.17 mg/dL; <span class="math inline">\(t = -5.77\)</span>, <span class="math inline">\(gl = 11\)</span>, <span class="math inline">\(p = 0.0001\)</span>).</p>
+<p>¿Por qué emparejar? Cada ratón es su propio control: la diferencia entre ratones (de 127 a 160 mg/dL antes del tratamiento) no se mezcla con el efecto del tratamiento.</p>
 </div>
 </div>
 </div>
@@ -720,8 +785,16 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiZXhfMl81In0sImNvZGUi
 </div>
 </div>
 <div id="tabset-9-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-9-3-tab">
-<div class="sol-pendiente">
-<p>La solución se publicará después de la sesión del domingo 22 de noviembre. Mientras tanto, usa la pestaña <strong>Pista</strong>.</p>
+<div class="webr-ojs-exercise exercise-solution d-none" data-exercise="ex_2_5">
+<div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>prueba <span class="ot">&lt;-</span> <span class="fu">t.test</span>(Resorb.days <span class="sc">~</span> Res, <span class="at">data =</span> ranas, <span class="at">alternative =</span> <span class="st">"less"</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>prueba</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>prueba<span class="sc">$</span>estimate</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="fu">diff</span>(<span class="fu">rev</span>(prueba<span class="sc">$</span>estimate))     <span class="co"># media de Hi menos media de Lo</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>prueba<span class="sc">$</span>conf.int</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><span class="math inline">\(H_0: \mu_{Hi} - \mu_{Lo} \geq 0\)</span> frente a <span class="math inline">\(H_1: \mu_{Hi} - \mu_{Lo} &lt; 0\)</span>. La prueba de Welch da <span class="math inline">\(t = -3.80\)</span>, <span class="math inline">\(gl = 64.3\)</span>, <span class="math inline">\(p = 0.0002\)</span>: la mitad del valor p de dos colas del ejercicio 2.3, porque toda la región de rechazo está en un solo lado.</p>
+<p>El tamaño de efecto es <span class="math inline">\(-0.47\)</span> días: con recursos altos, la cola se reabsorbe casi medio día antes. El intervalo de una cola va de <span class="math inline">\(-\infty\)</span> a <span class="math inline">\(-0.26\)</span> días: con un 95% de confianza, la diferencia es de <strong>al menos</strong> 0.26 días a favor de <code>Hi</code>.</p>
+<p>Una prueba de una cola solo es válida si la dirección se decide <strong>antes</strong> de ver los datos, por la pregunta de investigación.</p>
 </div>
 </div>
 </div>
@@ -751,8 +824,17 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiZXhfMl82In0sImNvZGUi
 </div>
 </div>
 <div id="tabset-10-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-10-3-tab">
-<div class="sol-pendiente">
-<p>La solución se publicará después de la sesión del domingo 22 de noviembre. Mientras tanto, usa la pestaña <strong>Pista</strong>.</p>
+<div class="webr-ojs-exercise exercise-solution d-none" data-exercise="ex_2_6">
+<div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(ranas<span class="sc">$</span>SVL.final <span class="sc">-</span> ranas<span class="sc">$</span>SVL.initial)<span class="sc">$</span>p.value</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(<span class="fu">log</span>(ranas<span class="sc">$</span>SVL.final) <span class="sc">-</span> <span class="fu">log</span>(ranas<span class="sc">$</span>SVL.initial))<span class="sc">$</span>p.value</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>prueba_log <span class="ot">&lt;-</span> <span class="fu">t.test</span>(<span class="fu">log</span>(ranas<span class="sc">$</span>SVL.final), <span class="fu">log</span>(ranas<span class="sc">$</span>SVL.initial), <span class="at">paired =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>prueba_log</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(prueba_log<span class="sc">$</span>estimate)</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(prueba_log<span class="sc">$</span>conf.int)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>En milímetros, las diferencias no son normales (<span class="math inline">\(p = 0.001\)</span>); en logaritmo, sí (<span class="math inline">\(p = 0.15\)</span>). La prueba emparejada da <span class="math inline">\(t = 18.60\)</span>, <span class="math inline">\(gl = 77\)</span>, <span class="math inline">\(p &lt; 0.001\)</span>.</p>
+<p>De vuelta en las unidades originales: la longitud final es <strong>1.020 veces</strong> la inicial (IC 95%: 1.017 a 1.022), es decir, los renacuajos crecieron alrededor de un <strong>2%</strong>. En el ejercicio 4.4 resolverás la misma pregunta con Wilcoxon: dos caminos válidos para datos no normales.</p>
 </div>
 </div>
 </div>
@@ -785,8 +867,13 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiZXhfM18xIn0sImNvZGUi
 </div>
 </div>
 <div id="tabset-11-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-11-3-tab">
-<div class="sol-pendiente">
-<p>La solución se publicará después de la sesión del domingo 22 de noviembre. Mientras tanto, usa la pestaña <strong>Pista</strong>.</p>
+<div class="webr-ojs-exercise exercise-solution d-none" data-exercise="ex_3_1">
+<div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(germinacion)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(germinacion)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">median</span>(germinacion)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="fu">wilcox.test</span>(germinacion, <span class="at">mu =</span> <span class="fl">4.5</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Los datos no son normales: dos semillas tardaron mucho más que el resto (Shapiro-Wilk: <span class="math inline">\(p = 0.004\)</span>). La prueba de Wilcoxon da <span class="math inline">\(V = 67\)</span>, <span class="math inline">\(p = 0.027\)</span>: la mediana de germinación (5.2 días) es <strong>distinta</strong> de los 4.5 días que indica el proveedor; en estas semillas, es mayor.</p>
 </div>
 </div>
 </div>
@@ -816,8 +903,16 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiZXhfM18yIn0sImNvZGUi
 </div>
 </div>
 <div id="tabset-12-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-12-3-tab">
-<div class="sol-pendiente">
-<p>La solución se publicará después de la sesión del domingo 22 de noviembre. Mientras tanto, usa la pestaña <strong>Pista</strong>.</p>
+<div class="webr-ojs-exercise exercise-solution d-none" data-exercise="ex_3_2">
+<div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(Age.FromEmergence <span class="sc">~</span> Res, <span class="at">data =</span> ranas)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(ranas<span class="sc">$</span>Age.FromEmergence[ranas<span class="sc">$</span>Res <span class="sc">==</span> <span class="st">"Hi"</span>])</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(ranas<span class="sc">$</span>Age.FromEmergence[ranas<span class="sc">$</span>Res <span class="sc">==</span> <span class="st">"Lo"</span>])</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="fu">tapply</span>(ranas<span class="sc">$</span>Age.FromEmergence, ranas<span class="sc">$</span>Res, median)</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="fu">wilcox.test</span>(Age.FromEmergence <span class="sc">~</span> Res, <span class="at">data =</span> ranas)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Ninguno de los dos grupos es normal (Shapiro-Wilk: <span class="math inline">\(p = 0.013\)</span> y <span class="math inline">\(p = 0.003\)</span>). La prueba de Wilcoxon da <span class="math inline">\(W = 371\)</span>, <span class="math inline">\(p = 0.0001\)</span>: con recursos bajos, los renacuajos salen del agua más tarde (mediana de 33.7 días frente a 16.2).</p>
+<p>R avisa que no puede calcular el valor p exacto porque hay valores empatados, y usa una aproximación normal. Es un aviso, no un error.</p>
 </div>
 </div>
 </div>
@@ -847,8 +942,20 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiZXhfM18zIn0sImNvZGUi
 </div>
 </div>
 <div id="tabset-13-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-13-3-tab">
-<div class="sol-pendiente">
-<p>La solución se publicará después de la sesión del domingo 22 de noviembre. Mientras tanto, usa la pestaña <strong>Pista</strong>.</p>
+<div class="webr-ojs-exercise exercise-solution d-none" data-exercise="ex_3_3">
+<div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>ranas<span class="sc">$</span>log_edad <span class="ot">&lt;-</span> <span class="fu">log</span>(ranas<span class="sc">$</span>Age.FromEmergence)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(ranas<span class="sc">$</span>log_edad[ranas<span class="sc">$</span>Res <span class="sc">==</span> <span class="st">"Hi"</span>])</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(ranas<span class="sc">$</span>log_edad[ranas<span class="sc">$</span>Res <span class="sc">==</span> <span class="st">"Lo"</span>])</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>prueba <span class="ot">&lt;-</span> <span class="fu">t.test</span>(log_edad <span class="sc">~</span> Res, <span class="at">data =</span> ranas)</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>prueba</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(prueba<span class="sc">$</span>estimate)</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(prueba<span class="sc">$</span>conf.int)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>En escala logarítmica, los dos grupos ya son compatibles con la normalidad (Shapiro-Wilk: <span class="math inline">\(p = 0.52\)</span> para <code>Hi</code> y <span class="math inline">\(p = 0.055\)</span> para <code>Lo</code>). La prueba de Welch da <span class="math inline">\(t = -4.62\)</span>, <span class="math inline">\(gl = 69.5\)</span>, <span class="math inline">\(p &lt; 0.001\)</span>.</p>
+<p>De vuelta en días: las medias geométricas son 17.0 días (<code>Hi</code>) y 33.1 días (<code>Lo</code>). El intervalo de <code>exp(prueba$conf.int)</code> va de 0.39 a 0.69: con recursos altos, los renacuajos salen del agua en <strong>un 31% a 61% menos tiempo</strong>; en promedio, en la mitad (0.51 veces) del tiempo.</p>
+<p>La conclusión coincide con la del ejercicio 3.2, pero ahora tenemos además el <strong>tamaño</strong> del efecto y su intervalo de confianza.</p>
 </div>
 </div>
 </div>
@@ -878,8 +985,23 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiZXhfM180In0sImNvZGUi
 </div>
 </div>
 <div id="tabset-14-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-14-3-tab">
-<div class="sol-pendiente">
-<p>La solución se publicará después de la sesión del domingo 22 de noviembre. Mientras tanto, usa la pestaña <strong>Pista</strong>.</p>
+<div class="webr-ojs-exercise exercise-solution d-none" data-exercise="ex_3_4">
+<div class="sourceCode" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(Mass.final <span class="sc">~</span> Res, <span class="at">data =</span> ranas)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(ranas<span class="sc">$</span>Mass.final[ranas<span class="sc">$</span>Res <span class="sc">==</span> <span class="st">"Hi"</span>])<span class="sc">$</span>p.value</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(ranas<span class="sc">$</span>Mass.final[ranas<span class="sc">$</span>Res <span class="sc">==</span> <span class="st">"Lo"</span>])<span class="sc">$</span>p.value</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="fu">tapply</span>(ranas<span class="sc">$</span>Mass.final, ranas<span class="sc">$</span>Res, median)</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="fu">tapply</span>(ranas<span class="sc">$</span>Mass.final, ranas<span class="sc">$</span>Res, mean)</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="fu">wilcox.test</span>(Mass.final <span class="sc">~</span> Res, <span class="at">data =</span> ranas)</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(Mass.final <span class="sc">~</span> Res, <span class="at">data =</span> ranas)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Ninguno de los dos grupos es normal (Shapiro-Wilk: <span class="math inline">\(p &lt; 0.001\)</span> en ambos). Las conclusiones <strong>no coinciden</strong>:</p>
+<ul>
+<li>Wilcoxon: <span class="math inline">\(W = 973\)</span>, <span class="math inline">\(p = 0.034\)</span>. Los tanques con recursos altos tienden a tener renacuajos más pesados (medianas de 0.417 frente a 0.385 g).</li>
+<li>Welch: <span class="math inline">\(p = 0.26\)</span>. Las medias (0.444 frente a 0.416 g) no difieren de forma clara.</li>
+</ul>
+<p>¿Por qué? En el grupo <code>Lo</code> hay unos pocos tanques muy pesados (hasta 0.75 g) que suben su media y su varianza. La prueba t, sensible a esos valores, pierde potencia; Wilcoxon, que trabaja con rangos, no se deja llevar por ellos y detecta que la <strong>mayoría</strong> de los tanques <code>Lo</code> son más livianos. Como los datos no son normales y hay valores extremos, aquí la prueba adecuada es Wilcoxon. Y la prueba se elige <strong>antes</strong> de ver el valor p.</p>
 </div>
 </div>
 </div>
@@ -909,8 +1031,15 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiZXhfM181In0sImNvZGUi
 </div>
 </div>
 <div id="tabset-15-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-15-3-tab">
-<div class="sol-pendiente">
-<p>La solución se publicará después de la sesión del domingo 22 de noviembre. Mientras tanto, usa la pestaña <strong>Pista</strong>.</p>
+<div class="webr-ojs-exercise exercise-solution d-none" data-exercise="ex_3_5">
+<div class="sourceCode" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>diferencias <span class="ot">&lt;-</span> despues <span class="sc">-</span> antes</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>diferencias</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">median</span>(diferencias)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="fu">wilcox.test</span>(despues, antes, <span class="at">paired =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(despues, antes, <span class="at">paired =</span> <span class="cn">TRUE</span>)<span class="sc">$</span>p.value</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Los 12 ratones bajaron su glucosa (todas las diferencias son negativas; mediana de <span class="math inline">\(-8.5\)</span> mg/dL). Wilcoxon da <span class="math inline">\(V = 0\)</span>, <span class="math inline">\(p = 0.003\)</span>; la prueba t, <span class="math inline">\(p = 0.0001\)</span>. Las dos concluyen lo mismo: el tratamiento baja la glucosa.</p>
+<p><span class="math inline">\(V = 0\)</span> significa que <strong>ninguna</strong> diferencia fue positiva. Como en el ejercicio 2.4 las diferencias eran normales, la prueba t es la más adecuada aquí (y es más potente: su valor p es menor). Wilcoxon sería la elección si las diferencias no fueran normales y la muestra fuera pequeña.</p>
 </div>
 </div>
 </div>

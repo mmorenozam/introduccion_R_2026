@@ -16,7 +16,7 @@ webr:
     - datos/ranas.csv
 # Soluciones de este módulo: cambia a true después de la sesión y vuelve a renderizar.
 live:
-  show-solutions: false
+  show-solutions: true
 filters:
   - soluciones.lua
 engine: knitr
